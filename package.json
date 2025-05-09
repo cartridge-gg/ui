@@ -66,6 +66,7 @@
     "graphql:gen": "graphql-codegen --config src/utils/api/cartridge/codegen.yaml && graphql-codegen --config src/utils/api/indexer/codegen.yaml && pnpm tsx bin/post-graphql-gen.ts"
   },
   "dependencies": {
+    "@cartridge/presets": "github:cartridge-gg/presets#11ee3b8",
     "@radix-ui/react-accordion": "^1.2.6",
     "@radix-ui/react-alert-dialog": "^1.1.9",
     "@radix-ui/react-aspect-ratio": "^1.1.4",
