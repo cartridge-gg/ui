@@ -186,10 +186,8 @@ export type AccountTeamWhereInput = {
 };
 
 export type AccountUpdateInput = {
-  /** Set the email for the account. Required for slot billing. */
+  /** Set the email for the account. */
   email?: InputMaybe<Scalars['String']>;
-  /** Enable slot billing for the account. Requires email to be set. */
-  slotBilling?: InputMaybe<Scalars['Boolean']>;
 };
 
 /**
@@ -668,11 +666,6 @@ export type BalanceEdge = {
   node: Balance;
 };
 
-export type ClaimFreeStarterpackInput = {
-  accountId: Scalars['ID'];
-  starterpackId: Scalars['ID'];
-};
-
 export type Collectible = {
   __typename?: 'Collectible';
   assets: Array<AssetEdge>;
@@ -877,22 +870,6 @@ export type CreateServiceInput = {
   torii?: InputMaybe<ToriiCreateInput>;
   type: DeploymentService;
   version?: InputMaybe<Scalars['String']>;
-};
-
-export type CreateStarterpackContractInput = {
-  calldata: Scalars['JSON'];
-  contractAddress: Scalars['String'];
-  description?: InputMaybe<Scalars['String']>;
-  entryPoint: Scalars['String'];
-  iconUrl?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-};
-
-export type CreateStarterpackInput = {
-  contracts: Array<CreateStarterpackContractInput>;
-  cost: Scalars['Int'];
-  description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
 };
 
 export type CreateStripePaymentIntentInput = {
@@ -1718,6 +1695,12 @@ export type MetricsResult = {
   items: Array<MetricsItem>;
 };
 
+export type MintAllowance = {
+  __typename?: 'MintAllowance';
+  count: Scalars['Int'];
+  limit: Scalars['Int'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPaymasterPolicies?: Maybe<Array<PaymasterPolicy>>;
@@ -1729,11 +1712,11 @@ export type Mutation = {
   createDeployment: Deployment;
   createPaymaster: Paymaster;
   createSession: Scalars['String'];
-  createStarterpack: Starterpack;
   createStripePaymentIntent: StripePaymentIntent;
   createTeam: Team;
   decreaseBudget: Paymaster;
   deleteDeployment: Scalars['Boolean'];
+  deleteTeam: Scalars['Boolean'];
   finalizeLogin: Scalars['String'];
   finalizeRegistration: Account;
   increaseBudget: Paymaster;
@@ -1774,7 +1757,7 @@ export type MutationBeginRegistrationArgs = {
 
 
 export type MutationClaimFreeStarterpackArgs = {
-  input: ClaimFreeStarterpackInput;
+  input: StarterpackInput;
 };
 
 
@@ -1808,11 +1791,6 @@ export type MutationCreateSessionArgs = {
 };
 
 
-export type MutationCreateStarterpackArgs = {
-  input: CreateStarterpackInput;
-};
-
-
 export type MutationCreateStripePaymentIntentArgs = {
   input: CreateStripePaymentIntentInput;
 };
@@ -1833,6 +1811,11 @@ export type MutationDecreaseBudgetArgs = {
 export type MutationDeleteDeploymentArgs = {
   name: Scalars['String'];
   service: DeploymentService;
+};
+
+
+export type MutationDeleteTeamArgs = {
+  name: Scalars['String'];
 };
 
 
@@ -2399,7 +2382,7 @@ export type Query = {
   pricePeriodByAddresses: Array<Price>;
   session?: Maybe<Session>;
   sessions?: Maybe<SessionConnection>;
-  starterpack?: Maybe<Starterpack>;
+  starterpack?: Maybe<StarterpackDetails>;
   streaks: StreakResult;
   stripePayment: StripePayment;
   team?: Maybe<Team>;
@@ -2601,7 +2584,7 @@ export type QuerySessionsArgs = {
 
 
 export type QueryStarterpackArgs = {
-  id: Scalars['ID'];
+  input: StarterpackInput;
 };
 
 
@@ -3035,7 +3018,6 @@ export type StarknetCredentials = {
 export type Starterpack = Node & {
   __typename?: 'Starterpack';
   active: Scalars['Boolean'];
-  bonusCredits: Credits;
   chainID: Scalars['String'];
   createdAt: Scalars['Time'];
   description?: Maybe<Scalars['String']>;
@@ -3047,7 +3029,6 @@ export type Starterpack = Node & {
   name: Scalars['String'];
   paymaster?: Maybe<Paymaster>;
   paymasterID?: Maybe<Scalars['ID']>;
-  price: Credits;
   starterpackContract: StarterpackContractConnection;
   starterpackMint: StarterpackMintConnection;
   updatedAt: Scalars['Time'];
@@ -3284,6 +3265,14 @@ export type StarterpackContractWhereInput = {
   updatedAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
 };
 
+export type StarterpackDetails = {
+  __typename?: 'StarterpackDetails';
+  bonusCredits: Credits;
+  mintAllowance?: Maybe<MintAllowance>;
+  price: Credits;
+  starterpack: Starterpack;
+};
+
 /** An edge in a connection. */
 export type StarterpackEdge = {
   __typename?: 'StarterpackEdge';
@@ -3291,6 +3280,11 @@ export type StarterpackEdge = {
   cursor: Scalars['Cursor'];
   /** The item at the end of the edge. */
   node?: Maybe<Starterpack>;
+};
+
+export type StarterpackInput = {
+  accountId: Scalars['ID'];
+  starterpackId: Scalars['ID'];
 };
 
 export type StarterpackMint = Node & {
@@ -3645,6 +3639,8 @@ export type Team = Node & {
   __typename?: 'Team';
   /** Credits to use for slot billing. 1 credit = 0.001 USDC. */
   credits: Scalars['Int'];
+  /** Soft delete flag for legal and billing purposes. */
+  deleted: Scalars['Boolean'];
   deployments: DeploymentConnection;
   description?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -3848,6 +3844,9 @@ export type TeamWhereInput = {
   creditsLTE?: InputMaybe<Scalars['Int']>;
   creditsNEQ?: InputMaybe<Scalars['Int']>;
   creditsNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** deleted field predicates */
+  deleted?: InputMaybe<Scalars['Boolean']>;
+  deletedNEQ?: InputMaybe<Scalars['Boolean']>;
   /** description field predicates */
   description?: InputMaybe<Scalars['String']>;
   descriptionContains?: InputMaybe<Scalars['String']>;
@@ -4315,12 +4314,19 @@ export type SignerQueryVariables = Exact<{
 
 export type SignerQuery = { __typename?: 'Query', account?: { __typename?: 'Account', username: string, controllers: { __typename?: 'ControllerConnection', edges?: Array<{ __typename?: 'ControllerEdge', node?: { __typename?: 'Controller', signers?: Array<{ __typename?: 'Signer', id: string, type: SignerType, createdAt: string, updatedAt: string, controller: { __typename?: 'Controller', id: string, accountID: string } }> | null } | null } | null> | null } } | null };
 
-export type StarterPackQueryVariables = Exact<{
-  id: Scalars['ID'];
+export type ClaimFreeStarterpackMutationVariables = Exact<{
+  input: StarterpackInput;
 }>;
 
 
-export type StarterPackQuery = { __typename?: 'Query', starterpack?: { __typename?: 'Starterpack', name: string, description?: string | null, active: boolean, issuance: number, maxIssuance?: number | null, price: { __typename?: 'Credits', amount: string, decimals: number }, bonusCredits: { __typename?: 'Credits', amount: string, decimals: number }, starterpackContract: { __typename?: 'StarterpackContractConnection', edges?: Array<{ __typename?: 'StarterpackContractEdge', node?: { __typename?: 'StarterpackContract', name: string, description?: string | null, iconURL?: string | null, contractAddress: string, supplyEntryPoint?: string | null, supplyCalldata?: Array<string> | null } | null } | null> | null } } | null };
+export type ClaimFreeStarterpackMutation = { __typename?: 'Mutation', claimFreeStarterpack: string };
+
+export type StarterPackQueryVariables = Exact<{
+  input: StarterpackInput;
+}>;
+
+
+export type StarterPackQuery = { __typename?: 'Query', starterpack?: { __typename?: 'StarterpackDetails', starterpack: { __typename?: 'Starterpack', name: string, description?: string | null, active: boolean, issuance: number, maxIssuance?: number | null, starterpackContract: { __typename?: 'StarterpackContractConnection', edges?: Array<{ __typename?: 'StarterpackContractEdge', node?: { __typename?: 'StarterpackContract', name: string, description?: string | null, iconURL?: string | null, contractAddress: string, supplyEntryPoint?: string | null, supplyCalldata?: Array<string> | null } | null } | null> | null } }, price: { __typename?: 'Credits', amount: string, decimals: number }, bonusCredits: { __typename?: 'Credits', amount: string, decimals: number }, mintAllowance?: { __typename?: 'MintAllowance', count: number, limit: number } | null } | null };
 
 export type TraceabilitiesQueryVariables = Exact<{
   projects: Array<TraceabilityProject> | TraceabilityProject;
@@ -5258,12 +5264,42 @@ export const useSignerQuery = <
       useFetchData<SignerQuery, SignerQueryVariables>(SignerDocument).bind(null, variables),
       options
     );
+export const ClaimFreeStarterpackDocument = `
+    mutation ClaimFreeStarterpack($input: StarterpackInput!) {
+  claimFreeStarterpack(input: $input)
+}
+    `;
+export const useClaimFreeStarterpackMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<ClaimFreeStarterpackMutation, TError, ClaimFreeStarterpackMutationVariables, TContext>) =>
+    useMutation<ClaimFreeStarterpackMutation, TError, ClaimFreeStarterpackMutationVariables, TContext>(
+      ['ClaimFreeStarterpack'],
+      useFetchData<ClaimFreeStarterpackMutation, ClaimFreeStarterpackMutationVariables>(ClaimFreeStarterpackDocument),
+      options
+    );
 export const StarterPackDocument = `
-    query StarterPack($id: ID!) {
-  starterpack(id: $id) {
-    name
-    description
-    active
+    query StarterPack($input: StarterpackInput!) {
+  starterpack(input: $input) {
+    starterpack {
+      name
+      description
+      active
+      issuance
+      maxIssuance
+      starterpackContract {
+        edges {
+          node {
+            name
+            description
+            iconURL
+            contractAddress
+            supplyEntryPoint
+            supplyCalldata
+          }
+        }
+      }
+    }
     price {
       amount
       decimals
@@ -5272,19 +5308,9 @@ export const StarterPackDocument = `
       amount
       decimals
     }
-    issuance
-    maxIssuance
-    starterpackContract {
-      edges {
-        node {
-          name
-          description
-          iconURL
-          contractAddress
-          supplyEntryPoint
-          supplyCalldata
-        }
-      }
+    mintAllowance {
+      count
+      limit
     }
   }
 }
