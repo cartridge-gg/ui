@@ -3637,7 +3637,7 @@ export type StripePricingDetails = {
 
 export type Team = Node & {
   __typename?: 'Team';
-  /** Credits to use for slot billing. 1 credit = 0.001 USDC. */
+  /** Credits to use for slot billing. 1 credit = 0.01 USD. */
   credits: Scalars['Int'];
   /** Soft delete flag for legal and billing purposes. */
   deleted: Scalars['Boolean'];
