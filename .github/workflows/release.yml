@@ -57,7 +57,7 @@ jobs:
     steps:
       - uses: "actions/checkout@v4"
         with:
-          repository: cartridge-gg/ui
+          repository: cartridge-gg/controller
           token: ${{ secrets.CREATE_PR_TOKEN }}
 
       - name: Configure Git
@@ -76,6 +76,11 @@ jobs:
       - name: Update package.json
         run: |
           jq '.dependencies["@cartridge/ui"] = "github:cartridge-gg/ui#${{ needs.release.outputs.release_sha }}"' package.json > tmp.json && mv tmp.json package.json
+
+      - name: Update pnpm-workspace.yaml
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.catalog["@cartridge/ui"] = "github:cartridge-gg/ui#${{ needs.release.outputs.release_sha }}"' pnpm-workspace.yaml > tmp.yaml && mv tmp.yaml pnpm-workspace.yaml
 
       - name: Update lockfile
         run: pnpm install --no-frozen-lockfile
