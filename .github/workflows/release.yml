@@ -87,7 +87,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git add package.json pnpm-lock.yaml
+          git add package.json pnpm-workspace.yaml pnpm-lock.yaml
           git commit -m "chore: update @cartridge/ui to ${{ needs.release.outputs.release_sha }}"
           git push -f origin update-ui
 
