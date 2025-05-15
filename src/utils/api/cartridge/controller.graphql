@@ -7,6 +7,30 @@ query Controller($username: String!, $chainId: String!) {
     constructorCalldata
     createdAt
     updatedAt
+    sessions {
+      id
+      controllerAddress
+      appID
+      chainID
+      authorization
+      isRevoked
+      expiresAt
+      createdAt
+      updatedAt
+      activities {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+      signer {
+        id
+      }
+      controller {
+        id
+      }
+    }
     signers {
       metadata {
         ... on WebauthnCredentials {
