@@ -35,6 +35,9 @@ export const DAI_CONTRACT_ADDRESS = getChecksumAddress(
 export const EKUBO_CONTRACT_ADDRESS = getChecksumAddress(
   "0x075afe6402ad5a5c20dd25e10ec3b3986acaa647b77e4ae24b0cbc9a54a27a87",
 );
+export const LORDS_CONTRACT_ADDRESS = getChecksumAddress(
+  "0x0124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49",
+);
 
 export class ERC20 {
   private address: string;
