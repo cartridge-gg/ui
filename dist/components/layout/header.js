@@ -1,0 +1,73 @@
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { ArrowIcon, GearIcon, TimesIcon, GiftIcon, } from "../../components/icons";
+import { cn } from "../../utils";
+import { Button } from "../../components/primitives/button";
+import { isIframe } from "@cartridge/ui/utils";
+import { Network } from "../../components/network";
+import { useUI } from "../../hooks";
+import { ConnectionTooltip, Thumbnail } from "../../index";
+import { StarryHeaderBackground } from "./starry-header";
+export function LayoutHeader({ onBack, onClose, hideUsername, hideNetwork, hideSettings, onOpenStarterPack, ...innerProps }) {
+    const { account, chainId, closeModal, openSettings, followers, followings, onFollowersClick, onFollowingsClick, } = useUI();
+    return (_jsxs("div", { className: "sticky top-0 w-full z-10 bg-background", children: [(() => {
+                switch (innerProps.variant) {
+                    case "expanded":
+                        return (_jsxs("div", { className: "flex flex-col w-full h-[176px]", children: [getComputedStyle(document.documentElement)
+                                    .getPropertyValue("--theme-cover-url")
+                                    .includes("presets/cartridge/") ? (_jsx(StarryHeaderBackground, { className: "w-full h-[136px] relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-background before:pointer-events-none" })) : (_jsx("div", { className: "w-full h-[136px] bg-[image:var(--theme-cover-url)] bg-cover bg-center relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-background before:pointer-events-none" })), _jsx(HeaderInner, { ...innerProps, className: "absolute bottom-0 left-0 right-0" })] }));
+                    case "compressed":
+                    default:
+                        return (_jsxs("div", { className: "flex flex-col bg-spacer-100 gap-y-px", children: [_jsx("div", { className: "w-full bg-cover bg-center h-16 pb-6 bg-[linear-gradient(transparent,var(--background-100)),var(--theme-cover-url)]" }), _jsx("div", { className: "bg-background-100", children: _jsx(HeaderInner, { ...innerProps }) })] }));
+                }
+            })(), _jsxs("div", { className: "flex items-center justify-between absolute top-0 left-0 right-0 h-16 p-2 z-50", children: [_jsx("div", { children: onBack ? (_jsx(BackButton, { onClick: onBack })) : closeModal || onClose ? (_jsx(CloseButton, { onClose: () => {
+                                if (onClose)
+                                    onClose();
+                                if (closeModal)
+                                    closeModal();
+                            } })) : null }), _jsxs("div", { className: "flex items-center gap-2", children: [!!chainId &&
+                                (account ? (_jsxs(_Fragment, { children: [onOpenStarterPack && (_jsxs(Button, { variant: "secondary", size: "default", className: "gap-2", onClick: onOpenStarterPack, children: [_jsx(GiftIcon, { size: "default", variant: "line" }), _jsx("span", { children: "Get Starter Pack" })] })), _jsx(ConnectionTooltip, { username: account.username, address: account.address, chainId: chainId, followers: followers, followings: followings, hideNetwork: hideNetwork, hideUsername: hideUsername, onFollowersClick: onFollowersClick, onFollowingsClick: onFollowingsClick })] })) : (!hideNetwork && _jsx(Network, { chainId: chainId }))), openSettings && !hideSettings && (_jsx(SettingsButton, { onClick: openSettings }))] })] })] }));
+}
+function HeaderInner({ variant, Icon, icon, title, description, right, className, }) {
+    if (variant === "hidden")
+        return null;
+    return (_jsxs("div", { className: cn("p-6 pb-0 flex items-center justify-between", className), children: [_jsxs("div", { className: "flex items-center flex-shrink min-w-0 gap-3", children: [_jsx(HeaderIcon, { variant: variant, Icon: Icon, icon: icon }), _jsx(Headline, { variant: variant, title: title, description: description })] }), right] }));
+}
+function HeaderIcon({ variant, Icon, icon, }) {
+    return (_jsx(IconWrapper, { variant: variant, children: (() => {
+            if (Icon) {
+                return _jsx(Icon, { size: "lg" });
+            }
+            if (icon) {
+                return icon;
+            }
+            return (_jsx(Thumbnail, { variant: variant === "expanded" ? "dark" : "default", size: variant === "expanded" ? "xxl" : "lg" }));
+        })() }));
+}
+function IconWrapper({ variant, children, }) {
+    switch (variant) {
+        case "expanded":
+            return (_jsx("div", { className: "flex-shrink-0 rounded size-20 bg-background flex items-center justify-center", children: _jsx("div", { className: "rounded bg-background-200 size-[calc(100%-8px)] flex items-center justify-center", children: children }) }));
+        default:
+        case "compressed":
+            return (_jsx("div", { className: "flex-shrink-0 rounded size-10 flex items-center justify-center bg-background-200", children: children }));
+    }
+}
+function Headline({ variant, title, description, }) {
+    return (_jsxs("div", { className: cn("flex flex-col gap-0.5 justify-between", variant === "expanded" ? "gap-1.5" : "gap-0.5"), children: [_jsx("div", { className: "text-lg/[22px] font-semibold line-clamp-1 text-ellipsis", children: title }), description && (_jsx("div", { className: cn("text-foreground-300 break-words text-xs"), children: description }))] }));
+}
+function CloseButton({ onClose }) {
+    return (_jsx(Button, { variant: "icon", size: "icon", onClick: onClose, children: _jsx(TimesIcon, {}) }));
+}
+function BackButton({ onClick }) {
+    if (!isIframe()) {
+        return null;
+    }
+    return (_jsx(Button, { variant: "icon", size: "icon", onClick: onClick, children: _jsx(ArrowIcon, { variant: "left" }) }));
+}
+function SettingsButton({ onClick }) {
+    if (!isIframe()) {
+        return null;
+    }
+    return (_jsx(Button, { variant: "icon", size: "icon", onClick: onClick, children: _jsx(GearIcon, {}) }));
+}
+//# sourceMappingURL=header.js.map
