@@ -349,11 +349,17 @@ export type Activity = Node & {
   __typename?: 'Activity';
   account: Account;
   accountID: Scalars['ID'];
+  /** Actual fee for the activity */
+  actualFee?: Maybe<Scalars['BigInt']>;
   controller?: Maybe<Controller>;
   controllerID?: Maybe<Scalars['ID']>;
   createdAt: Scalars['Time'];
+  /** Credits fee for the activity */
+  creditsFee?: Maybe<Scalars['Int']>;
   /** Transaction fee payment source */
   feeSource: ActivityFeeSource;
+  /** Fee unit for the activity */
+  feeUnit: ActivityFeeUnit;
   id: Scalars['ID'];
   /** Blockchain network if applicable */
   network?: Maybe<Scalars['String']>;
@@ -415,6 +421,12 @@ export enum ActivityFeeSource {
   Account = 'ACCOUNT',
   Credits = 'CREDITS',
   Paymaster = 'PAYMASTER'
+}
+
+/** ActivityFeeUnit is enum for the field fee_unit */
+export enum ActivityFeeUnit {
+  Fri = 'FRI',
+  Wei = 'WEI'
 }
 
 export type ActivityItem = {
@@ -489,6 +501,17 @@ export type ActivityWhereInput = {
   accountIDLTE?: InputMaybe<Scalars['ID']>;
   accountIDNEQ?: InputMaybe<Scalars['ID']>;
   accountIDNotIn?: InputMaybe<Array<Scalars['ID']>>;
+  /** actual_fee field predicates */
+  actualFee?: InputMaybe<Scalars['BigInt']>;
+  actualFeeGT?: InputMaybe<Scalars['BigInt']>;
+  actualFeeGTE?: InputMaybe<Scalars['BigInt']>;
+  actualFeeIn?: InputMaybe<Array<Scalars['BigInt']>>;
+  actualFeeIsNil?: InputMaybe<Scalars['Boolean']>;
+  actualFeeLT?: InputMaybe<Scalars['BigInt']>;
+  actualFeeLTE?: InputMaybe<Scalars['BigInt']>;
+  actualFeeNEQ?: InputMaybe<Scalars['BigInt']>;
+  actualFeeNotIn?: InputMaybe<Array<Scalars['BigInt']>>;
+  actualFeeNotNil?: InputMaybe<Scalars['Boolean']>;
   and?: InputMaybe<Array<ActivityWhereInput>>;
   /** controller_id field predicates */
   controllerID?: InputMaybe<Scalars['ID']>;
@@ -515,11 +538,27 @@ export type ActivityWhereInput = {
   createdAtLTE?: InputMaybe<Scalars['Time']>;
   createdAtNEQ?: InputMaybe<Scalars['Time']>;
   createdAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  /** credits_fee field predicates */
+  creditsFee?: InputMaybe<Scalars['Int']>;
+  creditsFeeGT?: InputMaybe<Scalars['Int']>;
+  creditsFeeGTE?: InputMaybe<Scalars['Int']>;
+  creditsFeeIn?: InputMaybe<Array<Scalars['Int']>>;
+  creditsFeeIsNil?: InputMaybe<Scalars['Boolean']>;
+  creditsFeeLT?: InputMaybe<Scalars['Int']>;
+  creditsFeeLTE?: InputMaybe<Scalars['Int']>;
+  creditsFeeNEQ?: InputMaybe<Scalars['Int']>;
+  creditsFeeNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  creditsFeeNotNil?: InputMaybe<Scalars['Boolean']>;
   /** fee_source field predicates */
   feeSource?: InputMaybe<ActivityFeeSource>;
   feeSourceIn?: InputMaybe<Array<ActivityFeeSource>>;
   feeSourceNEQ?: InputMaybe<ActivityFeeSource>;
   feeSourceNotIn?: InputMaybe<Array<ActivityFeeSource>>;
+  /** fee_unit field predicates */
+  feeUnit?: InputMaybe<ActivityFeeUnit>;
+  feeUnitIn?: InputMaybe<Array<ActivityFeeUnit>>;
+  feeUnitNEQ?: InputMaybe<ActivityFeeUnit>;
+  feeUnitNotIn?: InputMaybe<Array<ActivityFeeUnit>>;
   /** account edge predicates */
   hasAccount?: InputMaybe<Scalars['Boolean']>;
   hasAccountWith?: InputMaybe<Array<AccountWhereInput>>;
@@ -1837,6 +1876,7 @@ export type MutationIncreaseBudgetArgs = {
 
 
 export type MutationRegisterArgs = {
+  appId: Scalars['String'];
   chainId: Scalars['String'];
   owner: SignerInput;
   session: SessionInput;
@@ -2331,6 +2371,39 @@ export type PlayerAchievementResult = {
   items: Array<PlayerAchievementItem>;
 };
 
+export type PlaythroughEntry = {
+  __typename?: 'PlaythroughEntry';
+  actionCount: Scalars['Int'];
+  callerAddress: Scalars['String'];
+  entrypoints: Scalars['String'];
+  sessionEnd: Scalars['String'];
+  sessionStart: Scalars['String'];
+};
+
+export type PlaythroughItem = {
+  __typename?: 'PlaythroughItem';
+  meta: PlaythroughMeta;
+  playthroughs: Array<PlaythroughEntry>;
+};
+
+export type PlaythroughMeta = {
+  __typename?: 'PlaythroughMeta';
+  count: Scalars['Int'];
+  error?: Maybe<Scalars['String']>;
+  limit: Scalars['Int'];
+  project: Scalars['String'];
+};
+
+export type PlaythroughProject = {
+  limit: Scalars['Int'];
+  project: Scalars['String'];
+};
+
+export type PlaythroughResult = {
+  __typename?: 'PlaythroughResult';
+  items: Array<PlaythroughItem>;
+};
+
 export type Price = {
   __typename?: 'Price';
   amount: Scalars['BigInt'];
@@ -2377,6 +2450,7 @@ export type Query = {
   paymaster?: Maybe<Paymaster>;
   paymasters?: Maybe<PaymasterConnection>;
   playerAchievements: PlayerAchievementResult;
+  playthroughs: PlaythroughResult;
   price: Array<Price>;
   priceByAddresses: Array<Price>;
   pricePeriodByAddresses: Array<Price>;
@@ -2548,6 +2622,11 @@ export type QueryPaymastersArgs = {
 
 export type QueryPlayerAchievementsArgs = {
   projects?: InputMaybe<Array<Project>>;
+};
+
+
+export type QueryPlaythroughsArgs = {
+  projects?: InputMaybe<Array<PlaythroughProject>>;
 };
 
 
@@ -4300,6 +4379,7 @@ export type PricePeriodByAddressesQuery = { __typename?: 'Query', pricePeriodByA
 export type RegisterMutationVariables = Exact<{
   username: Scalars['String'];
   chainId: Scalars['String'];
+  appId: Scalars['String'];
   owner: SignerInput;
   session: SessionInput;
 }>;
@@ -5232,8 +5312,9 @@ export const usePricePeriodByAddressesQuery = <
       options
     );
 export const RegisterDocument = `
-    mutation Register($username: String!, $chainId: String!, $owner: SignerInput!, $session: SessionInput!) {
+    mutation Register($username: String!, $chainId: String!, $appId: String!, $owner: SignerInput!, $session: SessionInput!) {
   register(
+    appId: $appId
     chainId: $chainId
     owner: $owner
     session: $session
