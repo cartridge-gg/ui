@@ -2857,6 +2857,7 @@ export type SessionEdge = {
 
 export type SessionInput = {
   allowedPoliciesRoot: Scalars['Felt'];
+  appId?: InputMaybe<Scalars['String']>;
   authorization: Array<Scalars['Felt']>;
   expiresAt: Scalars['Long'];
   guardianKeyGuid: Scalars['Felt'];
@@ -4386,7 +4387,6 @@ export type PricePeriodByAddressesQuery = { __typename?: 'Query', pricePeriodByA
 export type RegisterMutationVariables = Exact<{
   username: Scalars['String'];
   chainId: Scalars['String'];
-  appId: Scalars['String'];
   owner: SignerInput;
   session: SessionInput;
 }>;
@@ -5352,9 +5352,8 @@ export const usePricePeriodByAddressesQuery = <
       options
     );
 export const RegisterDocument = `
-    mutation Register($username: String!, $chainId: String!, $appId: String!, $owner: SignerInput!, $session: SessionInput!) {
+    mutation Register($username: String!, $chainId: String!, $owner: SignerInput!, $session: SessionInput!) {
   register(
-    appId: $appId
     chainId: $chainId
     owner: $owner
     session: $session

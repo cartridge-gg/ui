@@ -1,12 +1,10 @@
 mutation Register(
   $username: String!
   $chainId: String!
-  $appId: String!
   $owner: SignerInput!
   $session: SessionInput!
 ) {
   register(
-    appId: $appId
     chainId: $chainId
     owner: $owner
     session: $session
