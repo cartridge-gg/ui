@@ -4353,6 +4353,13 @@ export type CreateStripePaymentIntentMutationVariables = Exact<{
 
 export type CreateStripePaymentIntentMutation = { __typename?: 'Mutation', createStripePaymentIntent: { __typename?: 'StripePaymentIntent', id: string, clientSecret: string, pricing: { __typename?: 'StripePricingDetails', baseCostInCents: number, processingFeeInCents: number, totalInCents: number } } };
 
+export type PlaythroughsQueryVariables = Exact<{
+  projects: Array<PlaythroughProject> | PlaythroughProject;
+}>;
+
+
+export type PlaythroughsQuery = { __typename?: 'Query', playthroughs: { __typename?: 'PlaythroughResult', items: Array<{ __typename?: 'PlaythroughItem', playthroughs: Array<{ __typename?: 'PlaythroughEntry', entrypoints: string, sessionStart: string, sessionEnd: string, actionCount: number, callerAddress: string }>, meta: { __typename?: 'PlaythroughMeta', project: string, limit: number, error?: string | null, count: number } }> } };
+
 export type PriceQueryVariables = Exact<{
   pairs: Array<TokenPair> | TokenPair;
 }>;
@@ -5243,6 +5250,39 @@ export const useCreateStripePaymentIntentMutation = <
     useMutation<CreateStripePaymentIntentMutation, TError, CreateStripePaymentIntentMutationVariables, TContext>(
       ['CreateStripePaymentIntent'],
       useFetchData<CreateStripePaymentIntentMutation, CreateStripePaymentIntentMutationVariables>(CreateStripePaymentIntentDocument),
+      options
+    );
+export const PlaythroughsDocument = `
+    query Playthroughs($projects: [PlaythroughProject!]!) {
+  playthroughs(projects: $projects) {
+    items {
+      playthroughs {
+        entrypoints
+        sessionStart
+        sessionEnd
+        actionCount
+        callerAddress
+      }
+      meta {
+        project
+        limit
+        error
+        count
+      }
+    }
+  }
+}
+    `;
+export const usePlaythroughsQuery = <
+      TData = PlaythroughsQuery,
+      TError = unknown
+    >(
+      variables: PlaythroughsQueryVariables,
+      options?: UseQueryOptions<PlaythroughsQuery, TError, TData>
+    ) =>
+    useQuery<PlaythroughsQuery, TError, TData>(
+      ['Playthroughs', variables],
+      useFetchData<PlaythroughsQuery, PlaythroughsQueryVariables>(PlaythroughsDocument).bind(null, variables),
       options
     );
 export const PriceDocument = `
