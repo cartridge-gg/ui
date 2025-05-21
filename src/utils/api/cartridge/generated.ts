@@ -1876,7 +1876,6 @@ export type MutationIncreaseBudgetArgs = {
 
 
 export type MutationRegisterArgs = {
-  appId: Scalars['String'];
   chainId: Scalars['String'];
   owner: SignerInput;
   session: SessionInput;
