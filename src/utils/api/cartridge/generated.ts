@@ -2856,6 +2856,7 @@ export type SessionEdge = {
 
 export type SessionInput = {
   allowedPoliciesRoot: Scalars['Felt'];
+  appId?: InputMaybe<Scalars['String']>;
   authorization: Array<Scalars['Felt']>;
   expiresAt: Scalars['Long'];
   guardianKeyGuid: Scalars['Felt'];
@@ -4274,7 +4275,7 @@ export type ControllerQueryVariables = Exact<{
 }>;
 
 
-export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, signers?: Array<{ __typename?: 'Signer', metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
+export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, sessions?: Array<{ __typename?: 'Session', id: string, controllerAddress: string, appID: string, chainID: string, authorization: Array<string>, isRevoked: boolean, expiresAt: string, createdAt: string, updatedAt: string, activities: { __typename?: 'ActivityConnection', edges?: Array<{ __typename?: 'ActivityEdge', node?: { __typename?: 'Activity', id: string } | null } | null> | null }, signer?: { __typename?: 'Signer', id: string } | null, controller: { __typename?: 'Controller', id: string } }> | null, signers?: Array<{ __typename?: 'Signer', metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
 
 export type BeginRegistrationMutationVariables = Exact<{
   username: Scalars['String'];
@@ -4935,6 +4936,30 @@ export const ControllerDocument = `
     constructorCalldata
     createdAt
     updatedAt
+    sessions {
+      id
+      controllerAddress
+      appID
+      chainID
+      authorization
+      isRevoked
+      expiresAt
+      createdAt
+      updatedAt
+      activities {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+      signer {
+        id
+      }
+      controller {
+        id
+      }
+    }
     signers {
       metadata {
         ... on WebauthnCredentials {
