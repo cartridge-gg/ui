@@ -7,7 +7,7 @@ import {
 } from "@/components/icons";
 import { cn } from "@/utils";
 import { Button } from "@/components/primitives/button";
-import { isIframe } from "@cartridge/ui/utils";
+import { isIframe } from "@/utils";
 import { Network } from "@/components/network";
 import { useUI } from "@/hooks";
 import { ConnectionTooltip, Thumbnail } from "@/index";

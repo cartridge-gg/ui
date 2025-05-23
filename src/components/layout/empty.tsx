@@ -5,7 +5,7 @@ import {
   EmptyStateIcon,
   EmptyStateInventoryIcon,
   EmptyStateLeaderboardIcon,
-} from "@cartridge/ui";
+} from "@/index";
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
