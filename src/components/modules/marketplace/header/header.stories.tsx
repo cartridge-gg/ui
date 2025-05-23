@@ -16,9 +16,7 @@ export default meta;
 type Story = StoryObj<typeof MarketplaceHeader>;
 
 export const Default: Story = {
-  render: () => (
-    <MarketplaceHeader label="Properties" />
-  ),
+  render: () => <MarketplaceHeader label="Properties" />,
 };
 
 export const Reset: Story = {

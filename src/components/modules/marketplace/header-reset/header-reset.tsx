@@ -8,7 +8,8 @@ const marketplaceHeaderVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-primary-100 text-xs bg-background-125 hover:bg-background-200",
+        default:
+          "text-primary-100 text-xs bg-background-125 hover:bg-background-200",
       },
     },
     defaultVariants: {
@@ -17,26 +18,26 @@ const marketplaceHeaderVariants = cva(
   },
 );
 
-export interface MarketplaceHeaderResetProps extends HTMLAttributes<HTMLButtonElement>, VariantProps<typeof marketplaceHeaderVariants> {
+export interface MarketplaceHeaderResetProps
+  extends HTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof marketplaceHeaderVariants> {
   label?: string;
 }
 
-export const MarketplaceHeaderReset = React.forwardRef<HTMLButtonElement, MarketplaceHeaderResetProps>(
-  (
-    {label = "Clear", className, variant, children, ...props },
-    ref,
-  ) => {
-    return (
-      <Button
-        ref={ref}
-        className={cn(marketplaceHeaderVariants({ variant }))}
-        {...props}
-      >
-        <p>{label}</p>
-        {children}
-      </Button>
-    );
-  },
-);
+export const MarketplaceHeaderReset = React.forwardRef<
+  HTMLButtonElement,
+  MarketplaceHeaderResetProps
+>(({ label = "Clear", className, variant, children, ...props }, ref) => {
+  return (
+    <Button
+      ref={ref}
+      className={cn(marketplaceHeaderVariants({ variant }))}
+      {...props}
+    >
+      <p>{label}</p>
+      {children}
+    </Button>
+  );
+});
 
 export default MarketplaceHeaderReset;

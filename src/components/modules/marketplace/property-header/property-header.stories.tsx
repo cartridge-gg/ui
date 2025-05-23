@@ -26,7 +26,11 @@ export const Default: Story = {
 
     return (
       <PropertyHeader {...args}>
-        <PropertySearch variant="darkest" search={search} setSearch={setSearch} />
+        <PropertySearch
+          variant="darkest"
+          search={search}
+          setSearch={setSearch}
+        />
         <div className="flex flex-col gap-px">
           <PropertyFilter label="Property Name" count={100} />
           <PropertyFilter label="Property Name" count={100} />

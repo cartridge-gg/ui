@@ -28,7 +28,7 @@ export const Default: Story = {
         <PropertyFilter label="Property Name" count={100} />
       </div>
     );
-  }
+  },
 };
 
 export const Unselected: Story = {

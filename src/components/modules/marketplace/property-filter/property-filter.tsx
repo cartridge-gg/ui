@@ -8,7 +8,8 @@ const propertyFilterVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-transparent hover:bg-background-200 text-background-500 data-[selected=true]:text-foreground-200",
+        default:
+          "bg-transparent hover:bg-background-200 text-background-500 data-[selected=true]:text-foreground-200",
       },
     },
     defaultVariants: {
@@ -17,47 +18,54 @@ const propertyFilterVariants = cva(
   },
 );
 
-export interface PropertyFilterProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof propertyFilterVariants> {
+export interface PropertyFilterProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof propertyFilterVariants> {
   label: string;
   count: number;
   value?: boolean;
   setValue?: (value: boolean) => void;
 }
 
-export const PropertyFilter = React.forwardRef<HTMLDivElement, PropertyFilterProps>(
-  (
-    {label, count, value, setValue, className, variant },
-    ref,
-  ) => {
-    const [selected, setSelected] = React.useState<boolean>(!!value);
+export const PropertyFilter = React.forwardRef<
+  HTMLDivElement,
+  PropertyFilterProps
+>(({ label, count, value, setValue, className, variant }, ref) => {
+  const [selected, setSelected] = React.useState<boolean>(!!value);
 
-    const handleClick = useCallback((value: boolean) => {
+  const handleClick = useCallback(
+    (value: boolean) => {
       setSelected(value);
       if (!setValue) return;
       setValue(value);
-    }, [setValue, setSelected]);
+    },
+    [setValue, setSelected],
+  );
 
-    useEffect(() => {
-      if (value !== undefined) {
-        setSelected(value);
-      }
-    }, [value]);
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelected(value);
+    }
+  }, [value]);
 
-    return (
-      <div
-        ref={ref}
-        data-selected={selected}
-        className={cn(propertyFilterVariants({ variant }), className)}
-        onClick={() => handleClick(!selected)}
-      >
-        <div className="flex items-center gap-2">
-          {selected ? <CheckboxCheckedIcon size="sm" /> : <CheckboxUncheckedIcon size="sm" /> }
-          <p className="text-xs text-foreground-100">{label}</p>
-        </div>
-        <p className="text-xs text-foreground-100">{count}</p>
+  return (
+    <div
+      ref={ref}
+      data-selected={selected}
+      className={cn(propertyFilterVariants({ variant }), className)}
+      onClick={() => handleClick(!selected)}
+    >
+      <div className="flex items-center gap-2">
+        {selected ? (
+          <CheckboxCheckedIcon size="sm" />
+        ) : (
+          <CheckboxUncheckedIcon size="sm" />
+        )}
+        <p className="text-xs text-foreground-100">{label}</p>
       </div>
-    );
-  },
-);
+      <p className="text-xs text-foreground-100">{count}</p>
+    </div>
+  );
+});
 
 export default PropertyFilter;

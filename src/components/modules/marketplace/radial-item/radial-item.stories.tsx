@@ -23,4 +23,4 @@ export const Default: Story = {
       <RadialItem label="Buy Now" />
     </div>
   ),
-}
+};

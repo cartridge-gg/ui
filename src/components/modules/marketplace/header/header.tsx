@@ -17,26 +17,26 @@ const marketplaceHeaderVariants = cva(
   },
 );
 
-export interface MarketplaceHeaderProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof marketplaceHeaderVariants> {
+export interface MarketplaceHeaderProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof marketplaceHeaderVariants> {
   label: string;
 }
 
-export const MarketplaceHeader = React.forwardRef<HTMLDivElement, MarketplaceHeaderProps>(
-  (
-    {label, className, variant, children, ...props },
-    ref,
-  ) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(marketplaceHeaderVariants({ variant }))}
-        {...props}
-      >
-        <MarketplaceHeaderLabel label={label} />
-        {children}
-      </div>
-    );
-  },
-);
+export const MarketplaceHeader = React.forwardRef<
+  HTMLDivElement,
+  MarketplaceHeaderProps
+>(({ label, className, variant, children, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(marketplaceHeaderVariants({ variant }))}
+      {...props}
+    >
+      <MarketplaceHeaderLabel label={label} />
+      {children}
+    </div>
+  );
+});
 
 export default MarketplaceHeader;

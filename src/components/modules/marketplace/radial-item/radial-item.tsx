@@ -17,20 +17,19 @@ const radialItemVariants = cva(
   },
 );
 
-export interface RadialItemProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof radialItemVariants> {
+export interface RadialItemProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof radialItemVariants> {
   label: string;
   active?: boolean;
 }
 
 export const RadialItem = React.forwardRef<HTMLDivElement, RadialItemProps>(
-  (
-    {label, active, className, variant, ...props },
-    ref,
-  ) => {
+  ({ label, active, className, variant, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        data-active={active} 
+        data-active={active}
         className={cn(radialItemVariants({ variant }), className)}
         {...props}
       >

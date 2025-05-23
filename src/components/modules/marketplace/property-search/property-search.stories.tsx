@@ -23,7 +23,11 @@ export const Darkest: Story = {
 
     return (
       <div className="flex gap-2">
-        <PropertySearch variant="darkest" search={search} setSearch={setSearch} />
+        <PropertySearch
+          variant="darkest"
+          search={search}
+          setSearch={setSearch}
+        />
       </div>
     );
   },
@@ -35,7 +39,11 @@ export const Darker: Story = {
 
     return (
       <div className="flex gap-2">
-        <PropertySearch variant="darker" search={search} setSearch={setSearch} />
+        <PropertySearch
+          variant="darker"
+          search={search}
+          setSearch={setSearch}
+        />
       </div>
     );
   },

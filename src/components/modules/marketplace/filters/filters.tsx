@@ -16,14 +16,12 @@ const filtersVariants = cva(
   },
 );
 
-export interface FiltersProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof filtersVariants> {
-}
+export interface FiltersProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof filtersVariants> {}
 
 export const Filters = React.forwardRef<HTMLDivElement, FiltersProps>(
-  (
-    {className, variant, ...props },
-    ref,
-  ) => {
+  ({ className, variant, ...props }, ref) => {
     return (
       <div
         ref={ref}
