@@ -6,7 +6,7 @@ import { SonnerToaster } from "../src/components/primitives/sonner";
 import { Toaster } from "../src/components/primitives/toaster";
 
 import "../src/index.css";
-import { useThemeEffect } from "../dist";
+import { useThemeEffect } from "../src/hooks/theme";
 import { defaultTheme } from "@cartridge/presets";
 
 const loadScript = (src: string) => {

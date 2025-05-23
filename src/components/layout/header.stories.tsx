@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { EthereumIcon, TransferIcon } from "@cartridge/ui";
+import { EthereumIcon, TransferIcon } from "@/index";
 import { LayoutHeader } from "./index";
 
 const meta: Meta<typeof LayoutHeader> = {

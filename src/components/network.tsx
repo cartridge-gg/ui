@@ -10,7 +10,7 @@ import { hexToString, Hex } from "viem";
 import { SlotIcon, StarknetColorIcon, StarknetIcon } from "./icons";
 import { QuestionIcon } from "./icons/utility/question";
 import { constants } from "starknet";
-import { getChainName, isSlotChain } from "@cartridge/ui/utils";
+import { getChainName, isSlotChain } from "@/utils";
 import { useCallback } from "react";
 import { toast } from "sonner";
 

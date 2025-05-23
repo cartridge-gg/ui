@@ -1,4 +1,4 @@
-import { ErrorImage, Spinner } from "@cartridge/ui";
+import { ErrorImage, Spinner } from "@/index";
 import { PropsWithChildren, useEffect, useRef, useState, useMemo } from "react";
 import { useLayoutContext } from "./context";
 import { isIframe, cn } from "@/utils";

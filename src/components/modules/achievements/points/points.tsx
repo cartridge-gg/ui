@@ -1,6 +1,6 @@
 import { CalendarIcon, Separator, SparklesIcon } from "@/index";
 import { cn } from "@/utils";
-import { getDate } from "@cartridge/ui/utils";
+import { getDate } from "@/utils";
 
 interface AchievementPointsProps {
   points: number;

@@ -4,7 +4,7 @@ import {
   CardListContent,
   CardListItem,
   CardTitle,
-} from "@cartridge/ui";
+} from "@/index";
 
 interface ReceivingProps {
   title?: string;

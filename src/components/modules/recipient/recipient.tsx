@@ -1,7 +1,7 @@
 import { Header, Textarea, WalletType } from "@/components";
 import { Selection } from "./selection";
 import { Preview } from "./preview";
-import { formatAddress } from "@cartridge/ui/utils";
+import { formatAddress } from "@/utils";
 
 type RecipientProps = {
   to: string;
