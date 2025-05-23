@@ -31,7 +31,7 @@ export const MarketplaceHeaderReset = React.forwardRef<
   return (
     <Button
       ref={ref}
-      className={cn(marketplaceHeaderVariants({ variant }))}
+      className={cn(marketplaceHeaderVariants({ variant }), className)}
       {...props}
     >
       <p>{label}</p>

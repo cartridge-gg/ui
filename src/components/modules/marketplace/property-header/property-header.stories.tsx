@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { PropertyHeader } from "./property-header";
-import { PropertyFilter } from "@/index";
-import { PropertySearch } from "../property-search";
+import { MarketplacePropertyHeader } from "./property-header";
+import { MarketplacePropertyFilter, MarketplacePropertySearch } from "@/index";
 import { useState } from "react";
 
-const meta: Meta<typeof PropertyHeader> = {
+const meta: Meta<typeof MarketplacePropertyHeader> = {
   title: "Modules/Marketplace/Property Header",
-  component: PropertyHeader,
+  component: MarketplacePropertyHeader,
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -18,27 +17,27 @@ const meta: Meta<typeof PropertyHeader> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof PropertyHeader>;
+type Story = StoryObj<typeof MarketplacePropertyHeader>;
 
 export const Default: Story = {
   render: function Render(args) {
     const [search, setSearch] = useState<string>("");
 
     return (
-      <PropertyHeader {...args}>
-        <PropertySearch
+      <MarketplacePropertyHeader {...args}>
+        <MarketplacePropertySearch
           variant="darkest"
           search={search}
           setSearch={setSearch}
         />
         <div className="flex flex-col gap-px">
-          <PropertyFilter label="Property Name" count={100} />
-          <PropertyFilter label="Property Name" count={100} />
-          <PropertyFilter label="Property Name" count={100} />
-          <PropertyFilter label="Property Name" count={100} />
-          <PropertyFilter label="Property Name" count={100} />
+          <MarketplacePropertyFilter label="Property Name" count={100} />
+          <MarketplacePropertyFilter label="Property Name" count={100} />
+          <MarketplacePropertyFilter label="Property Name" count={100} />
+          <MarketplacePropertyFilter label="Property Name" count={100} />
+          <MarketplacePropertyFilter label="Property Name" count={100} />
         </div>
-      </PropertyHeader>
+      </MarketplacePropertyHeader>
     );
   },
 };

@@ -3,7 +3,7 @@ import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import React, { HTMLAttributes, useState } from "react";
 
-const propertySearchVariants = cva("pr-9 caret-foreground-100", {
+const marketplacePropertySearchVariants = cva("pr-9 caret-foreground-100", {
   variants: {
     variant: {
       darkest:
@@ -20,23 +20,26 @@ const propertySearchVariants = cva("pr-9 caret-foreground-100", {
   },
 });
 
-export interface PropertySearchProps
+export interface MarketplacePropertySearchProps
   extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof propertySearchVariants> {
+    VariantProps<typeof marketplacePropertySearchVariants> {
   search: string;
   setSearch: (search: string) => void;
 }
 
-export const PropertySearch = React.forwardRef<
+export const MarketplacePropertySearch = React.forwardRef<
   HTMLDivElement,
-  PropertySearchProps
+  MarketplacePropertySearchProps
 >(({ search, setSearch, className, variant, ...props }, ref) => {
   const [focus, setFocus] = useState(false);
 
   return (
     <div ref={ref} className="relative" {...props}>
       <Input
-        className={cn(propertySearchVariants({ variant }), className)}
+        className={cn(
+          marketplacePropertySearchVariants({ variant }),
+          className,
+        )}
         type="text"
         placeholder="Search"
         value={search}
@@ -56,4 +59,4 @@ export const PropertySearch = React.forwardRef<
   );
 });
 
-export default PropertySearch;
+export default MarketplacePropertySearch;

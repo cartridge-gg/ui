@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { RadialToggle } from "./radial-toggle";
+import { MarketplaceRadialToggle } from "./radial-toggle";
 
-const meta: Meta<typeof RadialToggle> = {
+const meta: Meta<typeof MarketplaceRadialToggle> = {
   title: "Modules/Marketplace/Radial Toggle",
-  component: RadialToggle,
+  component: MarketplaceRadialToggle,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
@@ -14,13 +14,13 @@ const meta: Meta<typeof RadialToggle> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof RadialToggle>;
+type Story = StoryObj<typeof MarketplaceRadialToggle>;
 
 export const Default: Story = {
   render: () => (
     <div className="flex gap-3">
-      <RadialToggle active />
-      <RadialToggle />
+      <MarketplaceRadialToggle active />
+      <MarketplaceRadialToggle />
     </div>
   ),
 };

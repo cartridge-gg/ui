@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { AssetFilter } from "./asset-filter";
+import { MarketplaceAssetFilter } from "./asset-filter";
 
-const meta: Meta<typeof AssetFilter> = {
+const meta: Meta<typeof MarketplaceAssetFilter> = {
   title: "Modules/Marketplace/Asset Filter",
-  component: AssetFilter,
+  component: MarketplaceAssetFilter,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
@@ -12,6 +12,6 @@ const meta: Meta<typeof AssetFilter> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof AssetFilter>;
+type Story = StoryObj<typeof MarketplaceAssetFilter>;
 
 export const Default: Story = {};

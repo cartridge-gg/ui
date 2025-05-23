@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Filters } from "./filters";
+import { MarketplaceFilters } from "./filters";
 import { useCallback, useMemo, useState } from "react";
 import {
-  PropertyHeader,
-  PropertySearch,
-  PropertyFilter,
-  RadialItem,
+  MarketplacePropertyHeader,
+  MarketplacePropertySearch,
+  MarketplacePropertyFilter,
+  MarketplaceRadialItem,
   MarketplaceHeaderReset,
   MarketplaceHeader,
 } from "@/index";
@@ -24,9 +24,9 @@ const ATTRIBUTES = [
 ];
 const PROPERTIES = [1, 2, 3, 4, 5];
 
-const meta: Meta<typeof Filters> = {
-  title: "Modules/Marketplace/Filters",
-  component: Filters,
+const meta: Meta<typeof MarketplaceFilters> = {
+  title: "Modules/Marketplace/Marketplace Filters",
+  component: MarketplaceFilters,
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -34,7 +34,7 @@ const meta: Meta<typeof Filters> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Filters>;
+type Story = StoryObj<typeof MarketplaceFilters>;
 
 export const Default: Story = {
   render: function Render() {
@@ -52,15 +52,15 @@ export const Default: Story = {
     }, []);
 
     return (
-      <Filters>
+      <MarketplaceFilters>
         <MarketplaceHeader label="Status" />
         <div className="flex flex-col gap-2 w-fit">
-          <RadialItem
+          <MarketplaceRadialItem
             label="Buy Now"
             active={active === 0}
             onClick={() => setActive(0)}
           />
-          <RadialItem
+          <MarketplaceRadialItem
             label="Show All"
             active={active === 1}
             onClick={() => setActive(1)}
@@ -70,8 +70,8 @@ export const Default: Story = {
           {reset && <MarketplaceHeaderReset onClick={clear} />}
         </MarketplaceHeader>
         {ATTRIBUTES.map((label, index) => (
-          <PropertyHeader key={index} label={label} count={17}>
-            <PropertySearch
+          <MarketplacePropertyHeader key={index} label={label} count={17}>
+            <MarketplacePropertySearch
               variant="darkest"
               search={search[label] || ""}
               setSearch={(value: string) =>
@@ -84,7 +84,7 @@ export const Default: Story = {
                   .toLowerCase()
                   .includes((search[label] || "").toLowerCase()),
               ).map((i) => (
-                <PropertyFilter
+                <MarketplacePropertyFilter
                   key={i}
                   label={`Property ${label} ${i}`}
                   count={100}
@@ -95,9 +95,9 @@ export const Default: Story = {
                 />
               ))}
             </div>
-          </PropertyHeader>
+          </MarketplacePropertyHeader>
         ))}
-      </Filters>
+      </MarketplaceFilters>
     );
   },
 };

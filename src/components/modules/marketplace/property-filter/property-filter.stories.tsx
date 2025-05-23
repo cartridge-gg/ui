@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { PropertyFilter } from "./property-filter";
+import { MarketplacePropertyFilter } from "./property-filter";
 
-const meta: Meta<typeof PropertyFilter> = {
+const meta: Meta<typeof MarketplacePropertyFilter> = {
   title: "Modules/Marketplace/Property Filter",
-  component: PropertyFilter,
+  component: MarketplacePropertyFilter,
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -15,17 +15,25 @@ const meta: Meta<typeof PropertyFilter> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof PropertyFilter>;
+type Story = StoryObj<typeof MarketplacePropertyFilter>;
 
 export const Default: Story = {
   render: () => {
     return (
       <div className="flex flex-col gap-px">
-        <PropertyFilter label="Property Name" count={100} />
-        <PropertyFilter label="Property Name" count={100} value={true} />
-        <PropertyFilter label="Property Name" count={100} />
-        <PropertyFilter label="Property Name" count={100} value={true} />
-        <PropertyFilter label="Property Name" count={100} />
+        <MarketplacePropertyFilter label="Property Name" count={100} />
+        <MarketplacePropertyFilter
+          label="Property Name"
+          count={100}
+          value={true}
+        />
+        <MarketplacePropertyFilter label="Property Name" count={100} />
+        <MarketplacePropertyFilter
+          label="Property Name"
+          count={100}
+          value={true}
+        />
+        <MarketplacePropertyFilter label="Property Name" count={100} />
       </div>
     );
   },

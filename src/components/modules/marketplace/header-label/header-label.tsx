@@ -26,7 +26,7 @@ export const MarketplaceHeaderLabel = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn(marketplaceHeaderLabelVariants({ variant }))}
+      className={cn(marketplaceHeaderLabelVariants({ variant }), className)}
       {...props}
     >
       <p>{label}</p>

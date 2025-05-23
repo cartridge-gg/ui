@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { PropertySearch } from "./property-search";
+import { MarketplacePropertySearch } from "./property-search";
 import { useState } from "react";
 
-const meta: Meta<typeof PropertySearch> = {
+const meta: Meta<typeof MarketplacePropertySearch> = {
   title: "Modules/Marketplace/Property Search",
-  component: PropertySearch,
+  component: MarketplacePropertySearch,
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -15,7 +15,7 @@ const meta: Meta<typeof PropertySearch> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof PropertySearch>;
+type Story = StoryObj<typeof MarketplacePropertySearch>;
 
 export const Darkest: Story = {
   render: function Render(args) {
@@ -23,7 +23,7 @@ export const Darkest: Story = {
 
     return (
       <div className="flex gap-2">
-        <PropertySearch
+        <MarketplacePropertySearch
           variant="darkest"
           search={search}
           setSearch={setSearch}
@@ -39,7 +39,7 @@ export const Darker: Story = {
 
     return (
       <div className="flex gap-2">
-        <PropertySearch
+        <MarketplacePropertySearch
           variant="darker"
           search={search}
           setSearch={setSearch}

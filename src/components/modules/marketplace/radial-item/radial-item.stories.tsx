@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { RadialItem } from "./radial-item";
+import { MarketplaceRadialItem } from "./radial-item";
 
-const meta: Meta<typeof RadialItem> = {
+const meta: Meta<typeof MarketplaceRadialItem> = {
   title: "Modules/Marketplace/Radial Item",
-  component: RadialItem,
+  component: MarketplaceRadialItem,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
@@ -14,13 +14,13 @@ const meta: Meta<typeof RadialItem> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof RadialItem>;
+type Story = StoryObj<typeof MarketplaceRadialItem>;
 
 export const Default: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
-      <RadialItem label="Buy Now" active />
-      <RadialItem label="Buy Now" />
+      <MarketplaceRadialItem label="Buy Now" active />
+      <MarketplaceRadialItem label="Buy Now" />
     </div>
   ),
 };

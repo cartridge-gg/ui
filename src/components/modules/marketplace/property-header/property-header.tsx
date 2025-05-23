@@ -8,7 +8,7 @@ import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import React, { HTMLAttributes } from "react";
 
-const propertyHeaderVariants = cva("h-9 cursor-pointer", {
+const marketplacePropertyHeaderVariants = cva("h-9 cursor-pointer", {
   variants: {
     variant: {
       default: "",
@@ -19,21 +19,26 @@ const propertyHeaderVariants = cva("h-9 cursor-pointer", {
   },
 });
 
-export interface PropertyHeaderProps
+export interface MarketplacePropertyHeaderProps
   extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof propertyHeaderVariants> {
+    VariantProps<typeof marketplacePropertyHeaderVariants> {
   label: string;
   count: number;
 }
 
-export const PropertyHeader = React.forwardRef<
+export const MarketplacePropertyHeader = React.forwardRef<
   HTMLDivElement,
-  PropertyHeaderProps
+  MarketplacePropertyHeaderProps
 >(({ label, count, className, variant, children }, ref) => {
   return (
     <Accordion ref={ref} type="single" collapsible>
       <AccordionItem value="item-1">
-        <div className={cn(propertyHeaderVariants({ variant }), className)}>
+        <div
+          className={cn(
+            marketplacePropertyHeaderVariants({ variant }),
+            className,
+          )}
+        >
           <AccordionTrigger
             className="grow pr-2 flex justify-between items-center"
             parentClassName="group px-3 py-2 bg-background-200 hover:bg-background-300 [&[data-state=open]]:bg-background-300 text-foreground-300 hover:text-foreground-200 rounded"
@@ -51,4 +56,4 @@ export const PropertyHeader = React.forwardRef<
   );
 });
 
-export default PropertyHeader;
+export default MarketplacePropertyHeader;
