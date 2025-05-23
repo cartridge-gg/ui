@@ -8,6 +8,7 @@ import {
   MarketplaceRadialItem,
   MarketplaceHeaderReset,
   MarketplaceHeader,
+  MarketplacePropertyEmpty,
 } from "@/index";
 
 const ATTRIBUTES = [
@@ -94,6 +95,11 @@ export const Default: Story = {
                   }
                 />
               ))}
+              {PROPERTIES.filter((i) =>
+                `Property ${label} ${i}`
+                  .toLowerCase()
+                  .includes((search[label] || "").toLowerCase()),
+              ).length === 0 && <MarketplacePropertyEmpty />}
             </div>
           </MarketplacePropertyHeader>
         ))}
