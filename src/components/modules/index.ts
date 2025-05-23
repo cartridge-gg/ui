@@ -9,6 +9,7 @@ export * from "./create-account";
 export * from "./followers";
 export * from "./erc20";
 export * from "./leaderboard";
+export * from "./marketplace";
 export * from "./progress-bar";
 export * from "./recipient";
 export * from "./thumbnails";
