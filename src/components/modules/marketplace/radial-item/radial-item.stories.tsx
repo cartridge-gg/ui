@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MarketplaceRadialItem } from "./radial-item";
+import { MarketplaceRadialItem } from "@/index";
 
 const meta: Meta<typeof MarketplaceRadialItem> = {
   title: "Modules/Marketplace/Radial Item",

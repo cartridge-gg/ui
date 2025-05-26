@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MarketplaceRadialToggle } from "./radial-toggle";
+import { MarketplaceRadialToggle } from "@/index";
 
 const meta: Meta<typeof MarketplaceRadialToggle> = {
   title: "Modules/Marketplace/Radial Toggle",

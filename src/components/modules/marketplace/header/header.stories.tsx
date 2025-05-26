@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MarketplaceHeader } from "./header";
-import { MarketplaceHeaderReset } from "../header-reset";
+import { MarketplaceHeader, MarketplaceHeaderReset } from "@/index";
 
 const meta: Meta<typeof MarketplaceHeader> = {
   title: "Modules/Marketplace/Header",

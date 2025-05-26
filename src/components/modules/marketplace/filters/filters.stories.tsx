@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MarketplaceFilters } from "./filters";
 import { useCallback, useMemo, useState } from "react";
 import {
+  MarketplaceFilters,
   MarketplacePropertyHeader,
-  MarketplacePropertySearch,
+  MarketplaceSearchEngine,
   MarketplacePropertyFilter,
   MarketplaceRadialItem,
   MarketplaceHeaderReset,
@@ -72,7 +72,7 @@ export const Default: Story = {
         </MarketplaceHeader>
         {ATTRIBUTES.map((label, index) => (
           <MarketplacePropertyHeader key={index} label={label} count={17}>
-            <MarketplacePropertySearch
+            <MarketplaceSearchEngine
               variant="darkest"
               search={search[label] || ""}
               setSearch={(value: string) =>

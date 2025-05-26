@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MarketplaceHeaderLabel } from "./header-label";
+import { MarketplaceHeaderLabel } from "@/index";
 
 const meta: Meta<typeof MarketplaceHeaderLabel> = {
   title: "Modules/Marketplace/Header Label",

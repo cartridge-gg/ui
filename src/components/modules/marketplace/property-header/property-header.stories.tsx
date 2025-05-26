@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MarketplacePropertyHeader } from "./property-header";
-import { MarketplacePropertyFilter, MarketplacePropertySearch } from "@/index";
+import {
+  MarketplacePropertyHeader,
+  MarketplacePropertyFilter,
+  MarketplaceSearchEngine,
+} from "@/index";
 import { useState } from "react";
 
 const meta: Meta<typeof MarketplacePropertyHeader> = {
@@ -25,7 +28,7 @@ export const Default: Story = {
 
     return (
       <MarketplacePropertyHeader {...args}>
-        <MarketplacePropertySearch
+        <MarketplaceSearchEngine
           variant="darkest"
           search={search}
           setSearch={setSearch}

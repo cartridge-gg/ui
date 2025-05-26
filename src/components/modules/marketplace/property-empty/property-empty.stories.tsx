@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MarketplacePropertyEmpty } from "./property-empty";
+import { MarketplacePropertyEmpty } from "@/index";
 
 const meta: Meta<typeof MarketplacePropertyEmpty> = {
   title: "Modules/Marketplace/Property Empty",
