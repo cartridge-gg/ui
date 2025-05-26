@@ -38,9 +38,19 @@ export const MarketplaceSearchEngine = React.forwardRef<
 
   useEffect(() => {
     if (!containerRef.current) return;
-    const size = containerRef.current.getBoundingClientRect().width;
-    setPaddingLeft(size);
-  }, [containerRef, setPaddingLeft, cards]);
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.target === containerRef.current) {
+          const size = entry.contentRect.width;
+          setPaddingLeft(size);
+        }
+      }
+    });
+    observer.observe(containerRef.current);
+    return () => {
+      observer.disconnect();
+    };
+  }, [containerRef, setPaddingLeft]);
 
   return (
     <div ref={ref} className="relative" {...props}>
@@ -63,8 +73,8 @@ export const MarketplaceSearchEngine = React.forwardRef<
           (!cards || cards.length === 0) && "hidden",
         )}
       >
-        {(cards || []).map((card, index) => (
-          <div key={index} className="max-w-24">
+        {(cards || []).map((card) => (
+          <div key={`${card}`} className="max-w-24">
             {card}
           </div>
         ))}
