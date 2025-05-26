@@ -1,9 +1,9 @@
 import { Input, SearchIcon } from "@/index";
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import React, { HTMLAttributes, useState } from "react";
+import React, { HTMLAttributes, useEffect, useState } from "react";
 
-const marketplacePropertySearchVariants = cva("pr-9 caret-foreground-100", {
+const marketplaceSearchEngineVariants = cva("pr-9 caret-foreground-100", {
   variants: {
     variant: {
       darkest:
@@ -20,26 +20,35 @@ const marketplacePropertySearchVariants = cva("pr-9 caret-foreground-100", {
   },
 });
 
-export interface MarketplacePropertySearchProps
+export interface MarketplaceSearchEngineProps
   extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof marketplacePropertySearchVariants> {
+    VariantProps<typeof marketplaceSearchEngineVariants> {
   search: string;
   setSearch: (search: string) => void;
+  cards?: React.ReactNode[];
 }
 
-export const MarketplacePropertySearch = React.forwardRef<
+export const MarketplaceSearchEngine = React.forwardRef<
   HTMLDivElement,
-  MarketplacePropertySearchProps
->(({ search, setSearch, className, variant, ...props }, ref) => {
+  MarketplaceSearchEngineProps
+>(({ search, setSearch, cards, className, variant, ...props }, ref) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const [focus, setFocus] = useState(false);
+  const [paddingLeft, setPaddingLeft] = useState(0);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const size = containerRef.current.getBoundingClientRect().width;
+    setPaddingLeft(size);
+  }, [containerRef, setPaddingLeft, cards]);
 
   return (
     <div ref={ref} className="relative" {...props}>
       <Input
-        className={cn(
-          marketplacePropertySearchVariants({ variant }),
-          className,
-        )}
+        className={cn(marketplaceSearchEngineVariants({ variant }), className)}
+        style={{
+          paddingLeft: `${paddingLeft + 16}px`,
+        }}
         type="text"
         placeholder="Search"
         value={search}
@@ -47,6 +56,19 @@ export const MarketplacePropertySearch = React.forwardRef<
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
       />
+      <div
+        ref={containerRef}
+        className={cn(
+          "absolute left-2 top-1/2 -translate-y-1/2 flex items-center gap-2",
+          (!cards || cards.length === 0) && "hidden",
+        )}
+      >
+        {(cards || []).map((card, index) => (
+          <div key={index} className="max-w-24">
+            {card}
+          </div>
+        ))}
+      </div>
       <SearchIcon
         data-focused={focus}
         data-content={search.length > 0 && !focus}
@@ -59,4 +81,4 @@ export const MarketplacePropertySearch = React.forwardRef<
   );
 });
 
-export default MarketplacePropertySearch;
+export default MarketplaceSearchEngine;

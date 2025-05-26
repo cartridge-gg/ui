@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MarketplacePropertyFilter } from "./property-filter";
+import { MarketplacePropertyFilter } from "@/index";
 
 const meta: Meta<typeof MarketplacePropertyFilter> = {
   title: "Modules/Marketplace/Property Filter",
