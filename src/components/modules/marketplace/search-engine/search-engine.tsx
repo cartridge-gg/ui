@@ -74,7 +74,7 @@ export const MarketplaceSearchEngine = React.forwardRef<
         )}
       >
         {(cards || []).map((card) => (
-          <div key={`${card}`} className="max-w-24">
+          <div key={`${card}`} className="max-w-24 md:max-w-32">
             {card}
           </div>
         ))}

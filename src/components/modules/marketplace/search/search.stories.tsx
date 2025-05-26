@@ -57,7 +57,7 @@ export const Darkest: Story = {
         setSelected={setSelected}
         options={options}
         variant="darkest"
-        className="w-[200px]"
+        className="w-[200px] lg:w-[240px]"
       />
     );
   },
@@ -84,7 +84,7 @@ export const Darker: Story = {
         setSelected={setSelected}
         options={options}
         variant="darker"
-        className="w-[200px]"
+        className="w-[200px] md:w-[240px]"
       />
     );
   },
