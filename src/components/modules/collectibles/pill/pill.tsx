@@ -5,7 +5,6 @@ export interface CollectiblePillProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectiblePillVariants> {
   label: string;
-  hover?: boolean;
 }
 
 const collectiblePillVariants = cva(
@@ -13,8 +12,8 @@ const collectiblePillVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-background-300 data-[hover=true]:bg-background-400",
-        faded: "bg-background-200 data-[hover=true]:bg-background-300",
+        default: "bg-background-300 group-hover:bg-background-400",
+        faded: "bg-background-200 group-hover:bg-background-300",
       },
     },
     defaultVariants: {
@@ -25,14 +24,12 @@ const collectiblePillVariants = cva(
 
 export function CollectiblePill({
   label,
-  hover,
   variant,
   className,
   ...props
 }: CollectiblePillProps) {
   return (
     <div
-      data-hover={hover}
       className={cn(collectiblePillVariants({ variant }), className)}
       {...props}
     >

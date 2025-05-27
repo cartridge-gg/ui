@@ -1,4 +1,5 @@
 import { PLACEHOLDER } from "@/assets";
+import { CollectibleTag, StackDiamondIcon, TagIcon } from "@/index";
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
@@ -7,7 +8,8 @@ export interface CollectiblePreviewProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectiblePreviewVariants> {
   image: string;
-  hover?: boolean;
+  totalCount?: number;
+  listingCount?: number;
 }
 
 const collectiblePreviewVariants = cva(
@@ -32,7 +34,8 @@ const collectiblePreviewVariants = cva(
 
 export const CollectiblePreview = ({
   image,
-  hover,
+  totalCount,
+  listingCount,
   variant,
   size,
   className,
@@ -48,12 +51,7 @@ export const CollectiblePreview = ({
       className={cn(collectiblePreviewVariants({ variant, size }), className)}
       {...props}
     >
-      <div
-        className="absolute grow inset-0 blur-[8px] transition-opacity duration-150"
-        style={{
-          opacity: hover ? 1 : 0.75,
-        }}
-      >
+      <div className="absolute grow inset-0 blur-[8px] transition-opacity duration-150 opacity-75 group-hover:opacity-100">
         <img
           src={uri}
           className={cn("object-cover absolute inset-0 w-full h-full")}
@@ -66,14 +64,25 @@ export const CollectiblePreview = ({
         />
       </div>
       <img
-        data-hover={hover}
-        className="object-contain max-h-full max-w-full relative transition duration-150 ease-in-out data-[hover=true]:scale-[1.02]"
+        className="object-contain max-h-full max-w-full relative transition duration-150 ease-in-out group-hover:scale-[1.02]"
         draggable={false}
         src={image}
         onError={(e) => {
           e.currentTarget.src = PLACEHOLDER;
         }}
       />
+      <div className="flex gap-1 items-center flex-wrap justify-start absolute bottom-1 left-1">
+        {!!totalCount && (
+          <CollectibleTag label={`${totalCount}`}>
+            <StackDiamondIcon variant="solid" size="sm" />
+          </CollectibleTag>
+        )}
+        {!!listingCount && (
+          <CollectibleTag label={`${listingCount}`}>
+            <TagIcon variant="solid" size="sm" />
+          </CollectibleTag>
+        )}
+      </div>
     </div>
   );
 };

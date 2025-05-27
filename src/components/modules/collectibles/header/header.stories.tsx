@@ -11,7 +11,6 @@ const meta: Meta<typeof CollectibleHeader> = {
   },
   args: {
     title: "Beasts",
-    label: "9",
     onSelect: fn(),
   },
 };
@@ -25,12 +24,6 @@ export const LongName: Story = {
   args: {
     title:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-  },
-};
-
-export const Hover: Story = {
-  args: {
-    hover: true,
   },
 };
 
