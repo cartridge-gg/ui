@@ -5,16 +5,19 @@ export interface CollectibleItemsProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectibleItemsVariants> {}
 
-const collectibleItemsVariants = cva("flex flex-col items-stretch gap-3", {
-  variants: {
-    variant: {
-      default: "",
+const collectibleItemsVariants = cva(
+  "flex flex-col items-stretch gap-3 select-none",
+  {
+    variants: {
+      variant: {
+        default: "",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
     },
   },
-  defaultVariants: {
-    variant: "default",
-  },
-});
+);
 
 export function CollectibleItems({
   variant,
