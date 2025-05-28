@@ -19,12 +19,6 @@ type Story = StoryObj<typeof CollectiblePreview>;
 
 export const Default: Story = {};
 
-export const Hover: Story = {
-  args: {
-    hover: true,
-  },
-};
-
 export const Small: Story = {
   args: {
     size: "sm",

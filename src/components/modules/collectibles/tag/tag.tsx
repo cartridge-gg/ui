@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 export interface CollectibleTagProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectibleTagVariants> {
-  label: string;
+  label?: string;
   hover?: boolean;
 }
 
@@ -35,7 +35,7 @@ export function CollectibleTag({
       {...props}
     >
       {children}
-      <p className="px-0.5">{label}</p>
+      {label && <p className="px-0.5">{label}</p>}
     </div>
   );
 }

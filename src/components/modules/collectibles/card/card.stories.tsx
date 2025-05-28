@@ -30,6 +30,7 @@ export const Default: Story = {
       <div className="flex gap-2">
         <CollectibleCard
           {...args}
+          totalCount={1}
           selected={selected}
           onSelect={() => setSelected(!selected)}
           onClick={selected ? () => setSelected(!selected) : undefined}
@@ -47,18 +48,32 @@ export const Selectable: Story = {
       <div className="flex gap-2">
         <CollectibleCard
           {...args}
+          totalCount={2}
           selected={selected}
           onSelect={() => setSelected(!selected)}
           onClick={() => setSelected(!selected)}
+          price="$2"
         />
       </div>
     );
   },
 };
 
+export const Unselectable: Story = {
+  args: {
+    selectable: false,
+    totalCount: 2,
+    listingCount: 1,
+  },
+};
+
 export const Faded: Story = {
   args: {
     variant: "faded",
+    totalCount: 2,
+    listingCount: 2,
+    price: "$2",
+    lastSale: "$2",
   },
 };
 
@@ -71,5 +86,29 @@ export const Selected: Story = {
 export const Unselected: Story = {
   args: {
     selected: false,
+  },
+};
+
+export const Price: Story = {
+  args: {
+    selected: false,
+    price: "$2",
+    lastSale: "",
+  },
+};
+
+export const LastSale: Story = {
+  args: {
+    selected: false,
+    price: "",
+    lastSale: "$2",
+  },
+};
+
+export const PriceLastSale: Story = {
+  args: {
+    selected: false,
+    price: "$2",
+    lastSale: "$2",
   },
 };
