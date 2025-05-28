@@ -71,7 +71,7 @@ export const CollectiblePreview = ({
           e.currentTarget.src = PLACEHOLDER;
         }}
       />
-      <div className="flex gap-1 items-center flex-wrap justify-start absolute bottom-1 left-1">
+      <div className="flex gap-1 items-center flex-wrap justify-start absolute bottom-1.5 left-1.5">
         {!!totalCount && (
           <CollectibleTag label={`${totalCount}`}>
             <StackDiamondIcon variant="solid" size="sm" />

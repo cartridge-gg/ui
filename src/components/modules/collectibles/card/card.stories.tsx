@@ -89,6 +89,17 @@ export const Unselected: Story = {
   },
 };
 
+export const Icon: Story = {
+  args: {
+    icon: "",
+    selected: false,
+    price: "$2",
+    lastSale: "$2",
+    totalCount: 2,
+    listingCount: 1,
+  },
+};
+
 export const Price: Story = {
   args: {
     selected: false,
