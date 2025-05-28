@@ -14,7 +14,7 @@ export interface CollectibleHeaderProps
 }
 
 const collectibleHeaderVariants = cva(
-  "group h-9 relative flex gap-2 px-2 py-1.5 justify-between items-center text-sm font-medium transition-all duration-150",
+  "group h-9 relative flex gap-2 px-1.5 py-1.5 justify-between items-center text-sm font-medium transition-all duration-150",
   {
     variants: {
       variant: {
@@ -65,7 +65,13 @@ export function CollectibleHeader({
           icon={icon === null ? undefined : icon}
           className={icon === undefined ? "hidden" : ""}
         />
-        <p className={cn("truncate", (selected || selectable) && "pr-6")}>
+        <p
+          className={cn(
+            "truncate",
+            (selected || selectable) && "pr-6",
+            icon === undefined && "pl-2.5",
+          )}
+        >
           {title}
         </p>
       </div>
