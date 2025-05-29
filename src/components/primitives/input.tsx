@@ -7,7 +7,8 @@ import { cva, VariantProps } from "class-variance-authority";
 
 interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
-    VariantProps<typeof inputVariants> {
+  VariantProps<typeof inputVariants> {
+  containerClassName?: string;
   error?: Error;
   isLoading?: boolean;
   onClear?: () => void;
@@ -55,16 +56,16 @@ export function ErrorMessage({ label, className }: ErrorProps) {
   );
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { error, isLoading, onClear, variant, size, className, type, ...props },
+    { error, isLoading, onClear, variant, size, containerClassName, className, type, ...props },
     ref,
   ) => {
     const [isFocused, setIsFocused] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
 
     return (
-      <div className="flex flex-col gap-y-3">
+      <div className={cn("flex flex-col gap-y-3", containerClassName)}>
         <div
           className="relative"
           onMouseEnter={() => setIsHovered(true)}
@@ -79,7 +80,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               inputVariants({ variant, size, className }),
               !!props.value && !!onClear && "pr-12",
               !!error &&
-                "border-destructive-100 hover:border-destructive-100 focus-visible:border-destructive-100",
+              "border-destructive-100 hover:border-destructive-100 focus-visible:border-destructive-100",
             )}
             {...props}
           />
@@ -95,5 +96,3 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   },
 );
 Input.displayName = "Input";
-
-export { Input };
