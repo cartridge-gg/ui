@@ -5,7 +5,7 @@ import {
   CardTitle,
   ExternalIcon,
 } from "@/index";
-import { formatAddress, StarkscanUrl } from "@cartridge/ui/utils";
+import { formatAddress, StarkscanUrl } from "@/utils";
 import { constants } from "starknet";
 import { ERC20Token } from "./types";
 

@@ -1,7 +1,6 @@
 import { CheckboxIcon, Thumbnail } from "@/index";
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import { CollectiblePill } from "../pill";
 import { useCallback } from "react";
 
 export interface CollectibleHeaderProps
@@ -9,22 +8,20 @@ export interface CollectibleHeaderProps
     VariantProps<typeof collectibleHeaderVariants> {
   title: string;
   icon?: string | null;
-  label?: string;
-  hover?: boolean;
   selectable?: boolean;
   selected?: boolean;
   onSelect?: () => void;
 }
 
 const collectibleHeaderVariants = cva(
-  "h-9 relative flex gap-2 px-2 py-1.5 justify-between items-center text-sm font-medium transition-all duration-150",
+  "group h-9 relative flex gap-2 px-1.5 py-1.5 justify-between items-center text-sm font-medium transition-all duration-150",
   {
     variants: {
       variant: {
         default:
-          "bg-background-200 data-[hover=true]:bg-background-300 text-foreground-100",
+          "bg-background-200 group-hover:bg-background-300 text-foreground-100",
         faded:
-          "bg-background-100 data-[hover=true]:bg-background-200 text-foreground-100",
+          "bg-background-100 group-hover:bg-background-200 text-foreground-100",
       },
     },
     defaultVariants: {
@@ -36,8 +33,6 @@ const collectibleHeaderVariants = cva(
 export function CollectibleHeader({
   title,
   icon,
-  label,
-  hover,
   selectable,
   selected,
   onSelect,
@@ -56,7 +51,6 @@ export function CollectibleHeader({
 
   return (
     <div
-      data-hover={hover}
       className={cn(
         collectibleHeaderVariants({ variant }),
         className,
@@ -71,7 +65,13 @@ export function CollectibleHeader({
           icon={icon === null ? undefined : icon}
           className={icon === undefined ? "hidden" : ""}
         />
-        <p className={cn("truncate", (selected || selectable) && "pr-6")}>
+        <p
+          className={cn(
+            "truncate",
+            (selected || selectable) && "pr-6",
+            icon === undefined && "pl-2.5",
+          )}
+        >
           {title}
         </p>
       </div>
@@ -90,9 +90,6 @@ export function CollectibleHeader({
         >
           <CheckboxIcon variant="unchecked-line" size="sm" />
         </div>
-      )}
-      {label && !selected && !selectable && (
-        <CollectiblePill label={label} variant={variant} hover={hover} />
       )}
     </div>
   );

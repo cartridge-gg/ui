@@ -1,4 +1,4 @@
-import { Separator } from "@cartridge/ui";
+import { Separator } from "@/index";
 import { forwardRef, memo, PropsWithChildren, useEffect } from "react";
 import { useLayoutContext } from "./context";
 import { cn } from "@/utils";

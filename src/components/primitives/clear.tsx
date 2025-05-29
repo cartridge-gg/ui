@@ -1,4 +1,4 @@
-import { SpinnerIcon, TimesCircleIcon } from "@cartridge/ui";
+import { SpinnerIcon, TimesCircleIcon } from "@/index";
 
 type ClearProps = {
   isLoading: boolean;

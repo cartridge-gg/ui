@@ -6,7 +6,7 @@ import {
   WalletIcon,
   WalletType,
 } from "@/components";
-import { formatAddress } from "@cartridge/ui/utils";
+import { formatAddress } from "@/utils";
 import { useCallback } from "react";
 
 type PreviewProps = {

@@ -473,6 +473,7 @@ export enum ActivityStatus {
   Completed = 'COMPLETED',
   Failed = 'FAILED',
   Pending = 'PENDING',
+  PendingBacklog = 'PENDING_BACKLOG',
   TimedOut = 'TIMED_OUT'
 }
 
@@ -1490,6 +1491,11 @@ export type Eip191Credentials = {
   eip191?: Maybe<Array<Eip191Credential>>;
 };
 
+export enum FeeUnit {
+  Credit = 'CREDIT',
+  Strk = 'STRK'
+}
+
 export type File = Node & {
   __typename?: 'File';
   alt?: Maybe<Scalars['String']>;
@@ -1816,9 +1822,10 @@ export type MutationCreateDeploymentArgs = {
 
 
 export type MutationCreatePaymasterArgs = {
-  budget: Scalars['BigInt'];
+  budget: Scalars['Int'];
   name: Scalars['String'];
   teamName: Scalars['String'];
+  unit: FeeUnit;
 };
 
 
@@ -1842,8 +1849,9 @@ export type MutationCreateTeamArgs = {
 
 
 export type MutationDecreaseBudgetArgs = {
-  amount: Scalars['BigInt'];
+  amount: Scalars['Int'];
   paymasterId: Scalars['ID'];
+  unit: FeeUnit;
 };
 
 
@@ -1870,8 +1878,9 @@ export type MutationFinalizeRegistrationArgs = {
 
 
 export type MutationIncreaseBudgetArgs = {
-  amount: Scalars['BigInt'];
+  amount: Scalars['Int'];
   paymasterId: Scalars['ID'];
+  unit: FeeUnit;
 };
 
 
@@ -2027,14 +2036,22 @@ export type Paymaster = Node & {
   __typename?: 'Paymaster';
   active: Scalars['Boolean'];
   activities: ActivityConnection;
-  budget: Scalars['BigInt'];
+  /** Budget in 6 decimal precision */
+  budget: Scalars['Int'];
+  budgetFeeUnit: PaymasterBudgetFeeUnit;
   createdAt: Scalars['Time'];
+  /** Accumulated CREDITS fees in 6 decimal precision */
+  creditFees: Scalars['Int'];
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   policies: PaymasterPolicyConnection;
-  /** Accumulated USD value of all fees. 18 decimal precision */
-  spend: Scalars['BigInt'];
+  /** Number of reverted transactions */
+  revertedTransactions: Scalars['Int'];
   starterpacks: StarterpackConnection;
+  /** Accumulated STRK fees in 6 decimal precision */
+  strkFees: Scalars['Int'];
+  /** Number of successful transactions */
+  successfulTransactions: Scalars['Int'];
   team?: Maybe<Team>;
   updatedAt: Scalars['Time'];
 };
@@ -2068,6 +2085,12 @@ export type PaymasterStarterpacksArgs = {
   orderBy?: InputMaybe<StarterpackOrder>;
   where?: InputMaybe<StarterpackWhereInput>;
 };
+
+/** PaymasterBudgetFeeUnit is enum for the field budget_fee_unit */
+export enum PaymasterBudgetFeeUnit {
+  Credit = 'CREDIT',
+  Strk = 'STRK'
+}
 
 /** A connection to a list of items. */
 export type PaymasterConnection = {
@@ -2263,14 +2286,19 @@ export type PaymasterWhereInput = {
   activeNEQ?: InputMaybe<Scalars['Boolean']>;
   and?: InputMaybe<Array<PaymasterWhereInput>>;
   /** budget field predicates */
-  budget?: InputMaybe<Scalars['BigInt']>;
-  budgetGT?: InputMaybe<Scalars['BigInt']>;
-  budgetGTE?: InputMaybe<Scalars['BigInt']>;
-  budgetIn?: InputMaybe<Array<Scalars['BigInt']>>;
-  budgetLT?: InputMaybe<Scalars['BigInt']>;
-  budgetLTE?: InputMaybe<Scalars['BigInt']>;
-  budgetNEQ?: InputMaybe<Scalars['BigInt']>;
-  budgetNotIn?: InputMaybe<Array<Scalars['BigInt']>>;
+  budget?: InputMaybe<Scalars['Int']>;
+  /** budget_fee_unit field predicates */
+  budgetFeeUnit?: InputMaybe<PaymasterBudgetFeeUnit>;
+  budgetFeeUnitIn?: InputMaybe<Array<PaymasterBudgetFeeUnit>>;
+  budgetFeeUnitNEQ?: InputMaybe<PaymasterBudgetFeeUnit>;
+  budgetFeeUnitNotIn?: InputMaybe<Array<PaymasterBudgetFeeUnit>>;
+  budgetGT?: InputMaybe<Scalars['Int']>;
+  budgetGTE?: InputMaybe<Scalars['Int']>;
+  budgetIn?: InputMaybe<Array<Scalars['Int']>>;
+  budgetLT?: InputMaybe<Scalars['Int']>;
+  budgetLTE?: InputMaybe<Scalars['Int']>;
+  budgetNEQ?: InputMaybe<Scalars['Int']>;
+  budgetNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** created_at field predicates */
   createdAt?: InputMaybe<Scalars['Time']>;
   createdAtGT?: InputMaybe<Scalars['Time']>;
@@ -2280,6 +2308,15 @@ export type PaymasterWhereInput = {
   createdAtLTE?: InputMaybe<Scalars['Time']>;
   createdAtNEQ?: InputMaybe<Scalars['Time']>;
   createdAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  /** credit_fees field predicates */
+  creditFees?: InputMaybe<Scalars['Int']>;
+  creditFeesGT?: InputMaybe<Scalars['Int']>;
+  creditFeesGTE?: InputMaybe<Scalars['Int']>;
+  creditFeesIn?: InputMaybe<Array<Scalars['Int']>>;
+  creditFeesLT?: InputMaybe<Scalars['Int']>;
+  creditFeesLTE?: InputMaybe<Scalars['Int']>;
+  creditFeesNEQ?: InputMaybe<Scalars['Int']>;
+  creditFeesNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** activities edge predicates */
   hasActivities?: InputMaybe<Scalars['Boolean']>;
   hasActivitiesWith?: InputMaybe<Array<ActivityWhereInput>>;
@@ -2321,6 +2358,33 @@ export type PaymasterWhereInput = {
   nameNotNil?: InputMaybe<Scalars['Boolean']>;
   not?: InputMaybe<PaymasterWhereInput>;
   or?: InputMaybe<Array<PaymasterWhereInput>>;
+  /** reverted_transactions field predicates */
+  revertedTransactions?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsGT?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsGTE?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsIn?: InputMaybe<Array<Scalars['Int']>>;
+  revertedTransactionsLT?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsLTE?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsNEQ?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** strk_fees field predicates */
+  strkFees?: InputMaybe<Scalars['Int']>;
+  strkFeesGT?: InputMaybe<Scalars['Int']>;
+  strkFeesGTE?: InputMaybe<Scalars['Int']>;
+  strkFeesIn?: InputMaybe<Array<Scalars['Int']>>;
+  strkFeesLT?: InputMaybe<Scalars['Int']>;
+  strkFeesLTE?: InputMaybe<Scalars['Int']>;
+  strkFeesNEQ?: InputMaybe<Scalars['Int']>;
+  strkFeesNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** successful_transactions field predicates */
+  successfulTransactions?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsGT?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsGTE?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsIn?: InputMaybe<Array<Scalars['Int']>>;
+  successfulTransactionsLT?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsLTE?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsNEQ?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** updated_at field predicates */
   updatedAt?: InputMaybe<Scalars['Time']>;
   updatedAtGT?: InputMaybe<Scalars['Time']>;
@@ -2330,15 +2394,6 @@ export type PaymasterWhereInput = {
   updatedAtLTE?: InputMaybe<Scalars['Time']>;
   updatedAtNEQ?: InputMaybe<Scalars['Time']>;
   updatedAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
-  /** usd_total field predicates */
-  usdTotal?: InputMaybe<Scalars['BigInt']>;
-  usdTotalGT?: InputMaybe<Scalars['BigInt']>;
-  usdTotalGTE?: InputMaybe<Scalars['BigInt']>;
-  usdTotalIn?: InputMaybe<Array<Scalars['BigInt']>>;
-  usdTotalLT?: InputMaybe<Scalars['BigInt']>;
-  usdTotalLTE?: InputMaybe<Scalars['BigInt']>;
-  usdTotalNEQ?: InputMaybe<Scalars['BigInt']>;
-  usdTotalNotIn?: InputMaybe<Array<Scalars['BigInt']>>;
 };
 
 export type PlayerAchievement = {

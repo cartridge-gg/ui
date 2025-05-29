@@ -1,5 +1,5 @@
 import { cn } from "@/utils";
-import { FormatAddressOptions } from "@cartridge/ui/utils";
+import { FormatAddressOptions } from "@/utils";
 import { Address } from "./address";
 
 export function CopyAddress({
