@@ -26,6 +26,7 @@ export * from "./empty-state";
 export * from "./external";
 export * from "./touch";
 export * from "./fullscreen";
+export * from "./gas";
 export * from "./gear";
 export * from "./gift";
 export * from "./hamburger";

@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonProps,
   Skeleton,
   Tooltip,
   TooltipContent,
@@ -10,11 +11,23 @@ import { hexToString, Hex } from "viem";
 import { SlotIcon, StarknetColorIcon, StarknetIcon } from "./icons";
 import { QuestionIcon } from "./icons/utility/question";
 import { constants } from "starknet";
-import { getChainName, isSlotChain } from "@/utils";
+import { cn, getChainName, isSlotChain } from "@/utils";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
-export function Network({ chainId }: { chainId: string }) {
+export function Network({
+  chainId,
+  variant = "secondary",
+  tooltipTriggerClassName,
+  tooltipContentClassName,
+  iconClassName,
+}: {
+  chainId: string;
+  variant?: ButtonProps["variant"];
+  tooltipTriggerClassName?: string;
+  tooltipContentClassName?: string;
+  iconClassName?: string;
+}) {
   const onCopy = useCallback(() => {
     navigator.clipboard.writeText(chainId);
     toast.success("Chain ID copied");
@@ -29,16 +42,19 @@ export function Network({ chainId }: { chainId: string }) {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            variant="secondary"
-            className="flex items-center gap-2 font-inter bg-background hover:bg-background text-xs"
+            variant={variant}
+            className={cn(
+              "flex items-center gap-2 font-inter bg-background hover:bg-background text-xs",
+              tooltipTriggerClassName,
+            )}
             onClick={onCopy}
           >
             {(() => {
               switch (chainId) {
                 case constants.StarknetChainId.SN_MAIN:
-                  return <StarknetColorIcon />;
+                  return <StarknetColorIcon className={iconClassName} />;
                 case constants.StarknetChainId.SN_SEPOLIA:
-                  return <StarknetIcon />;
+                  return <StarknetIcon className={iconClassName} />;
                 default:
                   return isSlotChain(chainId) ? <SlotIcon /> : <QuestionIcon />;
               }
@@ -47,7 +63,9 @@ export function Network({ chainId }: { chainId: string }) {
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <div>{hexToString(chainId as Hex)}</div>
+          <div className={tooltipContentClassName}>
+            {hexToString(chainId as Hex)}
+          </div>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
