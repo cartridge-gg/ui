@@ -1770,7 +1770,7 @@ export type Mutation = {
   removeFromTeam: Scalars['Boolean'];
   removePaymaster: Scalars['Boolean'];
   removePolicies: Scalars['Boolean'];
-  revokeSession: Scalars['Boolean'];
+  revokeSessions: Scalars['Boolean'];
   togglePaymaster: Paymaster;
   transfer: TransferResponse;
   transferDeployment: Scalars['Boolean'];
@@ -1917,10 +1917,8 @@ export type MutationRemovePoliciesArgs = {
 };
 
 
-export type MutationRevokeSessionArgs = {
-  chainID: Scalars['String'];
-  sessionHash: Scalars['Felt'];
-  username: Scalars['String'];
+export type MutationRevokeSessionsArgs = {
+  sessions: Array<RevokeSessionInput>;
 };
 
 
@@ -2754,6 +2752,12 @@ export type Resources = {
   memory?: Maybe<Scalars['Float']>;
 };
 
+export type RevokeSessionInput = {
+  chainID: Scalars['String'];
+  sessionHash: Scalars['Felt'];
+  username: Scalars['String'];
+};
+
 export enum Role {
   Admin = 'ADMIN',
   User = 'USER'
@@ -2861,7 +2865,6 @@ export type Session = Node & {
   authorization: Array<Scalars['String']>;
   chainID: Scalars['String'];
   controller: Controller;
-  controllerAddress: Scalars['ID'];
   /** The time when the session was created */
   createdAt: Scalars['Time'];
   /** The time when the session expires */
@@ -2869,6 +2872,7 @@ export type Session = Node & {
   id: Scalars['ID'];
   /** Whether the session has been revoked */
   isRevoked: Scalars['Boolean'];
+  metadata?: Maybe<SessionMetadata>;
   signer?: Maybe<Signer>;
   updatedAt: Scalars['Time'];
 };
@@ -2911,6 +2915,12 @@ export type SessionInput = {
   guardianKeyGuid: Scalars['Felt'];
   metadataHash: Scalars['Felt'];
   sessionKeyGuid: Scalars['Felt'];
+};
+
+export type SessionMetadata = {
+  __typename?: 'SessionMetadata';
+  browser: Scalars['String'];
+  os: Scalars['String'];
 };
 
 /** Ordering options for Session connections */
@@ -2960,20 +2970,6 @@ export type SessionWhereInput = {
   chainIDLTE?: InputMaybe<Scalars['String']>;
   chainIDNEQ?: InputMaybe<Scalars['String']>;
   chainIDNotIn?: InputMaybe<Array<Scalars['String']>>;
-  /** controller_address field predicates */
-  controllerAddress?: InputMaybe<Scalars['ID']>;
-  controllerAddressContains?: InputMaybe<Scalars['ID']>;
-  controllerAddressContainsFold?: InputMaybe<Scalars['ID']>;
-  controllerAddressEqualFold?: InputMaybe<Scalars['ID']>;
-  controllerAddressGT?: InputMaybe<Scalars['ID']>;
-  controllerAddressGTE?: InputMaybe<Scalars['ID']>;
-  controllerAddressHasPrefix?: InputMaybe<Scalars['ID']>;
-  controllerAddressHasSuffix?: InputMaybe<Scalars['ID']>;
-  controllerAddressIn?: InputMaybe<Array<Scalars['ID']>>;
-  controllerAddressLT?: InputMaybe<Scalars['ID']>;
-  controllerAddressLTE?: InputMaybe<Scalars['ID']>;
-  controllerAddressNEQ?: InputMaybe<Scalars['ID']>;
-  controllerAddressNotIn?: InputMaybe<Array<Scalars['ID']>>;
   /** created_at field predicates */
   createdAt?: InputMaybe<Scalars['Time']>;
   createdAtGT?: InputMaybe<Scalars['Time']>;
