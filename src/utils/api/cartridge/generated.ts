@@ -1748,7 +1748,7 @@ export type MintAllowance = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addPaymasterPolicies?: Maybe<Array<PaymasterPolicy>>;
+  addPolicies?: Maybe<Array<PaymasterPolicy>>;
   addToTeam: Scalars['Boolean'];
   beginLogin: Scalars['JSON'];
   beginRegistration: Scalars['JSON'];
@@ -1766,9 +1766,12 @@ export type Mutation = {
   finalizeRegistration: Account;
   increaseBudget: Paymaster;
   register: Account;
+  removeAllPolicies: Scalars['Boolean'];
   removeFromTeam: Scalars['Boolean'];
-  removePaymasterPolicies: Scalars['Boolean'];
+  removePaymaster: Scalars['Boolean'];
+  removePolicies: Scalars['Boolean'];
   revokeSession: Scalars['Boolean'];
+  togglePaymaster: Paymaster;
   transfer: TransferResponse;
   transferDeployment: Scalars['Boolean'];
   updateDeployment: Deployment;
@@ -1779,9 +1782,9 @@ export type Mutation = {
 };
 
 
-export type MutationAddPaymasterPoliciesArgs = {
-  paymasterId: Scalars['ID'];
-  policies?: InputMaybe<Array<PaymasterPolicyInput>>;
+export type MutationAddPoliciesArgs = {
+  paymasterName: Scalars['ID'];
+  policies?: InputMaybe<Array<PolicyInput>>;
 };
 
 
@@ -1850,7 +1853,7 @@ export type MutationCreateTeamArgs = {
 
 export type MutationDecreaseBudgetArgs = {
   amount: Scalars['Int'];
-  paymasterId: Scalars['ID'];
+  paymasterName: Scalars['ID'];
   unit: FeeUnit;
 };
 
@@ -1879,7 +1882,7 @@ export type MutationFinalizeRegistrationArgs = {
 
 export type MutationIncreaseBudgetArgs = {
   amount: Scalars['Int'];
-  paymasterId: Scalars['ID'];
+  paymasterName: Scalars['ID'];
   unit: FeeUnit;
 };
 
@@ -1892,14 +1895,24 @@ export type MutationRegisterArgs = {
 };
 
 
+export type MutationRemoveAllPoliciesArgs = {
+  paymasterName: Scalars['ID'];
+};
+
+
 export type MutationRemoveFromTeamArgs = {
   name: Scalars['ID'];
   usernames: Array<Scalars['String']>;
 };
 
 
-export type MutationRemovePaymasterPoliciesArgs = {
-  paymasterId: Scalars['ID'];
+export type MutationRemovePaymasterArgs = {
+  paymasterName: Scalars['ID'];
+};
+
+
+export type MutationRemovePoliciesArgs = {
+  paymasterName: Scalars['ID'];
   policyIds?: InputMaybe<Array<Scalars['ID']>>;
 };
 
@@ -1908,6 +1921,12 @@ export type MutationRevokeSessionArgs = {
   chainID: Scalars['String'];
   sessionHash: Scalars['Felt'];
   username: Scalars['String'];
+};
+
+
+export type MutationTogglePaymasterArgs = {
+  active: Scalars['Boolean'];
+  paymasterName: Scalars['ID'];
 };
 
 
@@ -2043,15 +2062,11 @@ export type Paymaster = Node & {
   /** Accumulated CREDITS fees in 6 decimal precision */
   creditFees: Scalars['Int'];
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   policies: PaymasterPolicyConnection;
-  /** Number of reverted transactions */
-  revertedTransactions: Scalars['Int'];
   starterpacks: StarterpackConnection;
   /** Accumulated STRK fees in 6 decimal precision */
   strkFees: Scalars['Int'];
-  /** Number of successful transactions */
-  successfulTransactions: Scalars['Int'];
   team?: Maybe<Team>;
   updatedAt: Scalars['Time'];
 };
@@ -2155,12 +2170,6 @@ export type PaymasterPolicyEdge = {
   cursor: Scalars['Cursor'];
   /** The item at the end of the edge. */
   node?: Maybe<PaymasterPolicy>;
-};
-
-export type PaymasterPolicyInput = {
-  contractAddress: Scalars['String'];
-  entryPoint: Scalars['String'];
-  selector: Scalars['String'];
 };
 
 /** Ordering options for PaymasterPolicy connections */
@@ -2350,23 +2359,12 @@ export type PaymasterWhereInput = {
   nameHasPrefix?: InputMaybe<Scalars['String']>;
   nameHasSuffix?: InputMaybe<Scalars['String']>;
   nameIn?: InputMaybe<Array<Scalars['String']>>;
-  nameIsNil?: InputMaybe<Scalars['Boolean']>;
   nameLT?: InputMaybe<Scalars['String']>;
   nameLTE?: InputMaybe<Scalars['String']>;
   nameNEQ?: InputMaybe<Scalars['String']>;
   nameNotIn?: InputMaybe<Array<Scalars['String']>>;
-  nameNotNil?: InputMaybe<Scalars['Boolean']>;
   not?: InputMaybe<PaymasterWhereInput>;
   or?: InputMaybe<Array<PaymasterWhereInput>>;
-  /** reverted_transactions field predicates */
-  revertedTransactions?: InputMaybe<Scalars['Int']>;
-  revertedTransactionsGT?: InputMaybe<Scalars['Int']>;
-  revertedTransactionsGTE?: InputMaybe<Scalars['Int']>;
-  revertedTransactionsIn?: InputMaybe<Array<Scalars['Int']>>;
-  revertedTransactionsLT?: InputMaybe<Scalars['Int']>;
-  revertedTransactionsLTE?: InputMaybe<Scalars['Int']>;
-  revertedTransactionsNEQ?: InputMaybe<Scalars['Int']>;
-  revertedTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** strk_fees field predicates */
   strkFees?: InputMaybe<Scalars['Int']>;
   strkFeesGT?: InputMaybe<Scalars['Int']>;
@@ -2376,15 +2374,6 @@ export type PaymasterWhereInput = {
   strkFeesLTE?: InputMaybe<Scalars['Int']>;
   strkFeesNEQ?: InputMaybe<Scalars['Int']>;
   strkFeesNotIn?: InputMaybe<Array<Scalars['Int']>>;
-  /** successful_transactions field predicates */
-  successfulTransactions?: InputMaybe<Scalars['Int']>;
-  successfulTransactionsGT?: InputMaybe<Scalars['Int']>;
-  successfulTransactionsGTE?: InputMaybe<Scalars['Int']>;
-  successfulTransactionsIn?: InputMaybe<Array<Scalars['Int']>>;
-  successfulTransactionsLT?: InputMaybe<Scalars['Int']>;
-  successfulTransactionsLTE?: InputMaybe<Scalars['Int']>;
-  successfulTransactionsNEQ?: InputMaybe<Scalars['Int']>;
-  successfulTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** updated_at field predicates */
   updatedAt?: InputMaybe<Scalars['Time']>;
   updatedAtGT?: InputMaybe<Scalars['Time']>;
@@ -2456,6 +2445,11 @@ export type PlaythroughProject = {
 export type PlaythroughResult = {
   __typename?: 'PlaythroughResult';
   items: Array<PlaythroughItem>;
+};
+
+export type PolicyInput = {
+  contractAddress: Scalars['String'];
+  entryPoint: Scalars['String'];
 };
 
 export type Price = {
@@ -2660,7 +2654,7 @@ export type QueryOwnershipsArgs = {
 
 
 export type QueryPaymasterArgs = {
-  id: Scalars['ID'];
+  name: Scalars['ID'];
 };
 
 
@@ -4330,7 +4324,7 @@ export type ControllerQueryVariables = Exact<{
 }>;
 
 
-export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, sessions?: Array<{ __typename?: 'Session', id: string, controllerAddress: string, appID: string, chainID: string, authorization: Array<string>, isRevoked: boolean, expiresAt: string, createdAt: string, updatedAt: string, activities: { __typename?: 'ActivityConnection', edges?: Array<{ __typename?: 'ActivityEdge', node?: { __typename?: 'Activity', id: string } | null } | null> | null }, signer?: { __typename?: 'Signer', id: string } | null, controller: { __typename?: 'Controller', id: string } }> | null, signers?: Array<{ __typename?: 'Signer', metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
+export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, sessions?: Array<{ __typename?: 'Session', id: string, appID: string, chainID: string, authorization: Array<string>, isRevoked: boolean, expiresAt: string, createdAt: string, updatedAt: string, activities: { __typename?: 'ActivityConnection', edges?: Array<{ __typename?: 'ActivityEdge', node?: { __typename?: 'Activity', id: string } | null } | null> | null }, signer?: { __typename?: 'Signer', id: string } | null, controller: { __typename?: 'Controller', id: string } }> | null, signers?: Array<{ __typename?: 'Signer', metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
 
 export type BeginRegistrationMutationVariables = Exact<{
   username: Scalars['String'];
@@ -4993,7 +4987,6 @@ export const ControllerDocument = `
     updatedAt
     sessions {
       id
-      controllerAddress
       appID
       chainID
       authorization

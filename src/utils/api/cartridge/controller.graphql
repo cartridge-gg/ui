@@ -9,7 +9,6 @@ query Controller($username: String!, $chainId: String!) {
     updatedAt
     sessions {
       id
-      controllerAddress
       appID
       chainID
       authorization
