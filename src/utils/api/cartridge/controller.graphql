@@ -16,6 +16,10 @@ query Controller($username: String!, $chainId: String!) {
       expiresAt
       createdAt
       updatedAt
+      metadata {
+        os
+        browser
+      }
       activities {
         edges {
           node {
