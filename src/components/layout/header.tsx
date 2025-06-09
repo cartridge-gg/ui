@@ -45,16 +45,10 @@ export function LayoutHeader({
     onFollowingsClick,
   } = useUI();
 
-  // Normalize CSS variable value by removing quotes and trimming whitespace
-  const normalizeCssValue = (value: string): string => {
-    return value.replace(/^['"]|['"]$/g, '').trim();
-  };
-
   // Memoize the cover URL computation to avoid repeated DOM queries
   const coverUrl = useMemo(() => {
-    const rawValue = getComputedStyle(document.documentElement)
+    return getComputedStyle(document.documentElement)
       .getPropertyValue("--theme-cover-url");
-    return normalizeCssValue(rawValue);
   }, []);
 
   // Helper function to check if we should use StarryHeader
