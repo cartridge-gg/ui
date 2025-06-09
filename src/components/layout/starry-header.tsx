@@ -75,8 +75,6 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
   // Performance optimization refs
   const lastFrameTimeRef = useRef<number>(0);
   const lastMouseUpdateRef = useRef<number>(0);
-  const isVisibleRef = useRef<boolean>(true);
-  const isPausedRef = useRef<boolean>(false);
   
   // Cached calculations - will be updated when container size changes
   const containerCenterRef = useRef<{ x: number; y: number }>({ x: 0, y: height / 2 });
@@ -103,36 +101,6 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
   useEffect(() => {
     updateContainerDimensions();
   }, [updateContainerDimensions]);
-
-  // Intersection Observer for visibility detection
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        isVisibleRef.current = entry.isIntersecting;
-        
-        // Pause/resume animation based on visibility
-        if (!entry.isIntersecting) {
-          isPausedRef.current = true;
-        } else {
-          isPausedRef.current = false;
-          // Resume animation if it was paused
-          if (!animationFrameRef.current) {
-            animationFrameRef.current = requestAnimationFrame(animate);
-          }
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(containerRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
 
   // --- Dynamic Style Injection (updated to remove shooting star styles) ---
   useEffect(() => {
@@ -390,16 +358,10 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
     containerRectRef.current = container.getBoundingClientRect();
   }, [createStarInLayer, updateContainerDimensions]);
 
-  // --- Highly Optimized Animation Loop with Caching (shooting stars removed) ---
+  // --- Highly Optimized Animation Loop with Caching ---
   const animate = useCallback((currentTime: number) => {
     // Frame rate throttling
     if (currentTime - lastFrameTimeRef.current < FRAME_INTERVAL) {
-      animationFrameRef.current = requestAnimationFrame(animate);
-      return;
-    }
-
-    // Skip animation if paused or not visible
-    if (isPausedRef.current || !isVisibleRef.current) {
       animationFrameRef.current = requestAnimationFrame(animate);
       return;
     }
