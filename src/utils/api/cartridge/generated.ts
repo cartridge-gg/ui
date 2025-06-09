@@ -1109,6 +1109,7 @@ export type Deployment = Node & {
   spinDownAt?: Maybe<Scalars['Time']>;
   spinUpAt?: Maybe<Scalars['Time']>;
   status: DeploymentStatus;
+  storage: Scalars['Int'];
   teams: TeamConnection;
   tier: DeploymentTier;
   updatedAt: Scalars['Time'];
@@ -1421,6 +1422,15 @@ export type DeploymentWhereInput = {
   statusIn?: InputMaybe<Array<DeploymentStatus>>;
   statusNEQ?: InputMaybe<DeploymentStatus>;
   statusNotIn?: InputMaybe<Array<DeploymentStatus>>;
+  /** storage field predicates */
+  storage?: InputMaybe<Scalars['Int']>;
+  storageGT?: InputMaybe<Scalars['Int']>;
+  storageGTE?: InputMaybe<Scalars['Int']>;
+  storageIn?: InputMaybe<Array<Scalars['Int']>>;
+  storageLT?: InputMaybe<Scalars['Int']>;
+  storageLTE?: InputMaybe<Scalars['Int']>;
+  storageNEQ?: InputMaybe<Scalars['Int']>;
+  storageNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** tier field predicates */
   tier?: InputMaybe<DeploymentTier>;
   tierIn?: InputMaybe<Array<DeploymentTier>>;
