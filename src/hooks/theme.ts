@@ -88,7 +88,7 @@ export type ControllerThemeOption = string | ControllerTheme;
 export type ControllerTheme = {
   name: string;
   icon: string;
-  cover: ThemeValue<string>;
+  cover?: ThemeValue<string>;
   colors?: ControllerColors;
 };
 

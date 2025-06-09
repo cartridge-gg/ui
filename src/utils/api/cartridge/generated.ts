@@ -1779,7 +1779,7 @@ export type Mutation = {
   removeAllPolicies: Scalars['Boolean'];
   removeFromTeam: Scalars['Boolean'];
   removePaymaster: Scalars['Boolean'];
-  removePolicies: Scalars['Boolean'];
+  removePolicy: Scalars['Boolean'];
   revokeSessions: Scalars['Boolean'];
   togglePaymaster: Paymaster;
   transfer: TransferResponse;
@@ -1921,9 +1921,9 @@ export type MutationRemovePaymasterArgs = {
 };
 
 
-export type MutationRemovePoliciesArgs = {
+export type MutationRemovePolicyArgs = {
   paymasterName: Scalars['ID'];
-  policyIds?: InputMaybe<Array<Scalars['ID']>>;
+  policy: PolicyInput;
 };
 
 
@@ -2307,11 +2307,10 @@ export type PaymasterStats = {
 
 export type PaymasterTransaction = {
   __typename?: 'PaymasterTransaction';
-  actualFee: Scalars['BigInt'];
-  creditsFee: Scalars['BigInt'];
   executedAt: Scalars['Time'];
   status: ActivityStatus;
   transactionHash: Scalars['String'];
+  usdFee: Scalars['Float'];
 };
 
 export enum PaymasterTransactionFilter {
@@ -4104,6 +4103,7 @@ export enum TokenPair {
 
 export type ToriiCreateInput = {
   replicas?: InputMaybe<Scalars['Int']>;
+  replication?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ToriiUpdateInput = {
