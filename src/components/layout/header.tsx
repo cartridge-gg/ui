@@ -44,6 +44,17 @@ export function LayoutHeader({
     onFollowingsClick,
   } = useUI();
 
+  // Helper function to check if we should use StarryHeader
+  const shouldUseStarryHeader = () => {
+    const coverUrl = getComputedStyle(document.documentElement)
+      .getPropertyValue("--theme-cover-url");
+    
+    // Use StarryHeader if:
+    // 1. It's a cartridge theme, OR
+    // 2. No cover URL is set or it's empty
+    return coverUrl.includes("presets/cartridge/") || !coverUrl.trim() || coverUrl === '""' || coverUrl === "''";
+  };
+
   return (
     <div className="sticky top-0 w-full z-10 bg-background">
       {(() => {
@@ -51,9 +62,7 @@ export function LayoutHeader({
           case "expanded":
             return (
               <div className="flex flex-col w-full h-[176px]">
-                {getComputedStyle(document.documentElement)
-                  .getPropertyValue("--theme-cover-url")
-                  .includes("presets/cartridge/") ? (
+                {shouldUseStarryHeader() ? (
                   <StarryHeaderBackground className="w-full h-[136px] relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-background before:pointer-events-none" />
                 ) : (
                   <div className="w-full h-[136px] bg-[image:var(--theme-cover-url)] bg-cover bg-center relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-background before:pointer-events-none" />
@@ -68,7 +77,14 @@ export function LayoutHeader({
           default:
             return (
               <div className="flex flex-col bg-spacer-100 gap-y-px">
-                <div className="w-full bg-cover bg-center h-16 pb-6 bg-[linear-gradient(transparent,var(--background-100)),var(--theme-cover-url)]" />
+                {shouldUseStarryHeader() ? (
+                  <StarryHeaderBackground 
+                    className="w-full h-16 pb-6 relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-background-100 before:pointer-events-none" 
+                    height={64}
+                  />
+                ) : (
+                  <div className="w-full bg-cover bg-center h-16 pb-6 bg-[linear-gradient(transparent,var(--background-100)),var(--theme-cover-url)]" />
+                )}
                 <div className="bg-background-100">
                   <HeaderInner {...innerProps} />
                 </div>
