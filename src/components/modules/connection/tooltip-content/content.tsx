@@ -155,7 +155,7 @@ export const ConnectionTooltipContent = ({
           <p className="text-sm text-foreground-400 select-none">Network:</p>
           <div className="flex items-center gap-1.5">
             <Thumbnail size="xs" icon={Icon} rounded />
-            <p className="text-sm font-medium capitalize">
+            <p className="text-sm font-normal capitalize">
               {getChainName(chainId).toLowerCase()}
             </p>
           </div>
@@ -169,7 +169,7 @@ export const ConnectionTooltipContent = ({
       >
         <Button
           variant="secondary"
-          className="w-1/2 h-9 normal-case font-sans"
+          className="w-1/2 h-9 normal-case font-sans gap-1"
           disabled={!onFollowersClick}
           onClick={onFollowersClick}
         >
@@ -180,7 +180,7 @@ export const ConnectionTooltipContent = ({
         </Button>
         <Button
           variant="secondary"
-          className="w-1/2 h-9 normal-case font-sans"
+          className="w-1/2 h-9 normal-case font-sans gap-1"
           disabled={!onFollowingsClick}
           onClick={onFollowingsClick}
         >
