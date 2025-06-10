@@ -27,7 +27,10 @@ export function useThemeEffect({
         const coverUrl = coverValue.startsWith("http")
           ? `url("${coverValue}")`
           : `url("${assetUrl}${coverValue}")`;
-        document.documentElement.style.setProperty("--theme-cover-url", coverUrl);
+        document.documentElement.style.setProperty(
+          "--theme-cover-url",
+          coverUrl,
+        );
       }
 
       // Set colors if they exist

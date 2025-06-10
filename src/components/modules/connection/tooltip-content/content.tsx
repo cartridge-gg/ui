@@ -43,6 +43,7 @@ export interface ConnectionTooltipContentProps
   setOpen?: (open: boolean) => void;
   onFollowersClick?: () => void;
   onFollowingsClick?: () => void;
+  onLogout?: () => void;
 }
 
 export const ConnectionTooltipContent = ({
@@ -55,6 +56,7 @@ export const ConnectionTooltipContent = ({
   setOpen,
   onFollowersClick,
   onFollowingsClick,
+  onLogout,
   variant,
   className,
 }: ConnectionTooltipContentProps) => {
@@ -86,7 +88,7 @@ export const ConnectionTooltipContent = ({
   const formattedAddress = useMemo(
     () =>
       formatAddress(getChecksumAddress(address), {
-        first: 6,
+        first: 4,
         last: 4,
         size: "xs",
       }),
@@ -99,6 +101,13 @@ export const ConnectionTooltipContent = ({
     setWithBackground(false);
     showQrCode(true);
   }, [showQrCode, setOpen, setWithBackground]);
+
+  const handleLogout = useCallback(() => {
+    if (!onLogout) return;
+    setOpen?.(false);
+    setWithBackground(false);
+    onLogout();
+  }, [onLogout, setOpen, setWithBackground]);
 
   return (
     <div
@@ -123,20 +132,6 @@ export const ConnectionTooltipContent = ({
         )}
       </div>
       <div className="flex flex-col gap-px bg-background-200">
-        <div
-          className={cn(
-            "flex items-center justify-between gap-2 px-2 py-2.5 bg-background-150",
-            hideNetwork && "hidden",
-          )}
-        >
-          <p className="text-sm text-foreground-400 select-none">Network:</p>
-          <div className="flex items-center gap-1.5">
-            <Thumbnail size="xs" icon={Icon} rounded />
-            <p className="text-sm font-medium capitalize">
-              {getChainName(chainId).toLowerCase()}
-            </p>
-          </div>
-        </div>
         <div className="flex items-center justify-between gap-2 px-2 py-2.5 bg-background-150">
           <p className="text-sm text-foreground-400 select-none">Address:</p>
           <div onClick={() => setOpen?.(false)}>
@@ -151,6 +146,20 @@ export const ConnectionTooltipContent = ({
             </div>
           </div>
         </div>
+        <div
+          className={cn(
+            "flex items-center justify-between gap-2 px-2 py-2.5 bg-background-150",
+            hideNetwork && "hidden",
+          )}
+        >
+          <p className="text-sm text-foreground-400 select-none">Network:</p>
+          <div className="flex items-center gap-1.5">
+            <Thumbnail size="xs" icon={Icon} rounded />
+            <p className="text-sm font-normal capitalize">
+              {getChainName(chainId).toLowerCase()}
+            </p>
+          </div>
+        </div>
       </div>
       <div
         className={cn(
@@ -160,7 +169,7 @@ export const ConnectionTooltipContent = ({
       >
         <Button
           variant="secondary"
-          className="w-1/2 h-9 normal-case font-sans"
+          className="w-1/2 h-9 normal-case font-sans gap-1"
           disabled={!onFollowersClick}
           onClick={onFollowersClick}
         >
@@ -171,7 +180,7 @@ export const ConnectionTooltipContent = ({
         </Button>
         <Button
           variant="secondary"
-          className="w-1/2 h-9 normal-case font-sans"
+          className="w-1/2 h-9 normal-case font-sans gap-1"
           disabled={!onFollowingsClick}
           onClick={onFollowingsClick}
         >
@@ -183,6 +192,13 @@ export const ConnectionTooltipContent = ({
           </span>
         </Button>
       </div>
+      <Button
+        variant="secondary"
+        className="w-full h-9 normal-case font-sans px-1.5 py-2"
+        onClick={handleLogout}
+      >
+        <span className="text-sm font-medium text-foreground-100">Log Out</span>
+      </Button>
     </div>
   );
 };
