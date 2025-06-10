@@ -21,12 +21,14 @@ export function useThemeEffect({
       );
 
       // Set cover
-      const coverValue =
-        typeof theme.cover === "string" ? theme.cover : theme.cover["dark"];
-      const coverUrl = coverValue.startsWith("http")
-        ? `url("${coverValue}")`
-        : `url("${assetUrl}${coverValue}")`;
-      document.documentElement.style.setProperty("--theme-cover-url", coverUrl);
+      if (theme.cover) {
+        const coverValue =
+          typeof theme.cover === "string" ? theme.cover : theme.cover["dark"];
+        const coverUrl = coverValue.startsWith("http")
+          ? `url("${coverValue}")`
+          : `url("${assetUrl}${coverValue}")`;
+        document.documentElement.style.setProperty("--theme-cover-url", coverUrl);
+      }
 
       // Set colors if they exist
       if (theme.colors) {
@@ -86,7 +88,7 @@ export type ControllerThemeOption = string | ControllerTheme;
 export type ControllerTheme = {
   name: string;
   icon: string;
-  cover: ThemeValue<string>;
+  cover?: ThemeValue<string>;
   colors?: ControllerColors;
 };
 
