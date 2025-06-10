@@ -1109,6 +1109,7 @@ export type Deployment = Node & {
   spinDownAt?: Maybe<Scalars['Time']>;
   spinUpAt?: Maybe<Scalars['Time']>;
   status: DeploymentStatus;
+  storage: Scalars['Int'];
   teams: TeamConnection;
   tier: DeploymentTier;
   updatedAt: Scalars['Time'];
@@ -1421,6 +1422,15 @@ export type DeploymentWhereInput = {
   statusIn?: InputMaybe<Array<DeploymentStatus>>;
   statusNEQ?: InputMaybe<DeploymentStatus>;
   statusNotIn?: InputMaybe<Array<DeploymentStatus>>;
+  /** storage field predicates */
+  storage?: InputMaybe<Scalars['Int']>;
+  storageGT?: InputMaybe<Scalars['Int']>;
+  storageGTE?: InputMaybe<Scalars['Int']>;
+  storageIn?: InputMaybe<Array<Scalars['Int']>>;
+  storageLT?: InputMaybe<Scalars['Int']>;
+  storageLTE?: InputMaybe<Scalars['Int']>;
+  storageNEQ?: InputMaybe<Scalars['Int']>;
+  storageNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** tier field predicates */
   tier?: InputMaybe<DeploymentTier>;
   tierIn?: InputMaybe<Array<DeploymentTier>>;
@@ -1769,7 +1779,7 @@ export type Mutation = {
   removeAllPolicies: Scalars['Boolean'];
   removeFromTeam: Scalars['Boolean'];
   removePaymaster: Scalars['Boolean'];
-  removePolicies: Scalars['Boolean'];
+  removePolicy: Scalars['Boolean'];
   revokeSessions: Scalars['Boolean'];
   togglePaymaster: Paymaster;
   transfer: TransferResponse;
@@ -1911,9 +1921,9 @@ export type MutationRemovePaymasterArgs = {
 };
 
 
-export type MutationRemovePoliciesArgs = {
+export type MutationRemovePolicyArgs = {
   paymasterName: Scalars['ID'];
-  policyIds?: InputMaybe<Array<Scalars['ID']>>;
+  policy: PolicyInput;
 };
 
 
@@ -2297,11 +2307,10 @@ export type PaymasterStats = {
 
 export type PaymasterTransaction = {
   __typename?: 'PaymasterTransaction';
-  actualFee: Scalars['BigInt'];
-  creditsFee: Scalars['BigInt'];
   executedAt: Scalars['Time'];
   status: ActivityStatus;
   transactionHash: Scalars['String'];
+  usdFee: Scalars['Float'];
 };
 
 export enum PaymasterTransactionFilter {
@@ -4094,6 +4103,7 @@ export enum TokenPair {
 
 export type ToriiCreateInput = {
   replicas?: InputMaybe<Scalars['Int']>;
+  replication?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ToriiUpdateInput = {

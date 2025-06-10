@@ -50,6 +50,7 @@ export interface ConnectionTooltipProps
   hideNetwork?: boolean;
   onFollowersClick?: () => void;
   onFollowingsClick?: () => void;
+  onLogout?: () => void;
 }
 
 export const ConnectionTooltip = ({
@@ -62,6 +63,7 @@ export const ConnectionTooltip = ({
   hideNetwork,
   onFollowersClick,
   onFollowingsClick,
+  onLogout,
   variant,
   className,
   children,

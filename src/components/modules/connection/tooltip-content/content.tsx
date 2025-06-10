@@ -59,7 +59,7 @@ export const ConnectionTooltipContent = ({
   className,
 }: ConnectionTooltipContentProps) => {
   const { setWithBackground } = useLayoutContext();
-  const { showQrCode } = useUI();
+  const { showQrCode, onLogout } = useUI();
 
   const Icon = useMemo(() => {
     switch (chainId) {
@@ -86,7 +86,7 @@ export const ConnectionTooltipContent = ({
   const formattedAddress = useMemo(
     () =>
       formatAddress(getChecksumAddress(address), {
-        first: 6,
+        first: 4,
         last: 4,
         size: "xs",
       }),
@@ -99,6 +99,13 @@ export const ConnectionTooltipContent = ({
     setWithBackground(false);
     showQrCode(true);
   }, [showQrCode, setOpen, setWithBackground]);
+
+  const handleLogout = useCallback(() => {
+    if (!onLogout) return;
+    setOpen?.(false);
+    setWithBackground(false);
+    onLogout();
+  }, [onLogout, setOpen, setWithBackground]);
 
   return (
     <div
@@ -123,20 +130,6 @@ export const ConnectionTooltipContent = ({
         )}
       </div>
       <div className="flex flex-col gap-px bg-background-200">
-        <div
-          className={cn(
-            "flex items-center justify-between gap-2 px-2 py-2.5 bg-background-150",
-            hideNetwork && "hidden",
-          )}
-        >
-          <p className="text-sm text-foreground-400 select-none">Network:</p>
-          <div className="flex items-center gap-1.5">
-            <Thumbnail size="xs" icon={Icon} rounded />
-            <p className="text-sm font-medium capitalize">
-              {getChainName(chainId).toLowerCase()}
-            </p>
-          </div>
-        </div>
         <div className="flex items-center justify-between gap-2 px-2 py-2.5 bg-background-150">
           <p className="text-sm text-foreground-400 select-none">Address:</p>
           <div onClick={() => setOpen?.(false)}>
@@ -149,6 +142,20 @@ export const ConnectionTooltipContent = ({
               </p>
               <CopyIcon size="sm" />
             </div>
+          </div>
+        </div>
+        <div
+          className={cn(
+            "flex items-center justify-between gap-2 px-2 py-2.5 bg-background-150",
+            hideNetwork && "hidden",
+          )}
+        >
+          <p className="text-sm text-foreground-400 select-none">Network:</p>
+          <div className="flex items-center gap-1.5">
+            <Thumbnail size="xs" icon={Icon} rounded />
+            <p className="text-sm font-medium capitalize">
+              {getChainName(chainId).toLowerCase()}
+            </p>
           </div>
         </div>
       </div>
@@ -183,6 +190,17 @@ export const ConnectionTooltipContent = ({
           </span>
         </Button>
       </div>
+      {!onLogout && (
+        <Button
+          variant="secondary"
+          className="w-full h-9 normal-case font-sans px-1.5 py-2"
+          onClick={handleLogout}
+        >
+          <span className="text-sm font-medium text-foreground-100">
+            Log Out
+          </span>
+        </Button>
+      )}
     </div>
   );
 };

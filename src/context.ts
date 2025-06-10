@@ -13,6 +13,7 @@ type UIContextValue = {
   closeModal?: () => void;
   openSettings?: () => void;
   showQrCode?: (show: boolean) => void;
+  onLogout?: () => void;
 };
 
 export const UIContext = createContext<UIContextValue>({});
