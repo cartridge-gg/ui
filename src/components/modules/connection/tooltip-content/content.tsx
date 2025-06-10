@@ -190,17 +190,13 @@ export const ConnectionTooltipContent = ({
           </span>
         </Button>
       </div>
-      {!onLogout && (
-        <Button
-          variant="secondary"
-          className="w-full h-9 normal-case font-sans px-1.5 py-2"
-          onClick={handleLogout}
-        >
-          <span className="text-sm font-medium text-foreground-100">
-            Log Out
-          </span>
-        </Button>
-      )}
+      <Button
+        variant="secondary"
+        className="w-full h-9 normal-case font-sans px-1.5 py-2"
+        onClick={handleLogout}
+      >
+        <span className="text-sm font-medium text-foreground-100">Log Out</span>
+      </Button>
     </div>
   );
 };
