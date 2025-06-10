@@ -71,18 +71,27 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
   });
   const animationFrameRef = useRef<number>();
   const containerRectRef = useRef<DOMRect | null>(null);
-  
+
   // Performance optimization refs
   const lastFrameTimeRef = useRef<number>(0);
   const lastMouseUpdateRef = useRef<number>(0);
-  
+
   // Cached calculations - will be updated when container size changes
-  const containerCenterRef = useRef<{ x: number; y: number }>({ x: 0, y: height / 2 });
-  const containerSizeRef = useRef<{ width: number; height: number }>({ width: 430, height });
+  const containerCenterRef = useRef<{ x: number; y: number }>({
+    x: 0,
+    y: height / 2,
+  });
+  const containerSizeRef = useRef<{ width: number; height: number }>({
+    width: 430,
+    height,
+  });
   const pendingUpdatesRef = useRef<Array<() => void>>([]);
 
   // Memoized values for performance
-  const starColorClass = useMemo(() => starColor === "#FBCB4A" ? "yellow-star" : "black-star", [starColor]);
+  const starColorClass = useMemo(
+    () => (starColor === "#FBCB4A" ? "yellow-star" : "black-star"),
+    [starColor],
+  );
 
   // Update cached dimensions when container size changes
   const updateContainerDimensions = useCallback(() => {
@@ -90,7 +99,7 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
       const rect = containerRef.current.getBoundingClientRect();
       const newWidth = rect.width;
       const newHeight = height;
-      
+
       containerSizeRef.current = { width: newWidth, height: newHeight };
       containerCenterRef.current = { x: newWidth / 2, y: newHeight / 2 };
       containerRectRef.current = rect;
@@ -256,7 +265,8 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
 
     // Update container dimensions first
     updateContainerDimensions();
-    const { width: containerWidth, height: containerHeight } = containerSizeRef.current;
+    const { width: containerWidth, height: containerHeight } =
+      containerSizeRef.current;
 
     allStarsRef.current = [];
     starfield.innerHTML = "";
@@ -277,7 +287,7 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
         containerHeight,
       );
     }
-    
+
     // Create middle stars (original count)
     for (let i = 0; i < MIDDLE_STARS; i++) {
       createStarInLayer(
@@ -292,7 +302,7 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
         containerHeight,
       );
     }
-    
+
     // Create background stars with clustering (original logic)
     let currentBackgroundStars = 0;
     while (currentBackgroundStars < BACKGROUND_STARS) {
@@ -359,110 +369,128 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
   }, [createStarInLayer, updateContainerDimensions]);
 
   // --- Highly Optimized Animation Loop with Caching ---
-  const animate = useCallback((currentTime: number) => {
-    // Frame rate throttling
-    if (currentTime - lastFrameTimeRef.current < FRAME_INTERVAL) {
-      animationFrameRef.current = requestAnimationFrame(animate);
-      return;
-    }
+  const animate = useCallback(
+    (currentTime: number) => {
+      // Frame rate throttling
+      if (currentTime - lastFrameTimeRef.current < FRAME_INTERVAL) {
+        animationFrameRef.current = requestAnimationFrame(animate);
+        return;
+      }
 
-    lastFrameTimeRef.current = currentTime;
+      lastFrameTimeRef.current = currentTime;
 
-    const allStars = allStarsRef.current;
-    const containerRect = containerRectRef.current;
-    const starfield = starfieldRef.current;
+      const allStars = allStarsRef.current;
+      const containerRect = containerRectRef.current;
+      const starfield = starfieldRef.current;
 
-    if (!containerRect || !starfield) {
-      animationFrameRef.current = requestAnimationFrame(animate);
-      return;
-    }
+      if (!containerRect || !starfield) {
+        animationFrameRef.current = requestAnimationFrame(animate);
+        return;
+      }
 
-    const mouseX = mousePosRef.current.x;
-    const mouseY = mousePosRef.current.y;
-    const containerCenter = containerCenterRef.current;
+      const mouseX = mousePosRef.current.x;
+      const mouseY = mousePosRef.current.y;
+      const containerCenter = containerCenterRef.current;
 
-    // Clear pending updates array
-    pendingUpdatesRef.current.length = 0;
+      // Clear pending updates array
+      pendingUpdatesRef.current.length = 0;
 
-    // Cache frequently used calculations
-    const relativeMouseX = mouseX - containerRect.left;
-    const relativeMouseY = mouseY - containerRect.top;
-    const mouseOffsetX = relativeMouseX - containerCenter.x;
-    const mouseOffsetY = relativeMouseY - containerCenter.y;
+      // Cache frequently used calculations
+      const relativeMouseX = mouseX - containerRect.left;
+      const relativeMouseY = mouseY - containerRect.top;
+      const mouseOffsetX = relativeMouseX - containerCenter.x;
+      const mouseOffsetY = relativeMouseY - containerCenter.y;
 
-    // Update regular stars with cached calculations
-    const motionMultiplier = reducedMotion ? 0.3 : 1;
-    
-    for (let i = 0; i < allStars.length; i++) {
-      const star = allStars[i];
-      
-      // Use pre-calculated values
-      const influenceX = Math.max(-1, Math.min(1, mouseOffsetX / star.influenceRangeX));
-      const influenceY = Math.max(-1, Math.min(1, mouseOffsetY / star.influenceRangeY));
-      const targetOffsetX = influenceX * star.maxDisplacement * motionMultiplier;
-      const targetOffsetY = influenceY * star.maxDisplacement * motionMultiplier;
-      const targetX = star.originX + targetOffsetX;
-      const targetY = star.originY + targetOffsetY;
-      const diffX = targetX - star.x;
-      const diffY = targetY - star.y;
-      const targetDx = diffX * star.ease;
-      const targetDy = diffY * star.ease;
+      // Update regular stars with cached calculations
+      const motionMultiplier = reducedMotion ? 0.3 : 1;
 
-      star.dx += (targetDx - star.dx) * 0.5;
-      star.dy += (targetDy - star.dy) * 0.5;
-      star.dx *= star.velocityDamping;
-      star.dy *= star.velocityDamping;
-      star.x += star.dx;
-      star.y += star.dy;
+      for (let i = 0; i < allStars.length; i++) {
+        const star = allStars[i];
 
-      // Optimized twinkle calculation
-      let newOpacity = star.initialOpacity;
-      if (!reducedMotion) {
-        const twinkleAmount = (Math.random() - 0.5) * star.twinkleIntensity;
-        newOpacity = Math.max(
-          star.initialOpacity * star.minOpacityFactor,
-          Math.min(star.initialOpacity * star.maxOpacityFactor, star.initialOpacity + twinkleAmount),
+        // Use pre-calculated values
+        const influenceX = Math.max(
+          -1,
+          Math.min(1, mouseOffsetX / star.influenceRangeX),
         );
+        const influenceY = Math.max(
+          -1,
+          Math.min(1, mouseOffsetY / star.influenceRangeY),
+        );
+        const targetOffsetX =
+          influenceX * star.maxDisplacement * motionMultiplier;
+        const targetOffsetY =
+          influenceY * star.maxDisplacement * motionMultiplier;
+        const targetX = star.originX + targetOffsetX;
+        const targetY = star.originY + targetOffsetY;
+        const diffX = targetX - star.x;
+        const diffY = targetY - star.y;
+        const targetDx = diffX * star.ease;
+        const targetDy = diffY * star.ease;
+
+        star.dx += (targetDx - star.dx) * 0.5;
+        star.dy += (targetDy - star.dy) * 0.5;
+        star.dx *= star.velocityDamping;
+        star.dy *= star.velocityDamping;
+        star.x += star.dx;
+        star.y += star.dy;
+
+        // Optimized twinkle calculation
+        let newOpacity = star.initialOpacity;
+        if (!reducedMotion) {
+          const twinkleAmount = (Math.random() - 0.5) * star.twinkleIntensity;
+          newOpacity = Math.max(
+            star.initialOpacity * star.minOpacityFactor,
+            Math.min(
+              star.initialOpacity * star.maxOpacityFactor,
+              star.initialOpacity + twinkleAmount,
+            ),
+          );
+        }
+
+        // Only update DOM if values changed significantly
+        const xChanged =
+          Math.abs(star.x - (star.lastX || 0)) > SIGNIFICANT_CHANGE_THRESHOLD;
+        const yChanged =
+          Math.abs(star.y - (star.lastY || 0)) > SIGNIFICANT_CHANGE_THRESHOLD;
+        const opacityChanged =
+          Math.abs(newOpacity - (star.lastOpacity || 0)) > 0.01;
+
+        if (xChanged || yChanged || opacityChanged) {
+          const newTransform = `translate(${star.x.toFixed(TRANSFORM_PRECISION)}px, ${star.y.toFixed(TRANSFORM_PRECISION)}px) rotate(45deg)`;
+
+          pendingUpdatesRef.current.push(() => {
+            if (xChanged || yChanged) {
+              star.element.style.transform = newTransform;
+              star.lastTransform = newTransform;
+              star.lastX = star.x;
+              star.lastY = star.y;
+            }
+            if (opacityChanged) {
+              star.element.style.opacity =
+                newOpacity.toFixed(OPACITY_PRECISION);
+              star.lastOpacity = newOpacity;
+            }
+          });
+        }
       }
 
-      // Only update DOM if values changed significantly
-      const xChanged = Math.abs(star.x - (star.lastX || 0)) > SIGNIFICANT_CHANGE_THRESHOLD;
-      const yChanged = Math.abs(star.y - (star.lastY || 0)) > SIGNIFICANT_CHANGE_THRESHOLD;
-      const opacityChanged = Math.abs(newOpacity - (star.lastOpacity || 0)) > 0.01;
-
-      if (xChanged || yChanged || opacityChanged) {
-        const newTransform = `translate(${star.x.toFixed(TRANSFORM_PRECISION)}px, ${star.y.toFixed(TRANSFORM_PRECISION)}px) rotate(45deg)`;
-        
-        pendingUpdatesRef.current.push(() => {
-          if (xChanged || yChanged) {
-            star.element.style.transform = newTransform;
-            star.lastTransform = newTransform;
-            star.lastX = star.x;
-            star.lastY = star.y;
-          }
-          if (opacityChanged) {
-            star.element.style.opacity = newOpacity.toFixed(OPACITY_PRECISION);
-            star.lastOpacity = newOpacity;
-          }
-        });
+      // Apply all DOM updates in a single batch
+      const updates = pendingUpdatesRef.current;
+      for (let i = 0; i < updates.length; i++) {
+        updates[i]();
       }
-    }
 
-    // Apply all DOM updates in a single batch
-    const updates = pendingUpdatesRef.current;
-    for (let i = 0; i < updates.length; i++) {
-      updates[i]();
-    }
-
-    animationFrameRef.current = requestAnimationFrame(animate);
-  }, [reducedMotion]);
+      animationFrameRef.current = requestAnimationFrame(animate);
+    },
+    [reducedMotion],
+  );
 
   // --- Optimized Event Listeners ---
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       const now = Date.now();
       if (now - lastMouseUpdateRef.current < MOUSE_THROTTLE_MS) return;
-      
+
       lastMouseUpdateRef.current = now;
       mousePosRef.current = { x: e.clientX, y: e.clientY };
     };
@@ -490,11 +518,7 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn(
-        "starry-container",
-        "relative overflow-hidden",
-        className,
-      )}
+      className={cn("starry-container", "relative overflow-hidden", className)}
       style={{
         width: "100%",
         height: `${height}px`,

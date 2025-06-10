@@ -33,7 +33,6 @@ export function LayoutHeader({
   hideNetwork,
   hideSettings,
   onOpenStarterPack,
-  onLogout,
   ...innerProps
 }: HeaderProps) {
   const {
@@ -45,12 +44,14 @@ export function LayoutHeader({
     followings,
     onFollowersClick,
     onFollowingsClick,
+    onLogout,
   } = useUI();
 
   // Memoize the cover URL computation to avoid repeated DOM queries
   const coverUrl = useMemo(() => {
-    return getComputedStyle(document.documentElement)
-      .getPropertyValue("--theme-cover-url");
+    return getComputedStyle(document.documentElement).getPropertyValue(
+      "--theme-cover-url",
+    );
   }, []);
 
   // Helper function to check if we should use StarryHeader
@@ -84,8 +85,8 @@ export function LayoutHeader({
             return (
               <div className="flex flex-col bg-spacer-100 gap-y-px">
                 {shouldUseStarryHeader ? (
-                  <StarryHeaderBackground 
-                    className="w-full h-16 pb-6 relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-background-100 before:pointer-events-none" 
+                  <StarryHeaderBackground
+                    className="w-full h-16 pb-6 relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-background-100 before:pointer-events-none"
                     height={64}
                   />
                 ) : (
@@ -138,6 +139,7 @@ export function LayoutHeader({
                   hideUsername={hideUsername}
                   onFollowersClick={onFollowersClick}
                   onFollowingsClick={onFollowingsClick}
+                  onLogout={onLogout}
                 />
               </>
             ) : (

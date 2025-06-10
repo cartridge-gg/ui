@@ -108,6 +108,12 @@ export const ConnectionTooltip = ({
     setWithBackground(false);
   }, [onFollowingsClick, setOpen, setWithBackground]);
 
+  const handleLogout = useCallback(() => {
+    onLogout?.();
+    setOpen(false);
+    setWithBackground(false);
+  }, [onLogout, setOpen, setWithBackground]);
+
   return (
     <TooltipProvider>
       <Tooltip open={open} onOpenChange={() => {}}>
@@ -145,6 +151,7 @@ export const ConnectionTooltip = ({
               onFollowingsClick={
                 onFollowingsClick ? handleFollowingsClick : undefined
               }
+              onLogout={onLogout ? handleLogout : undefined}
             />
           )}
           {children}

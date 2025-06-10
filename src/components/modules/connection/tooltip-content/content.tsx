@@ -43,6 +43,7 @@ export interface ConnectionTooltipContentProps
   setOpen?: (open: boolean) => void;
   onFollowersClick?: () => void;
   onFollowingsClick?: () => void;
+  onLogout?: () => void;
 }
 
 export const ConnectionTooltipContent = ({
@@ -55,11 +56,12 @@ export const ConnectionTooltipContent = ({
   setOpen,
   onFollowersClick,
   onFollowingsClick,
+  onLogout,
   variant,
   className,
 }: ConnectionTooltipContentProps) => {
   const { setWithBackground } = useLayoutContext();
-  const { showQrCode, onLogout } = useUI();
+  const { showQrCode } = useUI();
 
   const Icon = useMemo(() => {
     switch (chainId) {
