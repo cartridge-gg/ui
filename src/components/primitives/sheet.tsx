@@ -52,6 +52,7 @@ interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {
   showClose?: boolean;
+  portal?: boolean;
 }
 
 const SheetContent = React.forwardRef<
@@ -59,26 +60,34 @@ const SheetContent = React.forwardRef<
   SheetContentProps
 >(
   (
-    { side = "right", className, children, showClose = true, ...props },
+    { side = "right", className, portal, children, showClose = true, ...props },
     ref,
-  ) => (
-    <SheetPortal>
-      <SheetOverlay />
-      <SheetPrimitive.Content
-        ref={ref}
-        className={cn(sheetVariants({ side }), className)}
-        {...props}
-      >
-        {children}
-        {showClose && (
-          <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-background-200">
-            <TimesIcon size="xs" />
-            <span className="sr-only">Close</span>
-          </SheetPrimitive.Close>
-        )}
-      </SheetPrimitive.Content>
-    </SheetPortal>
-  ),
+  ) => {
+    const content = (
+      <>
+        <SheetOverlay />
+        <SheetPrimitive.Content
+          ref={ref}
+          className={cn(sheetVariants({ side }), className)}
+          {...props}
+        >
+          {children}
+          {showClose && (
+            <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-background-200">
+              <TimesIcon size="xs" />
+              <span className="sr-only">Close</span>
+            </SheetPrimitive.Close>
+          )}
+        </SheetPrimitive.Content>
+      </>
+    );
+
+    if (portal === false) {
+      return content;
+    }
+
+    return <SheetPortal>{content}</SheetPortal>;
+  },
 );
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
