@@ -1781,12 +1781,12 @@ export type Mutation = {
   removePaymaster: Scalars['Boolean'];
   removePolicy: Scalars['Boolean'];
   revokeSessions: Scalars['Boolean'];
-  togglePaymaster: Paymaster;
   transfer: TransferResponse;
   transferDeployment: Scalars['Boolean'];
   updateDeployment: Deployment;
   updateFile: Scalars['Boolean'];
   updateMe: Account;
+  updatePaymaster: Scalars['Boolean'];
   updateTeam: Team;
   upload: Array<File>;
 };
@@ -1932,12 +1932,6 @@ export type MutationRevokeSessionsArgs = {
 };
 
 
-export type MutationTogglePaymasterArgs = {
-  active: Scalars['Boolean'];
-  paymasterName: Scalars['ID'];
-};
-
-
 export type MutationTransferArgs = {
   data: TransferInput;
 };
@@ -1966,6 +1960,14 @@ export type MutationUpdateFileArgs = {
 
 export type MutationUpdateMeArgs = {
   data: AccountUpdateInput;
+};
+
+
+export type MutationUpdatePaymasterArgs = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  newName?: InputMaybe<Scalars['String']>;
+  paymasterName: Scalars['ID'];
+  teamName?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -2070,11 +2072,19 @@ export type Paymaster = Node & {
   /** Accumulated CREDITS fees in 6 decimal precision */
   creditFees: Scalars['Int'];
   id: Scalars['ID'];
+  legacyEthFees: Scalars['Int'];
+  legacyRevertedTransactions: Scalars['Int'];
+  legacyStrkFees: Scalars['Int'];
+  legacySuccessfulTransactions: Scalars['Int'];
   name: Scalars['String'];
   policies: PaymasterPolicyConnection;
+  /** Number of reverted transactions */
+  revertedTransactions: Scalars['Int'];
   starterpacks: StarterpackConnection;
   /** Accumulated STRK fees in 6 decimal precision */
   strkFees: Scalars['Int'];
+  /** Number of successful transactions */
+  successfulTransactions: Scalars['Int'];
   team?: Maybe<Team>;
   updatedAt: Scalars['Time'];
 };
@@ -2316,7 +2326,14 @@ export type PaymasterTransaction = {
 export enum PaymasterTransactionFilter {
   All = 'ALL',
   Reverted = 'REVERTED',
-  Successful = 'SUCCESSFUL'
+  Success = 'SUCCESS'
+}
+
+export enum PaymasterTransactionOrder {
+  ExecutedAtAsc = 'EXECUTED_AT_ASC',
+  ExecutedAtDesc = 'EXECUTED_AT_DESC',
+  FeesAsc = 'FEES_ASC',
+  FeesDesc = 'FEES_DESC'
 }
 
 /**
@@ -2383,6 +2400,42 @@ export type PaymasterWhereInput = {
   idLTE?: InputMaybe<Scalars['ID']>;
   idNEQ?: InputMaybe<Scalars['ID']>;
   idNotIn?: InputMaybe<Array<Scalars['ID']>>;
+  /** legacy_eth_fees field predicates */
+  legacyEthFees?: InputMaybe<Scalars['Int']>;
+  legacyEthFeesGT?: InputMaybe<Scalars['Int']>;
+  legacyEthFeesGTE?: InputMaybe<Scalars['Int']>;
+  legacyEthFeesIn?: InputMaybe<Array<Scalars['Int']>>;
+  legacyEthFeesLT?: InputMaybe<Scalars['Int']>;
+  legacyEthFeesLTE?: InputMaybe<Scalars['Int']>;
+  legacyEthFeesNEQ?: InputMaybe<Scalars['Int']>;
+  legacyEthFeesNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** legacy_reverted_transactions field predicates */
+  legacyRevertedTransactions?: InputMaybe<Scalars['Int']>;
+  legacyRevertedTransactionsGT?: InputMaybe<Scalars['Int']>;
+  legacyRevertedTransactionsGTE?: InputMaybe<Scalars['Int']>;
+  legacyRevertedTransactionsIn?: InputMaybe<Array<Scalars['Int']>>;
+  legacyRevertedTransactionsLT?: InputMaybe<Scalars['Int']>;
+  legacyRevertedTransactionsLTE?: InputMaybe<Scalars['Int']>;
+  legacyRevertedTransactionsNEQ?: InputMaybe<Scalars['Int']>;
+  legacyRevertedTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** legacy_strk_fees field predicates */
+  legacyStrkFees?: InputMaybe<Scalars['Int']>;
+  legacyStrkFeesGT?: InputMaybe<Scalars['Int']>;
+  legacyStrkFeesGTE?: InputMaybe<Scalars['Int']>;
+  legacyStrkFeesIn?: InputMaybe<Array<Scalars['Int']>>;
+  legacyStrkFeesLT?: InputMaybe<Scalars['Int']>;
+  legacyStrkFeesLTE?: InputMaybe<Scalars['Int']>;
+  legacyStrkFeesNEQ?: InputMaybe<Scalars['Int']>;
+  legacyStrkFeesNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** legacy_successful_transactions field predicates */
+  legacySuccessfulTransactions?: InputMaybe<Scalars['Int']>;
+  legacySuccessfulTransactionsGT?: InputMaybe<Scalars['Int']>;
+  legacySuccessfulTransactionsGTE?: InputMaybe<Scalars['Int']>;
+  legacySuccessfulTransactionsIn?: InputMaybe<Array<Scalars['Int']>>;
+  legacySuccessfulTransactionsLT?: InputMaybe<Scalars['Int']>;
+  legacySuccessfulTransactionsLTE?: InputMaybe<Scalars['Int']>;
+  legacySuccessfulTransactionsNEQ?: InputMaybe<Scalars['Int']>;
+  legacySuccessfulTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** name field predicates */
   name?: InputMaybe<Scalars['String']>;
   nameContains?: InputMaybe<Scalars['String']>;
@@ -2399,6 +2452,15 @@ export type PaymasterWhereInput = {
   nameNotIn?: InputMaybe<Array<Scalars['String']>>;
   not?: InputMaybe<PaymasterWhereInput>;
   or?: InputMaybe<Array<PaymasterWhereInput>>;
+  /** reverted_transactions field predicates */
+  revertedTransactions?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsGT?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsGTE?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsIn?: InputMaybe<Array<Scalars['Int']>>;
+  revertedTransactionsLT?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsLTE?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsNEQ?: InputMaybe<Scalars['Int']>;
+  revertedTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** strk_fees field predicates */
   strkFees?: InputMaybe<Scalars['Int']>;
   strkFeesGT?: InputMaybe<Scalars['Int']>;
@@ -2408,6 +2470,15 @@ export type PaymasterWhereInput = {
   strkFeesLTE?: InputMaybe<Scalars['Int']>;
   strkFeesNEQ?: InputMaybe<Scalars['Int']>;
   strkFeesNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** successful_transactions field predicates */
+  successfulTransactions?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsGT?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsGTE?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsIn?: InputMaybe<Array<Scalars['Int']>>;
+  successfulTransactionsLT?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsLTE?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsNEQ?: InputMaybe<Scalars['Int']>;
+  successfulTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** updated_at field predicates */
   updatedAt?: InputMaybe<Scalars['Time']>;
   updatedAtGT?: InputMaybe<Scalars['Time']>;
@@ -2703,7 +2774,9 @@ export type QueryPaymasterStatsArgs = {
 export type QueryPaymasterTransactionsArgs = {
   filter?: InputMaybe<PaymasterTransactionFilter>;
   limit?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<PaymasterTransactionOrder>;
   paymasterName: Scalars['ID'];
+  since: Scalars['Time'];
 };
 
 
