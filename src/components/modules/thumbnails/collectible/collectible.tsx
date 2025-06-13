@@ -63,7 +63,10 @@ export const ThumbnailCollectible = ({
           </div>
           <div className="absolute inset-0 bg-center bg-cover h-full w-full bg-translucent-dark-300" />
           <img
-            className="object-contain max-h-full max-w-full z-10 relative p-px"
+            className={cn(
+              thumbnailCollectibleVariants({ size }),
+              "object-contain max-h-full max-w-full z-10 relative border-0",
+            )}
             draggable={false}
             src={image}
             onError={(e) => {
