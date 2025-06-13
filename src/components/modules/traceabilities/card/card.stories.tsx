@@ -17,41 +17,54 @@ export const Collectible: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
       <TraceabilityCollectibleCard
-        from="0x041a...123b"
-        to="0x041a...123b"
-        amount={1}
-        image="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
-        action="receive"
+        username="shinobi"
+        timestamp={1}
+        category="list"
+        collectibleImage="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
+        collectibleName="Adventurer #8"
+        currencyImage="https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo"
+        amount={50000}
+        quantity={2}
       />
       <TraceabilityCollectibleCard
-        from="0x041a...123b"
-        to="0x041a...123b"
-        amount={2}
-        image="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
-        action="send"
+        username="shinobi"
+        timestamp={1}
+        category="sale"
+        collectibleImage="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
+        collectibleName="Adventurer #8"
+        currencyImage="https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo"
+        amount={50000}
+        quantity={1}
       />
       <TraceabilityCollectibleCard
-        from="0x041a...123b"
-        to="0x041a...123b"
-        amount={3}
-        image="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
-        action="mint"
+        username="bal7hazar"
+        timestamp={1}
+        category="list"
+        collectibleImage="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
+        collectibleName="Adventurer #8"
+        currencyImage="https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo"
+        amount={50000}
       />
       <TraceabilityCollectibleCard
-        from="0x041a...123b"
-        to="0x041a...123b"
-        amount={4}
-        image="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
-        action="receive"
-        loading
+        username="bal7hazar"
+        timestamp={1}
+        category="receive"
+        collectibleImage="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
+        collectibleName="Adventurer #8"
       />
       <TraceabilityCollectibleCard
-        from="0x041a...123b"
-        to="0x041a...123b"
-        amount={10}
-        image="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
-        action="receive"
-        error
+        username="tedison"
+        timestamp={1}
+        category="send"
+        collectibleImage="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
+        collectibleName="Adventurer #8"
+      />
+      <TraceabilityCollectibleCard
+        username="tedison"
+        timestamp={1}
+        category="mint"
+        collectibleImage="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
+        collectibleName="Adventurer #8"
       />
     </div>
   ),
