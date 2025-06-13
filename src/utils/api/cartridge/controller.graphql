@@ -20,13 +20,6 @@ query Controller($username: String!, $chainId: String!) {
         os
         browser
       }
-      activities {
-        edges {
-          node {
-            id
-          }
-        }
-      }
       signer {
         id
       }
