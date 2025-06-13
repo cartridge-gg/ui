@@ -1,9 +1,11 @@
 import {
   ArrowIcon,
+  MoneyIcon,
   PaperPlaneIcon,
-  SparklesIcon,
+  SeedlingIcon,
+  TagIcon,
+  Thumbnail,
   ThumbnailCollectible,
-  ThumbnailsSubIcon,
 } from "@/index";
 import { VariantProps } from "class-variance-authority";
 import { useMemo, useState } from "react";
@@ -12,92 +14,101 @@ import TraceabilityCard, { traceabilityCardVariants } from "./card";
 export interface TraceabilityCollectibleCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof traceabilityCardVariants> {
-  from: string;
-  to: string;
-  image: string;
-  action: "send" | "receive" | "mint";
+  username: string;
+  timestamp: number;
+  category: "send" | "receive" | "mint" | "sale" | "list";
+  collectibleImage: string;
+  collectibleName: string;
+  currencyImage?: string;
   amount?: number;
-  error?: boolean;
-  loading?: boolean;
+  quantity?: number;
   className?: string;
 }
 
 export const TraceabilityCollectibleCard = ({
-  from,
-  to,
+  username,
+  timestamp,
+  category,
+  collectibleImage,
+  collectibleName,
+  currencyImage,
   amount,
-  image,
-  action,
-  error,
-  loading,
+  quantity,
   variant,
   className,
   ...props
 }: TraceabilityCollectibleCardProps) => {
   const [hover, setHover] = useState(false);
 
-  const Icon = useMemo(() => {
-    switch (action) {
-      case "send":
-        return <PaperPlaneIcon className="w-full h-full" variant="solid" />;
-      case "receive":
-        return <ArrowIcon variant="down" className="w-full h-full" />;
-      default:
-        return <SparklesIcon className="w-full h-full" variant="solid" />;
-    }
-  }, [action]);
-
-  const title = useMemo(() => {
-    switch (action) {
-      case "send":
-      case "receive":
-        return loading ? "Transfering" : "Transfer";
-      default:
-        return loading ? "Minting" : "Mint";
-    }
-  }, [loading, action]);
-
-  const Logo = useMemo(
+  const CollectibleIcon = useMemo(
     () => (
       <ThumbnailCollectible
-        image={image}
-        subIcon={
-          <ThumbnailsSubIcon
-            variant={hover ? "lighter" : "light"}
-            Icon={Icon}
-          />
-        }
-        error={error}
-        loading={loading}
-        variant={hover ? "lighter" : "light"}
-        size="lg"
+        image={collectibleImage}
+        size="xxs"
+        className="border-0 p-0"
       />
     ),
-    [image, error, loading, hover, Icon],
+    [collectibleImage, hover],
   );
 
-  const { fromAddress, toAddress } = useMemo(() => {
-    const fromAddress = `From: ${from}`;
-    const toAddress = `To: ${to}`;
-    return { fromAddress, toAddress };
-  }, [from, to]);
+  const CurrencyIcon = useMemo(() => {
+    if (!currencyImage) return null;
+    return (
+      <Thumbnail
+        icon={currencyImage}
+        size="xxs"
+        rounded
+        className="border-0 p-0"
+      />
+    );
+  }, [currencyImage, hover]);
 
   return (
     <TraceabilityCard
-      Logo={Logo}
-      title={title}
-      count={amount}
-      from={fromAddress}
-      to={toAddress}
-      error={error}
-      loading={loading}
+      username={username}
+      timestamp={timestamp}
+      Icon={<CategoryIcon category={category} />}
       variant={variant}
       className={className}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       {...props}
-    />
+    >
+      <>
+        <div className="h-6 flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded">
+          {CollectibleIcon}
+          <p className="text-xs text-foreground-100 px-0.5">
+            {quantity ? `${quantity} ${collectibleName}` : collectibleName}
+          </p>
+        </div>
+        {amount !== undefined && (
+          <div className="flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded">
+            {CurrencyIcon}
+            <p className="text-xs text-foreground-100 px-0.5">
+              {amount.toLocaleString()}
+            </p>
+          </div>
+        )}
+      </>
+    </TraceabilityCard>
   );
+};
+
+const CategoryIcon = ({
+  category,
+}: { category: "mint" | "receive" | "send" | "sale" | "list" }) => {
+  switch (category) {
+    case "mint":
+      return <SeedlingIcon variant="solid" size="xs" />;
+    case "receive":
+      return <ArrowIcon variant="down" size="xs" />;
+    case "send":
+      return <PaperPlaneIcon variant="solid" size="xs" />;
+    case "sale":
+      return <MoneyIcon variant="solid" size="xs" />;
+    case "list":
+      return <TagIcon variant="solid" size="xs" />;
+  }
 };
 
 export default TraceabilityCollectibleCard;
