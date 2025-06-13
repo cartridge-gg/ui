@@ -24,6 +24,7 @@ export const thumbnailVariants = cva(
         ghost: "bg-transparent",
       },
       size: {
+        xxs: "w-4 h-4 min-w-4 min-h-4 p-0.5 data-[centered=true]:p-[2px]",
         xs: "w-5 h-5 min-w-5 min-h-5 p-0.5 data-[centered=true]:p-[2px]",
         sm: "w-6 h-6 min-w-6 min-h-6 p-0.5 data-[centered=true]:p-[3px]",
         md: "w-8 h-8 min-w-8 min-h-8 p-0.5 data-[centered=true]:p-[4px]",

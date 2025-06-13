@@ -44,8 +44,8 @@ export const TraceabilityCollectibleCard = ({
     () => (
       <ThumbnailCollectible
         image={collectibleImage}
-        size="xs"
-        className="bg-transparent"
+        size="xxs"
+        className="border-0 p-0"
       />
     ),
     [collectibleImage, hover],
@@ -56,9 +56,9 @@ export const TraceabilityCollectibleCard = ({
     return (
       <Thumbnail
         icon={currencyImage}
-        size="xs"
+        size="xxs"
         rounded
-        className="bg-transparent"
+        className="border-0 p-0"
       />
     );
   }, [currencyImage, hover]);
@@ -82,7 +82,7 @@ export const TraceabilityCollectibleCard = ({
           </p>
         </div>
         {amount !== undefined && (
-          <div className="h-6 flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded">
+          <div className="flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded">
             {CurrencyIcon}
             <p className="text-xs text-foreground-100 px-0.5">
               {amount.toLocaleString()}

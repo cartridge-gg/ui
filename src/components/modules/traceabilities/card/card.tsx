@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import { useEffect, useMemo, useState } from "react";
 
 export const traceabilityCardVariants = cva(
-  "h-10 select-none px-3 py-2.5 transition-colors flex items-center justify-between gap-4",
+  "select-none px-3 py-2.5 transition-colors flex items-center justify-between gap-4",
   {
     variants: {
       variant: {
