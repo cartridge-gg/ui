@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import { useEffect, useMemo, useState } from "react";
 
 export const traceabilityCardVariants = cva(
-  "select-none px-3 py-2.5 transition-colors flex items-center justify-between gap-4",
+  "select-none px-3 py-2.5 transition-colors flex items-center justify-between gap-4 overflow-hidden",
   {
     variants: {
       variant: {
@@ -70,7 +70,7 @@ export const TraceabilityCard = ({
 
   const ellapsedTime = useMemo(() => {
     if (state.years > 0) return `${state.years}y`;
-    if (state.months > 0) return `${state.months}m`;
+    if (state.months > 0) return `${state.months}mo`;
     if (state.days > 0) return `${state.days}d`;
     if (state.hours > 0) return `${state.hours}h`;
     if (state.minutes > 0) return `${state.minutes}m`;
@@ -82,7 +82,7 @@ export const TraceabilityCard = ({
       className={cn(traceabilityCardVariants({ variant }), className)}
       {...props}
     >
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1.5 overflow-hidden">
         <div className="flex items-center gap-1">
           <AchievementPlayerAvatar
             username={username}
