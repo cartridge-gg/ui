@@ -2080,6 +2080,8 @@ export type Paymaster = Node & {
   policies: PaymasterPolicyConnection;
   /** Number of reverted transactions */
   revertedTransactions: Scalars['Int'];
+  /** Start block of the paymaster */
+  startBlock?: Maybe<Scalars['Int']>;
   starterpacks: StarterpackConnection;
   /** Accumulated STRK fees in 6 decimal precision */
   strkFees: Scalars['Int'];
@@ -2461,6 +2463,17 @@ export type PaymasterWhereInput = {
   revertedTransactionsLTE?: InputMaybe<Scalars['Int']>;
   revertedTransactionsNEQ?: InputMaybe<Scalars['Int']>;
   revertedTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** start_block field predicates */
+  startBlock?: InputMaybe<Scalars['Int']>;
+  startBlockGT?: InputMaybe<Scalars['Int']>;
+  startBlockGTE?: InputMaybe<Scalars['Int']>;
+  startBlockIn?: InputMaybe<Array<Scalars['Int']>>;
+  startBlockIsNil?: InputMaybe<Scalars['Boolean']>;
+  startBlockLT?: InputMaybe<Scalars['Int']>;
+  startBlockLTE?: InputMaybe<Scalars['Int']>;
+  startBlockNEQ?: InputMaybe<Scalars['Int']>;
+  startBlockNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  startBlockNotNil?: InputMaybe<Scalars['Boolean']>;
   /** strk_fees field predicates */
   strkFees?: InputMaybe<Scalars['Int']>;
   strkFeesGT?: InputMaybe<Scalars['Int']>;
@@ -4553,16 +4566,6 @@ export type PricePeriodByAddressesQueryVariables = Exact<{
 
 export type PricePeriodByAddressesQuery = { __typename?: 'Query', pricePeriodByAddresses: Array<{ __typename?: 'Price', amount: string, base: string, decimals: number, quote: string }> };
 
-export type RegisterMutationVariables = Exact<{
-  username: Scalars['String'];
-  chainId: Scalars['String'];
-  owner: SignerInput;
-  session: SessionInput;
-}>;
-
-
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'Account', name?: string | null, username: string } };
-
 export type SignerQueryVariables = Exact<{
   username: Scalars['String'];
 }>;
@@ -5514,28 +5517,6 @@ export const usePricePeriodByAddressesQuery = <
     useQuery<PricePeriodByAddressesQuery, TError, TData>(
       ['PricePeriodByAddresses', variables],
       useFetchData<PricePeriodByAddressesQuery, PricePeriodByAddressesQueryVariables>(PricePeriodByAddressesDocument).bind(null, variables),
-      options
-    );
-export const RegisterDocument = `
-    mutation Register($username: String!, $chainId: String!, $owner: SignerInput!, $session: SessionInput!) {
-  register(
-    chainId: $chainId
-    owner: $owner
-    session: $session
-    username: $username
-  ) {
-    name
-    username
-  }
-}
-    `;
-export const useRegisterMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<RegisterMutation, TError, RegisterMutationVariables, TContext>) =>
-    useMutation<RegisterMutation, TError, RegisterMutationVariables, TContext>(
-      ['Register'],
-      useFetchData<RegisterMutation, RegisterMutationVariables>(RegisterDocument),
       options
     );
 export const SignerDocument = `
