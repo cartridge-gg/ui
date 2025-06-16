@@ -75,14 +75,14 @@ export const TraceabilityCollectibleCard = ({
       {...props}
     >
       <>
-        <div className="h-6 flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded">
+        <div className="h-6 flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded overflow-hidden">
           {CollectibleIcon}
-          <p className="text-xs text-foreground-100 px-0.5">
+          <p className="text-xs text-foreground-100 px-0.5 truncate overflow-hidden">
             {quantity ? `${quantity} ${collectibleName}` : collectibleName}
           </p>
         </div>
         {amount !== undefined && (
-          <div className="flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded">
+          <div className="flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded truncate overflow-hidden">
             {CurrencyIcon}
             <p className="text-xs text-foreground-100 px-0.5">
               {amount.toLocaleString()}
