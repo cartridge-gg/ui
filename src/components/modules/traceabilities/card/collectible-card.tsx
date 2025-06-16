@@ -82,7 +82,7 @@ export const TraceabilityCollectibleCard = ({
           </p>
         </div>
         {amount !== undefined && (
-          <div className="flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded truncate overflow-hidde">
+          <div className="flex items-center gap-0.5 bg-translucent-dark-100 p-1 rounded truncate overflow-hidden">
             {CurrencyIcon}
             <p className="text-xs text-foreground-100 px-0.5">
               {amount.toLocaleString()}
