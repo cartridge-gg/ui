@@ -65,6 +65,7 @@ export const Collectible: Story = {
         category="mint"
         collectibleImage="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png"
         collectibleName="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
+        amount={50000.123456789}
       />
     </div>
   ),
