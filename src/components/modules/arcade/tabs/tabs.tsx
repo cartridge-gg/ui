@@ -252,15 +252,16 @@ const InventoryNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "Inventory" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<ChestIcon variant="solid" size="sm" />}
-        label="Inventory"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -272,7 +273,7 @@ const InventoryNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<ChestIcon variant="solid" size="sm" />}
-      label="Inventory"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
@@ -288,15 +289,16 @@ const AchievementsNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "Achievements" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<TrophyIcon variant="solid" size="sm" />}
-        label="Achievements"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -308,7 +310,7 @@ const AchievementsNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<TrophyIcon variant="solid" size="sm" />}
-      label="Achievements"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
@@ -324,15 +326,16 @@ const LeaderboardNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "Leaderboard" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<LeaderboardIcon variant="solid" size="sm" />}
-        label="Leaderboard"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -344,7 +347,7 @@ const LeaderboardNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<LeaderboardIcon variant="solid" size="sm" />}
-      label="Leaderboard"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
@@ -360,15 +363,16 @@ const GuildsNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "Guilds" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<SwordsIcon variant="solid" size="sm" />}
-        label="Guilds"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -380,7 +384,7 @@ const GuildsNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<SwordsIcon variant="solid" size="sm" />}
-      label="Guilds"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
@@ -396,15 +400,16 @@ const ActivityNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "Activity" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<PulseIcon variant="solid" size="sm" />}
-        label="Activity"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -416,7 +421,7 @@ const ActivityNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<PulseIcon variant="solid" size="sm" />}
-      label="Activity"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
@@ -432,15 +437,16 @@ const MetricsNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "Metrics" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<MetricsIcon variant="solid" size="sm" />}
-        label="Metrics"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -452,7 +458,7 @@ const MetricsNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<MetricsIcon variant="solid" size="sm" />}
-      label="Metrics"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
@@ -468,15 +474,16 @@ const AboutNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "About" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<ListIcon variant="solid" size="sm" />}
-        label="About"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -488,7 +495,7 @@ const AboutNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<ListIcon variant="solid" size="sm" />}
-      label="About"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
@@ -504,15 +511,16 @@ const MarketplaceNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "Marketplace" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<ShoppingCartIcon variant="solid" size="sm" />}
-        label="Marketplace"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -524,7 +532,7 @@ const MarketplaceNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<ShoppingCartIcon variant="solid" size="sm" />}
-      label="Marketplace"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
@@ -540,15 +548,16 @@ const ItemsNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "Items" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<ScrollIcon variant="solid" size="sm" />}
-        label="Items"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -560,7 +569,7 @@ const ItemsNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<ScrollIcon variant="solid" size="sm" />}
-      label="Items"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
@@ -576,15 +585,16 @@ const HoldersNavButton = React.forwardRef<
     size: "default" | null | undefined;
     onClick?: () => void;
     item?: boolean;
+    label?: string;
   }
->(({ value, active, size, onClick, item }, ref) => {
+>(({ value, active, size, onClick, item, label = "Holders" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
         ref={ref}
         value={value}
         Icon={<UsersIcon variant="solid" size="sm" />}
-        label="Holders"
+        label={label}
         active={active}
         size={size}
         onClick={onClick}
@@ -596,7 +606,7 @@ const HoldersNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<UsersIcon variant="solid" size="sm" />}
-      label="Holders"
+      label={label}
       active={active}
       size={size}
       onClick={onClick}
