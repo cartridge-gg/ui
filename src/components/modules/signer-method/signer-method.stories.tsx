@@ -49,7 +49,37 @@ export const Wallet: Story = {
   },
 };
 
-export const AllMethods: Story = {
+export const Argent: Story = {
+  args: {
+    kind: "argent",
+  },
+};
+
+export const Phantom: Story = {
+  args: {
+    kind: "phantom",
+  },
+};
+
+export const MetaMask: Story = {
+  args: {
+    kind: "metamask",
+  },
+};
+
+export const Rabby: Story = {
+  args: {
+    kind: "rabby",
+  },
+};
+
+export const WalletConnect: Story = {
+  args: {
+    kind: "walletconnect",
+  },
+};
+
+	export const AllMethods: Story = {
   render: () => (
     <div className="space-y-4">
       <SignerMethod kind="google" onClick={() => {}} />
@@ -57,6 +87,11 @@ export const AllMethods: Story = {
       <SignerMethod kind="SMS" onClick={() => {}} />
       <SignerMethod kind="passkey" onClick={() => {}} />
       <SignerMethod kind="wallet" onClick={() => {}} />
+      <SignerMethod kind="argent" onClick={() => {}} />
+      <SignerMethod kind="phantom" onClick={() => {}} />
+      <SignerMethod kind="metamask" onClick={() => {}} />
+      <SignerMethod kind="rabby" onClick={() => {}} />
+      <SignerMethod kind="walletconnect" onClick={() => {}} />
     </div>
   ),
 };
