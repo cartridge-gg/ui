@@ -7,6 +7,7 @@ import {
   ListIcon,
   MetricsIcon,
   PulseIcon,
+  ScrollIcon,
   Select,
   SelectContent,
   ShoppingCartIcon,
@@ -14,6 +15,7 @@ import {
   Tabs,
   TabsList,
   TrophyIcon,
+  UsersIcon,
 } from "@/index";
 import { cn } from "@/utils";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -45,7 +47,9 @@ export type TabValue =
   | "activity"
   | "metrics"
   | "about"
-  | "marketplace";
+  | "marketplace"
+  | "items"
+  | "holders";
 
 export interface ArcadeTabsProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -66,6 +70,8 @@ export const ArcadeTabs = ({
     "inventory",
     "achievements",
     "guilds",
+    "items",
+    "holders",
   ],
   onTabClick,
   variant,
@@ -229,6 +235,10 @@ const Tab = ({
       return <AboutNavButton {...props} />;
     case "marketplace":
       return <MarketplaceNavButton {...props} />;
+    case "items":
+      return <ItemsNavButton {...props} />;
+    case "holders":
+      return <HoldersNavButton {...props} />;
     default:
       return null;
   }
@@ -515,6 +525,78 @@ const MarketplaceNavButton = React.forwardRef<
       value={value}
       Icon={<ShoppingCartIcon variant="solid" size="sm" />}
       label="Marketplace"
+      active={active}
+      size={size}
+      onClick={onClick}
+    />
+  );
+});
+
+const ItemsNavButton = React.forwardRef<
+  HTMLButtonElement,
+  {
+    value: string;
+    active: boolean;
+    size: "default" | null | undefined;
+    onClick?: () => void;
+    item?: boolean;
+  }
+>(({ value, active, size, onClick, item }, ref) => {
+  if (item) {
+    return (
+      <ArcadeMenuItem
+        ref={ref}
+        value={value}
+        Icon={<ScrollIcon variant="solid" size="sm" />}
+        label="Items"
+        active={active}
+        size={size}
+        onClick={onClick}
+      />
+    );
+  }
+  return (
+    <ArcadeTab
+      ref={ref}
+      value={value}
+      Icon={<ScrollIcon variant="solid" size="sm" />}
+      label="Items"
+      active={active}
+      size={size}
+      onClick={onClick}
+    />
+  );
+});
+
+const HoldersNavButton = React.forwardRef<
+  HTMLButtonElement,
+  {
+    value: string;
+    active: boolean;
+    size: "default" | null | undefined;
+    onClick?: () => void;
+    item?: boolean;
+  }
+>(({ value, active, size, onClick, item }, ref) => {
+  if (item) {
+    return (
+      <ArcadeMenuItem
+        ref={ref}
+        value={value}
+        Icon={<UsersIcon variant="solid" size="sm" />}
+        label="Holders"
+        active={active}
+        size={size}
+        onClick={onClick}
+      />
+    );
+  }
+  return (
+    <ArcadeTab
+      ref={ref}
+      value={value}
+      Icon={<UsersIcon variant="solid" size="sm" />}
+      label="Holders"
       active={active}
       size={size}
       onClick={onClick}
