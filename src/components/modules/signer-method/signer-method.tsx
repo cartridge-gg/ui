@@ -1,28 +1,19 @@
 import { MobileIcon, WalletIcon } from "@/components/icons";
 import {
-	ArgentColorIcon,
-	DiscordColorIcon,
-	GoogleColorIcon,
-	MetaMaskColorIcon,
-	PhantomColorIcon,
-	RabbyColorIcon,
-	WalletConnectColorIcon,
+  ArgentColorIcon,
+  DiscordColorIcon,
+  GoogleColorIcon,
+  MetaMaskColorIcon,
+  PhantomColorIcon,
+  RabbyColorIcon,
+  WalletConnectColorIcon,
 } from "@/components/icons/brand-color";
 import { FingerprintIcon } from "@/components/icons/brand/fingerprint";
 import { cn } from "@/utils";
 import { useState } from "react";
+import { SignerPendingCardKind } from "../signer-pending-card/signer-pending-card";
 
-export type SignerMethodKind =
-  | "google"
-  | "SMS"
-  | "passkey"
-  | "discord"
-  | "wallet"
-  | "argent"
-  | "phantom"
-  | "metamask"
-  | "rabby"
-  | "walletconnect";
+export type SignerMethodKind = SignerPendingCardKind | "wallet";
 
 interface SignerMethodProps {
   className?: string;
@@ -30,45 +21,40 @@ interface SignerMethodProps {
   onClick: () => void;
 }
 
-const signers: Record<SignerMethodKind, {
-  icon: React.ReactNode;
-  label: string;
-}> = {
+const signers: Record<
+  SignerMethodKind,
+  {
+    icon: React.ReactNode;
+    label?: string;
+  }
+> = {
   google: {
     icon: <GoogleColorIcon size="sm" />,
-    label: "Google",
   },
   discord: {
     icon: <DiscordColorIcon size="sm" />,
-    label: "Discord",
   },
-  SMS: {
+  sms: {
     icon: <MobileIcon variant="solid" size="sm" />,
     label: "SMS",
   },
   passkey: {
     icon: <FingerprintIcon size="sm" />,
-    label: "Passkey",
   },
   wallet: {
     icon: <WalletIcon variant="solid" size="sm" />,
-    label: "Wallet",
   },
   argent: {
     icon: <ArgentColorIcon size="sm" />,
-    label: "Argent",
   },
   phantom: {
     icon: <PhantomColorIcon size="sm" />,
-    label: "Phantom",
   },
   metamask: {
     icon: <MetaMaskColorIcon size="sm" />,
-    label: "MetaMask",
   },
   rabby: {
     icon: <RabbyColorIcon size="sm" />,
-    label: "Rabby",
   },
   walletconnect: {
     icon: <WalletConnectColorIcon size="sm" />,
@@ -106,7 +92,9 @@ export function SignerMethod({ className, kind, onClick }: SignerMethodProps) {
           {icon}
         </div>
       )}
-      <span className="text-foreground-100 text-base">{label}</span>
+      <span className="text-foreground-100 text-base">
+        {label || kind.charAt(0).toUpperCase() + kind.slice(1)}
+      </span>
     </div>
   );
 }
