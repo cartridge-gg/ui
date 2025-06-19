@@ -1,6 +1,7 @@
 export * from "./argent";
 export * from "./cartridge";
 export * from "./discord";
+export * from "./google";
 export * from "./ethereum-dark";
 export * from "./ethereum-light";
 export * from "./ethereum";

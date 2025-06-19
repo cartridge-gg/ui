@@ -1982,7 +1982,6 @@ export type MutationUploadArgs = {
 };
 
 export enum Network {
-  Ethereum = 'ETHEREUM',
   Solana = 'SOLANA',
   Starknet = 'STARKNET'
 }
@@ -2080,6 +2079,8 @@ export type Paymaster = Node & {
   policies: PaymasterPolicyConnection;
   /** Number of reverted transactions */
   revertedTransactions: Scalars['Int'];
+  /** Start block of the paymaster */
+  startBlock?: Maybe<Scalars['Int']>;
   starterpacks: StarterpackConnection;
   /** Accumulated STRK fees in 6 decimal precision */
   strkFees: Scalars['Int'];
@@ -2461,6 +2462,17 @@ export type PaymasterWhereInput = {
   revertedTransactionsLTE?: InputMaybe<Scalars['Int']>;
   revertedTransactionsNEQ?: InputMaybe<Scalars['Int']>;
   revertedTransactionsNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** start_block field predicates */
+  startBlock?: InputMaybe<Scalars['Int']>;
+  startBlockGT?: InputMaybe<Scalars['Int']>;
+  startBlockGTE?: InputMaybe<Scalars['Int']>;
+  startBlockIn?: InputMaybe<Array<Scalars['Int']>>;
+  startBlockIsNil?: InputMaybe<Scalars['Boolean']>;
+  startBlockLT?: InputMaybe<Scalars['Int']>;
+  startBlockLTE?: InputMaybe<Scalars['Int']>;
+  startBlockNEQ?: InputMaybe<Scalars['Int']>;
+  startBlockNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  startBlockNotNil?: InputMaybe<Scalars['Boolean']>;
   /** strk_fees field predicates */
   strkFees?: InputMaybe<Scalars['Int']>;
   strkFeesGT?: InputMaybe<Scalars['Int']>;

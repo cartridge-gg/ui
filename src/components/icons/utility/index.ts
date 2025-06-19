@@ -1,5 +1,6 @@
 // export * from "./achievement";
 export * from "./alert";
+export * from "./add-user";
 export * from "./arrow-turn-down";
 export * from "./award";
 export * from "./award-simple";
