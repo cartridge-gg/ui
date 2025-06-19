@@ -29,6 +29,8 @@ export const Default: Story = {
       <TabsContent value="metrics">Metrics content</TabsContent>
       <TabsContent value="about">About content</TabsContent>
       <TabsContent value="marketplace">Marketplace content</TabsContent>
+      <TabsContent value="items">Items content</TabsContent>
+      <TabsContent value="holders">Holders content</TabsContent>
     </ArcadeTabs>
   ),
 };
@@ -37,6 +39,13 @@ export const Game: Story = {
   args: {
     defaultValue: "activity",
     order: ["activity", "leaderboard", "marketplace", "guilds", "about"],
+  },
+};
+
+export const Marketplace: Story = {
+  args: {
+    defaultValue: "activity",
+    order: ["activity", "items", "holders"],
   },
 };
 
