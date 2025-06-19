@@ -513,7 +513,7 @@ const MarketplaceNavButton = React.forwardRef<
     item?: boolean;
     label?: string;
   }
->(({ value, active, size, onClick, item, label = "Marketplace" }, ref) => {
+>(({ value, active, size, onClick, item, label = "Shop" }, ref) => {
   if (item) {
     return (
       <ArcadeMenuItem
