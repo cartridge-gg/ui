@@ -1,12 +1,12 @@
 import { MobileIcon } from "@/components/icons";
 import {
-  ArgentColorIcon,
-  DiscordColorIcon,
-  GoogleColorIcon,
-  MetaMaskColorIcon,
-  PhantomColorIcon,
-  RabbyColorIcon,
-  WalletConnectColorIcon,
+	ArgentColorIcon,
+	DiscordColorIcon,
+	GoogleColorIcon,
+	MetaMaskColorIcon,
+	PhantomColorIcon,
+	RabbyColorIcon,
+	WalletConnectColorIcon,
 } from "@/components/icons/brand-color";
 import { FingerprintIcon } from "@/components/icons/brand/fingerprint";
 import { cn } from "@/utils";
@@ -102,7 +102,7 @@ export function SignerPendingCard({
     <div
       className={cn(
         "flex flex-col items-center justify-center",
-        "w-[400px] h-fit p-10 gap-4",
+        "w-full h-fit p-10 gap-4",
         "rounded",
         "border border-background-200",
         "bg-background-100",
