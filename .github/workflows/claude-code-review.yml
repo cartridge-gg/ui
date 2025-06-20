@@ -1,0 +1,119 @@
+name: claude
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    # Optional: Filter by PR author
+    # if: |
+    #   github.event.pull_request.user.login == 'external-contributor' ||
+    #   github.event.pull_request.user.login == 'new-developer' ||
+    #   github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR'
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if commit is from Claude
+        id: check-author
+        run: |
+          AUTHOR_EMAIL=$(git log -1 --pretty=format:'%ae')
+          AUTHOR_NAME=$(git log -1 --pretty=format:'%an')
+          if [[ "$AUTHOR_EMAIL" == *"claude[bot]"* ]] || [[ "$AUTHOR_NAME" == *"claude[bot]"* ]]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Claude Code Review
+        id: claude-review
+        if: steps.check-author.outputs.skip != 'true'
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+          # Optional: Specify model (defaults to Claude Sonnet 4, uncomment for Claude Opus 4)
+          # model: "claude-opus-4-20250514"
+
+          # Direct prompt for automated review (no @claude mention needed)
+          direct_prompt: |
+            Please review this TypeScript/React UI component library PR and provide inline feedback using the GitHub review system. Follow these steps:
+
+            1. **Check for existing reviews**: First, use `mcp__github__get_pull_request_reviews` to check if you have any existing pending or submitted reviews on this PR
+            2. **Check existing comments**: Use `mcp__github__get_pull_request_comments` to see what comments have already been made to avoid redundancy
+            3. **Start a fresh review**: Use `mcp__github__create_pending_pull_request_review` to begin a new pending review
+            4. **Get diff information**: Use `mcp__github__get_pull_request_diff` to understand the code changes
+            5. **Add unique inline comments**: Only add comments for issues that haven't been addressed in existing reviews
+            6. **Add inline comments**: Use `mcp__github__add_pull_request_review_comment_to_pending_review` for each specific piece of feedback on particular lines, including code change suggestions where appropriate using multiline comments and the suggestion syntax:
+
+            ```suggestion
+              export const ExampleComponent: React.FC<Props> = ({ children, ...props }) => {
+                return <div {...props}>{children}</div>;
+              };
+            ```
+
+            7. **Submit the review**: Use `mcp__github__submit_pending_pull_request_review` with event type "COMMENT" (not "REQUEST_CHANGES") to publish all comments as a non-blocking review
+
+            Only comment when something is off, wrong, or could be improved but don't be overly pedantic; if a given implementation is already good, do not comment on it.
+
+            Focus your review on:
+
+            **Component Design & API:**
+            - Component API consistency and reusability
+            - Props interface design and TypeScript typing
+            - Component composition patterns
+            - Export consistency and module structure
+            - API design patterns across components
+
+            **UI/UX & Design System:**
+            - Design token usage and consistency
+            - TailwindCSS patterns and utility usage
+            - Responsive design implementation
+            - Component variants and states
+            - Accessibility implementation (ARIA, focus management)
+
+            **TypeScript & Code Quality:**
+            - Type safety and proper TypeScript usage
+            - Generic type patterns for flexibility
+            - Props validation and default values
+            - React patterns and hooks usage
+            - Performance considerations (memo, callback optimization)
+
+            **Testing & Documentation:**
+            - Storybook story completeness and quality
+            - Component documentation and examples
+            - Unit test coverage for component logic
+            - Visual regression test considerations
+            - Testing library best practices
+
+            **Package & Distribution:**
+            - Package exports and public API
+            - Bundle size considerations
+            - Tree shaking compatibility
+            - Dependency management
+            - Version compatibility
+
+            **Cross-Platform & Integration:**
+            - StarkNet integration patterns (if applicable)
+            - Component library consumption patterns
+            - Theme and styling integration
+            - Build system compatibility
+            - Consumer developer experience
+
+            Provide specific, actionable feedback with inline comments and suggestions for line-specific issues. Include an concise overall summary when submitting the review.
+
+            **Important**: Submit as "COMMENT" type so the review doesn't block the PR.
+
+          # Add MCP GitHub tools for inline comments and project-specific testing
+          allowed_tools: "mcp__github__create_pending_pull_request_review,mcp__github__get_pull_request_comments,mcp__github__get_pull_request_reviews,mcp__github__add_pull_request_review_comment_to_pending_review,mcp__github__submit_pending_pull_request_review,mcp__github__get_pull_request_diff,Bash(pnpm install),Bash(pnpm run build),Bash(pnpm run test),Bash(pnpm run lint),Bash(pnpm run format),Bash(pnpm run storybook),Bash(pnpm run dev),Bash(corepack enable pnpm)"
