@@ -1,0 +1,15 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { Thumbnail } from "./thumbnail";
+declare const meta: Meta<typeof Thumbnail>;
+export default meta;
+type Story = StoryObj<typeof Thumbnail>;
+export declare const Default: Story;
+export declare const Transdark: Story;
+export declare const Translight: Story;
+export declare const Rounded: Story;
+export declare const Component: Story;
+export declare const ComponentRounded: Story;
+export declare const FontAwesome: Story;
+export declare const Fallback: Story;
+export declare const Loading: Story;
+export declare const Error: Story;

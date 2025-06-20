@@ -1,0 +1,6 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { forwardRef, memo } from "react";
+import { iconVariants } from "../utils";
+export const EthereumColorIcon = memo(forwardRef(({ className, size, ...props }, forwardedRef) => (_jsxs("svg", { viewBox: "0 0 24 24", className: iconVariants({ size, className }), ref: forwardedRef, ...props, children: [_jsx("path", { fill: "#627EEA", d: "M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11Z" }), _jsx("path", { fill: "#fff", fillOpacity: ".602", d: "M11.999 4v5.915l4.999 2.233-5-8.148Z" }), _jsx("path", { fill: "#fff", d: "m11.999 4-5 8.148 5-2.233V4Z" }), _jsx("path", { fill: "#fff", fillOpacity: ".602", d: "M11.999 15.981V20L17 13.08 12 15.98Z" }), _jsx("path", { fill: "#fff", d: "M11.999 20v-4.02l-5-2.9 5 6.92Z" }), _jsx("path", { fill: "#fff", fillOpacity: ".2", d: "m11.999 15.051 4.999-2.903-5-2.232v5.135Z" }), _jsx("path", { fill: "#fff", fillOpacity: ".602", d: "m6.999 12.148 5 2.903V9.916l-5 2.232Z" })] }))));
+EthereumColorIcon.displayName = "EthereumColorIcon";
+//# sourceMappingURL=ethereum.js.map
