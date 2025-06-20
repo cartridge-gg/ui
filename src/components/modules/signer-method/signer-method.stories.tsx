@@ -11,7 +11,7 @@ const meta: Meta<typeof SignerMethod> = {
   argTypes: {
     kind: {
       control: { type: "select" },
-      options: ["google", "discord", "SMS", "passkey", "wallet"],
+      options: ["google", "discord", "sms", "passkey", "wallet"],
     },
   },
 };
@@ -31,9 +31,9 @@ export const Discord: Story = {
   },
 };
 
-export const SMS: Story = {
+export const sms: Story = {
   args: {
-    kind: "SMS",
+    kind: "sms",
   },
 };
 
@@ -49,14 +49,49 @@ export const Wallet: Story = {
   },
 };
 
+export const Argent: Story = {
+  args: {
+    kind: "argent",
+  },
+};
+
+export const Phantom: Story = {
+  args: {
+    kind: "phantom",
+  },
+};
+
+export const MetaMask: Story = {
+  args: {
+    kind: "metamask",
+  },
+};
+
+export const Rabby: Story = {
+  args: {
+    kind: "rabby",
+  },
+};
+
+export const WalletConnect: Story = {
+  args: {
+    kind: "walletconnect",
+  },
+};
+
 export const AllMethods: Story = {
   render: () => (
     <div className="space-y-4">
       <SignerMethod kind="google" onClick={() => {}} />
       <SignerMethod kind="discord" onClick={() => {}} />
-      <SignerMethod kind="SMS" onClick={() => {}} />
+      <SignerMethod kind="sms" onClick={() => {}} />
       <SignerMethod kind="passkey" onClick={() => {}} />
       <SignerMethod kind="wallet" onClick={() => {}} />
+      <SignerMethod kind="argent" onClick={() => {}} />
+      <SignerMethod kind="phantom" onClick={() => {}} />
+      <SignerMethod kind="metamask" onClick={() => {}} />
+      <SignerMethod kind="rabby" onClick={() => {}} />
+      <SignerMethod kind="walletconnect" onClick={() => {}} />
     </div>
   ),
 };

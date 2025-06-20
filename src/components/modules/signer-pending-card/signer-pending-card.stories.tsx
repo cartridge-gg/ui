@@ -14,12 +14,13 @@ const meta: Meta<typeof SignerPendingCard> = {
       options: [
         "google",
         "discord",
-        "SMS",
+        "sms",
         "passkey",
         "metamask",
         "argent",
         "rabby",
         "phantom",
+        "walletconnect",
       ],
     },
   },
@@ -42,7 +43,7 @@ export const DiscordSuccess: Story = {
 
 export const SMSSuccess: Story = {
   args: {
-    kind: "SMS",
+    kind: "sms",
   },
 };
 
@@ -76,6 +77,12 @@ export const PhantomSuccess: Story = {
   },
 };
 
+export const WalletConnectSuccess: Story = {
+  args: {
+    kind: "walletconnect",
+  },
+};
+
 export const GoogleInProgress: Story = {
   args: {
     kind: "google",
@@ -92,7 +99,7 @@ export const DiscordInProgress: Story = {
 
 export const SMSInProgress: Story = {
   args: {
-    kind: "SMS",
+    kind: "sms",
     inProgress: true,
   },
 };
@@ -132,10 +139,24 @@ export const PhantomInProgress: Story = {
   },
 };
 
+export const WalletConnectInProgress: Story = {
+  args: {
+    kind: "walletconnect",
+    inProgress: true,
+  },
+};
+
 export const GoogleError: Story = {
   args: {
     kind: "google",
     error: "Error connecting to Google",
+  },
+};
+
+export const WalletConnectError: Story = {
+  args: {
+    kind: "walletconnect",
+    error: "Error connecting to WalletConnect",
   },
 };
 
@@ -144,12 +165,13 @@ export const AllMethods: Story = {
     <div className="space-y-4">
       <SignerPendingCard kind="google" inProgress={false} />
       <SignerPendingCard kind="discord" inProgress={false} />
-      <SignerPendingCard kind="SMS" inProgress={false} />
+      <SignerPendingCard kind="sms" inProgress={false} />
       <SignerPendingCard kind="passkey" inProgress={false} />
       <SignerPendingCard kind="metamask" inProgress={false} />
       <SignerPendingCard kind="argent" inProgress={false} />
       <SignerPendingCard kind="rabby" inProgress={false} />
       <SignerPendingCard kind="phantom" inProgress={false} />
+      <SignerPendingCard kind="walletconnect" inProgress={false} />
     </div>
   ),
 };

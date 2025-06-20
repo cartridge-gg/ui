@@ -1,18 +1,19 @@
 import { MobileIcon, WalletIcon } from "@/components/icons";
 import {
+  ArgentColorIcon,
   DiscordColorIcon,
   GoogleColorIcon,
+  MetaMaskColorIcon,
+  PhantomColorIcon,
+  RabbyColorIcon,
+  WalletConnectColorIcon,
 } from "@/components/icons/brand-color";
 import { FingerprintIcon } from "@/components/icons/brand/fingerprint";
 import { cn } from "@/utils";
 import { useState } from "react";
+import { SignerPendingCardKind } from "../signer-pending-card/signer-pending-card";
 
-export type SignerMethodKind =
-  | "google"
-  | "SMS"
-  | "passkey"
-  | "discord"
-  | "wallet";
+export type SignerMethodKind = SignerPendingCardKind | "wallet";
 
 interface SignerMethodProps {
   className?: string;
@@ -20,24 +21,56 @@ interface SignerMethodProps {
   onClick: () => void;
 }
 
-const iconMap = {
-  google: <GoogleColorIcon size="sm" />,
-  discord: <DiscordColorIcon size="sm" />,
-  SMS: <MobileIcon variant="solid" size="sm" />,
-  passkey: <FingerprintIcon size="sm" />,
-  wallet: <WalletIcon variant="solid" size="sm" />,
+const signers: Record<
+  SignerMethodKind,
+  {
+    icon: React.ReactNode;
+    label?: string;
+  }
+> = {
+  google: {
+    icon: <GoogleColorIcon size="sm" />,
+  },
+  discord: {
+    icon: <DiscordColorIcon size="sm" />,
+  },
+  sms: {
+    icon: <MobileIcon variant="solid" size="sm" />,
+    label: "SMS",
+  },
+  passkey: {
+    icon: <FingerprintIcon size="sm" />,
+  },
+  wallet: {
+    icon: <WalletIcon variant="solid" size="sm" />,
+  },
+  argent: {
+    icon: <ArgentColorIcon size="sm" />,
+  },
+  phantom: {
+    icon: <PhantomColorIcon size="sm" />,
+  },
+  metamask: {
+    icon: <MetaMaskColorIcon size="sm" />,
+  },
+  rabby: {
+    icon: <RabbyColorIcon size="sm" />,
+  },
+  walletconnect: {
+    icon: <WalletConnectColorIcon size="sm" />,
+    label: "WalletConnect",
+  },
 } as const;
 
 export function SignerMethod({ className, kind, onClick }: SignerMethodProps) {
   const [hovered, setHovered] = useState(false);
-  const IconComponent = iconMap[kind];
-  const label = kind.charAt(0).toUpperCase() + kind.slice(1);
+  const { icon, label } = signers[kind];
 
   return (
     <div
       className={cn(
         "flex items-center",
-        "w-[400px] h-[52px] p-3 gap-2",
+        "w-full h-[52px] p-3 gap-2",
         "rounded",
         "bg-background-200 hover:bg-background-300",
         "cursor-pointer transition-colors ease-in-out",
@@ -47,7 +80,7 @@ export function SignerMethod({ className, kind, onClick }: SignerMethodProps) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {IconComponent && (
+      {icon && (
         <div
           className={cn(
             "w-fit h-fit p-1",
@@ -56,10 +89,12 @@ export function SignerMethod({ className, kind, onClick }: SignerMethodProps) {
             hovered && "bg-background-400",
           )}
         >
-          {IconComponent}
+          {icon}
         </div>
       )}
-      <span className="text-foreground-100 text-base font-medium">{label}</span>
+      <span className="text-foreground-100 text-base">
+        {label || kind.charAt(0).toUpperCase() + kind.slice(1)}
+      </span>
     </div>
   );
 }

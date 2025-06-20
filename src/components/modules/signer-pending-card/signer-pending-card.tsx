@@ -6,19 +6,21 @@ import {
   MetaMaskColorIcon,
   PhantomColorIcon,
   RabbyColorIcon,
+  WalletConnectColorIcon,
 } from "@/components/icons/brand-color";
 import { FingerprintIcon } from "@/components/icons/brand/fingerprint";
 import { cn } from "@/utils";
 
 export type SignerPendingCardKind =
   | "google"
-  | "SMS"
+  | "sms"
   | "passkey"
   | "discord"
   | "metamask"
   | "argent"
   | "rabby"
-  | "phantom";
+  | "phantom"
+  | "walletconnect";
 
 interface SignerPendingCardProps {
   className?: string;
@@ -29,7 +31,12 @@ interface SignerPendingCardProps {
 
 const variants: Record<
   SignerPendingCardKind,
-  { icon: React.ReactNode; primaryText: string; secondaryText: string }
+  {
+    icon: React.ReactNode;
+    primaryText: string;
+    secondaryText: string;
+    label?: string;
+  }
 > = {
   google: {
     icon: <GoogleColorIcon size="xl" />,
@@ -41,10 +48,11 @@ const variants: Record<
     primaryText: "Connecting to Discord",
     secondaryText: "Continue in the other window",
   },
-  SMS: {
+  sms: {
     icon: <MobileIcon variant="solid" size="xl" />,
     primaryText: "",
     secondaryText: "",
+    label: "SMS",
   },
   passkey: {
     icon: <FingerprintIcon size="xl" />,
@@ -71,6 +79,12 @@ const variants: Record<
     primaryText: "Waiting for Signature",
     secondaryText: "Don't see your wallet? Check your other browser windows",
   },
+  walletconnect: {
+    icon: <WalletConnectColorIcon size="xl" />,
+    primaryText: "Waiting for Signature",
+    secondaryText: "Continue on your mobile device",
+    label: "WalletConnect",
+  },
 } as const;
 
 export function SignerPendingCard({
@@ -79,9 +93,9 @@ export function SignerPendingCard({
   inProgress,
   error,
 }: SignerPendingCardProps) {
-  const { icon, primaryText, secondaryText } = variants[kind];
+  const { icon, primaryText, secondaryText, label } = variants[kind];
 
-  if (kind === "SMS" && (inProgress || error)) {
+  if (kind === "sms" && (inProgress || error)) {
     return <></>;
   }
   return (
@@ -123,7 +137,8 @@ export function SignerPendingCard({
             ? "Please try connecting again"
             : inProgress
               ? secondaryText
-              : kind.charAt(0).toUpperCase() + kind.slice(1) + " connected"}
+              : (label || kind.charAt(0).toUpperCase() + kind.slice(1)) +
+                " connected"}
         </span>
       </div>
     </div>
