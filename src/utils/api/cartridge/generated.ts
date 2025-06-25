@@ -4565,16 +4565,6 @@ export type PricePeriodByAddressesQueryVariables = Exact<{
 
 export type PricePeriodByAddressesQuery = { __typename?: 'Query', pricePeriodByAddresses: Array<{ __typename?: 'Price', amount: string, base: string, decimals: number, quote: string }> };
 
-export type RegisterMutationVariables = Exact<{
-  username: Scalars['String'];
-  chainId: Scalars['String'];
-  owner: SignerInput;
-  session: SessionInput;
-}>;
-
-
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'Account', name?: string | null, username: string } };
-
 export type SignerQueryVariables = Exact<{
   username: Scalars['String'];
 }>;
@@ -5526,28 +5516,6 @@ export const usePricePeriodByAddressesQuery = <
     useQuery<PricePeriodByAddressesQuery, TError, TData>(
       ['PricePeriodByAddresses', variables],
       useFetchData<PricePeriodByAddressesQuery, PricePeriodByAddressesQueryVariables>(PricePeriodByAddressesDocument).bind(null, variables),
-      options
-    );
-export const RegisterDocument = `
-    mutation Register($username: String!, $chainId: String!, $owner: SignerInput!, $session: SessionInput!) {
-  register(
-    chainId: $chainId
-    owner: $owner
-    session: $session
-    username: $username
-  ) {
-    name
-    username
-  }
-}
-    `;
-export const useRegisterMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<RegisterMutation, TError, RegisterMutationVariables, TContext>) =>
-    useMutation<RegisterMutation, TError, RegisterMutationVariables, TContext>(
-      ['Register'],
-      useFetchData<RegisterMutation, RegisterMutationVariables>(RegisterDocument),
       options
     );
 export const SignerDocument = `
