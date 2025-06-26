@@ -4,6 +4,7 @@ import {
   IconProps,
   TimesIcon,
   GiftIcon,
+  ControllerIcon,
 } from "@/components/icons";
 import { cn } from "@/utils";
 import { Button } from "@/components/primitives/button";
@@ -208,12 +209,11 @@ function HeaderIcon({
           return icon;
         }
 
-        return (
-          <Thumbnail
-            variant={variant === "expanded" ? "dark" : "default"}
-            size={variant === "expanded" ? "xxl" : "lg"}
-          />
-        );
+        return <Thumbnail
+          variant={variant === "expanded" ? "dark" : "default"}
+          size={variant === "expanded" ? "xxl" : "lg"}
+          icon={<ControllerIcon size="xl" className="fill-current text-primary" />}
+        />;
       })()}
     </IconWrapper>
   );
