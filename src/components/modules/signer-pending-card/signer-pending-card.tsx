@@ -9,7 +9,7 @@ import {
   WalletConnectColorIcon,
 } from "@/components/icons/brand-color";
 import { FingerprintIcon } from "@/components/icons/brand/fingerprint";
-import { cn } from "@/utils";
+import { cn, formatAddress } from "@/utils";
 
 export type SignerPendingCardKind =
   | "google"
@@ -27,6 +27,7 @@ interface SignerPendingCardProps {
   kind: SignerPendingCardKind;
   inProgress: boolean;
   error?: string;
+  authedAddress?: string;
 }
 
 const variants: Record<
@@ -92,6 +93,7 @@ export function SignerPendingCard({
   kind,
   inProgress,
   error,
+  authedAddress,
 }: SignerPendingCardProps) {
   const { icon, primaryText, secondaryText, label } = variants[kind];
 
@@ -126,9 +128,16 @@ export function SignerPendingCard({
           className={cn(
             "text-foreground-300 text-sm font-medium text-center",
             error && "text-destructive-100",
+            authedAddress && "text-constructive-100",
           )}
         >
-          {error ? error : inProgress ? primaryText : "Success!"}
+          {error
+            ? error
+            : inProgress
+              ? primaryText
+              : authedAddress
+                ? "This wallet is already authenticated"
+                : "Success!"}
         </span>
         <span
           className={cn("text-foreground-400 text-sm font-medium text-center")}
@@ -137,8 +146,10 @@ export function SignerPendingCard({
             ? "Please try connecting again"
             : inProgress
               ? secondaryText
-              : (label || kind.charAt(0).toUpperCase() + kind.slice(1)) +
-                " connected"}
+              : authedAddress
+                ? formatAddress(authedAddress, { size: "xs" })
+                : (label || kind.charAt(0).toUpperCase() + kind.slice(1)) +
+                  " connected"}
         </span>
       </div>
     </div>
