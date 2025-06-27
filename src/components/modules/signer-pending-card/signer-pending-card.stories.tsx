@@ -160,6 +160,13 @@ export const WalletConnectError: Story = {
   },
 };
 
+export const MetamaskAlreadyAuthenticated: Story = {
+  args: {
+    kind: "metamask",
+    authedAddress: "0x1234567890123456789012345678901234567890",
+  },
+};
+
 export const AllMethods: Story = {
   render: () => (
     <div className="space-y-4">

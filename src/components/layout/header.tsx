@@ -209,11 +209,15 @@ function HeaderIcon({
           return icon;
         }
 
-        return <Thumbnail
-          variant={variant === "expanded" ? "dark" : "default"}
-          size={variant === "expanded" ? "xxl" : "lg"}
-          icon={<ControllerIcon size="xl" className="fill-current text-primary" />}
-        />;
+        return (
+          <Thumbnail
+            variant={variant === "expanded" ? "dark" : "default"}
+            size={variant === "expanded" ? "xxl" : "lg"}
+            icon={
+              <ControllerIcon size="xl" className="fill-current text-primary" />
+            }
+          />
+        );
       })()}
     </IconWrapper>
   );
