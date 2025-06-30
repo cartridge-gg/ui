@@ -39,3 +39,16 @@ mutation CreateStripePaymentIntent($input: CreateStripePaymentIntentInput!) {
     }
   }
 }
+
+mutation CreateLayerswapPayment($input: CreateLayerswapPaymentInput!) {
+  createLayerswapPayment(input: $input) {
+    cryptoPaymentId 
+    swapId
+    status
+    sourceNetwork
+    sourceTokenAmount
+    sourceTokenAddress
+    sourceDepositAddress
+    expiresAt
+  }
+}
