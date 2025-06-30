@@ -66,7 +66,7 @@ function Card({
     if (!icon) return;
     document.documentElement.style.setProperty(
       "--theme-icon-url",
-      `url("https://x.cartridge.gg/whitelabel/dope-wars/icon.png")`,
+      `url("https://static.cartridge.gg/presets/slot/icon.svg")`,
     );
   }, [icon]);
 
