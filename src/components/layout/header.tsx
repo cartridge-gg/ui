@@ -208,6 +208,16 @@ function HeaderIcon({
           ), []
         );
 
+        if (iconUrl) {
+          // This will implicitly use the theme icon url CSS variable
+          return (
+            <Thumbnail
+              variant={variant === "expanded" ? "dark" : "default"}
+              size={variant === "expanded" ? "xxl" : "lg"}
+            />
+          );
+        }
+
         if (Icon) {
           return <Icon size="lg" />;
         }
@@ -221,7 +231,7 @@ function HeaderIcon({
             variant={variant === "expanded" ? "dark" : "default"}
             size={variant === "expanded" ? "xxl" : "lg"}
             icon={
-              iconUrl ? iconUrl : <ControllerIcon size="xl" className="fill-current text-primary" />
+              <ControllerIcon size="xl" className="fill-current text-primary" />
             }
           />
         );
