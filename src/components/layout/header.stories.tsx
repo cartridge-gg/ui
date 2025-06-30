@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 import { EthereumIcon, TransferIcon } from "@/index";
 import { LayoutHeader } from "./index";
 
@@ -49,4 +50,80 @@ export const VeryLongTitle: Story = {
     description:
       "This is a very long description that should be wrapped and demonstrate how text behaves when it extends beyond multiple lines. It's important to test how the UI handles lengthy content to ensure proper wrapping, readability, and overall visual appeal. How does this much longer description look in the component?",
   },
+};
+
+export const CustomIconUrl: Story = {
+  args: {
+    title: "Custom Icon URL Example",
+    description: "This header uses a custom icon defined via CSS variable",
+  },
+  decorators: [
+    (Story) => {
+      // Set the custom icon URL CSS variable
+      const originalIconUrl = document.documentElement.style.getPropertyValue("--theme-icon-url");
+      document.documentElement.style.setProperty(
+        "--theme-icon-url",
+        "https://static.cartridge.gg/presets/slot/icon.svg"
+      );
+      
+      // Clean up on unmount
+      React.useEffect(() => {
+        return () => {
+          if (originalIconUrl) {
+            document.documentElement.style.setProperty("--theme-icon-url", originalIconUrl);
+          } else {
+            document.documentElement.style.removeProperty("--theme-icon-url");
+          }
+        };
+      }, []);
+      
+      return (
+        <div>
+          <Story />
+        </div>
+      );
+    },
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story: "This example demonstrates using a custom icon URL via the `--theme-icon-url` CSS variable. The header will automatically use this URL for the icon when no Icon or icon prop is provided.",
+      },
+    },
+  },
+};
+
+export const CustomIconUrlExpanded: Story = {
+  args: {
+    variant: "expanded",
+    title: "Custom Icon - Expanded View",
+    description: "Same custom icon URL in expanded header variant",
+  },
+  decorators: [
+    (Story) => {
+      // Set the custom icon URL CSS variable
+      const originalIconUrl = document.documentElement.style.getPropertyValue("--theme-icon-url");
+      document.documentElement.style.setProperty(
+        "--theme-icon-url",
+        "https://static.cartridge.gg/presets/slot/icon.svg"
+      );
+      
+      // Clean up on unmount
+      React.useEffect(() => {
+        return () => {
+          if (originalIconUrl) {
+            document.documentElement.style.setProperty("--theme-icon-url", originalIconUrl);
+          } else {
+            document.documentElement.style.removeProperty("--theme-icon-url");
+          }
+        };
+      }, []);
+      
+      return (
+        <div>
+          <Story />
+        </div>
+      );
+    },
+  ],
 };

@@ -201,6 +201,13 @@ function HeaderIcon({
   return (
     <IconWrapper variant={variant}>
       {(() => {
+        // Check if we have a custom icon URL defined in CSS variables
+        const iconUrl = useMemo(() => 
+          getComputedStyle(document.documentElement).getPropertyValue(
+            "--theme-icon-url",
+          ), []
+        );
+
         if (Icon) {
           return <Icon size="lg" />;
         }
@@ -214,7 +221,7 @@ function HeaderIcon({
             variant={variant === "expanded" ? "dark" : "default"}
             size={variant === "expanded" ? "xxl" : "lg"}
             icon={
-              <ControllerIcon size="xl" className="fill-current text-primary" />
+              iconUrl ? iconUrl : <ControllerIcon size="xl" className="fill-current text-primary" />
             }
           />
         );
