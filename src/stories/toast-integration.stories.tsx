@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@/components/primitives/button";
-import { useToast } from "@/components/primitives/use-toast";
-import { Toaster } from "@/components/primitives/toaster";
+import { useToast } from "@/components/primitives/toast/use-toast";
+import { Toaster } from "@/components/primitives/toast/toaster";
 import {
   showAchievementToast,
   showNetworkSwitchToast,

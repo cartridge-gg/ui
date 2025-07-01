@@ -16,7 +16,7 @@ import {
   Toast,
   ToastClose,
   type ToastProps,
-} from "../toast";
+} from "./toast";
 
 // Base toast container for specialized toasts
 const specializedToastVariants = cva(

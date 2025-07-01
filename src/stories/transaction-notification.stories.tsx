@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { TransactionNotification } from "@/components/primitives/toast/specialized-toasts";
+import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
 
 const meta: Meta<typeof TransactionNotification> = {
   title: "Components/Toast Components/Transaction Notification",
@@ -14,6 +15,14 @@ const meta: Meta<typeof TransactionNotification> = {
       ],
     },
   },
+  decorators: [
+    (Story) => (
+      <ToastProvider>
+        <Story />
+        <ToastViewport />
+      </ToastProvider>
+    ),
+  ],
   argTypes: {
     status: {
       control: "select",

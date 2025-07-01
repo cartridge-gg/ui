@@ -5,6 +5,7 @@ import {
   ErrorToast,
   TransactionNotification,
 } from "@/components/primitives/toast/specialized-toasts";
+import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
 import { StarknetIcon } from "@/components/icons/brand";
 
 const meta: Meta = {
@@ -19,6 +20,14 @@ const meta: Meta = {
       ],
     },
   },
+  decorators: [
+    (Story) => (
+      <ToastProvider>
+        <Story />
+        <ToastViewport />
+      </ToastProvider>
+    ),
+  ],
 };
 
 export default meta;
