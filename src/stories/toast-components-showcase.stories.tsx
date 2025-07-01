@@ -4,7 +4,7 @@ import {
   NetworkSwitchToast,
   ErrorToast,
   TransactionNotification,
-} from "@/components/toast-components";
+} from "@/components/primitives/toast/specialized-toasts";
 import { StarknetIcon } from "@/components/icons/brand";
 
 const meta: Meta = {

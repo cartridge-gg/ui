@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ErrorToast } from "@/components/toast-components";
+import { ErrorToast } from "@/components/primitives/toast/specialized-toasts";
 
 const meta: Meta<typeof ErrorToast> = {
   title: "Components/Toast Components/Error Toast",
@@ -17,7 +17,6 @@ const meta: Meta<typeof ErrorToast> = {
   argTypes: {
     message: { control: "text" },
     progress: { control: { type: "range", min: 0, max: 100, step: 1 } },
-    onClose: { action: "closed" },
   },
 };
 

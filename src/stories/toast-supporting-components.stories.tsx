@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { CloseButton, XPTag, ToastProgressBar } from "@/components/toast-components";
+import { CloseButton } from "@/components/primitives/toast/specialized-toasts";
 
 // Close Button Stories
 const closeButtonMeta: Meta<typeof CloseButton> = {

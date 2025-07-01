@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { AchievementToast } from "@/components/toast-components";
+import { AchievementToast } from "@/components/primitives/toast/specialized-toasts";
 
 const meta: Meta<typeof AchievementToast> = {
   title: "Components/Toast Components/Achievement Toast",
@@ -20,7 +20,6 @@ const meta: Meta<typeof AchievementToast> = {
     xpAmount: { control: "number" },
     progress: { control: { type: "range", min: 0, max: 100, step: 1 } },
     isDraft: { control: "boolean" },
-    onClose: { action: "closed" },
   },
 };
 

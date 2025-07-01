@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { NetworkSwitchToast } from "@/components/toast-components";
+import { NetworkSwitchToast } from "@/components/primitives/toast/specialized-toasts";
 import { StarknetIcon } from "@/components/icons/brand";
 
 const meta: Meta<typeof NetworkSwitchToast> = {
@@ -17,7 +17,6 @@ const meta: Meta<typeof NetworkSwitchToast> = {
   },
   argTypes: {
     networkName: { control: "text" },
-    onClose: { action: "closed" },
   },
 };
 

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { TransactionNotification } from "@/components/toast-components";
+import { TransactionNotification } from "@/components/primitives/toast/specialized-toasts";
 
 const meta: Meta<typeof TransactionNotification> = {
   title: "Components/Toast Components/Transaction Notification",
@@ -22,7 +22,6 @@ const meta: Meta<typeof TransactionNotification> = {
     isExpanded: { control: "boolean" },
     label: { control: "text" },
     progress: { control: { type: "range", min: 0, max: 100, step: 1 } },
-    onClose: { action: "closed" },
   },
 };
 

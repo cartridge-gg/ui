@@ -2,7 +2,7 @@
 
 ## Overview
 
-I have successfully implemented a comprehensive set of toast components based on the provided CSS specifications. These components include achievement toasts, network switch notifications, error toasts, and transaction notifications with animated progress bars.
+I have successfully implemented a comprehensive set of specialized toast components that integrate seamlessly with the existing Radix-based toast system. These components include achievement toasts, network switch notifications, error toasts, and transaction notifications with animated progress bars, all properly organized within the `src/components/primitives/toast/` directory structure.
 
 ## Components Implemented
 
@@ -126,43 +126,80 @@ Comprehensive Storybook stories have been created for all components:
 
 ## Usage Examples
 
+### Integration with Existing Toast System
+
+```tsx
+import { useToast } from "@/components/primitives/use-toast";
+import { Toaster } from "@/components/primitives/toaster";
+import {
+  showAchievementToast,
+  showNetworkSwitchToast,
+  showErrorToast,
+  showTransactionToast
+} from "@/components/primitives/toast";
+
+function MyComponent() {
+  const { toast } = useToast();
+
+  const handleAchievement = () => {
+    toast(showAchievementToast({
+      title: "Pacifist Path",
+      subtitle: "Earned!",
+      xpAmount: 100,
+      progress: 66.7,
+      isDraft: false
+    }));
+  };
+
+  const handleNetworkSwitch = () => {
+    toast(showNetworkSwitchToast({
+      networkName: "Starknet Mainnet",
+      networkIcon: <StarknetIcon size="default" />
+    }));
+  };
+
+  const handleError = () => {
+    toast(showErrorToast({
+      message: "Execution Error",
+      progress: 66.7
+    }));
+  };
+
+  const handleTransaction = () => {
+    toast(showTransactionToast({
+      status: "confirming",
+      isExpanded: true,
+      label: "New Game",
+      progress: 66.7
+    }));
+  };
+
+  return (
+    <div>
+      {/* Your component content */}
+      <Toaster />
+    </div>
+  );
+}
+```
+
+### Direct Component Usage
+
 ```tsx
 import {
   AchievementToast,
   NetworkSwitchToast,
   ErrorToast,
   TransactionNotification
-} from "@/components/toast-components";
+} from "@/components/primitives/toast";
 
-// Achievement notification
+// Direct usage (for custom implementations)
 <AchievementToast
   title="Pacifist Path"
   subtitle="Earned!"
   xpAmount={100}
   progress={66.7}
   isDraft={false}
-  onClose={() => console.log('Achievement toast closed')}
-/>
-
-// Network switch
-<NetworkSwitchToast
-  networkName="Starknet Mainnet"
-  networkIcon={<StarknetIcon size="default" />}
-/>
-
-// Error notification
-<ErrorToast
-  message="Execution Error"
-  progress={66.7}
-  onClose={() => console.log('Error dismissed')}
-/>
-
-// Transaction status
-<TransactionNotification
-  status="confirming"
-  isExpanded={true}
-  label="New Game"
-  progress={66.7}
 />
 ```
 
@@ -187,17 +224,24 @@ import {
 
 ## Files Created
 
-1. **`src/components/toast-components.tsx`** - Main component implementations
-2. **`src/stories/achievement-toast.stories.tsx`** - Achievement Toast stories
-3. **`src/stories/network-switch-toast.stories.tsx`** - Network Switch Toast stories
-4. **`src/stories/error-toast.stories.tsx`** - Error Toast stories
-5. **`src/stories/transaction-notification.stories.tsx`** - Transaction Notification stories
-6. **`src/stories/toast-supporting-components.stories.tsx`** - Close Button stories
-7. **`src/stories/xp-tag.stories.tsx`** - XP Tag stories
-8. **`src/stories/toast-progress-bar.stories.tsx`** - Progress Bar stories
-9. **`src/stories/toast-components-showcase.stories.tsx`** - Combined showcase
-10. **`src/components/index.ts`** - Updated exports
-11. **`TOAST_COMPONENTS_IMPLEMENTATION.md`** - This documentation
+### Core Implementation
+1. **`src/components/primitives/toast/specialized-toasts.tsx`** - Main component implementations
+2. **`src/components/primitives/toast/index.ts`** - Toast module exports
+3. **`src/components/primitives/index.ts`** - Updated to include specialized toasts
+
+### Storybook Stories
+4. **`src/stories/achievement-toast.stories.tsx`** - Achievement Toast stories
+5. **`src/stories/network-switch-toast.stories.tsx`** - Network Switch Toast stories
+6. **`src/stories/error-toast.stories.tsx`** - Error Toast stories
+7. **`src/stories/transaction-notification.stories.tsx`** - Transaction Notification stories
+8. **`src/stories/toast-supporting-components.stories.tsx`** - Close Button stories
+9. **`src/stories/xp-tag.stories.tsx`** - XP Tag stories
+10. **`src/stories/toast-progress-bar.stories.tsx`** - Progress Bar stories
+11. **`src/stories/toast-components-showcase.stories.tsx`** - Combined showcase
+12. **`src/stories/toast-integration.stories.tsx`** - Integration examples
+
+### Documentation
+13. **`TOAST_COMPONENTS_IMPLEMENTATION.md`** - This documentation
 
 ## Development Status
 
@@ -242,10 +286,23 @@ The components can be viewed in Storybook at:
 
 Each component has individual stories with interactive controls for testing different states and configurations. The showcase page displays all toast types together for easy comparison.
 
-## Fixed Issues
+## Integration Features
+
+✅ **Seamless Integration with Existing Toast System**:
+- Built on top of existing Radix-based toast infrastructure
+- Integrates with `useToast` hook and `Toaster` component
+- Maintains existing toast behavior (positioning, animations, dismissal)
+- Provides convenience functions for easy integration
+
+✅ **Proper Package Structure**:
+- Located in `src/components/primitives/toast/` following package conventions
+- Extends existing toast primitives without breaking changes
+- Maintains backward compatibility with current toast usage
+- Properly exported through the primitives module
 
 ✅ **Storybook Story Organization**: 
 - Separated individual component stories into dedicated files
 - Each component type now has its own story category
 - All toast variants are now visible in Storybook navigation
 - Added comprehensive showcase views
+- Includes integration examples showing useToast hook usage

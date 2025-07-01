@@ -29,6 +29,7 @@ export * from "./tabs";
 export * from "./textarea";
 export * from "./toast";
 export * from "./toaster";
+export * from "./toast/specialized-toasts";
 export * from "./toggle-group";
 export * from "./toggle";
 export * from "./tooltip";
