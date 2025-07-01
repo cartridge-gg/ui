@@ -188,9 +188,16 @@ import {
 ## Files Created
 
 1. **`src/components/toast-components.tsx`** - Main component implementations
-2. **`src/stories/toast-components.stories.tsx`** - Storybook stories
-3. **`src/components/index.ts`** - Updated exports
-4. **`TOAST_COMPONENTS_IMPLEMENTATION.md`** - This documentation
+2. **`src/stories/achievement-toast.stories.tsx`** - Achievement Toast stories
+3. **`src/stories/network-switch-toast.stories.tsx`** - Network Switch Toast stories
+4. **`src/stories/error-toast.stories.tsx`** - Error Toast stories
+5. **`src/stories/transaction-notification.stories.tsx`** - Transaction Notification stories
+6. **`src/stories/toast-supporting-components.stories.tsx`** - Close Button stories
+7. **`src/stories/xp-tag.stories.tsx`** - XP Tag stories
+8. **`src/stories/toast-progress-bar.stories.tsx`** - Progress Bar stories
+9. **`src/stories/toast-components-showcase.stories.tsx`** - Combined showcase
+10. **`src/components/index.ts`** - Updated exports
+11. **`TOAST_COMPONENTS_IMPLEMENTATION.md`** - This documentation
 
 ## Development Status
 
@@ -223,6 +230,22 @@ The toast components are ready for production use. Consider these enhancements:
 
 The components can be viewed in Storybook at:
 - **Local**: http://localhost:6002
-- **Category**: Components/Toast Components/
+- **Categories**: 
+  - `Components/Toast Components/Achievement Toast`
+  - `Components/Toast Components/Network Switch Toast`
+  - `Components/Toast Components/Error Toast`
+  - `Components/Toast Components/Transaction Notification`
+  - `Components/Toast Components/Supporting/Close Button`
+  - `Components/Toast Components/Supporting/XP Tag`
+  - `Components/Toast Components/Supporting/Toast Progress Bar`
+  - `Components/Toast Components/Showcase`
 
-Each component has individual stories with interactive controls for testing different states and configurations.
+Each component has individual stories with interactive controls for testing different states and configurations. The showcase page displays all toast types together for easy comparison.
+
+## Fixed Issues
+
+✅ **Storybook Story Organization**: 
+- Separated individual component stories into dedicated files
+- Each component type now has its own story category
+- All toast variants are now visible in Storybook navigation
+- Added comprehensive showcase views
