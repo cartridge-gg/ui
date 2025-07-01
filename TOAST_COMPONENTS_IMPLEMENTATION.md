@@ -129,8 +129,8 @@ Comprehensive Storybook stories have been created for all components:
 ### Integration with Existing Toast System
 
 ```tsx
-import { useToast } from "@/components/primitives/use-toast";
-import { Toaster } from "@/components/primitives/toaster";
+import { useToast } from "@/components/primitives/toast/use-toast";
+import { Toaster } from "@/components/primitives/toast/toaster";
 import {
   showAchievementToast,
   showNetworkSwitchToast,
