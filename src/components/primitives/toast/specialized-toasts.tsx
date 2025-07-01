@@ -20,7 +20,7 @@ import {
 
 // Base toast container for specialized toasts
 const specializedToastVariants = cva(
-  "flex flex-col items-start p-0 bg-[#161A17] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-lg border-0",
+  "flex flex-col items-start p-0 bg-[#161A17] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-lg border-0 overflow-hidden",
   {
     variants: {
       variant: {
@@ -137,9 +137,9 @@ const ToastProgressBar = memo<ToastProgressBarProps>(({ progress, variant = "ach
   const colors = getColors();
 
   return (
-    <div className={cn("w-full h-1 relative", colors.bg, className)}>
+    <div className={cn("w-full h-1 relative rounded-b-lg", colors.bg, className)}>
       <div
-        className={cn("h-full transition-all duration-1000 ease-out", colors.fill)}
+        className={cn("h-full transition-all duration-1000 ease-out rounded-b-lg", colors.fill)}
         style={{ width: `${animatedProgress}%` }}
       />
     </div>
@@ -171,32 +171,29 @@ const AchievementToast = memo<AchievementToastProps>(({
 
   return (
     <Toast className={cn(specializedToastVariants({ variant: "achievement" }), className)} {...props}>
-      <div className="flex items-start p-3 gap-2 w-full h-16">
-        <div className="flex items-center justify-between w-full gap-1">
-          <div className="flex items-center gap-1">
-            <div className="flex items-center justify-center w-10 h-10 bg-[#161A17] rounded p-[5px]">
-              <IconComponent size="default" style={{ color: iconColor }} />
-            </div>
-            <div className="flex flex-col justify-center gap-[2px]">
-              <span className="text-white text-base font-medium leading-5 tracking-[0.01em]">
-                {title}
-              </span>
-              <span className="text-[#808080] text-xs font-normal leading-4">
-                {subtitle}
-              </span>
-            </div>
+      <div className="flex items-center justify-between p-3 w-full h-16">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-10 h-10 bg-[#161A17] rounded p-[5px]">
+            <IconComponent size="default" style={{ color: iconColor }} />
           </div>
-          <div className="flex flex-col items-start p-[10px]">
-            <XPTag amount={xpAmount} isMainnet={!isDraft} />
+          <div className="flex flex-col justify-center gap-[2px]">
+            <span className="text-white text-base font-medium leading-5 tracking-[0.01em]">
+              {title}
+            </span>
+            <span className="text-[#808080] text-xs font-normal leading-4">
+              {subtitle}
+            </span>
           </div>
         </div>
-        <ToastClose asChild>
-          <CloseButton />
-        </ToastClose>
+        <div className="flex items-center gap-2">
+          <XPTag amount={xpAmount} isMainnet={!isDraft} />
+          <ToastClose asChild>
+            <CloseButton />
+          </ToastClose>
+        </div>
       </div>
       <ToastProgressBar 
         progress={progress} 
-        className="w-full" 
         variant="achievement"
       />
     </Toast>
@@ -218,8 +215,8 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(({
   ...props
 }) => (
   <Toast className={cn(specializedToastVariants({ variant: "network" }), className)} {...props}>
-    <div className="flex items-center p-[14px] gap-3 w-full h-full">
-      <div className="flex items-center gap-3 flex-1">
+    <div className="flex items-center justify-center p-3 w-full h-full">
+      <div className="flex items-center gap-3">
         <div className="w-6 h-6 rounded-full overflow-hidden">
           {networkIcon || <StarknetIcon size="default" />}
         </div>
@@ -246,20 +243,16 @@ const ErrorToast = memo<ErrorToastProps>(({
   ...props
 }) => (
   <Toast className={cn(specializedToastVariants({ variant: "error" }), className)} {...props}>
-    <div className="flex items-start w-full h-12">
-      <div className="flex items-center p-3 gap-2 flex-1 h-full">
-        <div className="flex items-center gap-2">
-          <AlertIcon size="default" className="text-[#0F1410]" />
-          <span className="text-[#0F1410] text-base font-medium leading-5 tracking-[0.01em]">
-            {message}
-          </span>
-        </div>
+    <div className="flex items-center justify-between p-3 w-full h-12">
+      <div className="flex items-center gap-3">
+        <AlertIcon size="default" className="text-[#0F1410]" />
+        <span className="text-[#0F1410] text-base font-medium leading-5 tracking-[0.01em]">
+          {message}
+        </span>
       </div>
-      <div className="flex items-center p-1">
-        <ToastClose asChild>
-          <CloseButton variant="translucent" />
-        </ToastClose>
-      </div>
+      <ToastClose asChild>
+        <CloseButton variant="translucent" />
+      </ToastClose>
     </div>
     <ToastProgressBar progress={progress} variant="error" />
   </Toast>
@@ -285,7 +278,7 @@ const TransactionNotification = memo<TransactionNotificationProps>(({
 }) => {
   if (!isExpanded) {
     return (
-      <Toast className="flex items-start p-[10px] w-12 h-12 bg-[#161A17] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-lg border-0" {...props}>
+      <Toast className="flex items-center justify-center p-[10px] w-12 h-12 bg-[#161A17] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-lg border-0" {...props}>
         <div className="w-7 h-7">
           {status === "confirming" ? (
             <SpinnerIcon size="default" className="text-[#33FF33] animate-spin" />
@@ -299,36 +292,32 @@ const TransactionNotification = memo<TransactionNotificationProps>(({
 
   return (
     <Toast className={cn(specializedToastVariants({ variant: "transaction" }), className)} {...props}>
-      <div className="flex items-start w-full h-12">
-        <div className="flex items-center p-3 gap-2 flex-1 h-full">
-          <div className="flex items-center gap-2 flex-1">
-            <div className="w-6 h-6">
-              {status === "confirming" ? (
-                <SpinnerIcon size="default" className="text-white animate-spin" />
-              ) : (
-                <CheckIcon size="default" className="text-white" />
-              )}
-            </div>
-            <span className="text-white text-base font-normal leading-5 tracking-[0.01em]">
-              {status === "confirming" ? "Confirming" : "Confirmed"}
-            </span>
-            {status === "confirming" && (
-              <div className="flex items-center px-1 py-[4px] bg-[rgba(0,0,0,0.08)] rounded-[2px]">
-                <div className="w-4 h-4 mr-1">
-                  <div className="w-[10px] h-[8px] bg-[#33FF33]" />
-                </div>
-                <span className="text-[#33FF33] text-xs font-normal leading-4">
-                  {label}
-                </span>
-              </div>
+      <div className="flex items-center justify-between p-3 w-full h-12">
+        <div className="flex items-center gap-3">
+          <div className="w-6 h-6">
+            {status === "confirming" ? (
+              <SpinnerIcon size="default" className="text-white animate-spin" />
+            ) : (
+              <CheckIcon size="default" className="text-white" />
             )}
           </div>
+          <span className="text-white text-base font-normal leading-5 tracking-[0.01em]">
+            {status === "confirming" ? "Confirming" : "Confirmed"}
+          </span>
+          {status === "confirming" && (
+            <div className="flex items-center px-2 py-1 bg-[rgba(0,0,0,0.08)] rounded-[2px] ml-2">
+              <div className="w-4 h-4 mr-1">
+                <div className="w-[10px] h-[8px] bg-[#33FF33]" />
+              </div>
+              <span className="text-[#33FF33] text-xs font-normal leading-4">
+                {label}
+              </span>
+            </div>
+          )}
         </div>
-        <div className="flex items-center p-1">
-          <ToastClose asChild>
-            <CloseButton />
-          </ToastClose>
-        </div>
+        <ToastClose asChild>
+          <CloseButton />
+        </ToastClose>
       </div>
       <ToastProgressBar 
         progress={status === "confirmed" ? 100 : progress} 
