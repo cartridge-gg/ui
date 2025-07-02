@@ -1,0 +1,17 @@
+query Teams {
+  me {
+    teams {
+      totalCount
+      edges {
+        node {
+          id
+          name
+          credits
+          deployments {
+            totalCount
+          }
+        }
+      }
+    }
+  }
+}

@@ -901,6 +901,7 @@ export type CreateCryptoPaymentInput = {
   network: Network;
   purchaseType: PurchaseType;
   starterpackId?: InputMaybe<Scalars['ID']>;
+  teamId?: InputMaybe<Scalars['ID']>;
   username: Scalars['String'];
 };
 
@@ -910,6 +911,7 @@ export type CreateLayerswapPaymentInput = {
   purchaseType: PurchaseType;
   sourceNetwork: LayerswapNetwork;
   starterpackId?: InputMaybe<Scalars['ID']>;
+  teamId?: InputMaybe<Scalars['ID']>;
   username: Scalars['String'];
 };
 
@@ -4633,6 +4635,11 @@ export type StarterPackQueryVariables = Exact<{
 
 export type StarterPackQuery = { __typename?: 'Query', starterpack?: { __typename?: 'StarterpackDetails', starterpack: { __typename?: 'Starterpack', name: string, description?: string | null, active: boolean, issuance: number, maxIssuance?: number | null, starterpackContract: { __typename?: 'StarterpackContractConnection', edges?: Array<{ __typename?: 'StarterpackContractEdge', node?: { __typename?: 'StarterpackContract', name: string, description?: string | null, iconURL?: string | null, contractAddress: string, supplyEntryPoint?: string | null, supplyCalldata?: Array<string> | null } | null } | null> | null } }, price: { __typename?: 'Credits', amount: string, decimals: number }, bonusCredits: { __typename?: 'Credits', amount: string, decimals: number }, mintAllowance?: { __typename?: 'MintAllowance', count: number, limit: number } | null } | null };
 
+export type TeamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TeamsQuery = { __typename?: 'Query', me?: { __typename?: 'Account', teams: { __typename?: 'TeamConnection', totalCount: number, edges?: Array<{ __typename?: 'TeamEdge', node?: { __typename?: 'Team', id: string, name: string, credits: number, deployments: { __typename?: 'DeploymentConnection', totalCount: number } } | null } | null> | null } } | null };
+
 export type TraceabilitiesQueryVariables = Exact<{
   projects: Array<TraceabilityProject> | TraceabilityProject;
 }>;
@@ -5684,6 +5691,37 @@ export const useStarterPackQuery = <
     useQuery<StarterPackQuery, TError, TData>(
       ['StarterPack', variables],
       useFetchData<StarterPackQuery, StarterPackQueryVariables>(StarterPackDocument).bind(null, variables),
+      options
+    );
+export const TeamsDocument = `
+    query Teams {
+  me {
+    teams {
+      totalCount
+      edges {
+        node {
+          id
+          name
+          credits
+          deployments {
+            totalCount
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useTeamsQuery = <
+      TData = TeamsQuery,
+      TError = unknown
+    >(
+      variables?: TeamsQueryVariables,
+      options?: UseQueryOptions<TeamsQuery, TError, TData>
+    ) =>
+    useQuery<TeamsQuery, TError, TData>(
+      variables === undefined ? ['Teams'] : ['Teams', variables],
+      useFetchData<TeamsQuery, TeamsQueryVariables>(TeamsDocument).bind(null, variables),
       options
     );
 export const TraceabilitiesDocument = `
