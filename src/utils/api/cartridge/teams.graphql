@@ -1,6 +1,6 @@
 query Teams {
   me {
-    teams {
+    teams(where: { deleted: false }) {
       totalCount
       edges {
         node {

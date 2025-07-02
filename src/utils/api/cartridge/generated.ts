@@ -5696,7 +5696,7 @@ export const useStarterPackQuery = <
 export const TeamsDocument = `
     query Teams {
   me {
-    teams {
+    teams(where: {deleted: false}) {
       totalCount
       edges {
         node {
