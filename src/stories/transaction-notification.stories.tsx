@@ -3,7 +3,7 @@ import { TransactionNotification } from "@/components/primitives/toast/specializ
 import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
 
 const meta: Meta<typeof TransactionNotification> = {
-  title: "Components/Toast Components/Transaction Notification",
+  title: "Primitives/Toast/Transaction Notification",
   component: TransactionNotification,
   parameters: {
     layout: "centered",

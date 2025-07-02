@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ToastProgressBar } from "@/components/primitives/toast/specialized-toasts";
 
 const meta: Meta<typeof ToastProgressBar> = {
-  title: "Components/Toast Components/Supporting/Toast Progress Bar",
+  title: "Primitives/Toast/Supporting/Toast Progress Bar",
   component: ToastProgressBar,
   parameters: {
     layout: "centered",

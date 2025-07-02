@@ -3,7 +3,7 @@ import { CloseButton } from "@/components/primitives/toast/specialized-toasts";
 
 // Close Button Stories
 const closeButtonMeta: Meta<typeof CloseButton> = {
-  title: "Components/Toast Components/Supporting/Close Button",
+  title: "Primitives/Toast/Supporting/Close Button",
   component: CloseButton,
   parameters: {
     layout: "centered",

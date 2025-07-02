@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { XPTag } from "@/components/primitives/toast/specialized-toasts";
 
 const meta: Meta<typeof XPTag> = {
-  title: "Components/Toast Components/Supporting/XP Tag",
+  title: "Primitives/Toast/Supporting/XP Tag",
   component: XPTag,
   parameters: {
     layout: "centered",

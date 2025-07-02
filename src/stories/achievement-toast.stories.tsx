@@ -3,7 +3,7 @@ import { AchievementToast } from "@/components/primitives/toast/specialized-toas
 import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
 
 const meta: Meta<typeof AchievementToast> = {
-  title: "Components/Toast Components/Achievement Toast",
+  title: "Primitives/Toast/Achievement Toast",
   component: AchievementToast,
   parameters: {
     layout: "centered",

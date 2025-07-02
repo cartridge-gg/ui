@@ -4,7 +4,7 @@ import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
 import { StarknetIcon } from "@/components/icons/brand";
 
 const meta: Meta<typeof NetworkSwitchToast> = {
-  title: "Components/Toast Components/Network Switch Toast",
+  title: "Primitives/Toast/Network Switch Toast",
   component: NetworkSwitchToast,
   parameters: {
     layout: "centered",

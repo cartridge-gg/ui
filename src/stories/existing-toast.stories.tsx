@@ -4,7 +4,7 @@ import { useToast } from "@/components/primitives/toast/use-toast";
 import { Toaster } from "@/components/primitives/toast/toaster";
 
 const meta: Meta = {
-  title: "Components/Toast Components/Existing Toast System",
+  title: "Primitives/Toast/Existing Toast System",
   parameters: {
     layout: "centered",
     backgrounds: {

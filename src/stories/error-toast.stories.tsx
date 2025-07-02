@@ -3,7 +3,7 @@ import { ErrorToast } from "@/components/primitives/toast/specialized-toasts";
 import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
 
 const meta: Meta<typeof ErrorToast> = {
-  title: "Components/Toast Components/Error Toast",
+  title: "Primitives/Toast/Error Toast",
   component: ErrorToast,
   parameters: {
     layout: "centered",

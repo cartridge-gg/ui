@@ -901,6 +901,7 @@ export type CreateCryptoPaymentInput = {
   network: Network;
   purchaseType: PurchaseType;
   starterpackId?: InputMaybe<Scalars['ID']>;
+  teamId?: InputMaybe<Scalars['ID']>;
   username: Scalars['String'];
 };
 
@@ -910,6 +911,7 @@ export type CreateLayerswapPaymentInput = {
   purchaseType: PurchaseType;
   sourceNetwork: LayerswapNetwork;
   starterpackId?: InputMaybe<Scalars['ID']>;
+  teamId?: InputMaybe<Scalars['ID']>;
   username: Scalars['String'];
 };
 
