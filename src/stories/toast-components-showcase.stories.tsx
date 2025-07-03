@@ -55,6 +55,7 @@ export const AllToastTypes: Story = {
                 xpAmount={100}
                 progress={66.7}
                 isDraft={false}
+                showClose={false}
                 // Prevent auto-dismiss for showcase
                 open={true}
                 onOpenChange={() => {}}
@@ -69,6 +70,7 @@ export const AllToastTypes: Story = {
                 xpAmount={100}
                 progress={16.7}
                 isDraft={true}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -82,6 +84,7 @@ export const AllToastTypes: Story = {
                 xpAmount={250}
                 progress={100}
                 isDraft={false}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -98,6 +101,7 @@ export const AllToastTypes: Story = {
               <NetworkSwitchToast
                 networkName="Starknet Mainnet"
                 networkIcon={<StarknetIcon size="default" />}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -108,6 +112,7 @@ export const AllToastTypes: Story = {
               <NetworkSwitchToast
                 networkName="Nums Chain"
                 networkIcon={<div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">N</div>}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -118,6 +123,7 @@ export const AllToastTypes: Story = {
               <NetworkSwitchToast
                 networkName="Ethereum Mainnet"
                 networkIcon={<div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">E</div>}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -134,6 +140,7 @@ export const AllToastTypes: Story = {
               <ErrorToast 
                 message="Execution Error" 
                 progress={66.7}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -144,6 +151,7 @@ export const AllToastTypes: Story = {
               <ErrorToast 
                 message="Network Timeout" 
                 progress={30}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -154,6 +162,7 @@ export const AllToastTypes: Story = {
               <ErrorToast 
                 message="Transaction Failed" 
                 progress={10}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -172,6 +181,7 @@ export const AllToastTypes: Story = {
                 isExpanded={true}
                 label="New Game"
                 progress={66.7}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -184,6 +194,7 @@ export const AllToastTypes: Story = {
                 isExpanded={true}
                 label="Token Swap"
                 progress={100}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -197,6 +208,7 @@ export const AllToastTypes: Story = {
                   <TransactionNotification 
                     status="confirming" 
                     isExpanded={false}
+                    showClose={false}
                     open={true}
                     onOpenChange={() => {}}
                   />
@@ -206,6 +218,7 @@ export const AllToastTypes: Story = {
                   <TransactionNotification 
                     status="confirmed" 
                     isExpanded={false}
+                    showClose={false}
                     open={true}
                     onOpenChange={() => {}}
                   />
@@ -234,12 +247,14 @@ export const ToastStack: Story = {
           xpAmount={150}
           progress={100}
           isDraft={false}
+          showClose={false}
           open={true}
           onOpenChange={() => {}}
         />
         <NetworkSwitchToast
           networkName="Ethereum Mainnet"
           networkIcon={<div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">E</div>}
+          showClose={false}
           open={true}
           onOpenChange={() => {}}
         />
@@ -248,12 +263,14 @@ export const ToastStack: Story = {
           isExpanded={true}
           label="Token Swap"
           progress={45}
+          showClose={false}
           open={true}
           onOpenChange={() => {}}
         />
         <ErrorToast 
           message="Network Timeout" 
           progress={30}
+          showClose={false}
           open={true}
           onOpenChange={() => {}}
         />
@@ -283,6 +300,7 @@ export const ProgressStates: Story = {
                   xpAmount={progress}
                   progress={progress}
                   isDraft={progress < 100}
+                  showClose={false}
                   open={true}
                   onOpenChange={() => {}}
                 />
@@ -300,6 +318,7 @@ export const ProgressStates: Story = {
                 <ErrorToast 
                   message={`Error at ${progress}%`}
                   progress={progress}
+                  showClose={false}
                   open={true}
                   onOpenChange={() => {}}
                 />
@@ -330,6 +349,7 @@ export const DurationGuide: Story = {
               <p className="text-gray-400 text-xs mb-1">Network Switch (3s)</p>
               <NetworkSwitchToast
                 networkName="Quick Switch"
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -342,6 +362,7 @@ export const DurationGuide: Story = {
                 isExpanded={true}
                 label="Quick Action"
                 progress={100}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -362,6 +383,7 @@ export const DurationGuide: Story = {
                 xpAmount={100}
                 progress={75}
                 isDraft={false}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -372,6 +394,7 @@ export const DurationGuide: Story = {
               <ErrorToast 
                 message="Standard Error"
                 progress={50}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -391,6 +414,7 @@ export const DurationGuide: Story = {
                 isExpanded={true}
                 label="Important Process"
                 progress={40}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -401,6 +425,7 @@ export const DurationGuide: Story = {
               <ErrorToast 
                 message="Critical System Error"
                 progress={20}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
@@ -421,12 +446,184 @@ export const DurationGuide: Story = {
                 xpAmount={500}
                 progress={100}
                 isDraft={false}
+                showClose={false}
                 open={true}
                 onOpenChange={() => {}}
               />
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  ),
+};
+
+export const WithCloseButtons: Story = {
+  render: () => (
+    <div className="max-w-4xl mx-auto space-y-8 p-6">
+      <div className="text-center mb-8">
+        <h1 className="text-white text-2xl font-bold mb-2">Toast Components with Close Buttons</h1>
+        <p className="text-gray-400 text-sm">Interactive toast components showing close button functionality</p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Achievement Toasts */}
+        <div className="space-y-4">
+          <h3 className="text-white text-lg font-semibold border-b border-gray-600 pb-2">Achievement Toasts</h3>
+          <div className="space-y-3">
+            <div>
+              <p className="text-gray-400 text-xs mb-2">Standard Achievement with Close Button</p>
+              <AchievementToast
+                title="Pacifist Path"
+                subtitle="Earned!"
+                xpAmount={100}
+                progress={66.7}
+                isDraft={false}
+                showClose={true}
+                open={true}
+                onOpenChange={() => {}}
+              />
+            </div>
+            
+            <div>
+              <p className="text-gray-400 text-xs mb-2">Draft Achievement with Close Button</p>
+              <AchievementToast
+                title="Diamonds"
+                subtitle="Earned!"
+                xpAmount={100}
+                progress={16.7}
+                isDraft={true}
+                showClose={true}
+                open={true}
+                onOpenChange={() => {}}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Network Switch Toasts */}
+        <div className="space-y-4">
+          <h3 className="text-white text-lg font-semibold border-b border-gray-600 pb-2">Network Switch Toasts</h3>
+          <div className="space-y-3">
+            <div>
+              <p className="text-gray-400 text-xs mb-2">Starknet Mainnet with Close Button</p>
+              <NetworkSwitchToast
+                networkName="Starknet Mainnet"
+                networkIcon={<StarknetIcon size="default" />}
+                showClose={true}
+                open={true}
+                onOpenChange={() => {}}
+              />
+            </div>
+            
+            <div>
+              <p className="text-gray-400 text-xs mb-2">Custom Network with Close Button</p>
+              <NetworkSwitchToast
+                networkName="Ethereum Mainnet"
+                networkIcon={<div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">E</div>}
+                showClose={true}
+                open={true}
+                onOpenChange={() => {}}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Error Toasts */}
+        <div className="space-y-4">
+          <h3 className="text-white text-lg font-semibold border-b border-gray-600 pb-2">Error Toasts</h3>
+          <div className="space-y-3">
+            <div>
+              <p className="text-gray-400 text-xs mb-2">Execution Error with Close Button</p>
+              <ErrorToast 
+                message="Execution Error" 
+                progress={66.7}
+                showClose={true}
+                open={true}
+                onOpenChange={() => {}}
+              />
+            </div>
+            
+            <div>
+              <p className="text-gray-400 text-xs mb-2">Network Timeout with Close Button</p>
+              <ErrorToast 
+                message="Network Timeout" 
+                progress={30}
+                showClose={true}
+                open={true}
+                onOpenChange={() => {}}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Transaction Notifications */}
+        <div className="space-y-4">
+          <h3 className="text-white text-lg font-semibold border-b border-gray-600 pb-2">Transaction Notifications</h3>
+          <div className="space-y-3">
+            <div>
+              <p className="text-gray-400 text-xs mb-2">Confirming Transaction with Close Button</p>
+              <TransactionNotification
+                status="confirming"
+                isExpanded={true}
+                label="New Game"
+                progress={66.7}
+                showClose={true}
+                open={true}
+                onOpenChange={() => {}}
+              />
+            </div>
+            
+            <div>
+              <p className="text-gray-400 text-xs mb-2">Confirmed Transaction with Close Button</p>
+              <TransactionNotification
+                status="confirmed"
+                isExpanded={true}
+                label="Token Swap"
+                progress={100}
+                showClose={true}
+                open={true}
+                onOpenChange={() => {}}
+              />
+            </div>
+
+            <div>
+              <p className="text-gray-400 text-xs mb-2">Collapsed States (no close buttons)</p>
+              <div className="flex gap-2">
+                <div>
+                  <p className="text-gray-400 text-xs mb-1">Confirming</p>
+                  <TransactionNotification 
+                    status="confirming" 
+                    isExpanded={false}
+                    showClose={false}
+                    open={true}
+                    onOpenChange={() => {}}
+                  />
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs mb-1">Confirmed</p>
+                  <TransactionNotification 
+                    status="confirmed" 
+                    isExpanded={false}
+                    showClose={false}
+                    open={true}
+                    onOpenChange={() => {}}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-8 p-4 bg-gray-800 rounded-lg">
+        <h3 className="text-white text-sm font-medium mb-2">Close Button Behavior</h3>
+        <ul className="text-gray-400 text-xs space-y-1">
+          <li>• <strong>Achievement & Transaction toasts:</strong> Standard close button (gray hover state)</li>
+          <li>• <strong>Error toasts:</strong> Translucent close button (darker on hover)</li>
+          <li>• <strong>Network toasts:</strong> Standard close button positioned on the right</li>
+          <li>• <strong>Collapsed transaction toasts:</strong> No close button (too small)</li>
+        </ul>
       </div>
     </div>
   ),

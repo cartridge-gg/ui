@@ -296,6 +296,15 @@ toast(showErrorToast({
   message: "Transaction failed",
   progress: 25,
   duration: 8000 // 8 seconds
+}));
+
+// Show transaction notification
+toast(showTransactionToast({
+  status: "confirming",
+  isExpanded: true,
+  label: "Token Swap",
+  progress: 45,
+  duration: 6000
 }));`}
           </pre>
         </div>
