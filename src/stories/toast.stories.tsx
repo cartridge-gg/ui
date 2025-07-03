@@ -1,5 +1,5 @@
 import { Button } from "@/components/primitives/button";
-import { useToast } from "@/components/primitives/use-toast";
+import { useToast } from "@/components/primitives/toast/use-toast";
 import { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof Toast> = {

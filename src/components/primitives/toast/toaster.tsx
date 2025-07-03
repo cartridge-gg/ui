@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   Toast,
   ToastClose,
@@ -7,8 +8,8 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from "@/components/primitives/toast";
-import { useToast } from "@/components/primitives/use-toast";
+} from "./toast";
+import { useToast } from "./use-toast";
 
 export function Toaster() {
   const { toasts } = useToast();
@@ -16,6 +17,13 @@ export function Toaster() {
   return (
     <ToastProvider>
       {toasts.map(function ({ id, title, description, action, ...props }) {
+        if (action) {
+          // If there's an action (specialized toast), clone it with the toast props
+          // The specialized toast already includes its own Toast wrapper
+          return React.cloneElement(action, { key: id, ...props });
+        }
+        
+        // Otherwise render the default toast layout
         return (
           <Toast key={id} {...props}>
             <div className="grid gap-1">
@@ -24,7 +32,6 @@ export function Toaster() {
                 <ToastDescription>{description}</ToastDescription>
               )}
             </div>
-            {action}
             <ToastClose />
           </Toast>
         );

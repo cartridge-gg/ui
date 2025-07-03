@@ -75,6 +75,18 @@ export const Constructive: Story = {
   },
 };
 
+export const Achievement: Story = {
+  args: {
+    children: (
+      <>
+        <Palette color="bg-achievement" label="bg-achievement" />
+        <Palette color="bg-achievement-100" label="bg-achievement-100" />
+        <Palette color="bg-achievement-200" label="bg-achievement-200" />
+      </>
+    ),
+  },
+};
+
 export const Spacer: Story = {
   args: {
     children: (
