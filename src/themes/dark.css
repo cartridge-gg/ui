@@ -23,5 +23,8 @@
     --foreground-200: #9c9c9c;
     --foreground-300: #808080;
     --foreground-400: #505050;
+
+    --achievement-100: #33ff33;
+    --achievement-200: #d3a4e5;
   }
 }

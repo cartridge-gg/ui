@@ -70,6 +70,11 @@ export const cartridgeTWPreset: Partial<Config> = {
         100: "var(--constructive-100)",
         foreground: "var(--spacer-100)",
       },
+      achievement: {
+        DEFAULT: "var(--achievement-100)",
+        100: "var(--achievement-100)",
+        200: "var(--achievement-200)",
+      },
       "wallet-theme": {
         DEFAULT: "var(--wallet-theme-100)",
         100: "var(--wallet-theme-100)",

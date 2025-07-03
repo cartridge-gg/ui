@@ -21,13 +21,13 @@ import {
 
 // Base toast container for specialized toasts
 const specializedToastVariants = cva(
-  "flex flex-col items-start p-0 bg-[#161A17] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-lg border-0 overflow-hidden relative",
+  "flex flex-col items-start p-0 bg-background shadow-lg rounded-lg border-0 overflow-hidden relative",
   {
     variants: {
       variant: {
         achievement: "w-[360px] h-[68px]",
         network: "w-[360px] h-[52px]",
-        error: "w-[360px] h-[52px] bg-[#E66666]",
+        error: "w-[360px] h-[52px] bg-destructive",
         transaction: "w-[360px] h-[52px]",
       },
     },
@@ -46,8 +46,8 @@ interface CloseButtonProps {
 
 const CloseButton = memo<CloseButtonProps>(({ onClick, variant = "default", className }) => {
   const iconColorClass = variant === "translucent" 
-    ? "text-[rgba(0,0,0,0.48)] hover:text-[rgba(0,0,0,0.64)]" 
-    : "text-[rgba(255,255,255,0.64)] hover:text-white";
+    ? "text-translucent-dark-200 hover:text-translucent-dark-300" 
+    : "text-foreground-200 hover:text-foreground";
 
   return (
     <button
@@ -75,12 +75,12 @@ const XPTag = memo<XPTagProps>(({ amount, isMainnet = true }) => (
   <div className="flex items-center gap-[2px]">
     <div className="w-5 h-5 flex items-center justify-center">
       {isMainnet ? (
-        <SparklesIcon variant="solid" size="sm" className="text-white" />
+        <SparklesIcon variant="solid" size="sm" className="text-foreground" />
       ) : (
-        <div className="w-3 h-3 bg-white rounded-sm" />
+        <div className="w-3 h-3 bg-foreground rounded-sm" />
       )}
     </div>
-    <span className="text-white text-sm font-normal leading-5">{amount}</span>
+    <span className="text-foreground text-sm font-normal leading-5">{amount}</span>
   </div>
 ));
 
@@ -104,13 +104,13 @@ const ToastProgressBar = memo<ToastProgressBarProps>(({ progress, variant = "ach
   const getColors = () => {
     if (variant === "error") {
       return {
-        bg: "bg-[rgba(0,0,0,0.08)]",
-        fill: "bg-[rgba(0,0,0,0.48)]"
+        bg: "bg-translucent-dark-100",
+        fill: "bg-translucent-dark-200"
       };
     }
     return {
-      bg: "bg-[#1E221F]",
-      fill: "bg-[#33FF33]"
+      bg: "bg-background-200",
+      fill: "bg-achievement"
     };
   };
 
@@ -151,7 +151,7 @@ const AchievementToast = memo<AchievementToastProps>(({
   ...props
 }) => {
   const IconComponent = isDraft ? CreditsIcon : AwardIcon;
-  const iconColor = isDraft ? "#D3A4E5" : "#33FF33";
+  const iconColor = isDraft ? "var(--achievement-200)" : "var(--achievement-100)";
 
   return (
     <Toast 
@@ -161,14 +161,14 @@ const AchievementToast = memo<AchievementToastProps>(({
     >
       <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <div className="flex items-center justify-center w-10 h-10 bg-[#161A17] rounded p-[5px] flex-shrink-0">
+          <div className="flex items-center justify-center w-10 h-10 bg-background rounded p-[5px] flex-shrink-0">
             <IconComponent size="lg" style={{ color: iconColor }} />
           </div>
           <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
-            <span className="text-white text-base font-medium leading-5 tracking-[0.01em] truncate">
+            <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
               {title}
             </span>
-            <span className="text-[#808080] text-xs font-normal leading-4 truncate">
+            <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
               {subtitle}
             </span>
           </div>
@@ -218,7 +218,7 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(({
         <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
           {networkIcon || <StarknetIcon size="default" />}
         </div>
-        <span className="text-white text-base font-medium leading-5 tracking-[0.01em] truncate">
+        <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
           Switched to {networkName}
         </span>
       </div>
@@ -258,8 +258,8 @@ const ErrorToast = memo<ErrorToastProps>(({
   >
     <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
       <div className="flex items-center gap-3 flex-1 min-w-0">
-        <AlertIcon size="default" className="text-[#0F1410] flex-shrink-0" />
-        <span className="text-[#0F1410] text-base font-medium leading-5 tracking-[0.01em] truncate">
+        <AlertIcon size="default" className="text-destructive-foreground flex-shrink-0" />
+        <span className="text-destructive-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
           {message}
         </span>
       </div>
@@ -300,15 +300,15 @@ const TransactionNotification = memo<TransactionNotificationProps>(({
   if (!isExpanded) {
     return (
       <Toast 
-        className="flex items-center justify-center p-[10px] w-12 h-12 bg-[#161A17] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-lg border-0 overflow-hidden" 
+        className="flex items-center justify-center p-[10px] w-12 h-12 bg-background shadow-lg rounded-lg border-0 overflow-hidden" 
         duration={duration}
         {...props}
       >
         <div className="w-7 h-7 flex items-center justify-center">
           {status === "confirming" ? (
-            <SpinnerIcon size="default" className="text-[#33FF33] animate-spin" />
+            <SpinnerIcon size="default" className="text-achievement animate-spin" />
           ) : (
-            <CheckIcon size="default" className="text-[#33FF33]" />
+            <CheckIcon size="default" className="text-achievement" />
           )}
         </div>
       </Toast>
@@ -325,20 +325,20 @@ const TransactionNotification = memo<TransactionNotificationProps>(({
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
             {status === "confirming" ? (
-              <SpinnerIcon size="default" className="text-white animate-spin" />
+              <SpinnerIcon size="default" className="text-foreground animate-spin" />
             ) : (
-              <CheckIcon size="default" className="text-white" />
+              <CheckIcon size="default" className="text-foreground" />
             )}
           </div>
-          <span className="text-white text-base font-normal leading-5 tracking-[0.01em] truncate">
+          <span className="text-foreground text-base font-normal leading-5 tracking-[0.01em] truncate">
             {status === "confirming" ? "Confirming" : "Confirmed"}
           </span>
           {status === "confirming" && (
-            <div className="flex items-center px-2 py-1 bg-[rgba(0,0,0,0.08)] rounded-[2px] ml-2 flex-shrink-0">
+            <div className="flex items-center px-2 py-1 bg-translucent-dark-100 rounded-[2px] ml-2 flex-shrink-0">
               <div className="w-4 h-4 mr-1 flex items-center justify-center">
-                <div className="w-[10px] h-[8px] bg-[#33FF33]" />
+                <div className="w-[10px] h-[8px] bg-achievement" />
               </div>
-              <span className="text-[#33FF33] text-xs font-normal leading-4 whitespace-nowrap">
+              <span className="text-achievement text-xs font-normal leading-4 whitespace-nowrap">
                 {label}
               </span>
             </div>
