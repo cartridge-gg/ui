@@ -16,6 +16,24 @@ query StripePayment($id: ID!) {
   }
 }
 
+query LayerswapSources($token: String!, $isMainnet: Boolean) {
+  layerswapSources(token: $token, isMainnet: $isMainnet) {
+    name
+    displayName
+    logo
+    chainId
+    type
+    tokens {
+      symbol
+      displayAsset
+      decimals
+      priceInUsd
+      status
+    }
+    depositMethods
+  }
+}
+
 mutation CreateCryptoPayment($input: CreateCryptoPaymentInput!) {
   createCryptoPayment(input: $input) {
     id
