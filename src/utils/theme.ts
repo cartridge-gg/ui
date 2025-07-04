@@ -1,11 +1,11 @@
 export type Theme = "light" | "dark" | "system";
 
 /**
- * Get the current theme from localStorage or default to system
+ * Get the current theme from localStorage or default to dark
  */
 export function getTheme(): Theme {
-  if (typeof window === "undefined") return "system";
-  return (localStorage.getItem("theme") as Theme) || "system";
+  if (typeof window === "undefined") return "dark";
+  return (localStorage.getItem("theme") as Theme) || "dark";
 }
 
 /**
@@ -72,10 +72,14 @@ export function initializeTheme() {
  * Hook to get current theme state
  */
 export function useTheme() {
-  if (typeof window === "undefined") return { theme: "system" as Theme, isDark: false };
+  if (typeof window === "undefined") return { theme: "dark" as Theme, isDark: true };
   
   const theme = getTheme();
-  const isDark = document.documentElement.classList.contains("dark");
+  const hasLightClass = document.documentElement.classList.contains("light");
+  const hasDarkClass = document.documentElement.classList.contains("dark");
+  
+  // If no theme class is applied, default to dark mode (since :root has dark values)
+  const isDark = hasDarkClass || (!hasLightClass && !hasDarkClass);
   
   return { theme, isDark };
 }

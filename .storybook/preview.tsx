@@ -50,7 +50,7 @@ const preview: Preview = {
         light: "light",
         dark: "dark",
       },
-      defaultTheme: "light",
+      defaultTheme: "dark",
     }),
     (Story) => {
       useThemeEffect({ theme: defaultTheme, assetUrl: "https://x.cartridge.gg" });
