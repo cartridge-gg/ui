@@ -56,7 +56,9 @@ export const Comparison: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <div>
-        <h3 className="text-white text-sm font-semibold mb-2">Mainnet vs Testnet</h3>
+        <h3 className="text-white text-sm font-semibold mb-2">
+          Mainnet vs Testnet
+        </h3>
         <div className="flex gap-4 items-center">
           <div className="text-center">
             <XPTag amount={100} isMainnet={true} />
@@ -69,7 +71,9 @@ export const Comparison: Story = {
         </div>
       </div>
       <div>
-        <h3 className="text-white text-sm font-semibold mb-2">Different Amounts</h3>
+        <h3 className="text-white text-sm font-semibold mb-2">
+          Different Amounts
+        </h3>
         <div className="flex gap-4 items-center">
           <XPTag amount={25} isMainnet={true} />
           <XPTag amount={100} isMainnet={true} />

@@ -202,10 +202,12 @@ function HeaderIcon({
     <IconWrapper variant={variant}>
       {(() => {
         // Check if we have a custom icon URL defined in CSS variables
-        const iconUrl = useMemo(() => 
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--theme-icon-url",
-          ), []
+        const iconUrl = useMemo(
+          () =>
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--theme-icon-url",
+            ),
+          [],
         );
 
         if (iconUrl) {

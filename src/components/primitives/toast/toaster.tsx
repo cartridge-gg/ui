@@ -22,7 +22,7 @@ export function Toaster() {
           // The specialized toast already includes its own Toast wrapper
           return React.cloneElement(action, { key: id, ...props });
         }
-        
+
         // Otherwise render the default toast layout
         return (
           <Toast key={id} {...props}>

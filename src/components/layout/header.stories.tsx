@@ -60,23 +60,27 @@ export const CustomIconUrl: Story = {
   decorators: [
     (Story) => {
       // Set the custom icon URL CSS variable
-      const originalIconUrl = document.documentElement.style.getPropertyValue("--theme-icon-url");
+      const originalIconUrl =
+        document.documentElement.style.getPropertyValue("--theme-icon-url");
       document.documentElement.style.setProperty(
         "--theme-icon-url",
-        "https://static.cartridge.gg/presets/slot/icon.svg"
+        "https://static.cartridge.gg/presets/slot/icon.svg",
       );
-      
+
       // Clean up on unmount
       React.useEffect(() => {
         return () => {
           if (originalIconUrl) {
-            document.documentElement.style.setProperty("--theme-icon-url", originalIconUrl);
+            document.documentElement.style.setProperty(
+              "--theme-icon-url",
+              originalIconUrl,
+            );
           } else {
             document.documentElement.style.removeProperty("--theme-icon-url");
           }
         };
       }, []);
-      
+
       return (
         <div>
           <Story />
@@ -87,7 +91,8 @@ export const CustomIconUrl: Story = {
   parameters: {
     docs: {
       description: {
-        story: "This example demonstrates using a custom icon URL via the `--theme-icon-url` CSS variable. The header will automatically use this URL for the icon when no Icon or icon prop is provided.",
+        story:
+          "This example demonstrates using a custom icon URL via the `--theme-icon-url` CSS variable. The header will automatically use this URL for the icon when no Icon or icon prop is provided.",
       },
     },
   },
@@ -102,23 +107,27 @@ export const CustomIconUrlExpanded: Story = {
   decorators: [
     (Story) => {
       // Set the custom icon URL CSS variable
-      const originalIconUrl = document.documentElement.style.getPropertyValue("--theme-icon-url");
+      const originalIconUrl =
+        document.documentElement.style.getPropertyValue("--theme-icon-url");
       document.documentElement.style.setProperty(
         "--theme-icon-url",
-        "https://static.cartridge.gg/presets/slot/icon.svg"
+        "https://static.cartridge.gg/presets/slot/icon.svg",
       );
-      
+
       // Clean up on unmount
       React.useEffect(() => {
         return () => {
           if (originalIconUrl) {
-            document.documentElement.style.setProperty("--theme-icon-url", originalIconUrl);
+            document.documentElement.style.setProperty(
+              "--theme-icon-url",
+              originalIconUrl,
+            );
           } else {
             document.documentElement.style.removeProperty("--theme-icon-url");
           }
         };
       }, []);
-      
+
       return (
         <div>
           <Story />

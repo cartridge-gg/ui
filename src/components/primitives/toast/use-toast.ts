@@ -3,10 +3,7 @@
 // Inspired by react-hot-toast library
 import * as React from "react";
 
-import type {
-  ToastActionElement,
-  ToastProps,
-} from "./toast";
+import type { ToastActionElement, ToastProps } from "./toast";
 
 const TOAST_LIMIT = 5;
 const TOAST_REMOVE_DELAY = 5000; // 5 seconds default
@@ -95,7 +92,7 @@ export const reducer = (state: State, action: Action): State => {
       // ! Side effects ! - This could be extracted into a dismissToast() action,
       // but I'll keep it here for simplicity
       if (toastId) {
-        const toast = state.toasts.find(t => t.id === toastId);
+        const toast = state.toasts.find((t) => t.id === toastId);
         addToRemoveQueue(toastId, toast?.duration);
       } else {
         state.toasts.forEach((toast) => {
