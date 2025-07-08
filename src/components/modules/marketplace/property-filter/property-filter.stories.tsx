@@ -34,6 +34,13 @@ export const Default: Story = {
           value={true}
         />
         <MarketplacePropertyFilter label="Property Name" count={100} />
+        <MarketplacePropertyFilter label="Property Name" count={100} disabled />
+        <MarketplacePropertyFilter
+          label="Property Name"
+          count={100}
+          value={true}
+          disabled
+        />
       </div>
     );
   },

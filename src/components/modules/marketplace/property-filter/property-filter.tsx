@@ -9,7 +9,7 @@ const marketplacePropertyFilterVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-transparent hover:bg-background-200 text-background-500 data-[selected=true]:text-foreground-200",
+          "bg-transparent hover:bg-background-200 text-background-500 data-[selected=true]:text-foreground-200 data-[disabled=true]:text-foreground-400 data-[disabled=true]:cursor-default",
       },
     },
     defaultVariants: {
@@ -25,12 +25,13 @@ export interface MarketplacePropertyFilterProps
   count: number;
   value?: boolean;
   setValue?: (value: boolean) => void;
+  disabled?: boolean;
 }
 
 export const MarketplacePropertyFilter = React.forwardRef<
   HTMLDivElement,
   MarketplacePropertyFilterProps
->(({ label, count, value, setValue, className, variant }, ref) => {
+>(({ label, count, value, setValue, disabled, className, variant }, ref) => {
   const [selected, setSelected] = React.useState<boolean>(!!value);
 
   const handleClick = useCallback(
@@ -52,18 +53,37 @@ export const MarketplacePropertyFilter = React.forwardRef<
     <div
       ref={ref}
       data-selected={selected}
+      data-disabled={disabled}
       className={cn(marketplacePropertyFilterVariants({ variant }), className)}
-      onClick={() => handleClick(!selected)}
+      onClick={() => !disabled && handleClick(!selected)}
     >
       <div className="flex items-center gap-2">
         {selected ? (
-          <CheckboxCheckedIcon size="sm" />
+          <CheckboxCheckedIcon
+            data-disabled={disabled}
+            size="sm"
+            className="text-foreground-400 data-[disabled=true]:text-background-500"
+          />
         ) : (
-          <CheckboxUncheckedIcon size="sm" />
+          <CheckboxUncheckedIcon
+            data-disabled={disabled}
+            size="sm"
+            className="text-foreground-400 data-[disabled=true]:text-background-500"
+          />
         )}
-        <p className="text-xs text-foreground-100">{label}</p>
+        <p
+          data-disabled={disabled}
+          className="text-xs text-foreground-100 data-[disabled=true]:text-foreground-400"
+        >
+          {label}
+        </p>
       </div>
-      <p className="text-xs text-foreground-100">{count}</p>
+      <p
+        data-disabled={disabled}
+        className="text-xs text-foreground-100 data-[disabled=true]:text-foreground-400"
+      >
+        {count}
+      </p>
     </div>
   );
 });
