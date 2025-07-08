@@ -1,0 +1,51 @@
+@layer base {
+  .light {
+    --background-100: #ffffff;
+    --background-125: #fdfdf9;
+    --background-150: #faf9f5;
+    --background-200: #f6f5f1;
+    --background-300: #f0efeb;
+    --background-400: #eaeae6;
+    --background-500: #e0dfd9;
+
+    --translucent-dark-100: #00000008;
+    --translucent-dark-150: #00000014;
+    --translucent-dark-200: #0000003d;
+    --translucent-dark-300: #00000052;
+
+    --translucent-light-100: #ffffff52;
+    --translucent-light-150: #ffffff85;
+    --translucent-light-200: #ffffffa3;
+    --translucent-light-300: #ffffffd1;
+
+    --spacer-100: #ffffff;
+
+    --foreground-100: #0f1410;
+    --foreground-200: #505050;
+    --foreground-300: #808080;
+    --foreground-400: #9c9c9c;
+
+    --primary-100: #fbcb4a;
+    --primary-200: #e6b83a;
+
+    --primary-foreground-100: #0f1410;
+
+    --wallet-theme-100: #ab9ff2;
+    --wallet-theme-200: #7483f7;
+    --wallet-theme-300: #e88a39;
+    --wallet-theme-400: #ff875b;
+    --wallet-theme-500: #7289da;
+    --wallet-theme-600: #3b99fc;
+
+    --secondary-100: #6eb36e;
+
+    --destructive-100: #dc4444;
+
+    --constructive-100: #22c55e;
+
+    --achievement-100: #22c55e;
+    --achievement-200: #c084d1;
+
+    --radius: 0.5rem;
+  }
+}

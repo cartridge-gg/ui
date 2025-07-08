@@ -11,6 +11,7 @@ export * from "./explorer";
 export * from "./hooks";
 export * from "./iframe";
 export * from "./network";
+export * from "./theme";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
