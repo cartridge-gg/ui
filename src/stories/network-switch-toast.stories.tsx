@@ -43,20 +43,32 @@ export const StarknetMainnet: Story = {
 export const NumsChain: Story = {
   args: {
     networkName: "Nums Chain",
-    networkIcon: <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">N</div>,
+    networkIcon: (
+      <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+        N
+      </div>
+    ),
   },
 };
 
 export const EthereumMainnet: Story = {
   args: {
     networkName: "Ethereum Mainnet",
-    networkIcon: <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">E</div>,
+    networkIcon: (
+      <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+        E
+      </div>
+    ),
   },
 };
 
 export const CustomNetwork: Story = {
   args: {
     networkName: "Custom Network",
-    networkIcon: <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">C</div>,
+    networkIcon: (
+      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+        C
+      </div>
+    ),
   },
 };

@@ -52,7 +52,9 @@ export const AllCloseButtonVariants: CloseButtonStory = {
         <p className="text-black text-xs mt-1">Translucent</p>
       </div>
       <div className="text-center">
-        <p className="text-gray-400 text-xs mb-2">Hover states are applied via CSS</p>
+        <p className="text-gray-400 text-xs mb-2">
+          Hover states are applied via CSS
+        </p>
         <p className="text-gray-400 text-xs">on actual interaction</p>
       </div>
     </div>

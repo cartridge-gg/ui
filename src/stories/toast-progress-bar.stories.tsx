@@ -66,7 +66,9 @@ export const ProgressComparison: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-white text-sm font-semibold mb-2">Achievement Progress</h3>
+        <h3 className="text-white text-sm font-semibold mb-2">
+          Achievement Progress
+        </h3>
         <div className="space-y-2">
           <div className="w-[360px]">
             <ToastProgressBar progress={25} variant="achievement" />
@@ -87,7 +89,9 @@ export const ProgressComparison: Story = {
         </div>
       </div>
       <div>
-        <h3 className="text-white text-sm font-semibold mb-2">Error Progress</h3>
+        <h3 className="text-white text-sm font-semibold mb-2">
+          Error Progress
+        </h3>
         <div className="space-y-2">
           <div className="w-[360px]">
             <ToastProgressBar progress={25} variant="error" />
