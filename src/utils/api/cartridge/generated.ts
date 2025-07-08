@@ -4922,7 +4922,7 @@ export type StarterPackQuery = { __typename?: 'Query', starterpack?: { __typenam
 export type TeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TeamsQuery = { __typename?: 'Query', me?: { __typename?: 'Account', teams: { __typename?: 'TeamConnection', totalCount: number, edges?: Array<{ __typename?: 'TeamEdge', node?: { __typename?: 'Team', id: string, name: string, credits: number, deployments: { __typename?: 'DeploymentConnection', totalCount: number } } | null } | null> | null } } | null };
+export type TeamsQuery = { __typename?: 'Query', me?: { __typename?: 'Account', teams: { __typename?: 'TeamConnection', totalCount: number, edges?: Array<{ __typename?: 'TeamEdge', node?: { __typename?: 'Team', id: string, name: string, credits: number, deployments: { __typename?: 'DeploymentConnection', totalCount: number, edges?: Array<{ __typename?: 'DeploymentEdge', node?: { __typename?: 'Deployment', project: string } | null } | null> | null } } | null } | null> | null } } | null };
 
 export type TraceabilitiesQueryVariables = Exact<{
   projects: Array<TraceabilityProject> | TraceabilityProject;
@@ -6018,8 +6018,13 @@ export const TeamsDocument = `
           id
           name
           credits
-          deployments {
+          deployments(where: {deprecated: false}) {
             totalCount
+            edges {
+              node {
+                project
+              }
+            }
           }
         }
       }
