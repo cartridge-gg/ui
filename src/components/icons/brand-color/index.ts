@@ -14,4 +14,5 @@ export * from "./solflare";
 export * from "./phantom";
 export * from "./rabby";
 export * from "./starknet";
+export * from "./usd";
 export * from "./wallet-connect";
