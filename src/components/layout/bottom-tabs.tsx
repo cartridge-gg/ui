@@ -35,6 +35,10 @@ export function LayoutBottomTabs({
 
   useEffect(() => {
     setWithBottomTabs(true);
+    
+    return () => {
+      setWithBottomTabs(false);
+    };
   }, [setWithBottomTabs]);
 
   return (

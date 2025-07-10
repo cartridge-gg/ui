@@ -10,9 +10,12 @@ export function LayoutFooter({
 }: PropsWithChildren & { className?: string; showCatridgeLogo?: boolean }) {
   const { setWithFooter } = useLayoutContext();
 
-  useEffect(() => {
-    setWithFooter(true);
-  }, [setWithFooter]);
+    useEffect(() => {
+      setWithFooter(true);
+      return () => {
+        setWithFooter(false);
+      };
+    }, [setWithFooter]);
 
   return (
     <div
