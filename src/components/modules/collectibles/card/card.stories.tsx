@@ -131,3 +131,11 @@ export const PriceLastSale: Story = {
     },
   },
 };
+
+export const FooterForced: Story = {
+  args: {
+    selected: false,
+    price: null,
+    lastSale: null,
+  },
+};
