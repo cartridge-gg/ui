@@ -1,21 +1,19 @@
 import { createContext, useContext } from "react";
 
+export type BottomLayout = 'none' | 'tabs' | 'footer';
+
 const initialState = {
   withBackground: false,
   setWithBackground: () => {},
-  withBottomTabs: false,
-  setWithBottomTabs: () => {},
-  withFooter: false,
-  setWithFooter: () => {},
+  bottomLayout: 'none' as BottomLayout,
+  setBottomLayout: () => {},
 };
 
 type LayoutContextType = {
   withBackground: boolean;
   setWithBackground: (withBackground: boolean) => void;
-  withBottomTabs: boolean;
-  setWithBottomTabs: (withBottomTabs: boolean) => void;
-  withFooter: boolean;
-  setWithFooter: (withFooter: boolean) => void;
+  bottomLayout: BottomLayout;
+  setBottomLayout: (bottomLayout: BottomLayout) => void;
 };
 
 export const LayoutContext = createContext<LayoutContextType>(initialState);

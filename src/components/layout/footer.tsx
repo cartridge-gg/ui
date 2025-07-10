@@ -8,14 +8,14 @@ export function LayoutFooter({
   className,
   showCatridgeLogo,
 }: PropsWithChildren & { className?: string; showCatridgeLogo?: boolean }) {
-  const { setWithFooter } = useLayoutContext();
+  const { setBottomLayout } = useLayoutContext();
 
     useEffect(() => {
-      setWithFooter(true);
+      setBottomLayout('footer');
       return () => {
-        setWithFooter(false);
+        setBottomLayout('none');
       };
-    }, [setWithFooter]);
+    }, [setBottomLayout]);
 
   return (
     <div

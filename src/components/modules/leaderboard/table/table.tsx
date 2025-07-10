@@ -7,7 +7,7 @@ export const LeaderboardTable = ({
   return (
     <div
       className={cn(
-        "relative flex flex-col gap-y-px rounded",
+        "relative flex flex-col gap-y-px rounded overflow-y-scroll",
         className,
       )}
       style={{

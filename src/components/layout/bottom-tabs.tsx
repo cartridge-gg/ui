@@ -31,15 +31,15 @@ export function LayoutBottomTabs({
   size,
   ...props
 }: LayoutBottomTabsProps) {
-  const { setWithBottomTabs } = useLayoutContext();
+  const { setBottomLayout } = useLayoutContext();
 
   useEffect(() => {
-    setWithBottomTabs(true);
+    setBottomLayout('tabs');
     
     return () => {
-      setWithBottomTabs(false);
+      setBottomLayout('none');
     };
-  }, [setWithBottomTabs]);
+  }, [setBottomLayout]);
 
   return (
     <div
