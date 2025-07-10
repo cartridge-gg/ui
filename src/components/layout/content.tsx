@@ -36,24 +36,20 @@ export function LayoutContent({
     };
   }, []);
 
-  const { withBottomTabs, withFooter } = useLayoutContext();
+  const { bottomLayout } = useLayoutContext();
   const mbCompensation = useMemo(() => {
-    if (withBottomTabs && withFooter) {
-      throw new Error("BottomTabs and Footer cannot be used at the same time");
-    }
-
     if (!isIframe()) {
       return;
     }
 
-    if (withBottomTabs && !withFooter) {
+    if (bottomLayout === 'tabs') {
       return "[@media(min-width:768px)_and_(min-height:528px)]:mb-[72px]";
     }
 
-    if (!withBottomTabs && withFooter) {
+    if (bottomLayout === 'footer') {
       return "[@media(min-width:768px)_and_(min-height:400px)]:mb-[200px]";
     }
-  }, [withBottomTabs, withFooter]);
+  }, [bottomLayout]);
 
   return (
     <div

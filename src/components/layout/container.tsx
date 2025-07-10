@@ -1,6 +1,6 @@
 import { isIframe, cn } from "@/utils";
 import { type PropsWithChildren, useEffect, useState } from "react";
-import { LayoutContext } from "./context";
+import { LayoutContext, BottomLayout } from "./context";
 
 export function useMediaQuery(query: string) {
   const [matches, setMatches] = useState(false);
@@ -29,18 +29,15 @@ export function LayoutContainer({
   onModalClick?: () => void;
 }) {
   const [withBackground, setWithBackground] = useState(false);
-  const [withBottomTabs, setWithBottomTabs] = useState(false);
-  const [withFooter, setWithFooter] = useState(false);
+  const [bottomLayout, setBottomLayout] = useState<BottomLayout>('none');
 
   return (
     <LayoutContext.Provider
       value={{
         withBackground,
         setWithBackground,
-        withBottomTabs,
-        setWithBottomTabs,
-        withFooter,
-        setWithFooter,
+        bottomLayout,
+        setBottomLayout,
       }}
     >
       <ResponsiveWrapper>
