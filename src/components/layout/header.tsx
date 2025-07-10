@@ -8,7 +8,6 @@ import {
 } from "@/components/icons";
 import { cn } from "@/utils";
 import { Button } from "@/components/primitives/button";
-import { isIframe } from "@/utils";
 import { Network } from "@/components/network";
 import { useUI } from "@/hooks";
 import { ConnectionTooltip, Thumbnail } from "@/index";
@@ -302,10 +301,6 @@ function CloseButton({ onClose }: { onClose?: () => void }) {
 }
 
 function BackButton({ onClick }: { onClick?: () => void }) {
-  if (!isIframe()) {
-    return null;
-  }
-
   return (
     <Button variant="icon" size="icon" onClick={onClick}>
       <ArrowIcon variant="left" />
@@ -314,10 +309,6 @@ function BackButton({ onClick }: { onClick?: () => void }) {
 }
 
 function SettingsButton({ onClick }: { onClick?: () => void }) {
-  if (!isIframe()) {
-    return null;
-  }
-
   return (
     <Button variant="icon" size="icon" onClick={onClick}>
       <GearIcon />
