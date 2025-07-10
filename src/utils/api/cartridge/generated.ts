@@ -928,6 +928,7 @@ export type CreateStripePaymentIntentInput = {
   isMainnet?: InputMaybe<Scalars['Boolean']>;
   purchaseType: PurchaseType;
   starterpackId?: InputMaybe<Scalars['ID']>;
+  teamId?: InputMaybe<Scalars['ID']>;
   username: Scalars['String'];
 };
 
@@ -1665,6 +1666,8 @@ export type HasValueInput = {
 export type Invoice = Node & {
   __typename?: 'Invoice';
   createdAt: Scalars['Time'];
+  /** Whether the invoice is finalized and ready for billing */
+  finalized: Scalars['Boolean'];
   id: Scalars['ID'];
   /** Auto-credits from incubator program. 1 credit = 0.01 USD. */
   incubatorCredits: Scalars['Int'];
@@ -1736,6 +1739,9 @@ export type InvoiceWhereInput = {
   createdAtLTE?: InputMaybe<Scalars['Time']>;
   createdAtNEQ?: InputMaybe<Scalars['Time']>;
   createdAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  /** finalized field predicates */
+  finalized?: InputMaybe<Scalars['Boolean']>;
+  finalizedNEQ?: InputMaybe<Scalars['Boolean']>;
   /** team edge predicates */
   hasTeam?: InputMaybe<Scalars['Boolean']>;
   hasTeamWith?: InputMaybe<Array<TeamWhereInput>>;
@@ -2024,6 +2030,7 @@ export type MintAllowance = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addOwner: Scalars['Boolean'];
   addPolicies?: Maybe<Array<PaymasterPolicy>>;
   addToTeam: Scalars['Boolean'];
   beginLogin: Scalars['JSON'];
@@ -2045,6 +2052,7 @@ export type Mutation = {
   register: Account;
   removeAllPolicies: Scalars['Boolean'];
   removeFromTeam: Scalars['Boolean'];
+  removeOwner: Scalars['Boolean'];
   removePaymaster: Scalars['Boolean'];
   removePolicy: Scalars['Boolean'];
   revokeSessions: Scalars['Boolean'];
@@ -2056,6 +2064,14 @@ export type Mutation = {
   updatePaymaster: Scalars['Boolean'];
   updateTeam: Team;
   upload: Array<File>;
+};
+
+
+export type MutationAddOwnerArgs = {
+  chainID: Scalars['String'];
+  owner: SignerInput;
+  signerGuid: Scalars['Felt'];
+  username: Scalars['String'];
 };
 
 
@@ -2185,6 +2201,14 @@ export type MutationRemoveAllPoliciesArgs = {
 export type MutationRemoveFromTeamArgs = {
   name: Scalars['ID'];
   usernames: Array<Scalars['String']>;
+};
+
+
+export type MutationRemoveOwnerArgs = {
+  chainID: Scalars['String'];
+  owner: SignerInput;
+  signerGuid: Scalars['Felt'];
+  username: Scalars['String'];
 };
 
 
