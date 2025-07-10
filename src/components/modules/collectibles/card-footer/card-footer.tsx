@@ -1,11 +1,12 @@
+import { Thumbnail } from "@/index";
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 
 export interface CollectibleCardFooterProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectibleCardFooterVariants> {
-  price?: string;
-  lastSale?: string;
+  price?: string | { value: string; image: string };
+  lastSale?: string | { value: string; image: string };
 }
 
 const collectibleCardFooterVariants = cva(
@@ -41,11 +42,36 @@ export function CollectibleCardFooter({
         <p>Last Sale</p>
       </div>
       <div className="flex justify-between items-center text-sm font-medium">
-        <p className={price ? "text-foreground-100" : ""}>
-          {price ? price : "--"}
-        </p>
-        <p>{lastSale ? lastSale : "--"}</p>
+        {typeof price === "string" ? (
+          <p className="text-foreground-100">{price}</p>
+        ) : !!price ? (
+          <Price price={price} />
+        ) : (
+          <p className="text-foreground-100">--</p>
+        )}
+        {typeof lastSale === "string" ? (
+          <p className="text-foreground-100">{lastSale}</p>
+        ) : !!lastSale ? (
+          <Price price={lastSale} />
+        ) : (
+          <p className="text-foreground-100">--</p>
+        )}
       </div>
+    </div>
+  );
+}
+
+function Price({ price }: { price: { value: string; image: string } }) {
+  return (
+    <div className="flex items-center gap-1">
+      <Thumbnail
+        icon={price.image}
+        variant="lighter"
+        size="xs"
+        rounded
+        transdark
+      />
+      <p className="text-foreground-100">{price.value}</p>
     </div>
   );
 }
