@@ -5,8 +5,8 @@ import { cva, VariantProps } from "class-variance-authority";
 export interface CollectibleCardFooterProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectibleCardFooterVariants> {
-  price?: string | { value: string; image: string };
-  lastSale?: string | { value: string; image: string };
+  price?: string | { value: string; image: string } | null;
+  lastSale?: string | { value: string; image: string } | null;
 }
 
 const collectibleCardFooterVariants = cva(
@@ -33,7 +33,7 @@ export function CollectibleCardFooter({
 }: CollectibleCardFooterProps) {
   return (
     <div
-      data-hidden={!price && !lastSale}
+      data-hidden={price === undefined && lastSale === undefined}
       className={cn(collectibleCardFooterVariants({ variant }), className)}
       {...props}
     >

@@ -11,8 +11,8 @@ export interface CollectibleCardProps
   icon?: string;
   totalCount?: number;
   listingCount?: number;
-  price?: string | { value: string; image: string };
-  lastSale?: string | { value: string; image: string };
+  price?: string | { value: string; image: string } | null;
+  lastSale?: string | { value: string; image: string } | null;
   selectable?: boolean;
   selected?: boolean;
   onSelect?: () => void;
