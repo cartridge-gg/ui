@@ -42,19 +42,19 @@ export function CollectibleCardFooter({
         <p>Last Sale</p>
       </div>
       <div className="flex justify-between items-center text-sm font-medium">
-        {typeof price === "string" ? (
+        {!!price && typeof price === "string" ? (
           <p className="text-foreground-100">{price}</p>
-        ) : !!price ? (
+        ) : !!price && typeof price === "object" ? (
           <Price price={price} />
         ) : (
-          <p className="text-foreground-100">--</p>
+          <p>--</p>
         )}
-        {typeof lastSale === "string" ? (
+        {!!lastSale && typeof lastSale === "string" ? (
           <p className="text-foreground-100">{lastSale}</p>
-        ) : !!lastSale ? (
+        ) : !!lastSale && typeof lastSale === "object" ? (
           <Price price={lastSale} />
         ) : (
-          <p className="text-foreground-100">--</p>
+          <p>--</p>
         )}
       </div>
     </div>
