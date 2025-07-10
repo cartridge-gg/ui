@@ -119,7 +119,15 @@ export const LastSale: Story = {
 export const PriceLastSale: Story = {
   args: {
     selected: false,
-    price: "$2",
-    lastSale: "$2",
+    price: {
+      value: "100",
+      image:
+        "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo",
+    },
+    lastSale: {
+      value: "90",
+      image:
+        "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo",
+    },
   },
 };
