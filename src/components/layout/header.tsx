@@ -168,7 +168,7 @@ type HeaderInnerProps = {
 
 type HeaderVariant = "expanded" | "compressed" | "hidden";
 
-function HeaderInner({
+export function HeaderInner({
   variant,
   Icon,
   icon,
@@ -193,7 +193,7 @@ function HeaderInner({
   );
 }
 
-function HeaderIcon({
+export function HeaderIcon({
   variant,
   Icon,
   icon,
@@ -242,7 +242,7 @@ function HeaderIcon({
   );
 }
 
-function IconWrapper({
+export function IconWrapper({
   variant,
   children,
 }: {
