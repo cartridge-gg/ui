@@ -6,7 +6,7 @@ import {
   GiftIcon,
   ControllerIcon,
 } from "@/components/icons";
-import { cn } from "@/utils";
+import { cn, isIframe } from "@/utils";
 import { Button } from "@/components/primitives/button";
 import { Network } from "@/components/network";
 import { useUI } from "@/hooks";
@@ -102,9 +102,8 @@ export function LayoutHeader({
 
       <div className="flex items-center justify-between absolute top-0 left-0 right-0 h-16 p-2 z-50">
         <div>
-          {onBack ? (
-            <BackButton onClick={onBack} />
-          ) : closeModal || onClose ? (
+          {onBack && <BackButton onClick={onBack} />}
+          {onClose || (closeModal && isIframe()) ? (
             <CloseButton
               onClose={() => {
                 if (onClose) onClose();
