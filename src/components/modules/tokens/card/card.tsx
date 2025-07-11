@@ -1,7 +1,7 @@
 import { Thumbnail } from "@/index";
 import { cn } from "@/utils";
 import { VariantProps } from "class-variance-authority";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   ActivityCard,
   activityCardVariants,
@@ -28,9 +28,18 @@ export const TokenCard = ({
   className,
   ...props
 }: TokenCardProps) => {
+  const [hover, setHover] = useState(false);
+
   const Logo = useMemo(
-    () => <Thumbnail icon={image} size="lg" variant="light" rounded />,
-    [image],
+    () => (
+      <Thumbnail
+        icon={image}
+        size="lg"
+        variant={hover ? "lighter" : "light"}
+        rounded
+      />
+    ),
+    [image, hover],
   );
 
   const style = useMemo(() => {
@@ -67,6 +76,8 @@ export const TokenCard = ({
       variant={variant}
       className={cn("rounded-none", className)}
       style={style}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       {...props}
     />
   );
