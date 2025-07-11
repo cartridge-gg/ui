@@ -33,7 +33,7 @@ export const connectionTooltipContentVariants = cva(
 
 export interface ConnectionTooltipContentProps
   extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof connectionTooltipContentVariants> {
+  VariantProps<typeof connectionTooltipContentVariants> {
   username: string;
   address: string;
   chainId: string;
@@ -171,7 +171,7 @@ export const ConnectionTooltipContent = ({
           variant="secondary"
           className="w-1/2 h-9 normal-case font-sans gap-1"
           disabled={!onFollowersClick}
-          onClick={onFollowersClick}
+          onPress={onFollowersClick}
         >
           <p className="text-sm font-medium text-foreground-100">{followers}</p>
           <span className="text-sm font-normal text-foreground-300">
@@ -182,7 +182,7 @@ export const ConnectionTooltipContent = ({
           variant="secondary"
           className="w-1/2 h-9 normal-case font-sans gap-1"
           disabled={!onFollowingsClick}
-          onClick={onFollowingsClick}
+          onPress={onFollowingsClick}
         >
           <p className="text-sm font-medium text-foreground-100">
             {followings}
@@ -195,7 +195,7 @@ export const ConnectionTooltipContent = ({
       <Button
         variant="secondary"
         className="w-full h-9 normal-case font-sans px-1.5 py-2"
-        onClick={handleLogout}
+        onPress={handleLogout}
       >
         <span className="text-sm font-medium text-foreground-100">Log Out</span>
       </Button>

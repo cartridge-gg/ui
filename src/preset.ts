@@ -1,8 +1,11 @@
 import { Config } from "tailwindcss";
 import twAnimate from "tailwindcss-animate";
 import defaultTheme from "tailwindcss/defaultTheme";
+// @ts-expect-error nativewind is not typed
+import nativewind from "nativewind/preset";
 
 export const cartridgeTWPreset: Partial<Config> = {
+  presets: [nativewind],
   darkMode: "selector",
   theme: {
     container: {
