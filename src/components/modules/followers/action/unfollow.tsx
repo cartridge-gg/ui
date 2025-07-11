@@ -1,11 +1,12 @@
-import { HTMLAttributes } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/utils";
 import { Button } from "@/index";
+import { ComponentProps } from "react";
+import { Pressable } from "react-native";
 
 interface FollowerUnfollowProps
-  extends HTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof followerUnfollowVariants> {
+  extends Omit<ComponentProps<typeof Pressable>, 'children'>,
+  VariantProps<typeof followerUnfollowVariants> {
   loading: boolean;
   disabled: boolean;
 }
@@ -19,7 +20,7 @@ export const followerUnfollowVariants = cva(
         darker: "",
         dark: "",
         default:
-          "bg-background-300 text-foreground-100 hover:bg-background-400 hover:text-destructive-100",
+          "bg-background-300 text-foreground-100 hover:bg-destructive-100 hover:text-destructive-foreground",
         light: "",
         lighter: "",
         lightest: "",
@@ -33,10 +34,10 @@ export const followerUnfollowVariants = cva(
 );
 
 export const FollowerUnfollow = ({
-  loading,
-  disabled,
   variant,
   className,
+  loading,
+  disabled,
   ...props
 }: FollowerUnfollowProps) => {
   return (

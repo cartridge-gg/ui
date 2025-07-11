@@ -1,26 +1,21 @@
-import { cn } from "@/utils";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Text } from "@/components";
 
-const P = ({ label, className }: { label: string; className: string }) => {
-  return <p className={cn("font-sans", className)}>{label}</p>;
-};
-
-const meta: Meta<typeof P> = {
+const meta: Meta<typeof Text> = {
   title: "Typography/Sans",
-  component: P,
+  component: Text,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },
   args: {
-    label: "The quick brown fox jumps over the lazy dog.",
-    className: "",
+    children: "The quick brown fox jumps over the lazy dog.",
   },
 };
 
 export default meta;
 
-type Story = StoryObj<typeof P>;
+type Story = StoryObj<typeof Text>;
 
 export const Regular10px: Story = {
   args: {

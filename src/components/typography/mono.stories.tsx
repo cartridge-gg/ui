@@ -1,47 +1,42 @@
-import { cn } from "@/utils";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Text } from "@/components";
 
-const P = ({ label, className }: { label: string; className: string }) => {
-  return <p className={cn("font-mono", className)}>{label}</p>;
-};
-
-const meta: Meta<typeof P> = {
+const meta: Meta<typeof Text> = {
   title: "Typography/Mono",
-  component: P,
+  component: Text,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },
   args: {
-    label: "The quick brown fox jumps over the lazy dog.",
-    className: "",
+    children: "The quick brown fox jumps over the lazy dog.",
   },
 };
 
 export default meta;
 
-type Story = StoryObj<typeof P>;
+type Story = StoryObj<typeof Text>;
 
 export const Regular14px: Story = {
   args: {
-    className: "text-sm",
+    className: "font-mono text-sm",
   },
 };
 
 export const Regular16px: Story = {
   args: {
-    className: "text-base",
+    className: "font-mono",
   },
 };
 
 export const Medium16px: Story = {
   args: {
-    className: "text-base font-medium",
+    className: "font-mono font-medium",
   },
 };
 
 export const SemiBold16px: Story = {
   args: {
-    className: "text-base font-semibold",
+    className: "font-mono font-semibold",
   },
 };
