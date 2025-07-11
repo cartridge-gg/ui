@@ -1,18 +1,18 @@
 import {
   ArrowIcon,
+  ControllerIcon,
   GearIcon,
+  GiftIcon,
   IconProps,
   TimesIcon,
-  GiftIcon,
-  ControllerIcon,
 } from "@/components/icons";
-import { cn, isIframe } from "@/utils";
-import { Button } from "@/components/primitives/button";
 import { Network } from "@/components/network";
+import { Button } from "@/components/primitives/button";
 import { useUI } from "@/hooks";
 import { ConnectionTooltip, Thumbnail } from "@/index";
-import { StarryHeaderBackground } from "./starry-header";
+import { cn, isIframe } from "@/utils";
 import { useMemo } from "react";
+import { StarryHeaderBackground } from "./starry-header";
 
 export type HeaderProps = HeaderInnerProps & {
   onBack?: () => void;
@@ -213,6 +213,14 @@ export function HeaderIcon({
           [],
         );
 
+        if (Icon) {
+          return <Icon size="lg" />;
+        }
+
+        if (icon) {
+          return icon;
+        }
+
         if (iconUrl) {
           // This will implicitly use the theme icon url CSS variable
           return (
@@ -221,14 +229,6 @@ export function HeaderIcon({
               size={variant === "expanded" ? "xxl" : "lg"}
             />
           );
-        }
-
-        if (Icon) {
-          return <Icon size="lg" />;
-        }
-
-        if (icon) {
-          return icon;
         }
 
         return (
