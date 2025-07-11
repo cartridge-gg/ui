@@ -28,6 +28,7 @@ query Controller($username: String!, $chainId: String!) {
       }
     }
     signers {
+	createdAt
       metadata {
         ... on WebauthnCredentials {
           __typename
