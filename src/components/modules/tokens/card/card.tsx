@@ -10,7 +10,7 @@ import {
 export interface TokenCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof activityCardVariants> {
-  image: string;
+  image: string | React.ReactNode;
   title: string;
   amount: string;
   value?: string;
