@@ -17,6 +17,8 @@ const meta: Meta<typeof LayoutHeader> = {
     variant: "compressed",
     title: "Welcome to Keychain",
     description: "Secure your digital assets",
+    onBack: undefined,
+    onClose: undefined,
   },
 } satisfies Meta<typeof LayoutHeader>;
 
@@ -135,4 +137,16 @@ export const CustomIconUrlExpanded: Story = {
       );
     },
   ],
+};
+
+export const WithBackButton: Story = {
+  args: {
+    onBack: () => {},
+  },
+};
+
+export const WithCloseButton: Story = {
+  args: {
+    onClose: () => {},
+  },
 };
