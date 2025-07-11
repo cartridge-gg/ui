@@ -6,7 +6,7 @@ import {
   GiftIcon,
   ControllerIcon,
 } from "@/components/icons";
-import { cn } from "@/utils";
+import { cn, isIframe } from "@/utils";
 import { Button } from "@/components/primitives/button";
 import { Network } from "@/components/network";
 import { useUI } from "@/hooks";
@@ -62,6 +62,10 @@ export function LayoutHeader({
     return coverUrl.includes("presets/cartridge/") || !coverUrl;
   }, [coverUrl]);
 
+  const shouldShowCloseButton = useMemo(() => {
+    return onClose || (closeModal && isIframe());
+  }, [onClose, closeModal]);
+
   return (
     <div className="sticky top-0 w-full z-10 bg-background">
       {(() => {
@@ -104,7 +108,7 @@ export function LayoutHeader({
         <div>
           {onBack ? (
             <BackButton onClick={onBack} />
-          ) : closeModal || onClose ? (
+          ) : shouldShowCloseButton ? (
             <CloseButton
               onClose={() => {
                 if (onClose) onClose();
