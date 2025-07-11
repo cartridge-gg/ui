@@ -62,6 +62,10 @@ export function LayoutHeader({
     return coverUrl.includes("presets/cartridge/") || !coverUrl;
   }, [coverUrl]);
 
+  const shouldShowCloseButton = useMemo(() => {
+    return onClose || (closeModal && isIframe());
+  }, [onClose, closeModal]);
+
   return (
     <div className="sticky top-0 w-full z-10 bg-background">
       {(() => {
@@ -102,8 +106,9 @@ export function LayoutHeader({
 
       <div className="flex items-center justify-between absolute top-0 left-0 right-0 h-16 p-2 z-50">
         <div>
-          {onBack && <BackButton onClick={onBack} />}
-          {onClose || (closeModal && isIframe()) ? (
+          {onBack ? (
+            <BackButton onClick={onBack} />
+          ) : shouldShowCloseButton ? (
             <CloseButton
               onClose={() => {
                 if (onClose) onClose();
