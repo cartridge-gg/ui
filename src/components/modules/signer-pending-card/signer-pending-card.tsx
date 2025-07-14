@@ -1,12 +1,12 @@
 import { MobileIcon } from "@/components/icons";
 import {
-  ArgentColorIcon,
-  DiscordColorIcon,
-  GoogleColorIcon,
-  MetaMaskColorIcon,
-  PhantomColorIcon,
-  RabbyColorIcon,
-  WalletConnectColorIcon,
+	ArgentColorIcon,
+	DiscordColorIcon,
+	GoogleColorIcon,
+	MetaMaskColorIcon,
+	PhantomColorIcon,
+	RabbyColorIcon,
+	WalletConnectColorIcon,
 } from "@/components/icons/brand-color";
 import { FingerprintIcon } from "@/components/icons/brand/fingerprint";
 import { cn, formatAddress } from "@/utils";
@@ -56,7 +56,7 @@ const variants: Record<
     label: "SMS",
   },
   passkey: {
-    icon: <FingerprintIcon size="xl" />,
+    icon: <FingerprintIcon size="xl" variant="line"/>,
     primaryText: "Waiting for Confirmation",
     secondaryText: "Continue in browser",
   },
