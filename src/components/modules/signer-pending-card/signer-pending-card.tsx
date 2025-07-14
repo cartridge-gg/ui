@@ -56,7 +56,7 @@ const variants: Record<
     label: "SMS",
   },
   passkey: {
-    icon: <FingerprintIcon size="xl" />,
+    icon: <FingerprintIcon size="xl" variant="line" />,
     primaryText: "Waiting for Confirmation",
     secondaryText: "Continue in browser",
   },

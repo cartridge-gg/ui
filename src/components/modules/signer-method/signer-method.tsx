@@ -39,7 +39,7 @@ const signers: Record<
     label: "SMS",
   },
   passkey: {
-    icon: <FingerprintIcon size="sm" />,
+    icon: <FingerprintIcon size="sm" variant="solid" />,
   },
   wallet: {
     icon: <WalletIcon variant="solid" size="sm" />,
