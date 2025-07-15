@@ -24,6 +24,7 @@ export type HeaderProps = HeaderInnerProps & {
   onOpenStarterPack?: () => void;
   onFollowersClick?: () => void;
   onFollowingsClick?: () => void;
+  onOpenSettings?: () => void;
   onLogout?: () => void;
 };
 
@@ -34,6 +35,7 @@ export function LayoutHeader({
   hideNetwork,
   hideSettings,
   onOpenStarterPack,
+  onOpenSettings,
   ...innerProps
 }: HeaderProps) {
   const {
@@ -140,7 +142,7 @@ export function LayoutHeader({
                   hideUsername={hideUsername}
                   onFollowersClick={onFollowersClick}
                   onFollowingsClick={onFollowingsClick}
-                  onOpenSettings={openSettings}
+                  onOpenSettings={onOpenSettings ? onOpenSettings : openSettings}
                   onLogout={onLogout}
                 />
               </>
