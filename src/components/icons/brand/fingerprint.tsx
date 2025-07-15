@@ -3,7 +3,7 @@ import { StateIconProps } from "../types";
 import { iconVariants } from "../utils";
 
 export const FingerprintIcon = memo(
-  forwardRef<SVGSVGElement,StateIconProps>(
+  forwardRef<SVGSVGElement, StateIconProps>(
     ({ className, size, variant, ...props }, forwardedRef) => (
       <svg
         viewBox="0 0 24 24"
