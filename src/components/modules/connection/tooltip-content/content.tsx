@@ -43,6 +43,7 @@ export interface ConnectionTooltipContentProps
   setOpen?: (open: boolean) => void;
   onFollowersClick?: () => void;
   onFollowingsClick?: () => void;
+  onOpenSettings?: () => void;
   onLogout?: () => void;
 }
 
@@ -56,6 +57,7 @@ export const ConnectionTooltipContent = ({
   setOpen,
   onFollowersClick,
   onFollowingsClick,
+  onOpenSettings,
   onLogout,
   variant,
   className,
@@ -101,6 +103,13 @@ export const ConnectionTooltipContent = ({
     setWithBackground(false);
     showQrCode(true);
   }, [showQrCode, setOpen, setWithBackground]);
+
+  const handleOpenSettings = useCallback(() => {
+    if (!onOpenSettings) return;
+    setOpen?.(false);
+    setWithBackground(false);
+    onOpenSettings();
+  }, [onOpenSettings, setOpen, setWithBackground]);
 
   const handleLogout = useCallback(() => {
     if (!onLogout) return;
@@ -192,6 +201,15 @@ export const ConnectionTooltipContent = ({
           </span>
         </Button>
       </div>
+      {onOpenSettings && (
+        <Button
+          variant="secondary"
+          className="w-full h-9 normal-case font-sans px-1.5 py-2"
+          onClick={handleOpenSettings}
+        >
+          <span className="text-sm font-medium text-foreground-100">Settings</span>
+        </Button>
+      )}
       <Button
         variant="secondary"
         className="w-full h-9 normal-case font-sans px-1.5 py-2"
