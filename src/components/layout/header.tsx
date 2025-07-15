@@ -143,6 +143,7 @@ export function LayoutHeader({
                   hideUsername={hideUsername}
                   onFollowersClick={onFollowersClick}
                   onFollowingsClick={onFollowingsClick}
+                  onOpenSettings={openSettings}
                   onLogout={onLogout}
                 />
               </>
@@ -167,6 +168,7 @@ type HeaderInnerProps = {
   variant?: HeaderVariant;
   right?: React.ReactElement;
   className?: string;
+  hideIcon?: boolean;
 };
 
 type HeaderVariant = "expanded" | "compressed" | "hidden";
@@ -179,6 +181,7 @@ export function HeaderInner({
   description,
   right,
   className,
+  hideIcon,
 }: HeaderInnerProps) {
   if (variant === "hidden") return null;
 
@@ -187,7 +190,9 @@ export function HeaderInner({
       className={cn("p-6 pb-0 flex items-center justify-between", className)}
     >
       <div className="flex items-center flex-shrink min-w-0 gap-3">
-        <HeaderIcon variant={variant} Icon={Icon} icon={icon} />
+        {!hideIcon && (
+          <HeaderIcon variant={variant} Icon={Icon} icon={icon} />
+        )}
         <Headline variant={variant} title={title} description={description} />
       </div>
 

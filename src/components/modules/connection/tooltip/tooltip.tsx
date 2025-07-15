@@ -50,6 +50,7 @@ export interface ConnectionTooltipProps
   hideNetwork?: boolean;
   onFollowersClick?: () => void;
   onFollowingsClick?: () => void;
+  onOpenSettings?: () => void;
   onLogout?: () => void;
 }
 
@@ -63,6 +64,7 @@ export const ConnectionTooltip = ({
   hideNetwork,
   onFollowersClick,
   onFollowingsClick,
+  onOpenSettings,
   onLogout,
   variant,
   className,
@@ -114,6 +116,12 @@ export const ConnectionTooltip = ({
     setWithBackground(false);
   }, [onLogout, setOpen, setWithBackground]);
 
+  const handleOpenSettings = useCallback(() => {
+    onOpenSettings?.();
+    setOpen(false);
+    setWithBackground(false);
+  }, [onOpenSettings, setOpen, setWithBackground]);
+
   return (
     <TooltipProvider>
       <Tooltip open={open} onOpenChange={() => {}}>
@@ -150,6 +158,9 @@ export const ConnectionTooltip = ({
               }
               onFollowingsClick={
                 onFollowingsClick ? handleFollowingsClick : undefined
+              }
+              onOpenSettings={
+                onOpenSettings ? handleOpenSettings : undefined
               }
               onLogout={onLogout ? handleLogout : undefined}
             />
