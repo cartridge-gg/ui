@@ -14,6 +14,7 @@ export * from "./dope-wars";
 export * from "./ethereum";
 export * from "./etherscan";
 export * from "./github";
+export * from "./google";
 export * from "./metamask";
 export * from "./open-zeppelin";
 export * from "./passkey";
