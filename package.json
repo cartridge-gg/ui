@@ -1,50 +1,51 @@
 {
   "name": "@cartridge/ui",
-  "version": "0.7.14-alpha.2",
+  "version": "0.7.14-alpha.2-test-test",
   "description": "Catridge UI component library, backend utils for apps spread accross org",
   "packageManager": "pnpm@10.10.0",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "types": "./src/index.d.ts",
   "type": "module",
   "files": [
+    "src",
     "dist"
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
     },
     "./preset": {
-      "types": "./dist/preset.d.ts",
-      "import": "./dist/preset.js",
-      "require": "./dist/preset.js"
+      "types": "./src/preset.d.ts",
+      "import": "./src/preset.js",
+      "require": "./src/preset.js"
     },
-    "./themes/default.css": "./dist/themes/default.css",
-    "./themes/dark.css": "./dist/themes/dark.css",
-    "./themes/fonts.css": "./dist/themes/fonts.css",
-    "./themes/scrollbar.css": "./dist/themes/scrollbar.css",
-    "./assets/*": "./dist/assets/*",
+    "./themes/default.css": "./src/themes/default.css",
+    "./themes/dark.css": "./src/themes/dark.css",
+    "./themes/fonts.css": "./src/themes/fonts.css",
+    "./themes/scrollbar.css": "./src/themes/scrollbar.css",
+    "./assets/*": "./src/assets/*",
     "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.js",
-      "require": "./dist/utils/index.js"
+      "types": "./src/utils/index.d.ts",
+      "import": "./src/utils/index.js",
+      "require": "./src/utils/index.js"
     },
     "./utils/api/cartridge": {
-      "types": "./dist/utils/api/cartridge/index.d.ts",
-      "import": "./dist/utils/api/cartridge/index.js",
-      "require": "./dist/utils/api/cartridge/index.js"
+      "types": "./src/utils/api/cartridge/index.d.ts",
+      "import": "./src/utils/api/cartridge/index.js",
+      "require": "./src/utils/api/cartridge/index.js"
     },
     "./utils/api/indexer": {
-      "types": "./dist/utils/api/indexer/index.d.ts",
-      "import": "./dist/utils/api/indexer/index.js",
-      "require": "./dist/utils/api/indexer/index.js"
+      "types": "./src/utils/api/indexer/index.d.ts",
+      "import": "./src/utils/api/indexer/index.js",
+      "require": "./src/utils/api/indexer/index.js"
     },
     "./utils/mock/data": {
-      "types": "./dist/utils/mock/data/index.d.ts",
-      "import": "./dist/utils/mock/data/index.js",
-      "require": "./dist/utils/mock/data/index.js"
+      "types": "./src/utils/mock/data/index.d.ts",
+      "import": "./src/utils/mock/data/index.js",
+      "require": "./src/utils/mock/data/index.js"
     }
   },
   "scripts": {
@@ -98,10 +99,7 @@
     "nativewind": "^4.1.23",
     "posthog-js-lite": "3.2.1",
     "react": "^18.2.0",
-    "react-native-css-interop": "^0.1.22",
-    "react-native-reanimated": "3.18.0",
     "react-native-safe-area-context": "5.4.0",
-    "react-native-web": "^0.19.13",
     "react-query": "^3.39.2",
     "starknet": "^6.21.0",
     "swr": "^2.2.5",
@@ -155,6 +153,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "~0.80.1",
+    "react-native-css-interop": "^0.1.22",
+    "react-native-web": "^0.19.13",
     "sonner": "^1.4.41",
     "starknet": "^6.21.0",
     "viem": "^2.21.32"
