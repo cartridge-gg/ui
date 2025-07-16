@@ -1,25 +1,40 @@
-import {
-  Button,
-  cn,
-  ShoppingCancelIcon,
-  ShoppingCartIcon,
-  TagIcon,
-} from "@/index";
+import { cva, VariantProps } from "class-variance-authority";
+import { cn } from "@/utils";
+import { Button, ShoppingCancelIcon, ShoppingCartIcon, TagIcon } from "@/index";
+import { ComponentProps } from "react";
+import { Pressable } from "react-native";
 
-export interface CollectibleItemActionProps
-  extends React.HTMLAttributes<HTMLButtonElement> {
+interface CollectibleItemActionProps
+  extends Omit<ComponentProps<typeof Pressable>, 'children'>,
+  VariantProps<typeof collectibleItemActionVariants> {
   variant?: "list" | "unlist" | "purchase";
 }
 
-export function CollectibleItemAction({
+export const collectibleItemActionVariants = cva(
+  "min-h-10 min-w-10 p-0",
+  {
+    variants: {
+      variant: {
+        list: "",
+        unlist: "",
+        purchase: "",
+      },
+    },
+    defaultVariants: {
+      variant: "list",
+    },
+  },
+);
+
+export const CollectibleItemAction = ({
   variant,
   className,
   ...props
-}: CollectibleItemActionProps) {
+}: CollectibleItemActionProps) => {
   return (
     <Button
       variant="secondary"
-      className={cn("min-h-10 min-w-10 p-0", className)}
+      className={cn(collectibleItemActionVariants({ variant }), className)}
       aria-label="Action item"
       {...props}
     >
@@ -49,6 +64,6 @@ export function CollectibleItemAction({
       })()}
     </Button>
   );
-}
+};
 
 export default CollectibleItemAction;

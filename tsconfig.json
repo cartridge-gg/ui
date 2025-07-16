@@ -51,6 +51,7 @@
     "src/preset.ts",
     "src/utils/**/*",
     "src/types/**/*",
+    "src/nativewind.d.ts",
     "src/**/*.svg"
   ]
 }

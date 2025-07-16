@@ -1,4 +1,4 @@
-import type { StorybookConfig } from "@storybook/react-vite";
+import type { StorybookConfig } from "@storybook/react-native-web-vite";
 import { fileURLToPath, URL } from "url";
 
 import { join, dirname, resolve } from "path";
@@ -10,6 +10,7 @@ import { join, dirname, resolve } from "path";
 function getAbsolutePath(value: string) {
   return dirname(require.resolve(join(value, "package.json")));
 }
+
 const config: StorybookConfig = {
   stories: ["../src/stories/**/*.mdx", "../src/**/*.stories.@(ts|tsx)"],
   addons: [
@@ -17,8 +18,16 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-themes"),
   ],
   framework: {
-    name: getAbsolutePath("@storybook/react-vite"),
-    options: {},
+		name: "@storybook/react-native-web-vite",
+		options: {
+			pluginReactOptions: {
+				jsxRuntime: "automatic",
+				jsxImportSource: "nativewind",
+				babel: {
+					plugins: ["react-native-reanimated/plugin"],
+				},
+			},
+		},
   },
   docs: {
     autodocs: "tag",
@@ -28,10 +37,23 @@ const config: StorybookConfig = {
     ? (head) => `${head}<style>*{animation:none!important;}</style>`
     : undefined,
 
-  async viteFinal(config, { configType }) {
+  async viteFinal(config) {
     const { mergeConfig } = await import('vite');
 
     return mergeConfig(config, {
+      esbuild: {
+        loader: 'tsx',
+        include: /\.(tsx?|jsx?|mjs)$/,
+      },
+      optimizeDeps: {
+        esbuildOptions: {
+          loader: {
+            '.mjs': 'tsx',
+            '.js': 'tsx',
+          },
+        },
+        include: ["@rn-primitives/slot"],
+      },
       resolve: {
         alias: {
           "@": fileURLToPath(new URL(resolve(__dirname, "../src/"), import.meta.url)),
@@ -40,4 +62,5 @@ const config: StorybookConfig = {
     })
   },
 };
+
 export default config;

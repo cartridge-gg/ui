@@ -59,22 +59,22 @@ function ExistingToastDemo() {
       </div>
 
       <div className="space-y-2">
-        <Button onClick={showBasicToast} className="w-full">
+        <Button onPress={showBasicToast} className="w-full">
           Show Basic Toast
         </Button>
         <Button
-          onClick={showDestructiveToast}
+          onPress={showDestructiveToast}
           variant="destructive"
           className="w-full"
         >
-          Show Error Toast
+          Show Destructive Toast
         </Button>
         <Button
-          onClick={showToastWithAction}
+          onPress={showToastWithAction}
           variant="outline"
           className="w-full"
         >
-          Show Toast with Action
+          Show Toast With Action
         </Button>
       </div>
 

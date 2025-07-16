@@ -10,7 +10,7 @@ import {
 
 interface FollowerSocialRowProps
   extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof followerSocialRowVariants> {
+  VariantProps<typeof followerSocialRowVariants> {
   username: string;
   following: boolean;
   unfollowable: boolean;
@@ -81,7 +81,7 @@ export const FollowerSocialRow = ({
       <FollowerAction
         following={following}
         unfollowable={unfollowable}
-        onClick={onSocialClick}
+        onPress={onSocialClick}
         variant={variant}
         loading={!!loading}
         disabled={!!disabled}

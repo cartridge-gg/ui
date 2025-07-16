@@ -127,7 +127,7 @@ export function LayoutHeader({
                     variant="secondary"
                     size="default"
                     className="gap-2"
-                    onClick={onOpenStarterPack}
+                    onPress={onOpenStarterPack}
                   >
                     <GiftIcon size="default" variant="line" />
                     <span>Get Starter Pack</span>
@@ -301,26 +301,26 @@ function Headline({
   );
 }
 
-function CloseButton({ onClose }: { onClose?: () => void }) {
-  return (
-    <Button variant="icon" size="icon" onClick={onClose}>
-      <TimesIcon />
-    </Button>
-  );
-}
-
 function BackButton({ onClick }: { onClick?: () => void }) {
   return (
-    <Button variant="icon" size="icon" onClick={onClick}>
-      <ArrowIcon variant="left" />
+    <Button variant="icon" size="icon" onPress={onClick}>
+      <ArrowIcon size="sm" variant="left" />
     </Button>
   );
 }
 
 function SettingsButton({ onClick }: { onClick?: () => void }) {
   return (
-    <Button variant="icon" size="icon" onClick={onClick}>
-      <GearIcon />
+    <Button variant="icon" size="icon" onPress={onClick}>
+      <GearIcon size="sm" />
+    </Button>
+  );
+}
+
+function CloseButton({ onClose }: { onClose?: () => void }) {
+  return (
+    <Button variant="icon" size="icon" onPress={onClose}>
+      <TimesIcon size="sm" />
     </Button>
   );
 }

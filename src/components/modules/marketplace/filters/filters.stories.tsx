@@ -68,7 +68,7 @@ export const Default: Story = {
           />
         </div>
         <MarketplaceHeader label="Properties">
-          {reset && <MarketplaceHeaderReset onClick={clear} />}
+          {reset && <MarketplaceHeaderReset onPress={clear} />}
         </MarketplaceHeader>
         {ATTRIBUTES.map((label, index) => (
           <MarketplacePropertyHeader key={index} label={label} count={17}>

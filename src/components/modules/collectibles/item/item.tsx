@@ -4,13 +4,13 @@ import { cva, VariantProps } from "class-variance-authority";
 
 export interface CollectibleItemProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof collectibleItemVariants> {
+  VariantProps<typeof collectibleItemVariants> {
   owner: string;
   quantity: number;
   price?: string;
   expiration?: string;
   action: "list" | "unlist" | "purchase";
-  onActionClick: () => void;
+  onActionPress: () => void;
 }
 
 const collectibleItemVariants = cva("flex gap-3 w-full overflow-hidden", {
@@ -30,7 +30,7 @@ export function CollectibleItem({
   price,
   expiration,
   action,
-  onActionClick,
+  onActionPress,
   variant,
   className,
   ...props
@@ -46,7 +46,7 @@ export function CollectibleItem({
         price={price}
         expiration={expiration}
       />
-      <CollectibleItemAction variant={action} onClick={onActionClick} />
+      <CollectibleItemAction variant={action} onPress={onActionPress} />
     </div>
   );
 }

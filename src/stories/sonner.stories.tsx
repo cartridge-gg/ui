@@ -16,6 +16,6 @@ export const Default: Story = {};
 
 function Sonner() {
   return (
-    <Button onClick={() => toast("Event has been created.")}>Toast</Button>
+    <Button onPress={() => toast("Event has been created.")}>Toast</Button>
   );
 }

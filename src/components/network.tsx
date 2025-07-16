@@ -47,7 +47,7 @@ export function Network({
               "flex items-center gap-2 font-inter bg-background hover:bg-background text-xs",
               tooltipTriggerClassName,
             )}
-            onClick={onCopy}
+            onPress={onCopy}
           >
             {(() => {
               switch (chainId) {

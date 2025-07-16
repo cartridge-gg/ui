@@ -7,7 +7,6 @@
     "!biome",
     "!typescript-language-server",
     "vtsls",
-    "eslint",
     "..."
   ],
   "languages": {

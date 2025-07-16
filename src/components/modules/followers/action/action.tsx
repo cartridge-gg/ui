@@ -1,12 +1,13 @@
-import { HTMLAttributes } from "react";
+import { ComponentProps } from "react";
 import { cva, VariantProps } from "class-variance-authority";
+import { Pressable } from "react-native";
 import FollowerUnfollow from "./unfollow";
 import FollowerFollowing from "./following";
 import FollowerFollow from "./follow";
 
 interface FollowerActionProps
-  extends HTMLAttributes<HTMLButtonElement | HTMLDivElement>,
-    VariantProps<typeof followerActionVariants> {
+  extends ComponentProps<typeof Pressable>,
+  VariantProps<typeof followerActionVariants> {
   following: boolean;
   unfollowable: boolean;
   loading: boolean;
@@ -38,13 +39,13 @@ export const FollowerAction = ({
   disabled,
   variant,
   className,
-  onClick,
+  onPress,
   ...props
 }: FollowerActionProps) => {
   if (following && unfollowable) {
     return (
       <FollowerUnfollow
-        onClick={onClick}
+        onPress={onPress}
         loading={loading}
         disabled={disabled}
         variant={variant}
@@ -55,12 +56,12 @@ export const FollowerAction = ({
   }
   if (following) {
     return (
-      <FollowerFollowing variant={variant} className={className} {...props} />
+      <FollowerFollowing variant={variant} className={className} />
     );
   }
   return (
     <FollowerFollow
-      onClick={onClick}
+      onPress={onPress}
       loading={loading}
       disabled={disabled}
       variant={variant}

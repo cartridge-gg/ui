@@ -22,7 +22,7 @@ const marketplaceSearchEngineVariants = cva("pr-9 caret-foreground-100", {
 
 export interface MarketplaceSearchEngineProps
   extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof marketplaceSearchEngineVariants> {
+  VariantProps<typeof marketplaceSearchEngineVariants> {
   search: string;
   setSearch: (search: string) => void;
   cards?: React.ReactNode[];
@@ -39,7 +39,7 @@ export const MarketplaceSearchEngine = React.forwardRef<
   useEffect(() => {
     if (!containerRef.current) return;
     const observer = new ResizeObserver((entries) => {
-      for (let entry of entries) {
+      for (const entry of entries) {
         if (entry.target === containerRef.current) {
           const size = entry.contentRect.width;
           setPaddingLeft(size);

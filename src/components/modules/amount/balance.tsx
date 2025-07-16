@@ -1,28 +1,19 @@
-import { cn } from "@/utils";
+import { GestureResponderEvent, Pressable } from "react-native";
 
 type BalanceProps = {
   value: number;
   symbol: string;
-  className?: string;
-  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onPress?: (e: GestureResponderEvent) => void;
 };
 
-export function Balance({
-  value,
-  symbol,
-  className,
-  onClick = () => {},
-}: BalanceProps) {
+export function Balance({ value, symbol, onPress }: BalanceProps) {
   return (
-    <div
-      className={cn(
-        "text-xs uppercase font-medium text-foreground-100 cursor-pointer",
-        "hover:underline",
-        className,
-      )}
-      onClick={onClick}
+    <Pressable
+      className="flex cursor-pointer items-center gap-1 text-xs text-foreground-300 hover:text-foreground-200"
+      onPress={onPress}
     >
-      {`${value.toLocaleString()} ${symbol}`}
-    </div>
+      <span>{value.toLocaleString()}</span>
+      <span>{symbol}</span>
+    </Pressable>
   );
 }

@@ -1,11 +1,12 @@
-import { HTMLAttributes } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/utils";
 import { Button } from "@/index";
+import { ComponentProps } from "react";
+import { Pressable } from "react-native";
 
 interface FollowerFollowProps
-  extends HTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof followerFollowVariants> {
+  extends Omit<ComponentProps<typeof Pressable>, 'children'>,
+  VariantProps<typeof followerFollowVariants> {
   loading: boolean;
   disabled: boolean;
 }
