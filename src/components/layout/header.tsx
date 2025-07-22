@@ -13,6 +13,7 @@ import { ConnectionTooltip, Thumbnail } from "@/index";
 import { cn, isIframe } from "@/utils";
 import { useMemo } from "react";
 import { StarryHeaderBackground } from "./starry-header";
+import { useCSSCustomProperty } from "@/hooks/theme";
 
 export type HeaderProps = HeaderInnerProps & {
   onBack?: () => void;
@@ -47,12 +48,8 @@ export function LayoutHeader({
     onLogout,
   } = useUI();
 
-  // Memoize the cover URL computation to avoid repeated DOM queries
-  const coverUrl = useMemo(() => {
-    return getComputedStyle(document.documentElement).getPropertyValue(
-      "--theme-cover-url",
-    );
-  }, []);
+  // Reactively watch for changes to the theme cover URL
+  const coverUrl = useCSSCustomProperty("--theme-cover-url");
 
   // Helper function to check if we should use StarryHeader
   const shouldUseStarryHeader = useMemo(() => {
@@ -206,17 +203,12 @@ export function HeaderIcon({
   Icon,
   icon,
 }: Pick<HeaderInnerProps, "variant" | "Icon" | "icon">) {
+  // Reactively watch for changes to the theme icon URL
+  const iconUrl = useCSSCustomProperty("--theme-icon-url");
+
   return (
     <IconWrapper variant={variant}>
       {(() => {
-        // Check if we have a custom icon URL defined in CSS variables
-        const iconUrl = useMemo(
-          () =>
-            getComputedStyle(document.documentElement).getPropertyValue(
-              "--theme-icon-url",
-            ),
-          [],
-        );
 
         if (Icon) {
           return <Icon size="lg" />;
