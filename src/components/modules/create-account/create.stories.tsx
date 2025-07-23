@@ -21,6 +21,7 @@ const meta: Meta<typeof CreateAccount> = {
     },
     error: undefined,
     isLoading: false,
+    autoFocus: false,
     onUsernameChange: fn(),
     onUsernameFocus: fn(),
     onUsernameClear: fn(),
@@ -122,5 +123,27 @@ export const ErrorTimeout: Story = {
       name: "Error",
       message: "The operation either timed out or was not allowed",
     },
+  },
+};
+
+// Story demonstrating autoFocus prop
+export const WithAutoFocus: Story = {
+  args: {
+    autoFocus: true,
+    usernameField: {
+      value: "",
+      error: undefined,
+    },
+    validation: {
+      status: "idle",
+      error: undefined,
+      exists: undefined,
+    },
+    error: undefined,
+    isLoading: false,
+    onUsernameChange: fn(),
+    onUsernameFocus: fn(),
+    onUsernameClear: fn(),
+    onKeyDown: fn(),
   },
 };
