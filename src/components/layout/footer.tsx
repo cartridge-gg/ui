@@ -6,8 +6,7 @@ import { cn } from "@/utils";
 export function LayoutFooter({
   children,
   className,
-  showCatridgeLogo,
-}: PropsWithChildren & { className?: string; showCatridgeLogo?: boolean }) {
+}: PropsWithChildren & { className?: string }) {
   const { setBottomLayout } = useLayoutContext();
 
     useEffect(() => {
@@ -21,26 +20,11 @@ export function LayoutFooter({
     <div
       className={cn(
         "flex flex-col gap-3 w-full p-6 pt-0 mt-auto bg-background shrink-0",
-        showCatridgeLogo && "pb-2",
         className,
       )}
     >
       <Separator orientation="horizontal" className="bg-spacer" />
       {children}
-      {showCatridgeLogo && (
-        <div className="flex flex-col">
-          <Separator orientation="horizontal" className="bg-spacer" />
-          <a
-            href="https://cartridge.gg"
-            target="_blank"
-            className="h-10 flex items-center justify-center gap-1 text-foreground-400 hover:text-primary transition-colors focus:outline-none focus:text-primary"
-          >
-            <ControllerIcon />
-            <div className="text-xs font-medium">by</div>
-            <CartridgeLogo />
-          </a>
-        </div>
-      )}
     </div>
   );
 }
@@ -95,7 +79,7 @@ export const CartridgeLogo = memo(
   ),
 );
 
-const ControllerIcon = () => (
+export const ControllerIcon = () => (
   <svg
     viewBox="0 0 64 64"
     fill="none"
