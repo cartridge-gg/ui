@@ -29,7 +29,7 @@ export function LayoutContainer({
   onModalClick?: () => void;
 }) {
   const [withBackground, setWithBackground] = useState(false);
-  const [bottomLayout, setBottomLayout] = useState<BottomLayout>('none');
+  const [bottomLayout, setBottomLayout] = useState<BottomLayout>("none");
 
   return (
     <LayoutContext.Provider

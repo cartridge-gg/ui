@@ -42,11 +42,11 @@ export function LayoutContent({
       return;
     }
 
-    if (bottomLayout === 'tabs') {
+    if (bottomLayout === "tabs") {
       return "[@media(min-width:768px)_and_(min-height:528px)]:mb-[72px]";
     }
 
-    if (bottomLayout === 'footer') {
+    if (bottomLayout === "footer") {
       return "[@media(min-width:768px)_and_(min-height:400px)]:mb-[200px]";
     }
   }, [bottomLayout]);

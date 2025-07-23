@@ -18,20 +18,26 @@ type CreateAccountProps = {
   onKeyDown: (e: React.KeyboardEvent) => void;
 };
 
-export const CreateAccount = React.forwardRef<HTMLInputElement, CreateAccountProps>(
-  ({
-    usernameField,
-    validation,
-    error,
-    isLoading,
-    autoFocus = false,
-    onUsernameChange,
-    onUsernameFocus,
-    onUsernameClear,
-    onKeyDown,
-  }, ref) => {
+export const CreateAccount = React.forwardRef<
+  HTMLInputElement,
+  CreateAccountProps
+>(
+  (
+    {
+      usernameField,
+      validation,
+      error,
+      isLoading,
+      autoFocus = false,
+      onUsernameChange,
+      onUsernameFocus,
+      onUsernameClear,
+      onKeyDown,
+    },
+    ref,
+  ) => {
     const internalRef = React.useRef<HTMLInputElement>(null);
-    
+
     // Use imperative handle to expose the input ref
     React.useImperativeHandle(ref, () => internalRef.current!);
 
@@ -74,9 +80,9 @@ export const CreateAccount = React.forwardRef<HTMLInputElement, CreateAccountPro
         />
       </div>
     );
-  }
+  },
 );
 
-CreateAccount.displayName = 'CreateAccount';
+CreateAccount.displayName = "CreateAccount";
 
 export default CreateAccount;

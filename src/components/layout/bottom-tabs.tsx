@@ -34,10 +34,10 @@ export function LayoutBottomTabs({
   const { setBottomLayout } = useLayoutContext();
 
   useEffect(() => {
-    setBottomLayout('tabs');
-    
+    setBottomLayout("tabs");
+
     return () => {
-      setBottomLayout('none');
+      setBottomLayout("none");
     };
   }, [setBottomLayout]);
 

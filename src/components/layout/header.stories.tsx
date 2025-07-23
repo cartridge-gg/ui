@@ -154,7 +154,7 @@ export const WithCloseButton: Story = {
 export const ReactiveThemeChanges: Story = {
   render: () => {
     const [themeCount, setThemeCount] = React.useState(0);
-    
+
     const themes = [
       {
         name: "Default",
@@ -162,15 +162,15 @@ export const ReactiveThemeChanges: Story = {
         iconUrl: "",
       },
       {
-        name: "Custom Theme 1", 
+        name: "Custom Theme 1",
         coverUrl: "url('https://picsum.photos/800/400?random=1')",
         iconUrl: "url('https://picsum.photos/100/100?random=1')",
       },
       {
         name: "Custom Theme 2",
-        coverUrl: "url('https://picsum.photos/800/400?random=2')", 
+        coverUrl: "url('https://picsum.photos/800/400?random=2')",
         iconUrl: "url('https://picsum.photos/100/100?random=2')",
-      }
+      },
     ];
 
     const currentTheme = themes[themeCount % themes.length];
@@ -178,13 +178,19 @@ export const ReactiveThemeChanges: Story = {
     // Apply theme changes dynamically
     React.useEffect(() => {
       if (currentTheme.coverUrl) {
-        document.documentElement.style.setProperty("--theme-cover-url", currentTheme.coverUrl);
+        document.documentElement.style.setProperty(
+          "--theme-cover-url",
+          currentTheme.coverUrl,
+        );
       } else {
         document.documentElement.style.removeProperty("--theme-cover-url");
       }
-      
+
       if (currentTheme.iconUrl) {
-        document.documentElement.style.setProperty("--theme-icon-url", currentTheme.iconUrl);
+        document.documentElement.style.setProperty(
+          "--theme-icon-url",
+          currentTheme.iconUrl,
+        );
       } else {
         document.documentElement.style.removeProperty("--theme-icon-url");
       }
@@ -198,16 +204,17 @@ export const ReactiveThemeChanges: Story = {
           </p>
           <button
             className="bg-primary text-primary-foreground px-4 py-2 rounded hover:opacity-80"
-            onClick={() => setThemeCount(c => c + 1)}
+            onClick={() => setThemeCount((c) => c + 1)}
           >
             Switch Theme ({((themeCount + 1) % themes.length) + 1}/3)
           </button>
           <p className="text-xs text-foreground-400 mt-2">
-            Notice how the header background and icon update reactively when you click the button.
-            This demonstrates the useCSSCustomProperty hook working correctly.
+            Notice how the header background and icon update reactively when you
+            click the button. This demonstrates the useCSSCustomProperty hook
+            working correctly.
           </p>
         </div>
-        
+
         <LayoutHeader
           variant="expanded"
           title="Reactive Theme Demo"

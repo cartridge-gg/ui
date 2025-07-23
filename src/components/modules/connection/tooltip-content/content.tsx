@@ -207,7 +207,9 @@ export const ConnectionTooltipContent = ({
           className="w-full h-9 normal-case font-sans px-1.5 py-2"
           onClick={handleOpenSettings}
         >
-          <span className="text-sm font-medium text-foreground-100">Settings</span>
+          <span className="text-sm font-medium text-foreground-100">
+            Settings
+          </span>
         </Button>
       )}
       <Button

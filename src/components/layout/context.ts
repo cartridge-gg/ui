@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
 
-export type BottomLayout = 'none' | 'tabs' | 'footer';
+export type BottomLayout = "none" | "tabs" | "footer";
 
 const initialState = {
   withBackground: false,
   setWithBackground: () => {},
-  bottomLayout: 'none' as BottomLayout,
+  bottomLayout: "none" as BottomLayout,
   setBottomLayout: () => {},
 };
 

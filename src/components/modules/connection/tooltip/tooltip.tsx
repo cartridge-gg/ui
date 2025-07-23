@@ -159,9 +159,7 @@ export const ConnectionTooltip = ({
               onFollowingsClick={
                 onFollowingsClick ? handleFollowingsClick : undefined
               }
-              onOpenSettings={
-                onOpenSettings ? handleOpenSettings : undefined
-              }
+              onOpenSettings={onOpenSettings ? handleOpenSettings : undefined}
               onLogout={onLogout ? handleLogout : undefined}
             />
           )}

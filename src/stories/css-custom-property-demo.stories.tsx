@@ -23,7 +23,7 @@ function CSSPropertyDemo() {
   const coverUrl = useCSSCustomProperty("--theme-cover-url");
   const iconUrl = useCSSCustomProperty("--theme-icon-url");
   const primaryColor = useCSSCustomProperty("--primary-100");
-  
+
   const [counter, setCounter] = React.useState(0);
 
   const updateProperties = React.useCallback(() => {
@@ -47,15 +47,15 @@ function CSSPropertyDemo() {
     // Update CSS custom properties
     document.documentElement.style.setProperty(
       "--primary-100",
-      colors[newCounter % colors.length]
+      colors[newCounter % colors.length],
     );
     document.documentElement.style.setProperty(
       "--theme-cover-url",
-      images[newCounter % images.length]
+      images[newCounter % images.length],
     );
     document.documentElement.style.setProperty(
       "--theme-icon-url",
-      icons[newCounter % icons.length]
+      icons[newCounter % icons.length],
     );
   }, [counter]);
 
@@ -69,9 +69,12 @@ function CSSPropertyDemo() {
   return (
     <div className="p-6 space-y-6">
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold">CSS Custom Property Watcher Demo</h2>
+        <h2 className="text-xl font-semibold">
+          CSS Custom Property Watcher Demo
+        </h2>
         <p className="text-foreground-300">
-          This demo shows how the `useCSSCustomProperty` hook reactively updates when CSS custom properties change.
+          This demo shows how the `useCSSCustomProperty` hook reactively updates
+          when CSS custom properties change.
         </p>
       </div>
 
@@ -87,7 +90,9 @@ function CSSPropertyDemo() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-background-200 p-4 rounded-lg">
           <h3 className="font-medium mb-2">Cover URL</h3>
-          <p className="text-xs text-foreground-400 break-all">{coverUrl || "not set"}</p>
+          <p className="text-xs text-foreground-400 break-all">
+            {coverUrl || "not set"}
+          </p>
           <div
             className="mt-2 h-20 bg-center bg-cover rounded"
             style={{ backgroundImage: coverUrl || "none" }}
@@ -96,7 +101,9 @@ function CSSPropertyDemo() {
 
         <div className="bg-background-200 p-4 rounded-lg">
           <h3 className="font-medium mb-2">Icon URL</h3>
-          <p className="text-xs text-foreground-400 break-all">{iconUrl || "not set"}</p>
+          <p className="text-xs text-foreground-400 break-all">
+            {iconUrl || "not set"}
+          </p>
           <div
             className="mt-2 h-20 w-20 bg-center bg-cover rounded"
             style={{ backgroundImage: iconUrl || "none" }}
@@ -105,7 +112,9 @@ function CSSPropertyDemo() {
 
         <div className="bg-background-200 p-4 rounded-lg">
           <h3 className="font-medium mb-2">Primary Color</h3>
-          <p className="text-xs text-foreground-400">{primaryColor || "default"}</p>
+          <p className="text-xs text-foreground-400">
+            {primaryColor || "default"}
+          </p>
           <div
             className="mt-2 h-20 rounded"
             style={{ backgroundColor: primaryColor || "var(--primary-100)" }}
@@ -116,7 +125,7 @@ function CSSPropertyDemo() {
       <div className="bg-background-300 p-4 rounded-lg">
         <h3 className="font-medium mb-2">Usage Example</h3>
         <pre className="text-xs text-foreground-300 overflow-x-auto">
-{`const coverUrl = useCSSCustomProperty("--theme-cover-url");
+          {`const coverUrl = useCSSCustomProperty("--theme-cover-url");
 const iconUrl = useCSSCustomProperty("--theme-icon-url");
 const primaryColor = useCSSCustomProperty("--primary-100");
 
@@ -139,4 +148,4 @@ export const InteractiveDemo: Story = {
       },
     },
   },
-}; 
+};

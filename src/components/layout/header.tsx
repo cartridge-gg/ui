@@ -142,7 +142,9 @@ export function LayoutHeader({
                   hideUsername={hideUsername}
                   onFollowersClick={onFollowersClick}
                   onFollowingsClick={onFollowingsClick}
-                  onOpenSettings={onOpenSettings ? onOpenSettings : openSettings}
+                  onOpenSettings={
+                    onOpenSettings ? onOpenSettings : openSettings
+                  }
                   onLogout={onLogout}
                 />
               </>
@@ -189,9 +191,7 @@ export function HeaderInner({
       className={cn("p-6 pb-0 flex items-center justify-between", className)}
     >
       <div className="flex items-center flex-shrink min-w-0 gap-3">
-        {!hideIcon && (
-          <HeaderIcon variant={variant} Icon={Icon} icon={icon} />
-        )}
+        {!hideIcon && <HeaderIcon variant={variant} Icon={Icon} icon={icon} />}
         <Headline variant={variant} title={title} description={description} />
       </div>
 
@@ -211,7 +211,6 @@ export function HeaderIcon({
   return (
     <IconWrapper variant={variant}>
       {(() => {
-
         if (Icon) {
           return <Icon size="lg" />;
         }
