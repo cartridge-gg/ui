@@ -10,6 +10,7 @@ import { Max } from "./max";
 import { Conversion } from "./conversion";
 import { Balance } from "./balance";
 import { useEffect, useMemo } from "react";
+import { GestureResponderEvent } from "react-native";
 
 type AmountProps = {
   amount: number | undefined;
@@ -19,14 +20,14 @@ type AmountProps = {
   decimals: number;
   submitted: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onMax: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => void;
+  onMax: (e: GestureResponderEvent) => void;
   setError: (error: Error | undefined) => void;
   title?: string;
   label?: string;
   min?: number;
   max?: number;
-  onPlus?: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => void;
-  onMinus?: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => void;
+  onPlus?: (e: GestureResponderEvent) => void;
+  onMinus?: (e: GestureResponderEvent) => void;
 };
 
 export function Amount({
@@ -65,7 +66,7 @@ export function Amount({
         <Header label={title} />
         <div className="flex items-center gap-2">
           <Header label={`${label}:`} />
-          <Balance value={balance} symbol={symbol} onClick={onMax} />
+          <Balance value={balance} symbol={symbol} onPress={onMax} />
         </div>
       </div>
 
@@ -83,14 +84,14 @@ export function Amount({
             />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-x-3 justify-end">
               <Conversion value={amount && !error ? conversion : undefined} />
-              <Max onClick={onMax} />
+              <Max onPress={onMax} />
             </div>
           </div>
           {!!onMinus && min !== undefined && (
             <Button
               variant="secondary"
               className="h-10 w-10 p-2.5"
-              onClick={onMinus}
+              onPress={onMinus}
               disabled={(amount || 0) <= min}
             >
               <MinusIcon size="xs" />
@@ -100,7 +101,7 @@ export function Amount({
             <Button
               variant="secondary"
               className="h-10 w-10 p-2.5"
-              onClick={onPlus}
+              onPress={onPlus}
               disabled={(amount || 0) >= max}
             >
               <PlusIcon variant="solid" size="xs" />

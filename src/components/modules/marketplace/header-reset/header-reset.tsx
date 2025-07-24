@@ -1,7 +1,8 @@
 import { Button } from "@/index";
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import React, { HTMLAttributes } from "react";
+import React, { ComponentProps } from "react";
+import { Pressable, View } from "react-native";
 
 const marketplaceHeaderVariants = cva(
   "h-8 px-3 py-2 normal-case tracking-normal font-medium rounded",
@@ -19,13 +20,14 @@ const marketplaceHeaderVariants = cva(
 );
 
 export interface MarketplaceHeaderResetProps
-  extends HTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof marketplaceHeaderVariants> {
+  extends Omit<ComponentProps<typeof Pressable>, 'children'>,
+  VariantProps<typeof marketplaceHeaderVariants> {
   label?: string;
+  children?: React.ReactNode;
 }
 
 export const MarketplaceHeaderReset = React.forwardRef<
-  HTMLButtonElement,
+  View,
   MarketplaceHeaderResetProps
 >(({ label = "Clear", className, variant, children, ...props }, ref) => {
   return (

@@ -29,11 +29,11 @@ export function AchievementPin({
     <Button
       variant="tertiary"
       size="tall"
-      className="grow"
+      className="grow gap-1"
       isLoading={loading}
       isActive={pinned}
       disabled={disabled}
-      onClick={handleClick}
+      onPress={handleClick}
     >
       <TrackIcon size="sm" variant={pinned ? "solid" : "line"} />
     </Button>

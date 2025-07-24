@@ -25,7 +25,7 @@ const children = (
     <Button
       className="lowercase font-inter flex gap-1.5 px-3 py-2.5"
       variant="secondary"
-      onClick={fn()}
+      onPress={fn()}
     >
       <SpaceInvaderIcon variant="solid" size="sm" />
       <p className="text-sm">Shinobi</p>
@@ -33,12 +33,12 @@ const children = (
     <Button
       className="lowercase font-inter flex gap-1.5 p-2"
       variant="secondary"
-      onClick={fn()}
+      onPress={fn()}
     >
       <BellIcon variant="solid" size="default" />
       <p className="text-sm bg-background-300 rounded-full px-1.5 py-0.5">3</p>
     </Button>
-    <Button variant="icon" size="icon" onClick={fn()}>
+    <Button variant="icon" size="icon" onPress={fn()}>
       <DotsIcon size="default" />
     </Button>
   </>
@@ -48,7 +48,7 @@ export const Default: Story = {};
 
 export const DefaultVisitor: Story = {
   args: {
-    children: <Button onClick={fn()}>Connect</Button>,
+    children: <Button onPress={fn()}>Connect</Button>,
   },
 };
 
@@ -69,7 +69,7 @@ export const ThemeVisitor: Story = {
   args: {
     cover:
       "https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png",
-    children: <Button onClick={fn()}>Connect</Button>,
+    children: <Button onPress={fn()}>Connect</Button>,
   },
 };
 

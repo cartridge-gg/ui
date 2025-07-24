@@ -17,7 +17,7 @@ export function AchievementPagination({
       size="icon"
       className="rounded-none text-foreground-300 hover:text-foreground-200"
       disabled={disabled}
-      onClick={onClick}
+      onPress={onClick}
     >
       {direction === "left" ? (
         <WedgeIcon variant="left" size="sm" />
