@@ -67,14 +67,14 @@ function Block({
   return (
     <div
       className={cn(
-        "flex justify-between items-center text-xs px-3 py-2",
+        "flex justify-between items-center text-xs px-3 py-2 w-full box-border min-w-0",
         error
           ? "bg-destructive-100 text-destructive-foreground"
           : "bg-background-300 text-foreground-300",
         className,
       )}
     >
-      {children}
+      <span className="break-words min-w-0 flex-1">{children}</span>
     </div>
   );
 }
@@ -82,15 +82,17 @@ function Block({
 function HelpBlock() {
   return (
     <Block error>
-      <div>Having trouble signing up?</div>
-      <a
-        href="https://docs.cartridge.gg/controller/passkey-support"
-        target="_blank"
-        className="flex items-center gap-1 hover:underline"
-      >
-        <div>Controller Docs</div>
-        <ExternalIcon size="xs" />
-      </a>
+      <div className="flex items-center justify-between w-full gap-2">
+        <span className="min-w-0 flex-shrink">Having trouble signing up?</span>
+        <a
+          href="https://docs.cartridge.gg/controller/passkey-support"
+          target="_blank"
+          className="flex items-center gap-1 hover:underline flex-shrink-0"
+        >
+          <span>Controller Docs</span>
+          <ExternalIcon size="xs" />
+        </a>
+      </div>
     </Block>
   );
 }
