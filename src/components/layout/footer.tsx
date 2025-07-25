@@ -1,4 +1,3 @@
-import { Separator } from "@/index";
 import { forwardRef, memo, PropsWithChildren, useEffect } from "react";
 import { useLayoutContext } from "./context";
 import { cn } from "@/utils";
@@ -23,7 +22,6 @@ export function LayoutFooter({
         className,
       )}
     >
-      <Separator orientation="horizontal" className="bg-spacer" />
       {children}
     </div>
   );
