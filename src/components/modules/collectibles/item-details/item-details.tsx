@@ -51,9 +51,9 @@ export function CollectibleItemDetails({
       </div>
       <div className="flex justify-end items-center gap-2 min-w-40 overflow-hidden">
         <p className="min-w-10">{quantity}</p>
-        <div className="flex gap-1 items-center">
+        <div className="min-w-14 flex gap-1 items-center">
           {logo && <Thumbnail icon={logo} size="xs" rounded centered />}
-          <p className={cn("min-w-14", !price && "text-foreground-400")}>
+          <p className={cn(!price ? "text-foreground-400" : "")}>
             {price || "--"}
           </p>
         </div>
