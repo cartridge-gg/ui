@@ -8,6 +8,7 @@ export interface CollectibleItemProps
   owner: string;
   quantity: number;
   price?: string;
+  logo?: string;
   expiration?: string;
   action: "list" | "unlist" | "purchase";
   onActionClick: () => void;
@@ -28,6 +29,7 @@ export function CollectibleItem({
   owner,
   quantity,
   price,
+  logo,
   expiration,
   action,
   onActionClick,
@@ -44,6 +46,7 @@ export function CollectibleItem({
         owner={owner}
         quantity={quantity}
         price={price}
+        logo={logo}
         expiration={expiration}
       />
       <CollectibleItemAction variant={action} onClick={onActionClick} />

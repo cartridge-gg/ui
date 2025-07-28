@@ -1,4 +1,4 @@
-import { AchievementPlayerAvatar } from "@/index";
+import { AchievementPlayerAvatar, Thumbnail } from "@/index";
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 
@@ -8,6 +8,7 @@ export interface CollectibleItemDetailsProps
   owner: string;
   quantity: number;
   price?: string;
+  logo?: string;
   expiration?: string;
 }
 
@@ -29,6 +30,7 @@ export function CollectibleItemDetails({
   owner,
   quantity,
   price,
+  logo,
   expiration,
   variant,
   className,
@@ -49,9 +51,12 @@ export function CollectibleItemDetails({
       </div>
       <div className="flex justify-end items-center gap-2 min-w-40 overflow-hidden">
         <p className="min-w-10">{quantity}</p>
-        <p className={cn("min-w-14", !price && "text-foreground-400")}>
-          {price || "--"}
-        </p>
+        <div className="flex gap-1 items-center">
+          {logo && <Thumbnail icon={logo} size="xs" rounded centered />}
+          <p className={cn("min-w-14", !price && "text-foreground-400")}>
+            {price || "--"}
+          </p>
+        </div>
         <p className={cn("min-w-12", !expiration && "text-foreground-400")}>
           {expiration || "--"}
         </p>
