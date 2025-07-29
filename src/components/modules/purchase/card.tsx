@@ -1,21 +1,22 @@
 import { Thumbnail } from "@/index";
 import { cn } from "@/utils";
 
-export interface PaymentCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PurchaseCardProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   text: string;
   icon: React.ReactNode;
   network?: string;
   networkIcon?: React.ReactNode;
 }
 
-export const PaymentCard = ({
+export const PurchaseCard = ({
   text,
   icon,
   network,
   networkIcon,
   className,
   ...props
-}: PaymentCardProps) => {
+}: PurchaseCardProps) => {
   return (
     <div
       className={cn(
