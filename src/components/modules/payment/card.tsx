@@ -4,9 +4,8 @@ import { cn } from "@/utils";
 export interface PaymentCardProps extends React.HTMLAttributes<HTMLDivElement> {
   text: string;
   icon: React.ReactNode;
-  network: string;
-  networkIcon: React.ReactNode;
-  className?: string;
+  network?: string;
+  networkIcon?: React.ReactNode;
 }
 
 export const PaymentCard = ({

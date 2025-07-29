@@ -2462,6 +2462,8 @@ export type PaymasterPolicy = Node & {
   id: Scalars['ID'];
   paymasterID?: Maybe<Scalars['ID']>;
   paymasters?: Maybe<Paymaster>;
+  /** Predicate configuration for the policy */
+  predicate?: Maybe<PolicyPredicate>;
   selector: Scalars['String'];
   updatedAt: Scalars['Time'];
 };
@@ -2854,6 +2856,18 @@ export type PlaythroughResult = {
 export type PolicyInput = {
   contractAddress: Scalars['String'];
   entryPoint: Scalars['String'];
+  predicate?: InputMaybe<PolicyPredicateInput>;
+};
+
+export type PolicyPredicate = {
+  __typename?: 'PolicyPredicate';
+  address: Scalars['String'];
+  entrypoint: Scalars['String'];
+};
+
+export type PolicyPredicateInput = {
+  address: Scalars['String'];
+  entrypoint: Scalars['String'];
 };
 
 export type Price = {
