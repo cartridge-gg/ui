@@ -18,4 +18,4 @@ export * from "./thumbnails";
 export * from "./tokens";
 export * from "./traceabilities";
 export * from "./universals";
-export * from "./payment";
+export * from "./purchase";

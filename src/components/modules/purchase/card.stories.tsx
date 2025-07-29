@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { PaymentCard } from "./card";
+import { PurchaseCard } from "./card";
 import {
   ControllerColorIcon,
   CreditCardIcon,
@@ -14,8 +14,8 @@ import {
 } from "@/components/icons";
 
 const meta = {
-  title: "Modules/Payment/Card",
-  component: PaymentCard,
+  title: "Modules/Purchase/Card",
+  component: PurchaseCard,
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -38,10 +38,10 @@ const meta = {
       control: { type: "object" },
     },
   },
-} satisfies Meta<typeof PaymentCard>;
+} satisfies Meta<typeof PurchaseCard>;
 
 export default meta;
-type Story = StoryObj<typeof PaymentCard>;
+type Story = StoryObj<typeof PurchaseCard>;
 
 export const Controller: Story = {
   args: {
