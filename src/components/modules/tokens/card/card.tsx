@@ -8,10 +8,10 @@ import {
 } from "@/components/modules/activities/card";
 
 export interface TokenCardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
     VariantProps<typeof activityCardVariants> {
   image: string | React.ReactNode;
-  title: string;
+  title: string | React.ReactNode;
   amount: string;
   value?: string;
   change?: string;

@@ -18,10 +18,10 @@ export const activityCardVariants = cva(
 );
 
 export interface ActivityCardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
     VariantProps<typeof activityCardVariants> {
   Logo: React.ReactNode;
-  title: string;
+  title: string | React.ReactNode;
   subTitle: string | React.ReactNode;
   topic?: string;
   subTopic?: string | React.ReactNode;
