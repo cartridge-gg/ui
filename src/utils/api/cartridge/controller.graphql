@@ -11,7 +11,6 @@ query Controller($username: String!, $chainId: String!) {
       id
       appID
       chainID
-      authorization
       isRevoked
       expiresAt
       createdAt
