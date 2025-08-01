@@ -2861,8 +2861,8 @@ export type PolicyInput = {
 
 export type PolicyPredicate = {
   __typename?: 'PolicyPredicate';
-  address: Scalars['String'];
-  entrypoint: Scalars['String'];
+  contractAddress: Scalars['String'];
+  entryPoint: Scalars['String'];
 };
 
 export type PolicyPredicateInput = {
@@ -3480,6 +3480,7 @@ export type Signer = Node & {
   controllerID: Scalars['ID'];
   createdAt: Scalars['Time'];
   id: Scalars['ID'];
+  isRevoked: Scalars['Boolean'];
   metadata: CredentialMetadata;
   session?: Maybe<Session>;
   type: SignerType;
@@ -3561,6 +3562,9 @@ export type SignerWhereInput = {
   idLTE?: InputMaybe<Scalars['ID']>;
   idNEQ?: InputMaybe<Scalars['ID']>;
   idNotIn?: InputMaybe<Array<Scalars['ID']>>;
+  /** is_revoked field predicates */
+  isRevoked?: InputMaybe<Scalars['Boolean']>;
+  isRevokedNEQ?: InputMaybe<Scalars['Boolean']>;
   not?: InputMaybe<SignerWhereInput>;
   or?: InputMaybe<Array<SignerWhereInput>>;
   /** type field predicates */
@@ -4813,7 +4817,7 @@ export type ControllerQueryVariables = Exact<{
 }>;
 
 
-export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, sessions?: Array<{ __typename?: 'Session', id: string, appID: string, chainID: string, authorization: Array<string>, isRevoked: boolean, expiresAt: string, createdAt: string, updatedAt: string, metadata?: { __typename?: 'SessionMetadata', os: string, browser: string } | null, signer?: { __typename?: 'Signer', id: string } | null, controller: { __typename?: 'Controller', id: string } }> | null, signers?: Array<{ __typename?: 'Signer', createdAt: string, metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
+export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, sessions?: Array<{ __typename?: 'Session', id: string, appID: string, chainID: string, isRevoked: boolean, expiresAt: string, createdAt: string, updatedAt: string, metadata?: { __typename?: 'SessionMetadata', os: string, browser: string } | null, signer?: { __typename?: 'Signer', id: string } | null, controller: { __typename?: 'Controller', id: string } }> | null, signers?: Array<{ __typename?: 'Signer', createdAt: string, metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
 
 export type BeginRegistrationMutationVariables = Exact<{
   username: Scalars['String'];
@@ -5488,7 +5492,6 @@ export const ControllerDocument = `
       id
       appID
       chainID
-      authorization
       isRevoked
       expiresAt
       createdAt
