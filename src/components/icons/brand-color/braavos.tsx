@@ -32,8 +32,8 @@ export const BraavosColorIcon = memo(
             y2="21.0855"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#F5D45E" />
-            <stop offset="1" stop-color="#FF9600" />
+            <stop stopColor="#F5D45E" />
+            <stop offset="1" stopColor="#FF9600" />
           </linearGradient>
           <linearGradient
             id="paint1_linear_8289_15893"
@@ -43,8 +43,8 @@ export const BraavosColorIcon = memo(
             y2="21.0855"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#F5D45E" />
-            <stop offset="1" stop-color="#FF9600" />
+            <stop stopColor="#F5D45E" />
+            <stop offset="1" stopColor="#FF9600" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_8289_15893"
@@ -54,8 +54,8 @@ export const BraavosColorIcon = memo(
             y2="21.0855"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#F5D45E" />
-            <stop offset="1" stop-color="#FF9600" />
+            <stop stopColor="#F5D45E" />
+            <stop offset="1" stopColor="#FF9600" />
           </linearGradient>
         </defs>
       </svg>
