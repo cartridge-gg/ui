@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { AchievementSummary } from "./summary";
+declare const meta: Meta<typeof AchievementSummary>;
+export default meta;
+type Story = StoryObj<typeof AchievementSummary>;
+export declare const Default: Story;
+export declare const Dark: Story;
+export declare const Active: Story;
+export declare const NoCover: Story;
+export declare const MultiColors: Story;
