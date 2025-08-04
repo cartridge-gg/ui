@@ -116,6 +116,8 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
 
   // Track if stars have been initialized to avoid race conditions
   const starsInitializedRef = useRef(false);
+  // Track if star creation is already pending to prevent duplicates
+  const starCreationPendingRef = useRef(false);
 
   // --- Dynamic Style Injection (updated to remove shooting star styles) ---
   useEffect(() => {
@@ -269,10 +271,18 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
     const container = containerRef.current;
     if (!starfield || !container) return;
 
-    // Update container dimensions and check if we have valid size
-    updateContainerDimensions();
+    // Get container dimensions (should already be set by ResizeObserver)
     const { width: containerWidth, height: containerHeight } =
       containerSizeRef.current;
+
+    // Fallback: update dimensions if not set yet (e.g., immediate initialization)
+    if (containerWidth <= 0) {
+      updateContainerDimensions();
+      const { width: fallbackWidth } = containerSizeRef.current;
+      if (fallbackWidth < 50) {
+        return;
+      }
+    }
 
     // Don't create stars if container is too small (race condition protection)
     if (containerWidth < 50) {
@@ -376,8 +386,6 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
       star.container = container;
       allStarsRef.current.push(star);
     });
-
-    containerRectRef.current = container.getBoundingClientRect();
   }, [createStarInLayer, updateContainerDimensions]);
 
   // --- Initialization with ResizeObserver for reliable size detection ---
@@ -388,17 +396,25 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
     // Create ResizeObserver to handle container size changes
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        const { width } = entry.contentRect;
+        const { width, height } = entry.contentRect;
         
         // Only proceed if we have a reasonable width
         if (width > 50) {
           const oldWidth = containerSizeRef.current.width;
           const sizeChanged = Math.abs(width - oldWidth) / Math.max(oldWidth, 1) > 0.1;
           
-          // Create stars on first load or significant size change
-          if (!starsInitializedRef.current || sizeChanged) {
+          // Update cached dimensions immediately to prevent stale values
+          containerSizeRef.current = { width, height };
+          containerCenterRef.current = { x: width / 2, y: height / 2 };
+          // Update containerRect for animation loop (use getBoundingClientRect for accurate positioning)
+          containerRectRef.current = container.getBoundingClientRect();
+          
+          // Create stars on first load or significant size change, if not already pending
+          if ((!starsInitializedRef.current || sizeChanged) && !starCreationPendingRef.current) {
+            starCreationPendingRef.current = true;
             requestAnimationFrame(() => {
               createAllStars();
+              starCreationPendingRef.current = false;
             });
           }
         }
@@ -411,6 +427,20 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
     // Also try immediate initialization in case container already has size
     const rect = container.getBoundingClientRect();
     if (rect.width > 50) {
+      // Set initial dimensions using consistent measurement (simulate contentRect)
+      const computedStyle = getComputedStyle(container);
+      const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+      const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+      const borderLeft = parseFloat(computedStyle.borderLeftWidth) || 0;
+      const borderRight = parseFloat(computedStyle.borderRightWidth) || 0;
+      
+      const contentWidth = rect.width - paddingLeft - paddingRight - borderLeft - borderRight;
+      const contentHeight = rect.height;
+      
+      containerSizeRef.current = { width: contentWidth, height: contentHeight };
+      containerCenterRef.current = { x: contentWidth / 2, y: contentHeight / 2 };
+      containerRectRef.current = rect;
+      
       createAllStars();
     }
 
