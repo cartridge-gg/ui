@@ -4817,7 +4817,7 @@ export type ControllerQueryVariables = Exact<{
 }>;
 
 
-export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, sessions?: Array<{ __typename?: 'Session', id: string, appID: string, chainID: string, isRevoked: boolean, expiresAt: string, createdAt: string, updatedAt: string, metadata?: { __typename?: 'SessionMetadata', os: string, browser: string } | null, signer?: { __typename?: 'Signer', id: string } | null, controller: { __typename?: 'Controller', id: string } }> | null, signers?: Array<{ __typename?: 'Signer', createdAt: string, isRevoked: boolean, metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
+export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, signers?: Array<{ __typename?: 'Signer', createdAt: string, isRevoked: boolean, metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
 
 export type BeginRegistrationMutationVariables = Exact<{
   username: Scalars['String'];
@@ -4939,6 +4939,13 @@ export type PricePeriodByAddressesQueryVariables = Exact<{
 
 
 export type PricePeriodByAddressesQuery = { __typename?: 'Query', pricePeriodByAddresses: Array<{ __typename?: 'Price', amount: string, base: string, decimals: number, quote: string }> };
+
+export type SessionsQueryVariables = Exact<{
+  where: SessionWhereInput;
+}>;
+
+
+export type SessionsQuery = { __typename?: 'Query', sessions?: { __typename?: 'SessionConnection', edges?: Array<{ __typename?: 'SessionEdge', node?: { __typename?: 'Session', id: string, appID: string, chainID: string, isRevoked: boolean, expiresAt: string, createdAt: string, updatedAt: string, metadata?: { __typename?: 'SessionMetadata', os: string, browser: string } | null } | null } | null> | null } | null };
 
 export type SignerQueryVariables = Exact<{
   username: Scalars['String'];
@@ -5488,25 +5495,6 @@ export const ControllerDocument = `
     constructorCalldata
     createdAt
     updatedAt
-    sessions {
-      id
-      appID
-      chainID
-      isRevoked
-      expiresAt
-      createdAt
-      updatedAt
-      metadata {
-        os
-        browser
-      }
-      signer {
-        id
-      }
-      controller {
-        id
-      }
-    }
     signers {
       createdAt
       isRevoked
@@ -5951,6 +5939,39 @@ export const usePricePeriodByAddressesQuery = <
     useQuery<PricePeriodByAddressesQuery, TError, TData>(
       ['PricePeriodByAddresses', variables],
       useFetchData<PricePeriodByAddressesQuery, PricePeriodByAddressesQueryVariables>(PricePeriodByAddressesDocument).bind(null, variables),
+      options
+    );
+export const SessionsDocument = `
+    query Sessions($where: SessionWhereInput!) {
+  sessions(where: $where) {
+    edges {
+      node {
+        id
+        appID
+        chainID
+        isRevoked
+        expiresAt
+        createdAt
+        updatedAt
+        metadata {
+          os
+          browser
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSessionsQuery = <
+      TData = SessionsQuery,
+      TError = unknown
+    >(
+      variables: SessionsQueryVariables,
+      options?: UseQueryOptions<SessionsQuery, TError, TData>
+    ) =>
+    useQuery<SessionsQuery, TError, TData>(
+      ['Sessions', variables],
+      useFetchData<SessionsQuery, SessionsQueryVariables>(SessionsDocument).bind(null, variables),
       options
     );
 export const SignerDocument = `
