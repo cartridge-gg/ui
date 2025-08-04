@@ -4817,7 +4817,7 @@ export type ControllerQueryVariables = Exact<{
 }>;
 
 
-export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, sessions?: Array<{ __typename?: 'Session', id: string, appID: string, chainID: string, isRevoked: boolean, expiresAt: string, createdAt: string, updatedAt: string, metadata?: { __typename?: 'SessionMetadata', os: string, browser: string } | null, signer?: { __typename?: 'Signer', id: string } | null, controller: { __typename?: 'Controller', id: string } }> | null, signers?: Array<{ __typename?: 'Signer', createdAt: string, metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
+export type ControllerQuery = { __typename?: 'Query', controller?: { __typename?: 'Controller', id: string, accountID: string, address: string, network: string, constructorCalldata: Array<string>, createdAt: string, updatedAt: string, sessions?: Array<{ __typename?: 'Session', id: string, appID: string, chainID: string, isRevoked: boolean, expiresAt: string, createdAt: string, updatedAt: string, metadata?: { __typename?: 'SessionMetadata', os: string, browser: string } | null, signer?: { __typename?: 'Signer', id: string } | null, controller: { __typename?: 'Controller', id: string } }> | null, signers?: Array<{ __typename?: 'Signer', createdAt: string, isRevoked: boolean, metadata: { __typename: 'Eip191Credentials', eip191?: Array<{ __typename?: 'Eip191Credential', provider: string, ethAddress: string }> | null } | { __typename: 'SIWSCredentials', siws?: Array<{ __typename?: 'SIWSCredential', publicKey: string }> | null } | { __typename: 'StarknetCredentials', starknet?: Array<{ __typename?: 'StarknetCredential', publicKey: string }> | null } | { __typename: 'WebauthnCredentials', webauthn?: Array<{ __typename?: 'WebauthnCredential', id: string, publicKey: string }> | null } }> | null } | null };
 
 export type BeginRegistrationMutationVariables = Exact<{
   username: Scalars['String'];
@@ -5509,6 +5509,7 @@ export const ControllerDocument = `
     }
     signers {
       createdAt
+      isRevoked
       metadata {
         ... on WebauthnCredentials {
           __typename
