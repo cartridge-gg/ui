@@ -397,10 +397,9 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
           
           // Create stars on first load or significant size change
           if (!starsInitializedRef.current || sizeChanged) {
-            // Small delay to ensure layout is stable
-            setTimeout(() => {
+            requestAnimationFrame(() => {
               createAllStars();
-            }, 0);
+            });
           }
         }
       }
