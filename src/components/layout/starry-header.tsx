@@ -100,16 +100,24 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
       const newWidth = rect.width;
       const newHeight = height;
 
-      containerSizeRef.current = { width: newWidth, height: newHeight };
-      containerCenterRef.current = { x: newWidth / 2, y: newHeight / 2 };
-      containerRectRef.current = rect;
+      // Only update if we have a reasonable width (avoid race condition)
+      if (newWidth > 0) {
+        const oldWidth = containerSizeRef.current.width;
+        containerSizeRef.current = { width: newWidth, height: newHeight };
+        containerCenterRef.current = { x: newWidth / 2, y: newHeight / 2 };
+        containerRectRef.current = rect;
+        
+        // Return whether size changed significantly (>10% change)
+        return Math.abs(newWidth - oldWidth) / Math.max(oldWidth, 1) > 0.1;
+      }
     }
+    return false;
   }, [height]);
 
-  // Update cached center when dimensions change
-  useEffect(() => {
-    updateContainerDimensions();
-  }, [updateContainerDimensions]);
+  // Track if stars have been initialized to avoid race conditions
+  const starsInitializedRef = useRef(false);
+  // Track if star creation is already pending to prevent duplicates
+  const starCreationPendingRef = useRef(false);
 
   // --- Dynamic Style Injection (updated to remove shooting star styles) ---
   useEffect(() => {
@@ -257,19 +265,33 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
     [starColorClass],
   );
 
-  // --- Initialization with original star counts ---
-  useEffect(() => {
+  // Helper function to create all stars
+  const createAllStars = useCallback(() => {
     const starfield = starfieldRef.current;
     const container = containerRef.current;
     if (!starfield || !container) return;
 
-    // Update container dimensions first
-    updateContainerDimensions();
+    // Get container dimensions (should already be set by ResizeObserver)
     const { width: containerWidth, height: containerHeight } =
       containerSizeRef.current;
 
+    // Fallback: update dimensions if not set yet (e.g., immediate initialization)
+    if (containerWidth <= 0) {
+      updateContainerDimensions();
+      const { width: fallbackWidth } = containerSizeRef.current;
+      if (fallbackWidth < 50) {
+        return;
+      }
+    }
+
+    // Don't create stars if container is too small (race condition protection)
+    if (containerWidth < 50) {
+      return;
+    }
+
     allStarsRef.current = [];
     starfield.innerHTML = "";
+    starsInitializedRef.current = true;
 
     const containerStars: StarData[] = [];
 
@@ -364,9 +386,68 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
       star.container = container;
       allStarsRef.current.push(star);
     });
-
-    containerRectRef.current = container.getBoundingClientRect();
   }, [createStarInLayer, updateContainerDimensions]);
+
+  // --- Initialization with ResizeObserver for reliable size detection ---
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Create ResizeObserver to handle container size changes
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        
+        // Only proceed if we have a reasonable width
+        if (width > 50) {
+          const oldWidth = containerSizeRef.current.width;
+          const sizeChanged = Math.abs(width - oldWidth) / Math.max(oldWidth, 1) > 0.1;
+          
+          // Update cached dimensions immediately to prevent stale values
+          containerSizeRef.current = { width, height };
+          containerCenterRef.current = { x: width / 2, y: height / 2 };
+          // Update containerRect for animation loop (use getBoundingClientRect for accurate positioning)
+          containerRectRef.current = container.getBoundingClientRect();
+          
+          // Create stars on first load or significant size change, if not already pending
+          if ((!starsInitializedRef.current || sizeChanged) && !starCreationPendingRef.current) {
+            starCreationPendingRef.current = true;
+            requestAnimationFrame(() => {
+              createAllStars();
+              starCreationPendingRef.current = false;
+            });
+          }
+        }
+      }
+    });
+
+    // Start observing
+    resizeObserver.observe(container);
+
+    // Also try immediate initialization in case container already has size
+    const rect = container.getBoundingClientRect();
+    if (rect.width > 50) {
+      // Set initial dimensions using consistent measurement (simulate contentRect)
+      const computedStyle = getComputedStyle(container);
+      const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+      const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+      const borderLeft = parseFloat(computedStyle.borderLeftWidth) || 0;
+      const borderRight = parseFloat(computedStyle.borderRightWidth) || 0;
+      
+      const contentWidth = rect.width - paddingLeft - paddingRight - borderLeft - borderRight;
+      const contentHeight = rect.height;
+      
+      containerSizeRef.current = { width: contentWidth, height: contentHeight };
+      containerCenterRef.current = { x: contentWidth / 2, y: contentHeight / 2 };
+      containerRectRef.current = rect;
+      
+      createAllStars();
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [createAllStars]);
 
   // --- Highly Optimized Animation Loop with Caching ---
   const animate = useCallback(
@@ -383,7 +464,7 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
       const containerRect = containerRectRef.current;
       const starfield = starfieldRef.current;
 
-      if (!containerRect || !starfield) {
+      if (!containerRect || !starfield || !starsInitializedRef.current || allStars.length === 0) {
         animationFrameRef.current = requestAnimationFrame(animate);
         return;
       }
@@ -495,25 +576,19 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
       mousePosRef.current = { x: e.clientX, y: e.clientY };
     };
 
-    const handleResize = () => {
-      updateContainerDimensions();
-    };
-
     // Use passive listeners for better performance
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    window.addEventListener("resize", handleResize, { passive: true });
 
     // Start animation
     animationFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("resize", handleResize);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [animate, updateContainerDimensions]);
+  }, [animate]);
 
   return (
     <div
