@@ -97,22 +97,13 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
   const updateContainerDimensions = useCallback(() => {
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
-      const newWidth = rect.width;
-      const newHeight = height;
-
-      // Only update if we have a reasonable width (avoid race condition)
-      if (newWidth > 0) {
-        const oldWidth = containerSizeRef.current.width;
-        containerSizeRef.current = { width: newWidth, height: newHeight };
-        containerCenterRef.current = { x: newWidth / 2, y: newHeight / 2 };
+      if (rect.width > 0) {
+        containerSizeRef.current = { width: rect.width, height: rect.height };
+        containerCenterRef.current = { x: rect.width / 2, y: rect.height / 2 };
         containerRectRef.current = rect;
-        
-        // Return whether size changed significantly (>10% change)
-        return Math.abs(newWidth - oldWidth) / Math.max(oldWidth, 1) > 0.1;
       }
     }
-    return false;
-  }, [height]);
+  }, []);
 
   // Track if stars have been initialized to avoid race conditions
   const starsInitializedRef = useRef(false);
@@ -271,20 +262,12 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
     const container = containerRef.current;
     if (!starfield || !container) return;
 
-    // Get container dimensions (should already be set by ResizeObserver)
+    // Ensure we have current dimensions
+    updateContainerDimensions();
     const { width: containerWidth, height: containerHeight } =
       containerSizeRef.current;
 
-    // Fallback: update dimensions if not set yet (e.g., immediate initialization)
-    if (containerWidth <= 0) {
-      updateContainerDimensions();
-      const { width: fallbackWidth } = containerSizeRef.current;
-      if (fallbackWidth < 50) {
-        return;
-      }
-    }
-
-    // Don't create stars if container is too small (race condition protection)
+    // Don't create stars if container is too small
     if (containerWidth < 50) {
       return;
     }
@@ -388,29 +371,48 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
     });
   }, [createStarInLayer, updateContainerDimensions]);
 
-  // --- Initialization with ResizeObserver for reliable size detection ---
+  // --- Simple initialization with layout effect ---
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Create ResizeObserver to handle container size changes
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { width, height } = entry.contentRect;
-        
-        // Only proceed if we have a reasonable width
-        if (width > 50) {
+    let timeoutId: NodeJS.Timeout | null = null;
+
+    const initializeStars = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      
+      timeoutId = setTimeout(() => {
+        const rect = container.getBoundingClientRect();
+        if (rect.width > 50 && !starCreationPendingRef.current) {
+          // Update cached dimensions
+          containerSizeRef.current = { width: rect.width, height: rect.height };
+          containerCenterRef.current = { x: rect.width / 2, y: rect.height / 2 };
+          containerRectRef.current = rect;
+          
+          starCreationPendingRef.current = true;
+          requestAnimationFrame(() => {
+            createAllStars();
+            starCreationPendingRef.current = false;
+          });
+        }
+      }, 0);
+    };
+
+    const handleResize = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      
+      timeoutId = setTimeout(() => {
+        const rect = container.getBoundingClientRect();
+        if (rect.width > 50) {
           const oldWidth = containerSizeRef.current.width;
-          const sizeChanged = Math.abs(width - oldWidth) / Math.max(oldWidth, 1) > 0.1;
+          const sizeChanged = Math.abs(rect.width - oldWidth) / Math.max(oldWidth, 1) > 0.1;
           
-          // Update cached dimensions immediately to prevent stale values
-          containerSizeRef.current = { width, height };
-          containerCenterRef.current = { x: width / 2, y: height / 2 };
-          // Update containerRect for animation loop (use getBoundingClientRect for accurate positioning)
-          containerRectRef.current = container.getBoundingClientRect();
-          
-          // Create stars on first load or significant size change, if not already pending
-          if ((!starsInitializedRef.current || sizeChanged) && !starCreationPendingRef.current) {
+          if (sizeChanged && !starCreationPendingRef.current) {
+            // Update cached dimensions
+            containerSizeRef.current = { width: rect.width, height: rect.height };
+            containerCenterRef.current = { x: rect.width / 2, y: rect.height / 2 };
+            containerRectRef.current = rect;
+            
             starCreationPendingRef.current = true;
             requestAnimationFrame(() => {
               createAllStars();
@@ -418,34 +420,20 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
             });
           }
         }
-      }
-    });
+      }, 100); // Debounce resize events
+    };
 
-    // Start observing
-    resizeObserver.observe(container);
+    // Initialize stars immediately
+    initializeStars();
 
-    // Also try immediate initialization in case container already has size
-    const rect = container.getBoundingClientRect();
-    if (rect.width > 50) {
-      // Set initial dimensions using consistent measurement (simulate contentRect)
-      const computedStyle = getComputedStyle(container);
-      const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
-      const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
-      const borderLeft = parseFloat(computedStyle.borderLeftWidth) || 0;
-      const borderRight = parseFloat(computedStyle.borderRightWidth) || 0;
-      
-      const contentWidth = rect.width - paddingLeft - paddingRight - borderLeft - borderRight;
-      const contentHeight = rect.height;
-      
-      containerSizeRef.current = { width: contentWidth, height: contentHeight };
-      containerCenterRef.current = { x: contentWidth / 2, y: contentHeight / 2 };
-      containerRectRef.current = rect;
-      
-      createAllStars();
-    }
+    // Listen for window resize events
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      resizeObserver.disconnect();
+      window.removeEventListener('resize', handleResize);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
   }, [createAllStars]);
 
