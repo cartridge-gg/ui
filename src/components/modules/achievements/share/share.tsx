@@ -60,7 +60,7 @@ Play now 👇`;
       size="tall"
       className="grow"
       disabled={disabled}
-      onClick={handleShare}
+      onPress={handleShare}
     >
       <XIcon size="sm" />
     </Button>
