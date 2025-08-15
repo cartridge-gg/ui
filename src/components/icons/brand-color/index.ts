@@ -1,7 +1,9 @@
 export * from "./argent";
+export * from "./arbitrum";
 export * from "./braavos";
 export * from "./cartridge";
 export * from "./controller";
+export * from "./coinbase-wallet";
 export * from "./discord";
 export * from "./google";
 export * from "./ethereum-dark";
@@ -11,6 +13,7 @@ export * from "./metamask";
 export * from "./base";
 export * from "./solana";
 export * from "./solflare";
+export * from "./optimism";
 export * from "./phantom";
 export * from "./rabby";
 export * from "./starknet";

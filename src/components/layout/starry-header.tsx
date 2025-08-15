@@ -380,15 +380,18 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
 
     const initializeStars = () => {
       if (timeoutId) clearTimeout(timeoutId);
-      
+
       timeoutId = setTimeout(() => {
         const rect = container.getBoundingClientRect();
         if (rect.width > 50 && !starCreationPendingRef.current) {
           // Update cached dimensions
           containerSizeRef.current = { width: rect.width, height: rect.height };
-          containerCenterRef.current = { x: rect.width / 2, y: rect.height / 2 };
+          containerCenterRef.current = {
+            x: rect.width / 2,
+            y: rect.height / 2,
+          };
           containerRectRef.current = rect;
-          
+
           starCreationPendingRef.current = true;
           requestAnimationFrame(() => {
             createAllStars();
@@ -400,19 +403,26 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
 
     const handleResize = () => {
       if (timeoutId) clearTimeout(timeoutId);
-      
+
       timeoutId = setTimeout(() => {
         const rect = container.getBoundingClientRect();
         if (rect.width > 50) {
           const oldWidth = containerSizeRef.current.width;
-          const sizeChanged = Math.abs(rect.width - oldWidth) / Math.max(oldWidth, 1) > 0.1;
-          
+          const sizeChanged =
+            Math.abs(rect.width - oldWidth) / Math.max(oldWidth, 1) > 0.1;
+
           if (sizeChanged && !starCreationPendingRef.current) {
             // Update cached dimensions
-            containerSizeRef.current = { width: rect.width, height: rect.height };
-            containerCenterRef.current = { x: rect.width / 2, y: rect.height / 2 };
+            containerSizeRef.current = {
+              width: rect.width,
+              height: rect.height,
+            };
+            containerCenterRef.current = {
+              x: rect.width / 2,
+              y: rect.height / 2,
+            };
             containerRectRef.current = rect;
-            
+
             starCreationPendingRef.current = true;
             requestAnimationFrame(() => {
               createAllStars();
@@ -427,10 +437,10 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
     initializeStars();
 
     // Listen for window resize events
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
@@ -452,7 +462,12 @@ export const StarryHeaderBackground: React.FC<StarryHeaderBackgroundProps> = ({
       const containerRect = containerRectRef.current;
       const starfield = starfieldRef.current;
 
-      if (!containerRect || !starfield || !starsInitializedRef.current || allStars.length === 0) {
+      if (
+        !containerRect ||
+        !starfield ||
+        !starsInitializedRef.current ||
+        allStars.length === 0
+      ) {
         animationFrameRef.current = requestAnimationFrame(animate);
         return;
       }
