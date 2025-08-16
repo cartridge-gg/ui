@@ -70,3 +70,12 @@ mutation CreateLayerswapPayment($input: CreateLayerswapPaymentInput!) {
     expiresAt
   }
 }
+
+query LayerswapQuote($input: CreateLayerswapPaymentInput!) {
+  layerswapQuote(input: $input) {
+    requestedAmount
+    receivedAmount
+    totalFees
+    averageCompletionTime
+  }
+}
