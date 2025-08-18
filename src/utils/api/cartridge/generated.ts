@@ -907,6 +907,7 @@ export type CreateCryptoPaymentInput = {
 export type CreateLayerswapPaymentInput = {
   credits?: InputMaybe<CreditsInput>;
   isMainnet?: InputMaybe<Scalars['Boolean']>;
+  layerswapFees?: InputMaybe<Scalars['BigInt']>;
   purchaseType: PurchaseType;
   sourceNetwork: LayerswapNetwork;
   starterpackId?: InputMaybe<Scalars['ID']>;
@@ -3508,7 +3509,7 @@ export type QueryLayerswapPaymentArgs = {
 
 
 export type QueryLayerswapQuoteArgs = {
-  input?: InputMaybe<CreateLayerswapPaymentInput>;
+  input: CreateLayerswapPaymentInput;
 };
 
 
