@@ -35,5 +35,6 @@ query StarterPack($input: StarterpackInput!) {
       count
       limit
     }
+    acquisitionType
   }
 }
