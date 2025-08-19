@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { UniversalHeaderIcon } from "./header-icon";
+declare const meta: Meta<typeof UniversalHeaderIcon>;
+export default meta;
+type Story = StoryObj<typeof UniversalHeaderIcon>;
+export declare const Default: Story;
+export declare const IconComponent: Story;
+export declare const IconUrl: Story;
+export declare const IconString: Story;
+export declare const IconRounded: Story;

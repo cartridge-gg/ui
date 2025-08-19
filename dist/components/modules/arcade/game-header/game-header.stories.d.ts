@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { ArcadeGameHeader } from "./game-header";
+declare const meta: Meta<typeof ArcadeGameHeader>;
+export default meta;
+type Story = StoryObj<typeof ArcadeGameHeader>;
+export declare const Default: Story;
+export declare const Theme: Story;
+export declare const Empty: Story;
+export declare const LootSurvivor: Story;
+export declare const LootSurvivorTheme: Story;
