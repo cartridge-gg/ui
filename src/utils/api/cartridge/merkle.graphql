@@ -1,0 +1,16 @@
+query MerkleDropByKey($key: String!) {
+    merkleDropByKey(key: $key) {
+        network
+        contract
+        entrypoint
+        merkleRoot
+    }
+}
+
+query MerkleClaimsForAddress($key: String!, $address: String!) {
+    merkleClaimsForAddress(key: $key, address: $address) {
+        data
+        claimed
+        merkleProof
+    }
+}
