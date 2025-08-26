@@ -3371,6 +3371,7 @@ export type Query = {
   starterpack?: Maybe<StarterpackDetails>;
   streaks: StreakResult;
   stripePayment: StripePayment;
+  subscribeCreateSession?: Maybe<Session>;
   team?: Maybe<Team>;
   teams?: Maybe<TeamConnection>;
   traceabilities: TraceabilityResult;
@@ -3648,6 +3649,13 @@ export type QueryStreaksArgs = {
 
 export type QueryStripePaymentArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QuerySubscribeCreateSessionArgs = {
+  appId: Scalars['String'];
+  controllerId: Scalars['ID'];
+  sessionKeyGuid: Scalars['Felt'];
 };
 
 
@@ -5546,7 +5554,7 @@ export type StarterPackQueryVariables = Exact<{
 }>;
 
 
-export type StarterPackQuery = { __typename?: 'Query', starterpack?: { __typename?: 'StarterpackDetails', acquisitionType: StarterpackAcquisitionType, starterpack: { __typename?: 'Starterpack', name: string, description?: string | null, active: boolean, issuance: number, maxIssuance?: number | null, starterpackContract: { __typename?: 'StarterpackContractConnection', edges?: Array<{ __typename?: 'StarterpackContractEdge', node?: { __typename?: 'StarterpackContract', name: string, description?: string | null, iconURL?: string | null, contractAddress: string, supplyEntryPoint?: string | null, supplyCalldata?: Array<string> | null } | null } | null> | null } }, price: { __typename?: 'Credits', amount: string, decimals: number }, bonusCredits: { __typename?: 'Credits', amount: string, decimals: number }, mintAllowance?: { __typename?: 'MintAllowance', count: number, limit: number } | null } | null };
+export type StarterPackQuery = { __typename?: 'Query', starterpack?: { __typename?: 'StarterpackDetails', starterpack: { __typename?: 'Starterpack', name: string, description?: string | null, active: boolean, issuance: number, maxIssuance?: number | null, acquisitionType: StarterpackAcquisitionType, starterpackContract: { __typename?: 'StarterpackContractConnection', edges?: Array<{ __typename?: 'StarterpackContractEdge', node?: { __typename?: 'StarterpackContract', name: string, description?: string | null, iconURL?: string | null, contractAddress: string, supplyEntryPoint?: string | null, supplyCalldata?: Array<string> | null } | null } | null> | null }, merkleDrops: { __typename?: 'MerkleDropConnection', edges?: Array<{ __typename?: 'MerkleDropEdge', node?: { __typename?: 'MerkleDrop', key: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string } | null } | null> | null } }, price: { __typename?: 'Credits', amount: string, decimals: number }, bonusCredits: { __typename?: 'Credits', amount: string, decimals: number }, mintAllowance?: { __typename?: 'MintAllowance', count: number, limit: number } | null } | null };
 
 export type TeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6684,6 +6692,7 @@ export const StarterPackDocument = `
       active
       issuance
       maxIssuance
+      acquisitionType
       starterpackContract {
         edges {
           node {
@@ -6693,6 +6702,17 @@ export const StarterPackDocument = `
             contractAddress
             supplyEntryPoint
             supplyCalldata
+          }
+        }
+      }
+      merkleDrops {
+        edges {
+          node {
+            key
+            network
+            contract
+            entrypoint
+            merkleRoot
           }
         }
       }
@@ -6709,7 +6729,6 @@ export const StarterPackDocument = `
       count
       limit
     }
-    acquisitionType
   }
 }
     `;
