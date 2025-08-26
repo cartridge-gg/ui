@@ -10,6 +10,7 @@ query StarterPack($input: StarterpackInput!) {
       active
       issuance
       maxIssuance
+      acquisitionType
       starterpackContract {
         edges {
           node {
@@ -19,6 +20,17 @@ query StarterPack($input: StarterpackInput!) {
             contractAddress
             supplyEntryPoint
             supplyCalldata
+          }
+        }
+      }
+      merkleDrops {
+        edges {
+          node {
+            key
+            network
+            contract
+            entrypoint
+            merkleRoot
           }
         }
       }
@@ -35,6 +47,5 @@ query StarterPack($input: StarterpackInput!) {
       count
       limit
     }
-    acquisitionType
   }
 }
