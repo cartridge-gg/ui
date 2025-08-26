@@ -49,7 +49,8 @@ export type TabValue =
   | "about"
   | "marketplace"
   | "items"
-  | "holders";
+  | "holders"
+  | "predict";
 
 export interface ArcadeTabsProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -64,6 +65,7 @@ export const ArcadeTabs = ({
   order = [
     "activity",
     "leaderboard",
+    "predict",
     "about",
     "metrics",
     "marketplace",
