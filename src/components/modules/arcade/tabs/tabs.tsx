@@ -4,6 +4,7 @@ import {
   ArcadeTab,
   ChestIcon,
   LeaderboardIcon,
+  LightbulbIcon,
   ListIcon,
   MetricsIcon,
   PulseIcon,
@@ -49,7 +50,9 @@ export type TabValue =
   | "about"
   | "marketplace"
   | "items"
-  | "holders";
+  | "holders"
+  | "predict"
+  | "positions";
 
 export interface ArcadeTabsProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -64,11 +67,13 @@ export const ArcadeTabs = ({
   order = [
     "activity",
     "leaderboard",
+    "predict",
     "about",
     "metrics",
     "marketplace",
     "inventory",
     "achievements",
+    "positions",
     "guilds",
     "items",
     "holders",
@@ -239,6 +244,10 @@ const Tab = ({
       return <ItemsNavButton {...props} />;
     case "holders":
       return <HoldersNavButton {...props} />;
+    case "predict":
+      return <PredictNavButton {...props} />;
+    case "positions":
+      return <PositionsNavButton {...props} />;
     default:
       return null;
   }
@@ -606,6 +615,80 @@ const HoldersNavButton = React.forwardRef<
       ref={ref}
       value={value}
       Icon={<UsersIcon variant="solid" size="sm" />}
+      label={label}
+      active={active}
+      size={size}
+      onClick={onClick}
+    />
+  );
+});
+
+const PredictNavButton = React.forwardRef<
+  HTMLButtonElement,
+  {
+    value: string;
+    active: boolean;
+    size: "default" | null | undefined;
+    onClick?: () => void;
+    item?: boolean;
+    label?: string;
+  }
+>(({ value, active, size, onClick, item, label = "Predict" }, ref) => {
+  if (item) {
+    return (
+      <ArcadeMenuItem
+        ref={ref}
+        value={value}
+        Icon={<LightbulbIcon variant="solid" size="sm" />}
+        label={label}
+        active={active}
+        size={size}
+        onClick={onClick}
+      />
+    );
+  }
+  return (
+    <ArcadeTab
+      ref={ref}
+      value={value}
+      Icon={<LightbulbIcon variant="solid" size="sm" />}
+      label={label}
+      active={active}
+      size={size}
+      onClick={onClick}
+    />
+  );
+});
+
+const PositionsNavButton = React.forwardRef<
+  HTMLButtonElement,
+  {
+    value: string;
+    active: boolean;
+    size: "default" | null | undefined;
+    onClick?: () => void;
+    item?: boolean;
+    label?: string;
+  }
+>(({ value, active, size, onClick, item, label = "Positions" }, ref) => {
+  if (item) {
+    return (
+      <ArcadeMenuItem
+        ref={ref}
+        value={value}
+        Icon={<LightbulbIcon variant="solid" size="sm" />}
+        label={label}
+        active={active}
+        size={size}
+        onClick={onClick}
+      />
+    );
+  }
+  return (
+    <ArcadeTab
+      ref={ref}
+      value={value}
+      Icon={<LightbulbIcon variant="solid" size="sm" />}
       label={label}
       active={active}
       size={size}
