@@ -26,6 +26,7 @@ export * from "./laptop";
 export * from "./laurel";
 export * from "./leaderboard";
 export * from "./list";
+export * from "./lightbulb";
 export * from "./metrics";
 export * from "./mobile";
 export * from "./money";
