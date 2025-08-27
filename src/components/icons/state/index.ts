@@ -63,3 +63,4 @@ export * from "./users";
 export * from "./wallet";
 export * from "./wand";
 export * from "./wrench";
+export * from "./xp";
