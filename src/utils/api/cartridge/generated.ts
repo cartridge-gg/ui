@@ -5432,7 +5432,7 @@ export type MerkleClaimsForAddressQueryVariables = Exact<{
 }>;
 
 
-export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', data: Array<string>, claimed: boolean, merkleProof?: Array<string> | null }> };
+export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', data: Array<string>, claimed: boolean, merkleProof?: Array<string> | null, merkleDrop: { __typename?: 'MerkleDrop', network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string } }> };
 
 export type MetricsQueryVariables = Exact<{
   projects: Array<MetricsProject> | MetricsProject;
@@ -6259,6 +6259,12 @@ export const MerkleClaimsForAddressDocument = `
     data
     claimed
     merkleProof
+    merkleDrop {
+      network
+      contract
+      entrypoint
+      merkleRoot
+    }
   }
 }
     `;

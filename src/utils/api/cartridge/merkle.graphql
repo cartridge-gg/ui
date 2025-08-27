@@ -12,5 +12,11 @@ query MerkleClaimsForAddress($key: String!, $address: String!) {
     data
     claimed
     merkleProof
+    merkleDrop {
+      network
+      contract
+      entrypoint
+      merkleRoot
+    }
   }
 }
