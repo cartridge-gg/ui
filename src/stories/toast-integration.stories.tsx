@@ -179,16 +179,16 @@ function ToastIntegrationDemo() {
         <div className="space-y-2">
           <h3 className="text-white text-sm font-medium">Achievement Toasts</h3>
           <Button
-            onClick={showAchievement}
             className="w-full"
             disabled={isLoading.achievement}
+            onPress={showAchievement}
           >
             {isLoading.achievement ? "Loading..." : "Show Achievement (4s)"}
           </Button>
           <Button
-            onClick={showDraftAchievement}
             className="w-full"
             disabled={isLoading.draft}
+            onPress={showDraftAchievement}
           >
             {isLoading.draft ? "Loading..." : "Show Draft Achievement (6s)"}
           </Button>
@@ -197,16 +197,16 @@ function ToastIntegrationDemo() {
         <div className="space-y-2">
           <h3 className="text-white text-sm font-medium">Network & Error</h3>
           <Button
-            onClick={showNetworkSwitch}
             className="w-full"
             disabled={isLoading.network}
+            onPress={showNetworkSwitch}
           >
             {isLoading.network ? "Loading..." : "Show Network Switch (3s)"}
           </Button>
           <Button
-            onClick={showError}
             className="w-full"
             disabled={isLoading.error}
+            onPress={showError}
           >
             {isLoading.error ? "Loading..." : "Show Error (5s)"}
           </Button>
@@ -215,16 +215,16 @@ function ToastIntegrationDemo() {
         <div className="space-y-2">
           <h3 className="text-white text-sm font-medium">Transaction Status</h3>
           <Button
-            onClick={showTransaction}
             className="w-full"
             disabled={isLoading.transaction}
+            onPress={showTransaction}
           >
             {isLoading.transaction ? "Loading..." : "Show Confirming (8s)"}
           </Button>
           <Button
-            onClick={showConfirmedTransaction}
             className="w-full"
             disabled={isLoading.confirmed}
+            onPress={showConfirmedTransaction}
           >
             {isLoading.confirmed ? "Loading..." : "Show Confirmed (3s)"}
           </Button>
@@ -233,16 +233,16 @@ function ToastIntegrationDemo() {
         <div className="space-y-2">
           <h3 className="text-white text-sm font-medium">Duration Examples</h3>
           <Button
-            onClick={showQuickToast}
             className="w-full"
             disabled={isLoading.quick}
+            onPress={showQuickToast}
           >
             {isLoading.quick ? "Loading..." : "Quick Toast (2s)"}
           </Button>
           <Button
-            onClick={showLongToast}
             className="w-full"
             disabled={isLoading.long}
+            onPress={showLongToast}
           >
             {isLoading.long ? "Loading..." : "Long Toast (10s)"}
           </Button>
@@ -252,9 +252,9 @@ function ToastIntegrationDemo() {
       <div className="space-y-2">
         <h3 className="text-white text-sm font-medium">Collapsed View</h3>
         <Button
-          onClick={showCollapsedTransaction}
           className="w-full max-w-48"
           disabled={isLoading.collapsed}
+          onPress={showCollapsedTransaction}
         >
           {isLoading.collapsed ? "Loading..." : "Show Collapsed (4s)"}
         </Button>

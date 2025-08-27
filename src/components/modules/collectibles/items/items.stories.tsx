@@ -23,7 +23,7 @@ export const Default: Story = {
           owner="shinobi"
           quantity={1}
           action="list"
-          onActionClick={fn()}
+          onActionPress={fn()}
         />
         <CollectibleItem
           owner="yourwurstknightmare"
@@ -31,7 +31,7 @@ export const Default: Story = {
           price="$24"
           expiration="1mo"
           action="unlist"
-          onActionClick={fn()}
+          onActionPress={fn()}
         />
         <CollectibleItem
           owner="shinobi"
@@ -40,7 +40,7 @@ export const Default: Story = {
           logo="https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/e07829b7-0382-4e03-7ecd-a478c5aa9f00/logo"
           expiration="1mo"
           action="purchase"
-          onActionClick={fn()}
+          onActionPress={fn()}
         />
       </CollectibleItems>
     );

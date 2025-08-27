@@ -1,10 +1,12 @@
 import type { Config } from "tailwindcss";
 import { cartridgeTWPreset } from "./src/preset";
+// @ts-expect-error nativewind is not typed
+import nativewind from "nativewind/preset";
 
 const config = {
   darkMode: ["class", "class"],
   content: ["./src/**/*.{ts,tsx}", "./.storybook/**/*.{ts,tsx}"],
-  presets: [cartridgeTWPreset],
+  presets: [nativewind, cartridgeTWPreset],
   theme: {
     extend: {
       placeholderColor: {
