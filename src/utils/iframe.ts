@@ -9,7 +9,7 @@ const DEFAULT_PORT_BY_PROTOCOL: { [index: string]: string } = {
   "https:": "443",
 };
 
-const URL_REGEX = /^(https?:)?\/\/([^/:]+)?(:(\d+))?/;
+const URL_REGEX = /^(https?:|capacitor:)?\/\/([^/:]+)?(:(\d+))?/;
 
 const opaqueOriginSchemes = ["file:", "data:"];
 
