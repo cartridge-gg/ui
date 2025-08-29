@@ -10,6 +10,7 @@ query Controller($username: String!, $chainId: String!) {
     signers {
       createdAt
       isRevoked
+      isOriginal
       metadata {
         ... on WebauthnCredentials {
           __typename
