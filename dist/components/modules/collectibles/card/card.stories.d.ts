@@ -1,0 +1,16 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { CollectibleCard } from ".";
+declare const meta: Meta<typeof CollectibleCard>;
+export default meta;
+type Story = StoryObj<typeof CollectibleCard>;
+export declare const Default: Story;
+export declare const Selectable: Story;
+export declare const Unselectable: Story;
+export declare const Faded: Story;
+export declare const Selected: Story;
+export declare const Unselected: Story;
+export declare const Icon: Story;
+export declare const Price: Story;
+export declare const LastSale: Story;
+export declare const PriceLastSale: Story;
+export declare const FooterForced: Story;

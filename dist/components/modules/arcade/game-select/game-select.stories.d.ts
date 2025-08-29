@@ -1,0 +1,13 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { ArcadeGameSelect } from "./game-select";
+declare const meta: Meta<typeof ArcadeGameSelect>;
+export default meta;
+type Story = StoryObj<typeof ArcadeGameSelect>;
+export declare const Default: Story;
+export declare const Active: Story;
+export declare const Unplayed: Story;
+export declare const UnplayedActive: Story;
+export declare const Unthemed: Story;
+export declare const UnthemedActive: Story;
+export declare const Unknown: Story;
+export declare const UnknownActive: Story;
