@@ -906,10 +906,11 @@ export type CreateCryptoPaymentInput = {
 
 export type CreateLayerswapPaymentInput = {
   credits?: InputMaybe<CreditsInput>;
-  isMainnet?: InputMaybe<Scalars['Boolean']>;
+  destinationNetwork: LayerswapDestinationNetwork;
   layerswapFees?: InputMaybe<Scalars['BigInt']>;
+  outsideExecution?: InputMaybe<OutsideExecution>;
   purchaseType: PurchaseType;
-  sourceNetwork: LayerswapNetwork;
+  sourceNetwork: LayerswapSourceNetwork;
   starterpackId?: InputMaybe<Scalars['ID']>;
   teamId?: InputMaybe<Scalars['ID']>;
   username: Scalars['String'];
@@ -1766,12 +1767,9 @@ export type KatanaCreateInput = {
   saya?: InputMaybe<Scalars['Boolean']>;
 };
 
-export enum LayerswapNetwork {
-  Arbitrum = 'ARBITRUM',
-  Base = 'BASE',
-  Ethereum = 'ETHEREUM',
-  Optimism = 'OPTIMISM',
-  Solana = 'SOLANA'
+export enum LayerswapDestinationNetwork {
+  StarknetMainnet = 'STARKNET_MAINNET',
+  StarknetSepolia = 'STARKNET_SEPOLIA'
 }
 
 export type LayerswapPayment = {
@@ -1779,7 +1777,7 @@ export type LayerswapPayment = {
   cryptoPaymentId: Scalars['ID'];
   expiresAt: Scalars['Time'];
   sourceDepositAddress: Scalars['String'];
-  sourceNetwork: LayerswapNetwork;
+  sourceNetwork: LayerswapSourceNetwork;
   sourceTokenAddress: Scalars['String'];
   sourceTokenAmount: Scalars['BigInt'];
   status: LayerswapPaymentStatus;
@@ -1816,6 +1814,19 @@ export type LayerswapSource = {
   transactionExplorerTemplate: Scalars['String'];
   type: Scalars['String'];
 };
+
+export enum LayerswapSourceNetwork {
+  ArbitrumMainnet = 'ARBITRUM_MAINNET',
+  ArbitrumSepolia = 'ARBITRUM_SEPOLIA',
+  BaseMainnet = 'BASE_MAINNET',
+  BaseSepolia = 'BASE_SEPOLIA',
+  EthereumMainnet = 'ETHEREUM_MAINNET',
+  EthereumSepolia = 'ETHEREUM_SEPOLIA',
+  OptimismMainnet = 'OPTIMISM_MAINNET',
+  OptimismSepolia = 'OPTIMISM_SEPOLIA',
+  SolanaDevnet = 'SOLANA_DEVNET',
+  SolanaMainnet = 'SOLANA_MAINNET'
+}
 
 export type LayerswapSourceToken = {
   __typename?: 'LayerswapSourceToken';
@@ -2528,6 +2539,12 @@ export enum OrderDirection {
   /** Specifies a descending order for a given `orderBy` argument. */
   Desc = 'DESC'
 }
+
+export type OutsideExecution = {
+  address: Scalars['String'];
+  outsideExecution: Scalars['JSON'];
+  signature: Array<Scalars['String']>;
+};
 
 export type Ownership = {
   __typename?: 'Ownership';
@@ -3323,6 +3340,7 @@ export type Project = {
 
 export enum PurchaseType {
   Credits = 'CREDITS',
+  OutsideExecution = 'OUTSIDE_EXECUTION',
   Starterpack = 'STARTERPACK'
 }
 
@@ -5493,7 +5511,7 @@ export type CreateLayerswapPaymentMutationVariables = Exact<{
 }>;
 
 
-export type CreateLayerswapPaymentMutation = { __typename?: 'Mutation', createLayerswapPayment: { __typename?: 'LayerswapPayment', cryptoPaymentId: string, swapId: string, status: LayerswapPaymentStatus, sourceNetwork: LayerswapNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } };
+export type CreateLayerswapPaymentMutation = { __typename?: 'Mutation', createLayerswapPayment: { __typename?: 'LayerswapPayment', cryptoPaymentId: string, swapId: string, status: LayerswapPaymentStatus, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } };
 
 export type LayerswapQuoteQueryVariables = Exact<{
   input: CreateLayerswapPaymentInput;
