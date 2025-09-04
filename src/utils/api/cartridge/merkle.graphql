@@ -1,5 +1,7 @@
 query MerkleDropByKey($key: String!) {
   merkleDropByKey(key: $key) {
+    key
+    salt
     network
     contract
     entrypoint
@@ -8,12 +10,14 @@ query MerkleDropByKey($key: String!) {
   }
 }
 
-query MerkleClaimsForAddress($key: String!, $address: String!) {
-  merkleClaimsForAddress(key: $key, address: $address) {
+query MerkleClaimsForAddress($keys: [String!]!, $address: String!) {
+  merkleClaimsForAddress(keys: $keys, address: $address) {
     data
     claimed
     merkleProof
     merkleDrop {
+      key
+      salt
       network
       contract
       entrypoint

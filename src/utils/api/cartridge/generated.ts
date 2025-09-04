@@ -944,6 +944,7 @@ export type CreateMerkleDropInput = {
   key: Scalars['String'];
   merkleRoot: Scalars['String'];
   network: MerkleDropNetwork;
+  salt: Scalars['String'];
   starterpackID?: InputMaybe<Scalars['ID']>;
   updatedAt?: InputMaybe<Scalars['Time']>;
 };
@@ -2052,6 +2053,7 @@ export type MerkleDrop = Node & {
   key: Scalars['String'];
   merkleRoot: Scalars['String'];
   network: MerkleDropNetwork;
+  salt: Scalars['String'];
   starterpack?: Maybe<Starterpack>;
   updatedAt: Scalars['Time'];
 };
@@ -2220,6 +2222,20 @@ export type MerkleDropWhereInput = {
   networkNotIn?: InputMaybe<Array<MerkleDropNetwork>>;
   not?: InputMaybe<MerkleDropWhereInput>;
   or?: InputMaybe<Array<MerkleDropWhereInput>>;
+  /** salt field predicates */
+  salt?: InputMaybe<Scalars['String']>;
+  saltContains?: InputMaybe<Scalars['String']>;
+  saltContainsFold?: InputMaybe<Scalars['String']>;
+  saltEqualFold?: InputMaybe<Scalars['String']>;
+  saltGT?: InputMaybe<Scalars['String']>;
+  saltGTE?: InputMaybe<Scalars['String']>;
+  saltHasPrefix?: InputMaybe<Scalars['String']>;
+  saltHasSuffix?: InputMaybe<Scalars['String']>;
+  saltIn?: InputMaybe<Array<Scalars['String']>>;
+  saltLT?: InputMaybe<Scalars['String']>;
+  saltLTE?: InputMaybe<Scalars['String']>;
+  saltNEQ?: InputMaybe<Scalars['String']>;
+  saltNotIn?: InputMaybe<Array<Scalars['String']>>;
   /** updated_at field predicates */
   updatedAt?: InputMaybe<Scalars['Time']>;
   updatedAtGT?: InputMaybe<Scalars['Time']>;
@@ -2366,6 +2382,7 @@ export type MutationCreateMerkleDropArgs = {
   entrypoint: Scalars['String'];
   key: Scalars['String'];
   network: MerkleDropNetwork;
+  salt: Scalars['String'];
 };
 
 
@@ -3545,7 +3562,7 @@ export type QueryMerkleClaimsArgs = {
 
 export type QueryMerkleClaimsForAddressArgs = {
   address: Scalars['String'];
-  key: Scalars['String'];
+  keys: Array<Scalars['String']>;
 };
 
 
@@ -5258,6 +5275,7 @@ export type UpdateMerkleDropInput = {
   merkleRoot?: InputMaybe<Scalars['String']>;
   network?: InputMaybe<MerkleDropNetwork>;
   removeClaimIDs?: InputMaybe<Array<Scalars['ID']>>;
+  salt?: InputMaybe<Scalars['String']>;
   starterpackID?: InputMaybe<Scalars['ID']>;
   updatedAt?: InputMaybe<Scalars['Time']>;
 };
@@ -5453,15 +5471,15 @@ export type MerkleDropByKeyQueryVariables = Exact<{
 }>;
 
 
-export type MerkleDropByKeyQuery = { __typename?: 'Query', merkleDropByKey?: { __typename?: 'MerkleDrop', network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } | null };
+export type MerkleDropByKeyQuery = { __typename?: 'Query', merkleDropByKey?: { __typename?: 'MerkleDrop', key: string, salt: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } | null };
 
 export type MerkleClaimsForAddressQueryVariables = Exact<{
-  key: Scalars['String'];
+  keys: Array<Scalars['String']> | Scalars['String'];
   address: Scalars['String'];
 }>;
 
 
-export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', data: Array<string>, claimed: boolean, merkleProof?: Array<string> | null, merkleDrop: { __typename?: 'MerkleDrop', network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } }> };
+export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', data: Array<string>, claimed: boolean, merkleProof?: Array<string> | null, merkleDrop: { __typename?: 'MerkleDrop', key: string, salt: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } }> };
 
 export type MetricsQueryVariables = Exact<{
   projects: Array<MetricsProject> | MetricsProject;
@@ -5583,7 +5601,7 @@ export type StarterPackQueryVariables = Exact<{
 }>;
 
 
-export type StarterPackQuery = { __typename?: 'Query', starterpack?: { __typename?: 'StarterpackDetails', starterpack: { __typename?: 'Starterpack', name: string, description?: string | null, active: boolean, issuance: number, maxIssuance?: number | null, acquisitionType: StarterpackAcquisitionType, starterpackContract: { __typename?: 'StarterpackContractConnection', edges?: Array<{ __typename?: 'StarterpackContractEdge', node?: { __typename?: 'StarterpackContract', name: string, description?: string | null, iconURL?: string | null, contractAddress: string, supplyEntryPoint?: string | null, supplyCalldata?: Array<string> | null } | null } | null> | null }, merkleDrops: { __typename?: 'MerkleDropConnection', edges?: Array<{ __typename?: 'MerkleDropEdge', node?: { __typename?: 'MerkleDrop', key: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string } | null } | null> | null } }, price: { __typename?: 'Credits', amount: string, decimals: number }, bonusCredits: { __typename?: 'Credits', amount: string, decimals: number }, mintAllowance?: { __typename?: 'MintAllowance', count: number, limit: number } | null } | null };
+export type StarterPackQuery = { __typename?: 'Query', starterpack?: { __typename?: 'StarterpackDetails', starterpack: { __typename?: 'Starterpack', name: string, description?: string | null, active: boolean, issuance: number, maxIssuance?: number | null, acquisitionType: StarterpackAcquisitionType, starterpackContract: { __typename?: 'StarterpackContractConnection', edges?: Array<{ __typename?: 'StarterpackContractEdge', node?: { __typename?: 'StarterpackContract', name: string, description?: string | null, iconURL?: string | null, contractAddress: string, supplyEntryPoint?: string | null, supplyCalldata?: Array<string> | null } | null } | null> | null }, merkleDrops: { __typename?: 'MerkleDropConnection', edges?: Array<{ __typename?: 'MerkleDropEdge', node?: { __typename?: 'MerkleDrop', key: string, salt: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } | null } | null> | null } }, price: { __typename?: 'Credits', amount: string, decimals: number }, bonusCredits: { __typename?: 'Credits', amount: string, decimals: number }, mintAllowance?: { __typename?: 'MintAllowance', count: number, limit: number } | null } | null };
 
 export type TeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6265,6 +6283,8 @@ export const useMeQuery = <
 export const MerkleDropByKeyDocument = `
     query MerkleDropByKey($key: String!) {
   merkleDropByKey(key: $key) {
+    key
+    salt
     network
     contract
     entrypoint
@@ -6286,12 +6306,14 @@ export const useMerkleDropByKeyQuery = <
       options
     );
 export const MerkleClaimsForAddressDocument = `
-    query MerkleClaimsForAddress($key: String!, $address: String!) {
-  merkleClaimsForAddress(key: $key, address: $address) {
+    query MerkleClaimsForAddress($keys: [String!]!, $address: String!) {
+  merkleClaimsForAddress(keys: $keys, address: $address) {
     data
     claimed
     merkleProof
     merkleDrop {
+      key
+      salt
       network
       contract
       entrypoint
@@ -6748,10 +6770,12 @@ export const StarterPackDocument = `
         edges {
           node {
             key
+            salt
             network
             contract
             entrypoint
             merkleRoot
+            description
           }
         }
       }

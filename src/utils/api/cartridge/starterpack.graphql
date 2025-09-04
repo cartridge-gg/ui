@@ -27,10 +27,12 @@ query StarterPack($input: StarterpackInput!) {
         edges {
           node {
             key
+            salt
             network
             contract
             entrypoint
             merkleRoot
+            description
           }
         }
       }
