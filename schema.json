@@ -21788,7 +21788,7 @@
             {
               "defaultValue": null,
               "description": null,
-              "name": "outsideExecution",
+              "name": "execution",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -21832,6 +21832,20 @@
                       "ofType": null
                     }
                   }
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "swap",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "SwapAmount",
+                  "ofType": null
                 }
               }
             }
@@ -40146,6 +40160,45 @@
         {
           "description": null,
           "enumValues": [],
+          "fields": [],
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "tokenAddress",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "name": "amount",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "BigInt",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": [],
+          "kind": "INPUT_OBJECT",
+          "name": "SwapAmount",
+          "possibleTypes": []
+        },
+        {
+          "description": null,
+          "enumValues": [],
           "fields": [
             {
               "args": [],
@@ -44602,6 +44655,22 @@
               "description": null,
               "isDeprecated": false,
               "name": "publicKey",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "args": [],
+              "deprecationReason": null,
+              "description": null,
+              "isDeprecated": false,
+              "name": "AAGUID",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,

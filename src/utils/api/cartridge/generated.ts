@@ -2542,8 +2542,9 @@ export enum OrderDirection {
 
 export type OutsideExecution = {
   address: Scalars['String'];
-  outsideExecution: Scalars['JSON'];
+  execution: Scalars['JSON'];
   signature: Array<Scalars['String']>;
+  swap: SwapAmount;
 };
 
 export type Ownership = {
@@ -4752,6 +4753,11 @@ export type StripePricingDetails = {
   baseCostInCents: Scalars['Int'];
   processingFeeInCents: Scalars['Int'];
   totalInCents: Scalars['Int'];
+};
+
+export type SwapAmount = {
+  amount: Scalars['BigInt'];
+  tokenAddress: Scalars['String'];
 };
 
 export type Team = Node & {
