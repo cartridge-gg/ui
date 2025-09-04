@@ -17,7 +17,7 @@ query Controller($username: String!, $chainId: String!) {
           webauthn {
             id
             publicKey
-			AAGUID
+            AAGUID
           }
         }
         ... on StarknetCredentials {
