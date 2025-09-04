@@ -5453,7 +5453,7 @@ export type MerkleDropByKeyQueryVariables = Exact<{
 }>;
 
 
-export type MerkleDropByKeyQuery = { __typename?: 'Query', merkleDropByKey?: { __typename?: 'MerkleDrop', network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string } | null };
+export type MerkleDropByKeyQuery = { __typename?: 'Query', merkleDropByKey?: { __typename?: 'MerkleDrop', network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } | null };
 
 export type MerkleClaimsForAddressQueryVariables = Exact<{
   key: Scalars['String'];
@@ -5461,7 +5461,7 @@ export type MerkleClaimsForAddressQueryVariables = Exact<{
 }>;
 
 
-export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', data: Array<string>, claimed: boolean, merkleProof?: Array<string> | null, merkleDrop: { __typename?: 'MerkleDrop', network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string } }> };
+export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', data: Array<string>, claimed: boolean, merkleProof?: Array<string> | null, merkleDrop: { __typename?: 'MerkleDrop', network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } }> };
 
 export type MetricsQueryVariables = Exact<{
   projects: Array<MetricsProject> | MetricsProject;
@@ -6269,6 +6269,7 @@ export const MerkleDropByKeyDocument = `
     contract
     entrypoint
     merkleRoot
+    description
   }
 }
     `;
@@ -6295,6 +6296,7 @@ export const MerkleClaimsForAddressDocument = `
       contract
       entrypoint
       merkleRoot
+      description
     }
   }
 }
