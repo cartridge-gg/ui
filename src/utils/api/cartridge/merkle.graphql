@@ -4,6 +4,7 @@ query MerkleDropByKey($key: String!) {
     contract
     entrypoint
     merkleRoot
+    description
   }
 }
 
@@ -17,6 +18,7 @@ query MerkleClaimsForAddress($key: String!, $address: String!) {
       contract
       entrypoint
       merkleRoot
+      description
     }
   }
 }
