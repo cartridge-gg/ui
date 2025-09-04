@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { ArcadeHeader } from "./header";
+declare const meta: Meta<typeof ArcadeHeader>;
+export default meta;
+type Story = StoryObj<typeof ArcadeHeader>;
+export declare const Default: Story;
+export declare const DefaultVisitor: Story;
+export declare const DefaultUser: Story;
+export declare const Theme: Story;
+export declare const ThemeVisitor: Story;
+export declare const ThemeUser: Story;

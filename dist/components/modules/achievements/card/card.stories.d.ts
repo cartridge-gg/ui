@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { AchievementCard } from "./card";
+declare const meta: Meta<typeof AchievementCard>;
+export default meta;
+type Story = StoryObj<typeof AchievementCard>;
+export declare const Squire: Story;
+export declare const SquirePinOnly: Story;
+export declare const Battlelord: Story;
+export declare const Voyager: Story;
+export declare const Hidden: Story;

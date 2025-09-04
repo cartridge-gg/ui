@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { ThumbnailWallet } from "./wallet";
+declare const meta: Meta<typeof ThumbnailWallet>;
+export default meta;
+type Story = StoryObj<typeof ThumbnailWallet>;
+export declare const Default: Story;
+export declare const ArgentX: Story;
+export declare const Braavos: Story;
+export declare const OpenZeppelin: Story;
+export declare const Controller: Story;

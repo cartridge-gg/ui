@@ -1,0 +1,12 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { CollectiblePreview } from ".";
+declare const meta: Meta<typeof CollectiblePreview>;
+export default meta;
+type Story = StoryObj<typeof CollectiblePreview>;
+export declare const Default: Story;
+export declare const Small: Story;
+export declare const Large: Story;
+export declare const Fallback: Story;
+export declare const FallbackSmall: Story;
+export declare const FallbackLarge: Story;
+export declare const TextImage: Story;

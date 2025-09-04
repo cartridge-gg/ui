@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { Amount } from "./amount";
+declare const meta: Meta<typeof Amount>;
+export default meta;
+type Story = StoryObj<typeof Amount>;
+export declare const Default: Story;
+export declare const ZeroAmount: Story;
+export declare const NonZeroAmount: Story;
+export declare const NegativeAmount: Story;
+export declare const ZeroDecimals: Story;
+export declare const IncrementButtons: Story;
