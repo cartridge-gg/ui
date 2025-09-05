@@ -35,11 +35,3 @@ export const EmptyStateLeaderboardIcon = memo(
 );
 
 EmptyStateLeaderboardIcon.displayName = "EmptyStateLeaderboardIcon";
-
-<svg
-  width="120"
-  height="121"
-  viewBox="0 0 120 121"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
-></svg>;

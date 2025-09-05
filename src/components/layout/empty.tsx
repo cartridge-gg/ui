@@ -10,6 +10,7 @@ import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
 import { EmptyStateDiscoverIcon } from "../icons/utility/empty-state-discover";
+import { EmptyStateClaimIcon } from "../icons/utility/empty-state-claim";
 
 interface EmptyProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -21,7 +22,8 @@ interface EmptyProps
     | "guild"
     | "inventory"
     | "discover"
-    | "leaderboard";
+    | "leaderboard"
+    | "claim";
 }
 
 export const emptyVariants = cva("", {
@@ -53,6 +55,8 @@ export function Empty({
         return <EmptyStateDiscoverIcon className="h-[135px] w-[135px]" />;
       case "leaderboard":
         return <EmptyStateLeaderboardIcon className="h-[135px] w-[135px]" />;
+      case "claim":
+        return <EmptyStateClaimIcon className="h-[135px] w-[135px]" />;
       default:
         return <EmptyStateIcon className="h-[135px] w-[135px]" />;
     }
