@@ -50,3 +50,10 @@ export const Inventory: Story = {
     icon: "inventory",
   },
 };
+
+export const Claim: Story = {
+  args: {
+    title: "Nothing to claim from this wallet",
+    icon: "claim",
+  },
+};
