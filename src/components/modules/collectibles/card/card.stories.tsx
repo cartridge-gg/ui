@@ -135,6 +135,25 @@ export const Bloberts: Story = {
   },
 };
 
+export const Duelists: Story = {
+  render: function Render(args) {
+    const [selected, setSelected] = useState(false);
+
+    return (
+      <div className="flex gap-2">
+        <CollectibleCard
+          {...args}
+          image="https://api.cartridge.gg/x/arcade-pistols/torii/static/0x2e9c711b1a7e2784570b1bda5082a92606044e836ba392d2b977d280fb74b3c/0x0000000000000000000000000000000000000000000000000000000000000001/image"
+          totalCount={1}
+          selected={selected}
+          onSelect={() => setSelected(!selected)}
+          onClick={selected ? () => setSelected(!selected) : undefined}
+        />
+      </div>
+    );
+  },
+};
+
 export const Unselectable: Story = {
   args: {
     selectable: false,
