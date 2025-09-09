@@ -2,7 +2,7 @@ import { PLACEHOLDER } from "@/assets";
 import { CollectibleTag, StackDiamondIcon, TagIcon } from "@/index";
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export interface CollectiblePreviewProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -41,6 +41,22 @@ export const CollectiblePreview = ({
   className,
   ...props
 }: CollectiblePreviewProps) => {
+  const [data, setData] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // A trick only for Beasts and Golden Tokens
+      const res = await fetch(image);
+      const data = (await res.text());
+      if (!data.includes("</svg>")) return;
+      // Extra b64 image from the text
+      const match = data.match(/data:image\/png;base64,[^)"]+/);
+      if (!match || match.length === 0) return;
+      setData(match[0]);
+    };
+    fetchData();
+  }, [image]);
+
   const uri = useMemo(() => {
     if (!image) return PLACEHOLDER;
     return image;
@@ -53,8 +69,8 @@ export const CollectiblePreview = ({
     >
       <div className="absolute grow inset-0 blur-[8px] transition-opacity duration-150 opacity-75 group-hover:opacity-100">
         <img
-          src={uri}
-          className={cn("object-cover absolute inset-0 w-full h-full")}
+          src={data || uri}
+          className={cn("object-cover absolute inset-0 w-full h-full image-pixelated")}
         />
         <div
           className="bg-center bg-cover h-full w-full relative"
@@ -64,9 +80,10 @@ export const CollectiblePreview = ({
         />
       </div>
       <img
-        className="object-contain max-h-full max-w-full relative transition duration-150 ease-in-out group-hover:scale-[1.02]"
+        className="object-contain h-full w-full relative transition duration-150 ease-in-out group-hover:scale-[1.02]"
+        style={{ imageRendering: "pixelated" }}
         draggable={false}
-        src={image}
+        src={data || image}
         onError={(e) => {
           e.currentTarget.src = PLACEHOLDER;
         }}
