@@ -55,7 +55,6 @@ export const CollectiblePreview = ({
           return;
         }
         const data = await res.text();
-        console.log({ data })
         if (!data.includes('width="100width="100%"')) return;
         // Extract b64 image from the text
         const match = data.match(/data:image\/png;base64,[^)"]+/);
