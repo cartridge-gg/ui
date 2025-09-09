@@ -72,8 +72,6 @@ export const CollectiblePreview = ({
     return image;
   }, [image]);
 
-  console.log({ uri, data })
-
   return (
     <div
       className={cn(collectiblePreviewVariants({ variant, size }), className)}
