@@ -46,13 +46,22 @@ export const CollectiblePreview = ({
   useEffect(() => {
     const fetchData = async () => {
       // A trick only for Beasts and Golden Tokens
-      const res = await fetch(image);
-      const data = await res.text();
-      if (!data.includes("</svg>")) return;
-      // Extra b64 image from the text
-      const match = data.match(/data:image\/png;base64,[^)"]+/);
-      if (!match || match.length === 0) return;
-      setData(match[0]);
+      try {
+        const res = await fetch(image);
+        if (!res.ok) {
+          // Optionally handle non-OK responses
+          console.error(`Failed to fetch image: ${res.status} ${res.statusText}`);
+          return;
+        }
+        const data = await res.text();
+        if (!data.includes("</svg>")) return;
+        // Extract b64 image from the text
+        const match = data.match(/data:image\/png;base64,[^)"]+/);
+        if (!match || match.length === 0) return;
+        setData(match[0]);
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
     };
     fetchData();
   }, [image]);
