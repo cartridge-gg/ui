@@ -47,7 +47,7 @@ export const CollectiblePreview = ({
     const fetchData = async () => {
       // A trick only for Beasts and Golden Tokens
       const res = await fetch(image);
-      const data = (await res.text());
+      const data = await res.text();
       if (!data.includes("</svg>")) return;
       // Extra b64 image from the text
       const match = data.match(/data:image\/png;base64,[^)"]+/);
@@ -70,7 +70,9 @@ export const CollectiblePreview = ({
       <div className="absolute grow inset-0 blur-[8px] transition-opacity duration-150 opacity-75 group-hover:opacity-100">
         <img
           src={data || uri}
-          className={cn("object-cover absolute inset-0 w-full h-full image-pixelated")}
+          className={cn(
+            "object-cover absolute inset-0 w-full h-full image-pixelated",
+          )}
         />
         <div
           className="bg-center bg-cover h-full w-full relative"
