@@ -46,6 +46,7 @@ export const CollectiblePreview = ({
   useEffect(() => {
     const fetchData = async () => {
       // A trick only for Beasts and Golden Tokens
+      // All other images must return early and not set data
       try {
         const res = await fetch(image);
         if (!res.ok) {
@@ -54,7 +55,8 @@ export const CollectiblePreview = ({
           return;
         }
         const data = await res.text();
-        if (!data.includes("</svg>")) return;
+        console.log({ data })
+        if (!data.includes('width="100width="100%"')) return;
         // Extract b64 image from the text
         const match = data.match(/data:image\/png;base64,[^)"]+/);
         if (!match || match.length === 0) return;
@@ -70,6 +72,8 @@ export const CollectiblePreview = ({
     if (!image) return PLACEHOLDER;
     return image;
   }, [image]);
+
+  console.log({ uri, data })
 
   return (
     <div
