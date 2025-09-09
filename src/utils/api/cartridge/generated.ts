@@ -5334,6 +5334,14 @@ export type AddressByUsernameQueryVariables = Exact<{
 
 export type AddressByUsernameQuery = { __typename?: 'Query', account?: { __typename?: 'Account', controllers: { __typename?: 'ControllerConnection', edges?: Array<{ __typename?: 'ControllerEdge', node?: { __typename?: 'Controller', address: string } | null } | null> | null } } | null };
 
+export type AccountSearchQueryVariables = Exact<{
+  query: Scalars['String'];
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type AccountSearchQuery = { __typename?: 'Query', accounts?: { __typename?: 'AccountConnection', edges?: Array<{ __typename?: 'AccountEdge', node?: { __typename?: 'Account', username: string, updatedAt: string, credits: { __typename?: 'Credits', amount: string, decimals: number } } | null } | null> | null } | null };
+
 export type AchievementsQueryVariables = Exact<{
   projects: Array<Project> | Project;
 }>;
@@ -5764,6 +5772,38 @@ export const useAddressByUsernameQuery = <
     useQuery<AddressByUsernameQuery, TError, TData>(
       ['AddressByUsername', variables],
       useFetchData<AddressByUsernameQuery, AddressByUsernameQueryVariables>(AddressByUsernameDocument).bind(null, variables),
+      options
+    );
+export const AccountSearchDocument = `
+    query AccountSearch($query: String!, $limit: Int = 5) {
+  accounts(
+    where: {usernameHasPrefix: $query}
+    first: $limit
+    orderBy: {field: CREATED_AT, direction: DESC}
+  ) {
+    edges {
+      node {
+        username
+        credits {
+          amount
+          decimals
+        }
+        updatedAt
+      }
+    }
+  }
+}
+    `;
+export const useAccountSearchQuery = <
+      TData = AccountSearchQuery,
+      TError = unknown
+    >(
+      variables: AccountSearchQueryVariables,
+      options?: UseQueryOptions<AccountSearchQuery, TError, TData>
+    ) =>
+    useQuery<AccountSearchQuery, TError, TData>(
+      ['AccountSearch', variables],
+      useFetchData<AccountSearchQuery, AccountSearchQueryVariables>(AccountSearchDocument).bind(null, variables),
       options
     );
 export const AchievementsDocument = `

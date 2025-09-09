@@ -1,6 +1,8 @@
 import { cn } from "@/utils";
 import { Status, ValidationState } from "./status";
 import { Input } from "@/index";
+import { AccountSearchDropdown } from "./account-search-dropdown";
+import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
 import * as React from "react";
 
 type CreateAccountProps = {
@@ -12,10 +14,12 @@ type CreateAccountProps = {
   error?: Error;
   isLoading: boolean;
   autoFocus?: boolean;
+  showAutocomplete?: boolean;
   onUsernameChange: (value: string) => void;
   onUsernameFocus: () => void;
   onUsernameClear: () => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
+  onAccountSelect?: (result: AccountSearchResult) => void;
 };
 
 export const CreateAccount = React.forwardRef<
@@ -29,14 +33,20 @@ export const CreateAccount = React.forwardRef<
       error,
       isLoading,
       autoFocus = false,
+      showAutocomplete = false,
       onUsernameChange,
       onUsernameFocus,
       onUsernameClear,
       onKeyDown,
+      onAccountSelect,
     },
     ref,
   ) => {
     const internalRef = React.useRef<HTMLInputElement>(null);
+    const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+    const [selectedIndex, setSelectedIndex] = React.useState<
+      number | undefined
+    >();
 
     // Use imperative handle to expose the input ref
     React.useImperativeHandle(ref, () => internalRef.current!);
@@ -48,7 +58,45 @@ export const CreateAccount = React.forwardRef<
       }
     }, [autoFocus]);
 
-    return (
+    const handleFocus = React.useCallback(() => {
+      onUsernameFocus();
+      if (showAutocomplete) {
+        setIsDropdownOpen(true);
+      }
+    }, [onUsernameFocus, showAutocomplete]);
+
+    const handleAccountSelect = React.useCallback(
+      (result: AccountSearchResult) => {
+        onUsernameChange(result.username);
+        setIsDropdownOpen(false);
+        setSelectedIndex(undefined);
+        onAccountSelect?.(result);
+      },
+      [onUsernameChange, onAccountSelect],
+    );
+
+    const handleKeyDown = React.useCallback(
+      (e: React.KeyboardEvent) => {
+        // If autocomplete is shown and dropdown is open, let dropdown handle arrow keys and enter
+        if (
+          showAutocomplete &&
+          isDropdownOpen &&
+          (e.key === "ArrowDown" ||
+            e.key === "ArrowUp" ||
+            e.key === "Enter" ||
+            e.key === "Escape")
+        ) {
+          // Dropdown will handle these keys
+          return;
+        }
+
+        // Otherwise, pass to parent handler
+        onKeyDown(e);
+      },
+      [onKeyDown, showAutocomplete, isDropdownOpen],
+    );
+
+    const inputElement = (
       <div
         className={cn(
           "flex flex-col border rounded-md border-background-300 bg-background-300",
@@ -64,14 +112,25 @@ export const CreateAccount = React.forwardRef<
           spellCheck={false}
           placeholder="Username"
           className="relative z-1"
-          onFocus={onUsernameFocus}
+          onFocus={handleFocus}
           onChange={(e) => {
-            onUsernameChange(e.target.value.toLowerCase());
+            const value = e.target.value.toLowerCase();
+            onUsernameChange(value);
+            if (showAutocomplete) {
+              setIsDropdownOpen(value.length > 0);
+              setSelectedIndex(undefined);
+            }
           }}
-          onKeyDown={onKeyDown}
+          onKeyDown={handleKeyDown}
           isLoading={validation.status === "validating"}
           disabled={isLoading}
-          onClear={onUsernameClear}
+          onClear={() => {
+            onUsernameClear();
+            if (showAutocomplete) {
+              setIsDropdownOpen(false);
+              setSelectedIndex(undefined);
+            }
+          }}
         />
         <Status
           username={usernameField.value}
@@ -80,6 +139,23 @@ export const CreateAccount = React.forwardRef<
         />
       </div>
     );
+
+    if (showAutocomplete) {
+      return (
+        <AccountSearchDropdown
+          query={usernameField.value}
+          isOpen={isDropdownOpen}
+          onOpenChange={setIsDropdownOpen}
+          onSelect={handleAccountSelect}
+          selectedIndex={selectedIndex}
+          onSelectedIndexChange={setSelectedIndex}
+        >
+          {inputElement}
+        </AccountSearchDropdown>
+      );
+    }
+
+    return inputElement;
   },
 );
 

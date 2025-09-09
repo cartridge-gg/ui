@@ -148,6 +148,51 @@ export const WithAutoFocus: Story = {
   },
 };
 
+export const WithAutocomplete: Story = {
+  args: {
+    showAutocomplete: true,
+    usernameField: {
+      value: "",
+      error: undefined,
+    },
+    validation: {
+      status: "idle",
+      error: undefined,
+      exists: undefined,
+    },
+    error: undefined,
+    isLoading: false,
+    autoFocus: true,
+    onUsernameChange: fn(),
+    onUsernameFocus: fn(),
+    onUsernameClear: fn(),
+    onKeyDown: fn(),
+    onAccountSelect: fn(),
+  },
+};
+
+export const WithAutocompleteAndValue: Story = {
+  args: {
+    showAutocomplete: true,
+    usernameField: {
+      value: "shin",
+      error: undefined,
+    },
+    validation: {
+      status: "idle",
+      error: undefined,
+      exists: undefined,
+    },
+    error: undefined,
+    isLoading: false,
+    onUsernameChange: fn(),
+    onUsernameFocus: fn(),
+    onUsernameClear: fn(),
+    onKeyDown: fn(),
+    onAccountSelect: fn(),
+  },
+};
+
 export const LongError: Story = {
   args: {
     usernameField: {
