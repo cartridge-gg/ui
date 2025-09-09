@@ -51,7 +51,9 @@ export const CollectiblePreview = ({
         const res = await fetch(image);
         if (!res.ok) {
           // Optionally handle non-OK responses
-          console.error(`Failed to fetch image: ${res.status} ${res.statusText}`);
+          console.error(
+            `Failed to fetch image: ${res.status} ${res.statusText}`,
+          );
           return;
         }
         const data = await res.text();
