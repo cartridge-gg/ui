@@ -20,6 +20,10 @@ type CreateAccountProps = {
   onUsernameClear: () => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
   onAccountSelect?: (result: AccountSearchResult) => void;
+  // Mock data props for Storybook
+  mockResults?: AccountSearchResult[];
+  mockIsLoading?: boolean;
+  mockError?: Error;
 };
 
 export const CreateAccount = React.forwardRef<
@@ -39,6 +43,9 @@ export const CreateAccount = React.forwardRef<
       onUsernameClear,
       onKeyDown,
       onAccountSelect,
+      mockResults,
+      mockIsLoading,
+      mockError,
     },
     ref,
   ) => {
@@ -149,6 +156,9 @@ export const CreateAccount = React.forwardRef<
           onSelect={handleAccountSelect}
           selectedIndex={selectedIndex}
           onSelectedIndexChange={setSelectedIndex}
+          mockResults={mockResults}
+          mockIsLoading={mockIsLoading}
+          mockError={mockError}
         >
           {inputElement}
         </AccountSearchDropdown>

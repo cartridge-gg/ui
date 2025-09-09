@@ -168,6 +168,9 @@ export const WithAutocomplete: Story = {
     onUsernameClear: fn(),
     onKeyDown: fn(),
     onAccountSelect: fn(),
+    // Mock empty results
+    mockResults: [],
+    mockIsLoading: false,
   },
 };
 
@@ -190,6 +193,29 @@ export const WithAutocompleteAndValue: Story = {
     onUsernameClear: fn(),
     onKeyDown: fn(),
     onAccountSelect: fn(),
+    // Mock search results
+    mockResults: [
+      {
+        id: "create-new-shin",
+        type: "create-new",
+        username: "shin",
+      },
+      {
+        id: "existing-shints",
+        type: "existing",
+        username: "shints",
+        points: 20800,
+        lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+      },
+      {
+        id: "existing-shinobi",
+        type: "existing",
+        username: "shinobi",
+        points: 20800,
+        lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+      },
+    ],
+    mockIsLoading: false,
   },
 };
 

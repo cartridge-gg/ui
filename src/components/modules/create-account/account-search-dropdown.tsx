@@ -19,6 +19,10 @@ export interface AccountSearchDropdownProps {
   children: React.ReactNode;
   selectedIndex?: number;
   onSelectedIndexChange?: (index: number | undefined) => void;
+  // Optional mock data for Storybook
+  mockResults?: AccountSearchResult[];
+  mockIsLoading?: boolean;
+  mockError?: Error;
 }
 
 export const AccountSearchDropdown = React.forwardRef<
@@ -34,14 +38,25 @@ export const AccountSearchDropdown = React.forwardRef<
       children,
       selectedIndex,
       onSelectedIndexChange,
+      mockResults,
+      mockIsLoading,
+      mockError,
     },
     ref,
   ) => {
-    const { results, isLoading, error } = useAccountSearch(query, {
-      minLength: 1,
-      debounceMs: 300,
-      maxResults: 5,
-    });
+    // Use mock data if provided, otherwise use real hook
+    const hookData =
+      mockResults !== undefined
+        ? { results: [], isLoading: false, error: undefined }
+        : useAccountSearch(query, {
+            minLength: 1,
+            debounceMs: 300,
+            maxResults: 5,
+          });
+
+    const results = mockResults ?? hookData.results;
+    const isLoading = mockIsLoading ?? hookData.isLoading;
+    const error = mockError ?? hookData.error;
 
     const hasResults = results.length > 0;
     const shouldShowDropdown =
