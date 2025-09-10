@@ -119,6 +119,12 @@ export const CreateAccount = React.forwardRef<
           spellCheck={false}
           placeholder="Username"
           className="relative z-1"
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          data-1p-ignore="true"
+          data-lpignore="true"
+          data-form-type="other"
           onFocus={handleFocus}
           onChange={(e) => {
             const value = e.target.value.toLowerCase();
