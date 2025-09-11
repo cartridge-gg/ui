@@ -50,7 +50,15 @@ export const CreateAccount = React.forwardRef<
     ref,
   ) => {
     const internalRef = React.useRef<HTMLInputElement>(null);
-    const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = React.useState(() => {
+      // Initialize dropdown as open if we have autocomplete enabled, a value, and mock results
+      return Boolean(
+        showAutocomplete &&
+          usernameField.value.length > 0 &&
+          mockResults &&
+          mockResults.length > 0,
+      );
+    });
     const [selectedIndex, setSelectedIndex] = React.useState<
       number | undefined
     >();
@@ -68,9 +76,13 @@ export const CreateAccount = React.forwardRef<
     const handleFocus = React.useCallback(() => {
       onUsernameFocus();
       if (showAutocomplete) {
-        setIsDropdownOpen(true);
+        // Only open if we have a value or mock results
+        const shouldOpen =
+          usernameField.value.length > 0 ||
+          Boolean(mockResults && mockResults.length > 0);
+        setIsDropdownOpen(shouldOpen);
       }
-    }, [onUsernameFocus, showAutocomplete]);
+    }, [onUsernameFocus, showAutocomplete, usernameField.value, mockResults]);
 
     const handleAccountSelect = React.useCallback(
       (result: AccountSearchResult) => {
@@ -130,7 +142,13 @@ export const CreateAccount = React.forwardRef<
             const value = e.target.value.toLowerCase();
             onUsernameChange(value);
             if (showAutocomplete) {
-              setIsDropdownOpen(value.length > 0);
+              // Keep dropdown open if we have mock results and value, otherwise use value length
+              const shouldOpen = Boolean(
+                mockResults && mockResults.length > 0
+                  ? value.length > 0
+                  : value.length > 0,
+              );
+              setIsDropdownOpen(shouldOpen);
               setSelectedIndex(undefined);
             }
           }}
@@ -163,7 +181,7 @@ export const CreateAccount = React.forwardRef<
           selectedIndex={selectedIndex}
           onSelectedIndexChange={setSelectedIndex}
           mockResults={mockResults}
-          mockIsLoading={mockIsLoading}
+          mockIsLoading={mockIsLoading ?? false}
           mockError={mockError}
         >
           {inputElement}

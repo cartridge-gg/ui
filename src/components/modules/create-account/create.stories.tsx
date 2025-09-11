@@ -177,6 +177,7 @@ export const WithAutocomplete: Story = {
 export const WithAutocompleteAndValue: Story = {
   args: {
     showAutocomplete: true,
+    autoFocus: true, // Enable auto focus to trigger dropdown
     usernameField: {
       value: "shin",
       error: undefined,
