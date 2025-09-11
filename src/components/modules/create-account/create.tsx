@@ -3,6 +3,7 @@ import { Status, ValidationState } from "./status";
 import { Input } from "@/index";
 import { AccountSearchDropdown } from "./account-search-dropdown";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
+import { TimesCircleIcon } from "@/index";
 import * as React from "react";
 
 type CreateAccountProps = {
@@ -15,11 +16,13 @@ type CreateAccountProps = {
   isLoading: boolean;
   autoFocus?: boolean;
   showAutocomplete?: boolean;
+  selectedUsername?: string; // For pill functionality
   onUsernameChange: (value: string) => void;
   onUsernameFocus: () => void;
   onUsernameClear: () => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
   onAccountSelect?: (result: AccountSearchResult) => void;
+  onSelectedUsernameRemove?: () => void; // For removing pill
   // Mock data props for Storybook
   mockResults?: AccountSearchResult[];
   mockIsLoading?: boolean;
@@ -38,11 +41,13 @@ export const CreateAccount = React.forwardRef<
       isLoading,
       autoFocus = false,
       showAutocomplete = false,
+      selectedUsername,
       onUsernameChange,
       onUsernameFocus,
       onUsernameClear,
       onKeyDown,
       onAccountSelect,
+      onSelectedUsernameRemove,
       mockResults,
       mockIsLoading,
       mockError,
@@ -115,7 +120,48 @@ export const CreateAccount = React.forwardRef<
       [onKeyDown, showAutocomplete, isDropdownOpen],
     );
 
-    const inputElement = (
+    // Render pill mode when selectedUsername is provided
+    const renderPillInput = () => (
+      <div
+        className={cn(
+          "flex flex-col border rounded-md border-background-300 bg-background-300",
+          (validation.status === "invalid" || error) &&
+            "bg-destructive-100 border-destructive-100",
+        )}
+      >
+        <div className="bg-background-200 relative rounded-md p-1.5 w-full">
+          <div className="bg-background-300 flex items-center gap-2 px-3 py-2 rounded-sm border-l-4 border-background-400 shadow-sm">
+            <div className="flex items-center gap-1">
+              <div className="w-5 h-5 flex items-center justify-center">
+                {/* Plus icon for Create New */}
+                <svg viewBox="0 0 20 20" className="w-4 h-4 fill-primary">
+                  <path d="M16.667 9.167h-6.25V2.917a.833.833 0 0 0-1.667 0v6.25H2.5a.833.833 0 1 0 0 1.666h6.25v6.25a.833.833 0 0 0 1.667 0v-6.25h6.25a.833.833 0 1 0 0-1.666Z" />
+                </svg>
+              </div>
+              <span className="text-sm font-medium text-primary">
+                {selectedUsername}
+              </span>
+            </div>
+            <button
+              onClick={onSelectedUsernameRemove}
+              className="ml-auto p-0.5 hover:bg-background-400 rounded-full transition-colors"
+              type="button"
+            >
+              <TimesCircleIcon className="w-4 h-4 text-foreground-300 hover:text-foreground-200" />
+            </button>
+          </div>
+        </div>
+        <Status
+          username={selectedUsername || ""}
+          validation={validation}
+          error={error}
+        />
+      </div>
+    );
+
+    const inputElement = selectedUsername ? (
+      renderPillInput()
+    ) : (
       <div
         className={cn(
           "flex flex-col border rounded-md border-background-300 bg-background-300",

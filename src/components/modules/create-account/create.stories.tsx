@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { CreateAccount } from "./create";
+import { useState } from "react";
 
 const meta: Meta<typeof CreateAccount> = {
   title: "Modules/CreateAccount",
@@ -31,6 +32,13 @@ const meta: Meta<typeof CreateAccount> = {
 
 export default meta;
 type Story = StoryObj<typeof CreateAccount>;
+
+// Add the new props to the meta args for other stories to inherit
+meta.args = {
+  ...meta.args,
+  selectedUsername: undefined,
+  onSelectedUsernameRemove: fn(),
+};
 
 export const Default: Story = {};
 
@@ -235,6 +243,136 @@ export const LongError: Story = {
       name: "ClientError",
       message:
         'rpc error: code = Internal desc = internal server error: {"response":{"errors":[{"message":"rpc error: code = Internal desc = internal server error","path":["finalizeRegistration"]}],"data":null,"status":200,"headers":{}},"request":{"query":"\\n mutation FinalizeRegistration($credentials: String!, $network: String!) {\\n finalizeRegistration(credentials: $credentials, network: $network) {\\n username\\n controllers {\\n edges {\\n node {\\n address\\n constructorCalldata\\n signers {\\n type\\n }\\n }\\n }\\n }\\n credentials {\\n webauthn {\\n id\\n publicKey\\n }\\n }\\n }\\n}\\n ","variables":{"network":"SN_MAIN","credentials":"{\\"id\\":\\"ctfWh3FE96w5AZ-6iVNAv16ccGqJeDROaJ8YUdnOzZ0\\",\\"rawId\\":\\"ctfWh3FE96w5AZ-6iVNAv16ccGqJeDROaJ8YUdnOzZ0\\",\\"type\\":\\"public-key\\",\\"response\\":{\\"attestationObject\\":\\"o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikSZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NFAAAAALU5dmZIhaprzr_lImKkOaIAIHLX1odxRPesOQGfuolTQL9enHBqiXg0TmifGFHZzs2dpQECAyYgASFYIPx2O3ufZDxJ_fuu43knH7H4wfxp61JCg_TZey2CLwzIIlggygpmiDxx0Da84LP2vRu6xDJQrI552vP7Fo9bkIXkXtA\\",\\"clientDataJSON\\":\\"eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoib2NZZ2Q5LUlTY3B4U2dGeTZwcEZfSE5rdm1hWVRkZGtyb',
+    },
+  },
+};
+
+// Interactive story that demonstrates pill functionality
+export const InteractivePillDemo = {
+  render: function InteractivePillDemoComponent() {
+    const [usernameValue, setUsernameValue] = useState("");
+    const [selectedUsername, setSelectedUsername] = useState<
+      string | undefined
+    >();
+    const [validation, setValidation] = useState<{
+      status: "idle" | "validating" | "valid" | "invalid";
+      error?: Error;
+      exists?: boolean;
+    }>({
+      status: "idle",
+      error: undefined,
+      exists: undefined,
+    });
+
+    const mockResults = [
+      {
+        id: "create-new-" + usernameValue,
+        type: "create-new" as const,
+        username: usernameValue,
+      },
+      {
+        id: "existing-shints",
+        type: "existing" as const,
+        username: "shints",
+        points: 20800,
+        lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+      },
+      {
+        id: "existing-shinobi",
+        type: "existing" as const,
+        username: "shinobi",
+        points: 20800,
+        lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+      },
+    ].filter((result) =>
+      result.type === "create-new"
+        ? usernameValue.length > 0
+        : result.username.toLowerCase().includes(usernameValue.toLowerCase()),
+    );
+
+    const handleAccountSelect = (result: any) => {
+      console.log("Selected:", result);
+      setSelectedUsername(result.username);
+      setUsernameValue("");
+      setValidation({
+        status: "valid",
+        error: undefined,
+        exists: result.type === "existing",
+      });
+    };
+
+    const handleRemovePill = () => {
+      console.log("Removed pill:", selectedUsername);
+      setSelectedUsername(undefined);
+      setUsernameValue("");
+      setValidation({
+        status: "idle",
+        error: undefined,
+        exists: undefined,
+      });
+    };
+
+    return (
+      <div className="w-96">
+        <CreateAccount
+          usernameField={{
+            value: usernameValue,
+            error: undefined,
+          }}
+          validation={validation}
+          error={undefined}
+          isLoading={false}
+          autoFocus={true}
+          showAutocomplete={true}
+          selectedUsername={selectedUsername}
+          onUsernameChange={(value) => {
+            setUsernameValue(value);
+            if (!selectedUsername) {
+              setValidation({
+                status: "idle",
+                error: undefined,
+                exists: undefined,
+              });
+            }
+          }}
+          onUsernameFocus={() => console.log("Focus")}
+          onUsernameClear={() => {
+            setUsernameValue("");
+            setValidation({
+              status: "idle",
+              error: undefined,
+              exists: undefined,
+            });
+          }}
+          onKeyDown={() => {}}
+          onAccountSelect={handleAccountSelect}
+          onSelectedUsernameRemove={handleRemovePill}
+          mockResults={mockResults}
+          mockIsLoading={false}
+        />
+        <div className="mt-4 p-4 bg-background-200 rounded text-sm">
+          <h4 className="font-semibold mb-2">Demo Instructions:</h4>
+          <ul className="space-y-1 text-foreground-300">
+            <li>• Type in the input to see autocomplete suggestions</li>
+            <li>• Click on any suggestion to create a pill</li>
+            <li>• Click the X button on the pill to remove it</li>
+            <li>• Try "shin" to see matching results</li>
+          </ul>
+          {selectedUsername && (
+            <div className="mt-2 p-2 bg-primary/10 rounded">
+              <strong>Selected:</strong> {selectedUsername}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "An interactive demo showing how pills are created when selecting from autocomplete and how they can be removed.",
+      },
     },
   },
 };
