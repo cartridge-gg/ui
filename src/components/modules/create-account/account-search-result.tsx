@@ -1,7 +1,13 @@
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import React, { HTMLAttributes } from "react";
-import { AchievementPlayerAvatar, Separator, SparklesIcon } from "@/index";
+import {
+  AchievementPlayerAvatar,
+  Separator,
+  SparklesIcon,
+  PlusIcon,
+  SeedlingIcon,
+} from "@/index";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
 
 const accountSearchResultVariants = cva(
@@ -57,20 +63,36 @@ export const AccountSearchResultItem = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          accountSearchResultVariants({ variant: selectedVariant }),
+          "px-4 py-3 flex items-center gap-3 select-none cursor-pointer transition-colors duration-150",
+          isSelected
+            ? "bg-background-400"
+            : "bg-background-200 hover:bg-background-300",
           className,
         )}
         {...props}
       >
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <div className="w-5 h-5 min-w-5 min-h-5 flex items-center justify-center rounded-full bg-primary/20">
-            <div className="w-2 h-2 bg-primary rounded-full" />
+        {/* User icon container with plus and dotted border - matching Figma design */}
+        <div className="w-10 h-10 relative flex justify-center items-center">
+          <div className="w-8 h-8 p-1 absolute rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
+            <PlusIcon variant="line" className="w-4 h-4 text-foreground-100" />
           </div>
-          <div className="flex items-center gap-2 min-w-0">
-            <p className="text-sm font-medium truncate">{result.username}</p>
-            <div className="flex items-center gap-1 text-primary text-xs font-medium px-1.5 py-0.5 bg-primary/20 rounded">
-              <span>✨</span>
-              <span>Create New</span>
+          {/* Circular dotted border around plus */}
+          <div className="w-12 h-12 absolute border border-dashed border-foreground-400 rounded-full" />
+        </div>
+
+        {/* Username text */}
+        <div className="flex-1 justify-center text-foreground-100 text-sm font-normal leading-tight flex items-center">
+          {result.username}
+        </div>
+
+        {/* Create New tag with seedling icon */}
+        <div className="p-1 bg-background-300 rounded inline-flex justify-center items-center gap-0.5">
+          <div className="flex justify-start items-center gap-0.5">
+            <SeedlingIcon variant="solid" className="w-4 h-4 text-primary" />
+          </div>
+          <div className="px-0.5 flex justify-center items-center gap-2.5">
+            <div className="text-center justify-center text-primary text-xs font-normal leading-none">
+              Create New
             </div>
           </div>
         </div>

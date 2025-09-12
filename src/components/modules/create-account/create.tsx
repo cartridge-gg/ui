@@ -3,7 +3,7 @@ import { Status, ValidationState } from "./status";
 import { Input } from "@/index";
 import { AccountSearchDropdown } from "./account-search-dropdown";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
-import { TimesCircleIcon, PlusIcon, SeedlingIcon } from "@/index";
+import { TimesCircleIcon } from "@/index";
 import * as React from "react";
 
 type CreateAccountProps = {
@@ -120,75 +120,19 @@ export const CreateAccount = React.forwardRef<
       [onKeyDown, showAutocomplete, isDropdownOpen],
     );
 
-    // Render pill mode when selectedUsername is provided - matches Figma design exactly
+    // Render pill mode when selectedUsername is provided - simple pill design
     const renderPillInput = () => (
-      <div
-        className={cn(
-          "flex flex-col border rounded-md border-primary bg-background-300", // Golden border for selected state
-          (validation.status === "invalid" || error) &&
-            "bg-destructive-100 border-destructive-100",
-        )}
-      >
-        {/* Main input container with selected content */}
-        <div className="relative">
-          <div className="flex w-full rounded-md border border-primary bg-background-200 px-4 py-3 font-mono text-[15px] leading-5">
-            {/* User icon container */}
-            <div className="w-10 h-10 relative flex justify-center items-center mr-3">
-              <div className="w-8 h-8 p-1 absolute rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
-                {/* Plus icon */}
-                <PlusIcon
-                  variant="line"
-                  className="w-4 h-4 text-foreground-100"
-                />
-              </div>
-              {/* Circular dotted border around plus */}
-              <div className="w-12 h-12 absolute border border-dashed border-foreground-400 rounded-full" />
-            </div>
-
-            {/* Username text */}
-            <div className="flex-1 justify-center text-foreground-100 text-sm font-normal leading-tight flex items-center">
-              {selectedUsername}
-            </div>
-
-            {/* Create New tag */}
-            <div className="p-2 inline-flex flex-col justify-start items-start gap-2.5 ml-3">
-              <div className="p-1 bg-background-300 rounded inline-flex justify-center items-center gap-0.5">
-                <div className="flex justify-start items-center gap-0.5">
-                  {/* Seedling icon */}
-                  <SeedlingIcon
-                    variant="solid"
-                    className="w-4 h-4 text-primary"
-                  />
-                </div>
-                <div className="px-0.5 flex justify-center items-center gap-2.5">
-                  <div className="text-center justify-center text-primary text-xs font-normal leading-none">
-                    Create New
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Close button */}
-            <button
-              onClick={onSelectedUsernameRemove}
-              className="ml-2 p-1 hover:bg-background-400 rounded-full transition-colors flex items-center justify-center"
-              type="button"
-            >
-              <TimesCircleIcon className="w-5 h-5 text-foreground-300 hover:text-foreground-200" />
-            </button>
-          </div>
-
-          {/* Placeholder text when not focused */}
-          <div className="absolute left-4 -bottom-8 text-foreground-400 text-sm">
-            Enter a Username
-          </div>
-        </div>
-
-        <Status
-          username={selectedUsername || ""}
-          validation={validation}
-          error={error}
-        />
+      <div className="flex items-center gap-2 px-3 py-2 bg-background-300 border border-background-400 rounded-md">
+        <span className="text-foreground-100 font-mono text-sm">
+          {selectedUsername}
+        </span>
+        <button
+          onClick={onSelectedUsernameRemove}
+          className="p-1 hover:bg-background-400 rounded-full transition-colors flex items-center justify-center"
+          type="button"
+        >
+          <TimesCircleIcon className="w-4 h-4 text-foreground-300 hover:text-foreground-200" />
+        </button>
       </div>
     );
 
