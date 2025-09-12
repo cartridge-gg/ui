@@ -120,37 +120,85 @@ export const CreateAccount = React.forwardRef<
       [onKeyDown, showAutocomplete, isDropdownOpen],
     );
 
-    // Render pill mode when selectedUsername is provided
+    // Render pill mode when selectedUsername is provided - matches Figma design exactly
     const renderPillInput = () => (
       <div
         className={cn(
-          "flex flex-col border rounded-md border-background-300 bg-background-300",
+          "flex flex-col border rounded-md border-primary bg-background-300", // Golden border for selected state
           (validation.status === "invalid" || error) &&
             "bg-destructive-100 border-destructive-100",
         )}
       >
-        <div className="bg-background-200 relative rounded-md p-1.5 w-full">
-          <div className="bg-background-300 flex items-center gap-2 px-3 py-2 rounded-sm border-l-4 border-background-400 shadow-sm">
-            <div className="flex items-center gap-1">
-              <div className="w-5 h-5 flex items-center justify-center">
-                {/* Plus icon for Create New */}
-                <svg viewBox="0 0 20 20" className="w-4 h-4 fill-primary">
-                  <path d="M16.667 9.167h-6.25V2.917a.833.833 0 0 0-1.667 0v6.25H2.5a.833.833 0 1 0 0 1.666h6.25v6.25a.833.833 0 0 0 1.667 0v-6.25h6.25a.833.833 0 1 0 0-1.666Z" />
-                </svg>
+        {/* Main input container with selected content */}
+        <div className="relative">
+          <div className="flex w-full rounded-md border border-primary bg-background-200 px-4 py-3 font-mono text-[15px] leading-5">
+            {/* User icon container */}
+            <div className="w-10 h-10 relative flex justify-center items-center mr-3">
+              <div className="w-8 h-8 p-1 absolute rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
+                {/* Plus icon */}
+                <div className="w-6 h-6 relative">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="w-4 h-4 fill-foreground-100"
+                  >
+                    <path
+                      d="M12 2v20M2 12h20"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
               </div>
-              <span className="text-sm font-medium text-primary">
-                {selectedUsername}
-              </span>
+              {/* Circular dotted border around plus */}
+              <div className="w-12 h-12 absolute border border-dashed border-foreground-400 rounded-full" />
             </div>
+
+            {/* Username text */}
+            <div className="flex-1 justify-center text-foreground-100 text-sm font-normal leading-tight flex items-center">
+              {selectedUsername}
+            </div>
+
+            {/* Create New tag */}
+            <div className="p-2 inline-flex flex-col justify-start items-start gap-2.5 ml-3">
+              <div className="p-1 bg-background-300 rounded inline-flex justify-center items-center gap-0.5">
+                <div className="flex justify-start items-center gap-0.5">
+                  {/* Seedling icon */}
+                  <svg viewBox="0 0 16 16" className="w-4 h-4">
+                    <path
+                      d="M10.5 3.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5S8.17 2 9 2s1.5.67 1.5 1.5z"
+                      fill="#33ff33"
+                    />
+                    <path
+                      d="M9 6c-.83 0-1.5.67-1.5 1.5v5c0 .28.22.5.5.5s.5-.22.5-.5v-5c0-.28.22-.5.5-.5s.5.22.5.5v1c0 .28.22.5.5.5s.5-.22.5-.5v-1C10.5 6.67 9.83 6 9 6z"
+                      fill="#33ff33"
+                    />
+                  </svg>
+                </div>
+                <div className="px-0.5 flex justify-center items-center gap-2.5">
+                  <div className="text-center justify-center text-primary text-xs font-normal leading-none">
+                    Create New
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Close button */}
             <button
               onClick={onSelectedUsernameRemove}
-              className="ml-auto p-0.5 hover:bg-background-400 rounded-full transition-colors"
+              className="ml-2 p-1 hover:bg-background-400 rounded-full transition-colors flex items-center justify-center"
               type="button"
             >
-              <TimesCircleIcon className="w-4 h-4 text-foreground-300 hover:text-foreground-200" />
+              <TimesCircleIcon className="w-5 h-5 text-foreground-300 hover:text-foreground-200" />
             </button>
           </div>
+
+          {/* Placeholder text when not focused */}
+          <div className="absolute left-4 -bottom-8 text-foreground-400 text-sm">
+            Enter a Username
+          </div>
         </div>
+
         <Status
           username={selectedUsername || ""}
           validation={validation}
