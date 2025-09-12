@@ -77,7 +77,7 @@ export const AccountSearchDropdown = React.forwardRef<
         if (!shouldShowDropdown) return;
 
         switch (event.key) {
-          case "ArrowDown":
+          case "ArrowDown": {
             event.preventDefault();
             const nextIndex =
               selectedIndex === undefined
@@ -85,8 +85,9 @@ export const AccountSearchDropdown = React.forwardRef<
                 : Math.min(selectedIndex + 1, results.length - 1);
             onSelectedIndexChange?.(nextIndex);
             break;
+          }
 
-          case "ArrowUp":
+          case "ArrowUp": {
             event.preventDefault();
             const prevIndex =
               selectedIndex === undefined
@@ -94,19 +95,22 @@ export const AccountSearchDropdown = React.forwardRef<
                 : Math.max(selectedIndex - 1, 0);
             onSelectedIndexChange?.(prevIndex);
             break;
+          }
 
-          case "Enter":
+          case "Enter": {
             event.preventDefault();
             if (selectedIndex !== undefined && results[selectedIndex]) {
               handleSelect(results[selectedIndex]);
             }
             break;
+          }
 
-          case "Escape":
+          case "Escape": {
             event.preventDefault();
             onOpenChange(false);
             onSelectedIndexChange?.(undefined);
             break;
+          }
         }
       },
       [
