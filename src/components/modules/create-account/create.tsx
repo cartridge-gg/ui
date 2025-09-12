@@ -3,7 +3,7 @@ import { Status, ValidationState } from "./status";
 import { Input } from "@/index";
 import { AccountSearchDropdown } from "./account-search-dropdown";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
-import { TimesCircleIcon } from "@/index";
+import { TimesCircleIcon, PlusIcon, SeedlingIcon } from "@/index";
 import * as React from "react";
 
 type CreateAccountProps = {
@@ -136,19 +136,10 @@ export const CreateAccount = React.forwardRef<
             <div className="w-10 h-10 relative flex justify-center items-center mr-3">
               <div className="w-8 h-8 p-1 absolute rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
                 {/* Plus icon */}
-                <div className="w-6 h-6 relative">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="w-4 h-4 fill-foreground-100"
-                  >
-                    <path
-                      d="M12 2v20M2 12h20"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
+                <PlusIcon
+                  variant="line"
+                  className="w-4 h-4 text-foreground-100"
+                />
               </div>
               {/* Circular dotted border around plus */}
               <div className="w-12 h-12 absolute border border-dashed border-foreground-400 rounded-full" />
@@ -164,16 +155,10 @@ export const CreateAccount = React.forwardRef<
               <div className="p-1 bg-background-300 rounded inline-flex justify-center items-center gap-0.5">
                 <div className="flex justify-start items-center gap-0.5">
                   {/* Seedling icon */}
-                  <svg viewBox="0 0 16 16" className="w-4 h-4">
-                    <path
-                      d="M10.5 3.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5S8.17 2 9 2s1.5.67 1.5 1.5z"
-                      fill="#33ff33"
-                    />
-                    <path
-                      d="M9 6c-.83 0-1.5.67-1.5 1.5v5c0 .28.22.5.5.5s.5-.22.5-.5v-5c0-.28.22-.5.5-.5s.5.22.5.5v1c0 .28.22.5.5.5s.5-.22.5-.5v-1C10.5 6.67 9.83 6 9 6z"
-                      fill="#33ff33"
-                    />
-                  </svg>
+                  <SeedlingIcon
+                    variant="solid"
+                    className="w-4 h-4 text-primary"
+                  />
                 </div>
                 <div className="px-0.5 flex justify-center items-center gap-2.5">
                   <div className="text-center justify-center text-primary text-xs font-normal leading-none">
