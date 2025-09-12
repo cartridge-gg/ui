@@ -63,7 +63,7 @@ export const AccountSearchResultItem = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "px-4 py-3 flex items-center gap-3 select-none cursor-pointer transition-colors duration-150",
+          "p-3 flex items-center gap-3 select-none cursor-pointer transition-colors duration-150",
           isSelected
             ? "bg-background-400"
             : "bg-background-200 hover:bg-background-300",
@@ -72,18 +72,14 @@ export const AccountSearchResultItem = React.forwardRef<
         {...props}
       >
         {/* User icon container with plus and dotted border - matching Figma design */}
-        <div className="w-10 h-10 relative flex justify-center items-center">
-          <div className="w-8 h-8 p-1 absolute rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
-            <PlusIcon variant="line" className="w-4 h-4 text-foreground-100" />
-          </div>
-          {/* Circular dotted border around plus */}
-          <div className="w-12 h-12 absolute border border-dashed border-foreground-400 rounded-full" />
+        <div className="rounded-full flex justify-center items-center overflow-hidden border border-dashed border-foreground-400 w-10 h-10">
+          <PlusIcon variant="line" className="w-4 h-4 text-foreground-100" />
         </div>
 
         {/* Username text */}
-        <div className="flex-1 justify-center text-foreground-100 text-sm font-normal leading-tight flex items-center">
+        <p className="flex-1 justify-center text-foreground-100 text-sm font-normal leading-tight">
           {result.username}
-        </div>
+        </p>
 
         {/* Create New tag with seedling icon */}
         <div className="p-1 bg-background-300 rounded inline-flex justify-center items-center gap-0.5">
@@ -91,9 +87,9 @@ export const AccountSearchResultItem = React.forwardRef<
             <SeedlingIcon variant="solid" className="w-4 h-4 text-primary" />
           </div>
           <div className="px-0.5 flex justify-center items-center gap-2.5">
-            <div className="text-center justify-center text-primary text-xs font-normal leading-none">
+            <p className="text-center justify-center text-primary text-xs font-normal leading-none">
               Create New
-            </div>
+            </p>
           </div>
         </div>
       </div>
