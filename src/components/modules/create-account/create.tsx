@@ -89,7 +89,7 @@ export const CreateAccount = React.forwardRef<
       onUsernameFocus();
       if (showAutocomplete) {
         const shouldOpen = usernameField.value.length > 0 || hasMockResults;
-        return setIsDropdownOpen(shouldOpen);
+        setIsDropdownOpen(shouldOpen);
       }
     }, [
       onUsernameFocus,
@@ -97,6 +97,23 @@ export const CreateAccount = React.forwardRef<
       usernameField.value,
       hasMockResults,
     ]);
+
+    const handleBlur = React.useCallback((e: React.FocusEvent) => {
+      // Only close if focus is not moving to the dropdown
+      const relatedTarget = e.relatedTarget as HTMLElement;
+      if (
+        relatedTarget &&
+        relatedTarget.closest("[data-radix-popover-content]")
+      ) {
+        return;
+      }
+
+      // Small delay to allow for dropdown item clicks before closing
+      setTimeout(() => {
+        setIsDropdownOpen(false);
+        setSelectedIndex(undefined);
+      }, 150);
+    }, []);
 
     const handleAccountSelect = React.useCallback(
       (result: AccountSearchResult) => {
@@ -150,30 +167,6 @@ export const CreateAccount = React.forwardRef<
       [onUsernameChange, showAutocomplete, mockResults],
     );
 
-    React.useEffect(() => {
-      const inputRef = internalRef.current;
-      const focus = () => {
-        const shouldOpen = usernameField.value.length > 0 || hasMockResults;
-        if (
-          !isDropdownOpen &&
-          shouldOpen &&
-          showAutocomplete &&
-          inputRef === document.activeElement
-        ) {
-          setIsDropdownOpen(true);
-        }
-      };
-
-      inputRef?.addEventListener("focus", focus);
-
-      return () => inputRef?.removeEventListener("focus", focus);
-    }, [
-      hasMockResults,
-      usernameField.value.length,
-      isDropdownOpen,
-      showAutocomplete,
-    ]);
-
     // Render pill mode when selectedUsername is provided - simple pill design
     const renderPillInput = () => (
       <div className="flex flex-col border rounded-md border-background-300 bg-background-300">
@@ -226,6 +219,7 @@ export const CreateAccount = React.forwardRef<
             data-lpignore="true"
             data-form-type="other"
             onFocus={handleFocus}
+            onBlur={handleBlur}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             isLoading={validation.status === "validating"}
@@ -256,7 +250,13 @@ export const CreateAccount = React.forwardRef<
       () => ({
         query: usernameField.value,
         isOpen: isDropdownOpen,
-        onOpenChange: setIsDropdownOpen,
+        onOpenChange: (open: boolean) => {
+          // Only allow closing via blur or explicit close, not via Popover's auto-close
+          if (!open) {
+            return;
+          }
+          setIsDropdownOpen(open);
+        },
         onSelect: handleAccountSelect,
         selectedIndex,
         onSelectedIndexChange: setSelectedIndex,
