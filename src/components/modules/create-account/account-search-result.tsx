@@ -3,10 +3,11 @@ import { cva, VariantProps } from "class-variance-authority";
 import React, { HTMLAttributes } from "react";
 import {
   AchievementPlayerAvatar,
-  Separator,
   SparklesIcon,
   PlusIcon,
   SeedlingIcon,
+  ClockIcon,
+  AchievementPlayerBadge,
 } from "@/index";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
 
@@ -44,19 +45,6 @@ export const AccountSearchResultItem = React.forwardRef<
     : result.type === "create-new"
       ? "create-new"
       : "default";
-
-  const formatLastOnline = (date: Date) => {
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "1 day ago";
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
-    return `${Math.floor(diffDays / 365)} years ago`;
-  };
 
   if (result.type === "create-new") {
     return (
@@ -106,37 +94,36 @@ export const AccountSearchResultItem = React.forwardRef<
       {...props}
     >
       <div className="flex items-center gap-3 flex-1 min-w-0">
-        <div className="flex items-center gap-0.5">
-          <AchievementPlayerAvatar username={result.username} size="sm" />
+        <AchievementPlayerBadge
+          icon={
+            <AchievementPlayerAvatar
+              username={result.username}
+              className="h-full w-full"
+            />
+          }
+          variant="default"
+        />
+        <div className="flex flex-row items-center justify-between gap-1 flex-1">
           <p className="text-sm font-medium px-0.5 truncate">
             {result.username}
           </p>
-        </div>
 
-        {result.points && (
-          <>
-            <Separator
-              orientation="vertical"
-              className="w-px h-2 bg-background-400"
-            />
-            <div className="flex items-center gap-1 text-foreground-300">
-              <SparklesIcon variant="line" size="sm" />
-              <p className="text-sm font-medium">
-                {result.points.toLocaleString()}
-              </p>
+          {result.points && (
+            <div className="flex items-center gap-0.5 text-foreground-300 p-3">
+              <SparklesIcon
+                variant="solid"
+                size="sm"
+                className="text-foreground-100"
+              />
+              <div className="flex items-center gap-1">
+                <p className="text-xs font-medium text-foreground-100">
+                  {result.points.toLocaleString()}
+                </p>
+              </div>
             </div>
-          </>
-        )}
-      </div>
-
-      {result.lastOnline && (
-        <div className="flex flex-col items-end gap-0.5 text-xs text-foreground-400 min-w-0">
-          <span className="whitespace-nowrap">Last Online</span>
-          <span className="whitespace-nowrap">
-            {formatLastOnline(result.lastOnline)}
-          </span>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 });
