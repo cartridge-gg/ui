@@ -20,6 +20,7 @@ const meta: Meta<typeof CreateAccount> = {
       error: undefined,
       exists: undefined,
     },
+    className: "min-w-0 w-96",
     error: undefined,
     isLoading: false,
     autoFocus: false,

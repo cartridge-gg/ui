@@ -31,7 +31,7 @@ type CreateAccountProps = {
 
 export const CreateAccount = React.forwardRef<
   HTMLInputElement,
-  CreateAccountProps
+  React.HTMLAttributes<HTMLDivElement> & CreateAccountProps
 >(
   (
     {
@@ -51,11 +51,16 @@ export const CreateAccount = React.forwardRef<
       mockResults,
       mockIsLoading,
       mockError,
+      className,
     },
     ref,
   ) => {
     const internalRef = React.useRef<HTMLInputElement>(null);
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(() => {
+      if (usernameField.value === "") {
+        return false;
+      }
+
       // Initialize dropdown as open if we have autocomplete enabled, a value, and mock results
       return Boolean(
         showAutocomplete &&
@@ -120,78 +125,99 @@ export const CreateAccount = React.forwardRef<
       [onKeyDown, showAutocomplete, isDropdownOpen],
     );
 
+    React.useEffect(() => {
+      console.log("isDropdownOpen? ", isDropdownOpen);
+    }, [isDropdownOpen]);
+
     // Render pill mode when selectedUsername is provided - simple pill design
     const renderPillInput = () => (
-      <div className="flex items-center gap-2 px-3 py-2 bg-background-300 border border-background-400 rounded-md">
-        <span className="text-foreground-100 font-mono text-sm">
-          {selectedUsername}
-        </span>
-        <button
-          onClick={onSelectedUsernameRemove}
-          className="p-1 hover:bg-background-400 rounded-full transition-colors flex items-center justify-center"
-          type="button"
-        >
-          <TimesCircleIcon className="w-4 h-4 text-foreground-300 hover:text-foreground-200" />
-        </button>
+      <div className="flex flex-col border rounded-md border-background-300 bg-background-300">
+        <div className="p-1.5 bg-spacer rounded-md">
+          <div className="flex items-center justify-between gap-2 p-2 pl-3 bg-background-300 border-l-4 border-background-400 rounded-md">
+            <span className="text-foreground-100 font-mono text-sm">
+              {selectedUsername}
+            </span>
+            <button
+              onClick={onSelectedUsernameRemove}
+              className="p-1 hover:bg-background-400 rounded-full transition-colors flex items-center justify-center"
+              type="button"
+            >
+              <TimesCircleIcon className="w-4 h-4 text-foreground-300 hover:text-foreground-200" />
+            </button>
+          </div>
+        </div>
+        <Status
+          username={selectedUsername || ""}
+          validation={validation}
+          error={error}
+        />
       </div>
     );
 
     const inputElement = selectedUsername ? (
       renderPillInput()
     ) : (
-      <div
-        className={cn(
-          "flex flex-col border rounded-md border-background-300 bg-background-300",
-          (validation.status === "invalid" || error) &&
-            "bg-destructive-100 border-destructive-100",
+      <>
+        <div
+          className={cn(
+            "flex flex-col border rounded-md border-background-300 bg-background-300",
+            (validation.status === "invalid" || error) &&
+              "bg-destructive-100 border-destructive-100",
+            className,
+          )}
+        >
+          <Input
+            ref={internalRef}
+            variant="username"
+            size="lg"
+            value={usernameField.value}
+            spellCheck={false}
+            placeholder="Username"
+            className="relative z-1 focus:bg-spacer"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            data-1p-ignore="true"
+            data-lpignore="true"
+            data-form-type="other"
+            onFocus={handleFocus}
+            onChange={(e) => {
+              const value = e.target.value.toLowerCase();
+              onUsernameChange(value);
+              if (showAutocomplete) {
+                // Keep dropdown open if we have mock results and value, otherwise use value length
+                const shouldOpen = Boolean(
+                  mockResults && mockResults.length > 0
+                    ? value.length > 0
+                    : value.length > 0,
+                );
+                setIsDropdownOpen(shouldOpen);
+                setSelectedIndex(undefined);
+              }
+            }}
+            onKeyDown={handleKeyDown}
+            isLoading={validation.status === "validating"}
+            disabled={isLoading}
+            onClear={() => {
+              onUsernameClear();
+              if (showAutocomplete) {
+                setIsDropdownOpen(false);
+                setSelectedIndex(undefined);
+              }
+            }}
+          />
+          {!isDropdownOpen && (
+            <Status
+              username={usernameField.value}
+              validation={validation}
+              error={error}
+            />
+          )}
+        </div>
+        {isDropdownOpen && (
+          <div className="h-3 bg-background-150 border-none" /> // Placeholder to prevent layout shift when dropdown opens
         )}
-      >
-        <Input
-          ref={internalRef}
-          variant="username"
-          size="lg"
-          value={usernameField.value}
-          spellCheck={false}
-          placeholder="Username"
-          className="relative z-1"
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          data-1p-ignore="true"
-          data-lpignore="true"
-          data-form-type="other"
-          onFocus={handleFocus}
-          onChange={(e) => {
-            const value = e.target.value.toLowerCase();
-            onUsernameChange(value);
-            if (showAutocomplete) {
-              // Keep dropdown open if we have mock results and value, otherwise use value length
-              const shouldOpen = Boolean(
-                mockResults && mockResults.length > 0
-                  ? value.length > 0
-                  : value.length > 0,
-              );
-              setIsDropdownOpen(shouldOpen);
-              setSelectedIndex(undefined);
-            }
-          }}
-          onKeyDown={handleKeyDown}
-          isLoading={validation.status === "validating"}
-          disabled={isLoading}
-          onClear={() => {
-            onUsernameClear();
-            if (showAutocomplete) {
-              setIsDropdownOpen(false);
-              setSelectedIndex(undefined);
-            }
-          }}
-        />
-        <Status
-          username={usernameField.value}
-          validation={validation}
-          error={error}
-        />
-      </div>
+      </>
     );
 
     if (showAutocomplete) {
