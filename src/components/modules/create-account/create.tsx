@@ -55,6 +55,11 @@ export const CreateAccount = React.forwardRef<
     },
     ref,
   ) => {
+    const hasMockResults = React.useMemo(
+      () => Boolean(mockResults && mockResults.length > 0),
+      [mockResults],
+    );
+
     const internalRef = React.useRef<HTMLInputElement>(null);
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(() => {
       if (usernameField.value === "") {
@@ -63,10 +68,7 @@ export const CreateAccount = React.forwardRef<
 
       // Initialize dropdown as open if we have autocomplete enabled, a value, and mock results
       return Boolean(
-        showAutocomplete &&
-          usernameField.value.length > 0 &&
-          mockResults &&
-          mockResults.length > 0,
+        showAutocomplete && usernameField.value.length > 0 && hasMockResults,
       );
     });
     const [selectedIndex, setSelectedIndex] = React.useState<
@@ -83,12 +85,11 @@ export const CreateAccount = React.forwardRef<
       }
     }, [autoFocus]);
 
-    const hasMockResults = Boolean(mockResults && mockResults.length > 0);
     const handleFocus = React.useCallback(() => {
       onUsernameFocus();
       if (showAutocomplete) {
         const shouldOpen = usernameField.value.length > 0 || hasMockResults;
-        setIsDropdownOpen(shouldOpen);
+        return setIsDropdownOpen(shouldOpen);
       }
     }, [
       onUsernameFocus,
@@ -148,6 +149,34 @@ export const CreateAccount = React.forwardRef<
       },
       [onUsernameChange, showAutocomplete, mockResults],
     );
+
+    React.useEffect(() => {
+      const inputRef = internalRef.current;
+      const focus = () => {
+        const shouldOpen = usernameField.value.length > 0 || hasMockResults;
+        if (
+          !isDropdownOpen &&
+          shouldOpen &&
+          showAutocomplete &&
+          inputRef === document.activeElement
+        ) {
+          setIsDropdownOpen(true);
+        }
+      };
+
+      inputRef?.addEventListener("focus", focus);
+
+      return () => inputRef?.removeEventListener("focus", focus);
+    }, [
+      hasMockResults,
+      usernameField.value.length,
+      isDropdownOpen,
+      showAutocomplete,
+    ]);
+
+    React.useEffect(() => {
+      console.log("isDropdownOpen? ", isDropdownOpen);
+    }, [isDropdownOpen]);
 
     // Render pill mode when selectedUsername is provided - simple pill design
     const renderPillInput = () => (

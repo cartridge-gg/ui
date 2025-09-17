@@ -59,8 +59,9 @@ export const AccountSearchDropdown = React.forwardRef<
     const error = mockError ?? hookData.error;
 
     const hasResults = results.length > 0;
-    const shouldShowDropdown =
-      isOpen && query.length > 0 && (hasResults || isLoading);
+    const shouldShowDropdown = React.useMemo(() => {
+      return Boolean(isOpen && query.length > 0 && (hasResults || isLoading));
+    }, [isOpen, hasResults, isLoading, query.length]);
 
     const handleSelect = React.useCallback(
       (result: AccountSearchResult) => {
@@ -139,9 +140,7 @@ export const AccountSearchDropdown = React.forwardRef<
 
     return (
       <Popover open={isOpen} onOpenChange={onOpenChange}>
-        <PopoverAnchor asChild>
-          <div ref={ref}>{children}</div>
-        </PopoverAnchor>
+        <PopoverAnchor ref={ref}>{children}</PopoverAnchor>
         {shouldShowDropdown && (
           <PopoverContent
             className={cn(
