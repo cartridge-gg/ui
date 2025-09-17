@@ -1166,6 +1166,7 @@ export type Deployment = Node & {
 export type DeploymentLogsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<Order>;
+  region?: InputMaybe<Scalars['String']>;
   since?: InputMaybe<Scalars['Time']>;
 };
 
@@ -3689,8 +3690,6 @@ export type QueryStripePaymentArgs = {
 
 
 export type QuerySubscribeCreateSessionArgs = {
-  appId: Scalars['String'];
-  controllerId: Scalars['ID'];
   sessionKeyGuid: Scalars['Felt'];
 };
 

@@ -6,7 +6,6 @@ import {
   SparklesIcon,
   PlusIcon,
   SeedlingIcon,
-  ClockIcon,
   AchievementPlayerBadge,
 } from "@/index";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
