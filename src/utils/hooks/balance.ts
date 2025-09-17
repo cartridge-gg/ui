@@ -150,16 +150,34 @@ export function useCreditBalance({
   if (data?.account?.credits) {
     const value = BigInt(data?.account?.credits?.amount!);
     const decimals = data?.account?.credits?.decimals!;
+    
+    // Handle null/undefined decimals
+    if (decimals == null) {
+      throw new Error('Decimals cannot be null or undefined');
+    }
+    
     const factor = BigInt(10 ** decimals);
     
+    // Use BigInt arithmetic for precision, then convert to decimal string
     const wholePart = value / factor;
     const fractionalPart = value % factor;
     
-    const wholeNumber = Number(wholePart);
-    const fractionalNumber = Number(fractionalPart) / (10 ** decimals);
-    const adjusted = wholeNumber + fractionalNumber;
+    // Convert to decimal string to avoid floating-point precision issues
+    let decimalStr = wholePart.toString();
     
-    const rounded = parseFloat(adjusted.toFixed(2));
+    if (fractionalPart > 0n) {
+      // Pad fractional part with leading zeros to match decimal places
+      const fractionalStr = fractionalPart.toString().padStart(decimals, '0');
+      // Remove trailing zeros for cleaner display
+      const trimmedFractional = fractionalStr.replace(/0+$/, '');
+      if (trimmedFractional) {
+        decimalStr += '.' + trimmedFractional;
+      }
+    }
+    
+    // Convert to number for rounding to 2 decimal places
+    const adjusted = parseFloat(decimalStr);
+    const rounded = Math.round(adjusted * 100) / 100;
     const formatted = rounded.toString();
     
     balance = {
