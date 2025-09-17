@@ -138,51 +138,56 @@ export const AccountSearchDropdown = React.forwardRef<
     }, [shouldShowDropdown, handleKeyDown]);
 
     return (
-      <Popover open={shouldShowDropdown} onOpenChange={onOpenChange}>
+      <Popover open={isOpen} onOpenChange={onOpenChange}>
         <PopoverAnchor asChild>
           <div ref={ref}>{children}</div>
         </PopoverAnchor>
-        <PopoverContent
-          className={cn(
-            "w-[--radix-popover-trigger-width] p-0 bg-background-200 border-background-300 -translate-y-2",
-            "max-h-[300px] overflow-y-auto",
-          )}
-          align="start"
-          sideOffset={4}
-          onOpenAutoFocus={(e) => e.preventDefault()}
-          onCloseAutoFocus={(e) => e.preventDefault()}
-        >
-          {isLoading && (
-            <div className="px-3 py-2.5 text-sm text-foreground-400">
-              Searching...
-            </div>
-          )}
+        {shouldShowDropdown && (
+          <PopoverContent
+            className={cn(
+              "w-[--radix-popover-trigger-width] p-0 bg-background-200 border-background-300 -translate-y-6",
+              "max-h-[300px] overflow-y-auto",
+            )}
+            align="start"
+            sideOffset={4}
+            onOpenAutoFocus={(e) => e.preventDefault()}
+            onCloseAutoFocus={(e) => e.preventDefault()}
+          >
+            {isLoading && (
+              <div className="px-3 py-2.5 text-sm text-foreground-400">
+                Searching...
+              </div>
+            )}
 
-          {error && (
-            <div className="px-3 py-2.5 text-sm text-destructive-100">
-              Failed to search accounts
-            </div>
-          )}
+            {error && (
+              <div className="px-3 py-2.5 text-sm text-destructive-100">
+                Failed to search accounts
+              </div>
+            )}
 
-          {!isLoading && !error && results.length === 0 && query.length > 0 && (
-            <div className="px-3 py-2.5 text-sm text-foreground-400">
-              No accounts found
-            </div>
-          )}
+            {!isLoading &&
+              !error &&
+              results.length === 0 &&
+              query.length > 0 && (
+                <div className="px-3 py-2.5 text-sm text-foreground-400">
+                  No accounts found
+                </div>
+              )}
 
-          {!isLoading &&
-            !error &&
-            results.map((result, index) => (
-              <AccountSearchResultItem
-                key={result.id}
-                result={result}
-                isSelected={selectedIndex === index}
-                onClick={() => handleSelect(result)}
-                onMouseEnter={() => onSelectedIndexChange?.(index)}
-                className="border-b border-background-300 last:border-b-0"
-              />
-            ))}
-        </PopoverContent>
+            {!isLoading &&
+              !error &&
+              results.map((result, index) => (
+                <AccountSearchResultItem
+                  key={result.id}
+                  result={result}
+                  isSelected={selectedIndex === index}
+                  onClick={() => handleSelect(result)}
+                  onMouseEnter={() => onSelectedIndexChange?.(index)}
+                  className="border-b border-background-300 last:border-b-0"
+                />
+              ))}
+          </PopoverContent>
+        )}
       </Popover>
     );
   },

@@ -38,7 +38,7 @@ export interface AccountSearchResultItemProps
 export const AccountSearchResultItem = React.forwardRef<
   HTMLDivElement,
   AccountSearchResultItemProps
->(({ result, isSelected, className, variant, ...props }, ref) => {
+>(({ result, isSelected, className, ...props }, ref) => {
   const selectedVariant = isSelected
     ? "selected"
     : result.type === "create-new"

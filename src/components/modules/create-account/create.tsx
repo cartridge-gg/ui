@@ -91,6 +91,7 @@ export const CreateAccount = React.forwardRef<
           usernameField.value.length > 0 ||
           Boolean(mockResults && mockResults.length > 0);
         setIsDropdownOpen(shouldOpen);
+        return;
       }
     }, [onUsernameFocus, showAutocomplete, usernameField.value, mockResults]);
 
@@ -206,7 +207,7 @@ export const CreateAccount = React.forwardRef<
               }
             }}
           />
-          {!isDropdownOpen && (
+          {(!isDropdownOpen || usernameField.value === "") && (
             <Status
               username={usernameField.value}
               validation={validation}
@@ -214,8 +215,8 @@ export const CreateAccount = React.forwardRef<
             />
           )}
         </div>
-        {isDropdownOpen && (
-          <div className="h-3 bg-background-150 border-none" /> // Placeholder to prevent layout shift when dropdown opens
+        {isDropdownOpen && usernameField.value !== "" && (
+          <div className="h-8 bg-background-150 border-none" /> // Placeholder to prevent layout shift when dropdown opens
         )}
       </>
     );
