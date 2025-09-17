@@ -145,7 +145,7 @@ export const AccountSearchDropdown = React.forwardRef<
         {shouldShowDropdown && (
           <PopoverContent
             className={cn(
-              "w-[--radix-popover-trigger-width] p-0 bg-background-200 border-background-300 -translate-y-6",
+              "w-[--radix-popover-trigger-width] p-0 bg-background-200 border-background-300 -translate-y-7",
               "max-h-[300px] overflow-y-auto",
             )}
             align="start"

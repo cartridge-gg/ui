@@ -32,8 +32,6 @@ export function Status({ username, validation, error }: StatusProps) {
     return error?.message;
   }, [validation, error, isTimeoutError]);
 
-  console.log("validation status", validation);
-
   const message = useMemo(() => {
     return isError
       ? errorMessage
