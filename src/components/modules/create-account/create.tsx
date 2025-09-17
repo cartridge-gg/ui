@@ -1,6 +1,6 @@
 import { cn } from "@/utils";
 import { Status, ValidationState } from "./status";
-import { Input } from "@/index";
+import { Input, TimesIcon } from "@/index";
 import { AccountSearchDropdown } from "./account-search-dropdown";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
 import { TimesCircleIcon } from "@/index";
@@ -171,16 +171,16 @@ export const CreateAccount = React.forwardRef<
     const renderPillInput = () => (
       <div className="flex flex-col border rounded-md border-background-300 bg-background-300">
         <div className="p-1.5 bg-spacer rounded-md">
-          <div className="flex items-center justify-between gap-2 p-2 pl-3 bg-background-300 border-l-4 border-background-400 rounded-md">
+          <div className="flex items-center justify-between gap-2 p-2 pl-3 bg-background-150 border-l-4 border-background-300 rounded-md">
             <span className="text-foreground-100 font-mono text-sm">
               {selectedUsername}
             </span>
             <button
               onClick={onSelectedUsernameRemove}
-              className="p-1 hover:bg-background-400 rounded-full transition-colors flex items-center justify-center"
+              className="p-1 hover:bg-background-300 rounded-full transition-colors flex items-center justify-center"
               type="button"
             >
-              <TimesCircleIcon className="w-4 h-4 text-foreground-300 hover:text-foreground-200" />
+              <TimesIcon className="!w-5 !h-5 text-foreground-300 hover:text-foreground-200" />
             </button>
           </div>
         </div>
