@@ -149,12 +149,19 @@ export function useCreditBalance({
 
   if (data?.account?.credits) {
     const value = BigInt(data?.account?.credits?.amount!);
-    const factor = 10 ** data?.account?.credits?.decimals!;
-    const adjusted = parseFloat(value.toString()) / factor;
-    // Round and remove insignificant trailing zeros
+    const decimals = data?.account?.credits?.decimals!;
+    const factor = BigInt(10 ** decimals);
+    
+    const wholePart = value / factor;
+    const fractionalPart = value % factor;
+    
+    const wholeNumber = Number(wholePart);
+    const fractionalNumber = Number(fractionalPart) / (10 ** decimals);
+    const adjusted = wholeNumber + fractionalNumber;
+    
     const rounded = parseFloat(adjusted.toFixed(2));
-    const formatted =
-      adjusted === rounded ? adjusted.toString() : `~${rounded}`;
+    const formatted = rounded.toString();
+    
     balance = {
       value,
       formatted,
