@@ -149,14 +149,15 @@ export function useCreditBalance({
 
   if (data?.account?.credits) {
     const value = BigInt(data?.account?.credits?.amount!);
-    const decimals = data?.account?.credits?.decimals!;
+    const decimals = data?.account?.credits?.decimals;
     
-    // Handle null/undefined decimals
-    if (decimals == null) {
-      throw new Error('Decimals cannot be null or undefined');
+    // Handle null/undefined/invalid decimals
+    if (decimals == null || decimals < 0 || !Number.isInteger(decimals)) {
+      throw new Error('Decimals must be a non-negative integer');
     }
     
-    const factor = BigInt(10 ** decimals);
+    // Use BigInt arithmetic for factor calculation to avoid precision loss
+    const factor = 10n ** BigInt(decimals);
     
     // Use BigInt arithmetic for precision, then convert to decimal string
     const wholePart = value / factor;

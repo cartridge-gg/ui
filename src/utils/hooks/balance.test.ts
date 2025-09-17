@@ -4,12 +4,13 @@ import { describe, it, expect } from 'vitest';
 function calculateBalance(amount: string, decimals: number): { value: bigint; formatted: string } {
   const value = BigInt(amount);
   
-  // Handle null/undefined decimals
-  if (decimals == null) {
-    throw new Error('Decimals cannot be null or undefined');
+  // Handle null/undefined/invalid decimals
+  if (decimals == null || decimals < 0 || !Number.isInteger(decimals)) {
+    throw new Error('Decimals must be a non-negative integer');
   }
   
-  const factor = BigInt(10 ** decimals);
+  // Use BigInt arithmetic for factor calculation to avoid precision loss
+  const factor = 10n ** BigInt(decimals);
   
   // Use BigInt arithmetic for precision, then convert to decimal string
   const wholePart = value / factor;
@@ -118,6 +119,21 @@ describe('Balance calculation logic', () => {
       expect(typeof result.formatted).toBe('string');
       expect(result.formatted).not.toBe('NaN');
     });
+
+    it('should handle large decimal places without precision loss', () => {
+      // Test with 30 decimals - would overflow with old 10 ** decimals approach
+      const result = calculateBalance('1000000000000000000000000000000', 30);
+      expect(result.formatted).toBe('1');
+      expect(result.value).toBe(1000000000000000000000000000000n);
+    });
+
+    it('should handle very large decimal places (50)', () => {
+      // 50 decimals would definitely overflow with regular number arithmetic
+      const amount = '1' + '0'.repeat(50); // 1 followed by 50 zeros
+      const result = calculateBalance(amount, 50);
+      expect(result.formatted).toBe('1');
+      expect(result.value).toBe(BigInt(amount));
+    });
   });
 
   describe('Rounding behavior', () => {
@@ -176,16 +192,24 @@ describe('Balance calculation logic', () => {
       expect(() => calculateBalance(undefined as any, 6)).toThrow();
     });
 
-    it('should handle negative decimals by throwing', () => {
-      expect(() => calculateBalance('1000000', -1)).toThrow();
+    it('should throw on negative decimals', () => {
+      expect(() => calculateBalance('1000000', -1)).toThrow('Decimals must be a non-negative integer');
     });
 
     it('should throw on null decimals', () => {
-      expect(() => calculateBalance('1000000', null as any)).toThrow();
+      expect(() => calculateBalance('1000000', null as any)).toThrow('Decimals must be a non-negative integer');
     });
 
     it('should throw on undefined decimals', () => {
-      expect(() => calculateBalance('1000000', undefined as any)).toThrow();
+      expect(() => calculateBalance('1000000', undefined as any)).toThrow('Decimals must be a non-negative integer');
+    });
+
+    it('should throw on non-integer decimals', () => {
+      expect(() => calculateBalance('1000000', 6.5)).toThrow('Decimals must be a non-negative integer');
+    });
+
+    it('should throw on NaN decimals', () => {
+      expect(() => calculateBalance('1000000', NaN)).toThrow('Decimals must be a non-negative integer');
     });
   });
 
