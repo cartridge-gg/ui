@@ -188,7 +188,7 @@ export function HeaderInner({
 
   return (
     <div
-      className={cn("p-6 pb-0 flex items-center justify-between", className)}
+      className={cn("p-4 pb-0 flex items-center justify-between", className)}
     >
       <div className="flex items-center flex-shrink min-w-0 gap-3">
         {!hideIcon && <HeaderIcon variant={variant} Icon={Icon} icon={icon} />}
