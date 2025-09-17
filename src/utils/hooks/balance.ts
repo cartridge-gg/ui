@@ -17,37 +17,40 @@ export type Balance = {
  */
 export function calculateBalance(amount: string, decimals: number): Balance {
   const value = BigInt(amount);
-  
+
   // Handle null/undefined/invalid decimals
   if (decimals == null || decimals < 0 || !Number.isInteger(decimals)) {
-    throw new Error('Decimals must be a non-negative integer');
+    throw new Error("Decimals must be a non-negative integer");
   }
-  
+
   // Use BigInt arithmetic for factor calculation to avoid precision loss
   const factor = 10n ** BigInt(decimals);
-  
+
   // Use BigInt arithmetic for precision, then convert to decimal string
   const wholePart = value / factor;
   const fractionalPart = value % factor;
-  
+
   // Convert to decimal string to avoid floating-point precision issues
   let decimalStr = wholePart.toString();
-  
-  if (fractionalPart > 0n) {
+
+  // Handle fractional part (use absolute value for negative numbers)
+  const absFractionalPart =
+    fractionalPart < 0n ? -fractionalPart : fractionalPart;
+  if (absFractionalPart > 0n) {
     // Pad fractional part with leading zeros to match decimal places
-    const fractionalStr = fractionalPart.toString().padStart(decimals, '0');
+    const fractionalStr = absFractionalPart.toString().padStart(decimals, "0");
     // Remove trailing zeros for cleaner display
-    const trimmedFractional = fractionalStr.replace(/0+$/, '');
+    const trimmedFractional = fractionalStr.replace(/0+$/, "");
     if (trimmedFractional) {
-      decimalStr += '.' + trimmedFractional;
+      decimalStr += "." + trimmedFractional;
     }
   }
-  
+
   // Convert to number for rounding to 2 decimal places
   const adjusted = parseFloat(decimalStr);
   const rounded = Math.round(adjusted * 100) / 100;
   const formatted = rounded.toString();
-  
+
   return {
     value,
     formatted,
@@ -195,7 +198,7 @@ export function useCreditBalance({
   if (data?.account?.credits) {
     const amount = data?.account?.credits?.amount!;
     const decimals = data?.account?.credits?.decimals;
-    
+
     balance = calculateBalance(amount, decimals);
   }
 
