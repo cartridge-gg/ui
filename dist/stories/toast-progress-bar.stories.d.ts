@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { ToastProgressBar } from "../components/primitives/toast/specialized-toasts";
+declare const meta: Meta<typeof ToastProgressBar>;
+export default meta;
+type Story = StoryObj<typeof ToastProgressBar>;
+export declare const AchievementProgress: Story;
+export declare const ErrorProgress: Story;
+export declare const EmptyProgress: Story;
+export declare const FullProgress: Story;
+export declare const ProgressComparison: Story;
