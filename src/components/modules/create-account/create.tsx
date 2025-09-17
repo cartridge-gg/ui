@@ -3,7 +3,6 @@ import { Status, ValidationState } from "./status";
 import { Input, TimesIcon } from "@/index";
 import { AccountSearchDropdown } from "./account-search-dropdown";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
-import { TimesCircleIcon } from "@/index";
 import * as React from "react";
 
 type CreateAccountProps = {
