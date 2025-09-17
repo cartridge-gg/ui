@@ -174,10 +174,6 @@ export const CreateAccount = React.forwardRef<
       showAutocomplete,
     ]);
 
-    React.useEffect(() => {
-      console.log("isDropdownOpen? ", isDropdownOpen);
-    }, [isDropdownOpen]);
-
     // Render pill mode when selectedUsername is provided - simple pill design
     const renderPillInput = () => (
       <div className="flex flex-col border rounded-md border-background-300 bg-background-300">
