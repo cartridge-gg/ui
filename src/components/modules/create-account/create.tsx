@@ -71,7 +71,7 @@ export const CreateAccount = React.forwardRef<
     });
     const [selectedIndex, setSelectedIndex] = React.useState<
       number | undefined
-    >();
+    >(undefined);
 
     // Use imperative handle to expose the input ref
     React.useImperativeHandle(ref, () => internalRef.current!);
@@ -83,17 +83,19 @@ export const CreateAccount = React.forwardRef<
       }
     }, [autoFocus]);
 
+    const hasMockResults = Boolean(mockResults && mockResults.length > 0);
     const handleFocus = React.useCallback(() => {
       onUsernameFocus();
       if (showAutocomplete) {
-        // Only open if we have a value or mock results
-        const shouldOpen =
-          usernameField.value.length > 0 ||
-          Boolean(mockResults && mockResults.length > 0);
+        const shouldOpen = usernameField.value.length > 0 || hasMockResults;
         setIsDropdownOpen(shouldOpen);
-        return;
       }
-    }, [onUsernameFocus, showAutocomplete, usernameField.value, mockResults]);
+    }, [
+      onUsernameFocus,
+      showAutocomplete,
+      usernameField.value,
+      hasMockResults,
+    ]);
 
     const handleAccountSelect = React.useCallback(
       (result: AccountSearchResult) => {
@@ -124,6 +126,27 @@ export const CreateAccount = React.forwardRef<
         onKeyDown(e);
       },
       [onKeyDown, showAutocomplete, isDropdownOpen],
+    );
+
+    const handleInputChange = React.useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.toLowerCase();
+        onUsernameChange(value);
+
+        if (showAutocomplete) {
+          // Batch state updates
+          React.startTransition(() => {
+            const shouldOpen = Boolean(
+              mockResults && mockResults.length > 0
+                ? value.length > 0
+                : value.length > 0,
+            );
+            setIsDropdownOpen(shouldOpen);
+            setSelectedIndex(undefined);
+          });
+        }
+      },
+      [onUsernameChange, showAutocomplete, mockResults],
     );
 
     // Render pill mode when selectedUsername is provided - simple pill design
@@ -178,20 +201,7 @@ export const CreateAccount = React.forwardRef<
             data-lpignore="true"
             data-form-type="other"
             onFocus={handleFocus}
-            onChange={(e) => {
-              const value = e.target.value.toLowerCase();
-              onUsernameChange(value);
-              if (showAutocomplete) {
-                // Keep dropdown open if we have mock results and value, otherwise use value length
-                const shouldOpen = Boolean(
-                  mockResults && mockResults.length > 0
-                    ? value.length > 0
-                    : value.length > 0,
-                );
-                setIsDropdownOpen(shouldOpen);
-                setSelectedIndex(undefined);
-              }
-            }}
+            onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             isLoading={validation.status === "validating"}
             disabled={isLoading}
@@ -217,19 +227,32 @@ export const CreateAccount = React.forwardRef<
       </>
     );
 
+    const dropdownProps = React.useMemo(
+      () => ({
+        query: usernameField.value,
+        isOpen: isDropdownOpen,
+        onOpenChange: setIsDropdownOpen,
+        onSelect: handleAccountSelect,
+        selectedIndex,
+        onSelectedIndexChange: setSelectedIndex,
+        mockResults,
+        mockIsLoading: mockIsLoading ?? false,
+        mockError,
+      }),
+      [
+        usernameField.value,
+        isDropdownOpen,
+        handleAccountSelect,
+        selectedIndex,
+        mockResults,
+        mockIsLoading,
+        mockError,
+      ],
+    );
+
     if (showAutocomplete) {
       return (
-        <AccountSearchDropdown
-          query={usernameField.value}
-          isOpen={isDropdownOpen}
-          onOpenChange={setIsDropdownOpen}
-          onSelect={handleAccountSelect}
-          selectedIndex={selectedIndex}
-          onSelectedIndexChange={setSelectedIndex}
-          mockResults={mockResults}
-          mockIsLoading={mockIsLoading ?? false}
-          mockError={mockError}
-        >
+        <AccountSearchDropdown {...dropdownProps}>
           {inputElement}
         </AccountSearchDropdown>
       );
