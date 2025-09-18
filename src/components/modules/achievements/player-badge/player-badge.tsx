@@ -4,9 +4,10 @@ import {
   GoldIcon,
   SilverIcon,
 } from "@/components/icons";
+import { EmptyPfpIcon } from "@/components/icons/badge/empty";
 import { AchievementPlayerAvatar, Thumbnail } from "@/index";
 import { cn } from "@/utils";
-import { cva, VariantProps } from "class-variance-authority";
+import { VariantProps, cva } from "class-variance-authority";
 import { HTMLAttributes, useMemo } from "react";
 
 export interface AchievementPlayerBadgeProps
@@ -31,6 +32,7 @@ export const achievementPlayerBadgeVariants = cva(
         ghost: "",
       },
       rank: {
+        empty: "",
         default: "",
         gold: "",
         silver: "",
@@ -61,6 +63,10 @@ export const AchievementPlayerBadge = ({
 }: AchievementPlayerBadgeProps) => {
   const BadgeIcon = useMemo(() => {
     switch (rank) {
+      case "empty":
+        return (
+          <EmptyPfpIcon className="absolute text-primary" size={size ?? "xl"} />
+        );
       case "gold":
         return (
           <GoldIcon className="absolute text-primary" size={size ?? "xl"} />

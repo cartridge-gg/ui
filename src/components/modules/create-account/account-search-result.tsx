@@ -1,14 +1,14 @@
-import { cn } from "@/utils";
-import { cva, VariantProps } from "class-variance-authority";
-import React, { HTMLAttributes } from "react";
 import {
   AchievementPlayerAvatar,
-  SparklesIcon,
+  AchievementPlayerBadge,
   PlusIcon,
   SeedlingIcon,
-  AchievementPlayerBadge,
+  SparklesIcon,
 } from "@/index";
+import { cn } from "@/utils";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
+import { VariantProps, cva } from "class-variance-authority";
+import React, { HTMLAttributes } from "react";
 
 const accountSearchResultVariants = cva(
   "p-3 flex gap-3 items-center select-none cursor-pointer transition-colors duration-150 relative",
@@ -59,12 +59,14 @@ export const AccountSearchResultItem = React.forwardRef<
         {...props}
       >
         {/* User icon container with plus and dotted border - matching Figma design */}
-        <div className="rounded-full flex justify-center items-center overflow-hidden border border-dashed border-foreground-400 w-10 h-10 translate-x-1">
-          <PlusIcon variant="line" className="w-4 h-4 text-foreground-100" />
-        </div>
+        <AchievementPlayerBadge
+          rank="empty"
+          icon={<PlusIcon variant="line" className="text-foreground-100" />}
+          variant="default"
+        />
 
         {/* Username text */}
-        <p className="flex-1 justify-center text-foreground-100 text-sm font-normal leading-tight translate-x-2.5">
+        <p className="flex-1 justify-center text-foreground-100 text-sm font-normal leading-tight">
           {result.username}
         </p>
 
