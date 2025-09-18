@@ -4,7 +4,7 @@ import { CreateAccount } from "./create";
 import { useState } from "react";
 
 const meta: Meta<typeof CreateAccount> = {
-  title: "Modules/CreateAccount",
+  title: "Modules/Create Account/CreateAccount",
   component: CreateAccount,
   tags: ["autodocs"],
   parameters: {

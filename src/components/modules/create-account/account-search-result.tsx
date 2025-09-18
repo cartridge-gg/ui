@@ -59,12 +59,12 @@ export const AccountSearchResultItem = React.forwardRef<
         {...props}
       >
         {/* User icon container with plus and dotted border - matching Figma design */}
-        <div className="rounded-full flex justify-center items-center overflow-hidden border border-dashed border-foreground-400 w-10 h-10">
+        <div className="rounded-full flex justify-center items-center overflow-hidden border border-dashed border-foreground-400 w-10 h-10 translate-x-1">
           <PlusIcon variant="line" className="w-4 h-4 text-foreground-100" />
         </div>
 
         {/* Username text */}
-        <p className="flex-1 justify-center text-foreground-100 text-sm font-normal leading-tight">
+        <p className="flex-1 justify-center text-foreground-100 text-sm font-normal leading-tight translate-x-2.5">
           {result.username}
         </p>
 

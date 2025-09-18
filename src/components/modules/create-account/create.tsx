@@ -1,9 +1,9 @@
-import { cn } from "@/utils";
-import { Status, ValidationState } from "./status";
 import { Input, TimesIcon } from "@/index";
-import { AccountSearchDropdown } from "./account-search-dropdown";
+import { cn } from "@/utils";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
 import * as React from "react";
+import { AccountSearchDropdown } from "./account-search-dropdown";
+import { Status, ValidationState } from "./status";
 
 type CreateAccountProps = {
   usernameField: {
