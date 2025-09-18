@@ -61,10 +61,7 @@ export const MultipleResult: Story = {
     return (
       <div className="min-w-0 w-96 divide-y divide-spacer-100">
         {mockResults.map((result) => (
-          <AccountSearchResultItem
-            key={result.id}
-            result={result}
-          />
+          <AccountSearchResultItem key={result.id} result={result} />
         ))}
       </div>
     );
