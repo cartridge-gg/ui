@@ -11,7 +11,7 @@ import {
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
 
 const accountSearchResultVariants = cva(
-  "px-3 py-2.5 flex gap-3 items-center select-none cursor-pointer transition-colors duration-150 relative",
+  "p-3 flex gap-3 items-center select-none cursor-pointer transition-colors duration-150 relative",
   {
     variants: {
       variant: {

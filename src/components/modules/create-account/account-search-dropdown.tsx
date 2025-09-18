@@ -144,7 +144,7 @@ export const AccountSearchDropdown = React.forwardRef<
         {shouldShowDropdown && (
           <PopoverContent
             className={cn(
-              "w-[--radix-popover-trigger-width] p-0 bg-background-200 border-background-300 -translate-y-7",
+              "w-[--radix-popover-trigger-width] p-0 bg-spacer border-none -translate-y-7 divide-y divide-spacer",
               "max-h-[300px] overflow-y-auto",
             )}
             align="start"
@@ -182,7 +182,6 @@ export const AccountSearchDropdown = React.forwardRef<
                   isSelected={selectedIndex === index}
                   onClick={() => handleSelect(result)}
                   onMouseEnter={() => onSelectedIndexChange?.(index)}
-                  className="border-b border-background-300 last:border-b-0"
                 />
               ))}
           </PopoverContent>
