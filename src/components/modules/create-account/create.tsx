@@ -126,14 +126,19 @@ export const CreateAccount = React.forwardRef<
 
     const handleKeyDown = React.useCallback(
       (e: React.KeyboardEvent) => {
+        // Handle escape key to close dropdown
+        if (showAutocomplete && isDropdownOpen && e.key === "Escape") {
+          e.preventDefault();
+          setIsDropdownOpen(false);
+          setSelectedIndex(undefined);
+          return;
+        }
+
         // If autocomplete is shown and dropdown is open, let dropdown handle arrow keys and enter
         if (
           showAutocomplete &&
           isDropdownOpen &&
-          (e.key === "ArrowDown" ||
-            e.key === "ArrowUp" ||
-            e.key === "Enter" ||
-            e.key === "Escape")
+          (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter")
         ) {
           // Dropdown will handle these keys
           return;
