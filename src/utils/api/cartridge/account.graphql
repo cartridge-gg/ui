@@ -68,3 +68,22 @@ query AddressByUsername($username: String!) {
     }
   }
 }
+
+query AccountSearch($query: String!, $limit: Int = 5) {
+  accounts(
+    where: { usernameHasPrefix: $query }
+    first: $limit
+    orderBy: { field: CREATED_AT, direction: DESC }
+  ) {
+    edges {
+      node {
+        username
+        credits {
+          amount
+          decimals
+        }
+        updatedAt
+      }
+    }
+  }
+}

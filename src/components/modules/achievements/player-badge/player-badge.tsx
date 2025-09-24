@@ -4,9 +4,10 @@ import {
   GoldIcon,
   SilverIcon,
 } from "@/components/icons";
+import { EmptyPfpIcon } from "@/components/icons/badge/empty";
 import { AchievementPlayerAvatar, Thumbnail } from "@/index";
 import { cn } from "@/utils";
-import { cva, VariantProps } from "class-variance-authority";
+import { VariantProps, cva } from "class-variance-authority";
 import { HTMLAttributes, useMemo } from "react";
 
 export interface AchievementPlayerBadgeProps
@@ -14,6 +15,7 @@ export interface AchievementPlayerBadgeProps
     VariantProps<typeof achievementPlayerBadgeVariants> {
   username?: string;
   icon?: React.ReactNode;
+  badgeClassName?: string;
 }
 
 export const achievementPlayerBadgeVariants = cva(
@@ -31,12 +33,18 @@ export const achievementPlayerBadgeVariants = cva(
         ghost: "",
       },
       rank: {
+        empty: "",
         default: "",
         gold: "",
         silver: "",
         bronze: "",
       },
       size: {
+        "2xs": "",
+        xs: "",
+        sm: "",
+        default: "",
+        lg: "",
         xl: "",
         "2xl": "",
         "3xl": "",
@@ -56,30 +64,50 @@ export const AchievementPlayerBadge = ({
   rank,
   size,
   className,
+  badgeClassName,
   children,
   ...props
 }: AchievementPlayerBadgeProps) => {
   const BadgeIcon = useMemo(() => {
     switch (rank) {
+      case "empty":
+        return (
+          <EmptyPfpIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
+        );
       case "gold":
         return (
-          <GoldIcon className="absolute text-primary" size={size ?? "xl"} />
+          <GoldIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
         );
       case "silver":
         return (
-          <SilverIcon className="absolute text-primary" size={size ?? "xl"} />
+          <SilverIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
         );
       case "bronze":
         return (
-          <BronzeIcon className="absolute text-primary" size={size ?? "xl"} />
+          <BronzeIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
         );
       case "default":
       default:
         return (
-          <DefaultIcon className="absolute text-primary" size={size ?? "xl"} />
+          <DefaultIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
         );
     }
-  }, [rank, size]);
+  }, [rank, size, badgeClassName]);
 
   const ThumbnailIcon = useMemo(() => {
     if (icon) return icon;
@@ -102,7 +130,15 @@ export const AchievementPlayerBadge = ({
       <Thumbnail
         icon={ThumbnailIcon}
         variant={variant}
-        size={size === "3xl" ? "xl" : size === "2xl" ? "lg" : "md"}
+        size={
+          size === "3xl"
+            ? "xl"
+            : size === "2xl"
+              ? "lg"
+              : size === "lg"
+                ? "sm"
+                : "md"
+        }
         className="rounded-full"
         centered
         rounded
