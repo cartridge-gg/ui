@@ -1,4 +1,12 @@
-import { Input, TimesIcon } from "@/index";
+import {
+  AchievementPlayerAvatar,
+  AchievementPlayerBadge,
+  Input,
+  PlusIcon,
+  SeedlingIcon,
+  SparklesIcon,
+  TimesIcon,
+} from "@/index";
 import { cn } from "@/utils";
 import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
 import * as React from "react";
@@ -15,7 +23,7 @@ type CreateAccountProps = {
   isLoading: boolean;
   autoFocus?: boolean;
   showAutocomplete?: boolean;
-  selectedUsername?: string; // For pill functionality
+  selectedAccount?: AccountSearchResult; // For pill functionality with account data
   onUsernameChange: (value: string) => void;
   onUsernameFocus: () => void;
   onUsernameClear: () => void;
@@ -40,7 +48,7 @@ export const CreateAccount = React.forwardRef<
       isLoading,
       autoFocus = false,
       showAutocomplete = false,
-      selectedUsername,
+      selectedAccount,
       onUsernameChange,
       onUsernameFocus,
       onUsernameClear,
@@ -171,32 +179,90 @@ export const CreateAccount = React.forwardRef<
       [onUsernameChange, showAutocomplete, mockResults],
     );
 
-    // Render pill mode when selectedUsername is provided - simple pill design
+    // Render pill mode when selectedAccount is provided - simple pill design
     const renderPillInput = () => (
-      <div className="flex flex-col border rounded-md border-background-300 bg-background-300">
-        <div className="p-1.5 bg-spacer rounded-md">
-          <div className="flex items-center justify-between gap-2 p-2 pl-3 bg-background-150 border-l-4 border-background-300 rounded-md">
-            <span className="text-foreground-100 font-mono text-sm">
-              {selectedUsername}
-            </span>
-            <button
-              onClick={onSelectedUsernameRemove}
-              className="p-1 hover:bg-background-300 rounded-full transition-colors flex items-center justify-center"
-              type="button"
-            >
-              <TimesIcon className="!w-5 !h-5 text-foreground-300 hover:text-foreground-200" />
-            </button>
+      <div
+        className={cn("flex flex-col rounded-md bg-background-150", className)}
+      >
+        <div className="h-12 flex items-center justify-between gap-3 p-2 bg-background-200 rounded shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] z-10">
+          <AchievementPlayerBadge
+            icon={
+              selectedAccount?.type === "create-new" ? (
+                <PlusIcon variant="line" className="text-foreground-100" />
+              ) : (
+                <AchievementPlayerAvatar
+                  username={selectedAccount?.username || ""}
+                  className="!h-5 !w-5"
+                />
+              )
+            }
+            rank={selectedAccount?.type === "create-new" ? "empty" : undefined}
+            variant="ghost"
+            size="lg"
+            className="!w-8 !h-8"
+          />
+          <div className="flex flex-row items-center justify-between gap-1 flex-1">
+            <p className="text-sm font-normal px-0.5 truncate">
+              {selectedAccount?.username || "N/A"}
+            </p>
+
+            <div className="flex items-center gap-3">
+              {selectedAccount?.type === "create-new" ? (
+                <div className="p-1 bg-background-300 rounded inline-flex justify-center items-center gap-0.5">
+                  <div className="flex justify-start items-center gap-0.5">
+                    <SeedlingIcon
+                      variant="solid"
+                      className="w-4 h-4 text-primary"
+                    />
+                  </div>
+                  <div className="px-0.5 flex justify-center items-center gap-2.5">
+                    <p className="text-center justify-center text-primary text-xs font-normal leading-none">
+                      Create New
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                selectedAccount?.points && (
+                  <div className="flex items-start gap-2.5 p-2">
+                    <div className="flex items-center justify-center gap-0.5 p-1 bg-background-300 rounded text-foreground-100">
+                      <SparklesIcon
+                        variant="solid"
+                        size="xs"
+                        className="text-foreground-100"
+                      />
+                      <div className="flex items-center gap-1">
+                        <p className="text-xs font-medium text-foreground-100">
+                          {selectedAccount.points.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              )}
+              <TimesIcon
+                size="sm"
+                className="text-foreground-300 hover:text-foreground-100 cursor-pointer"
+                onClick={() => {
+                  onSelectedUsernameRemove?.();
+                  if (showAutocomplete) {
+                    setIsDropdownOpen(false);
+                    setSelectedIndex(undefined);
+                  }
+                }}
+              />
+            </div>
           </div>
         </div>
         <Status
-          username={selectedUsername || ""}
+          className="bg-background-150 rounded-b-md"
+          username={selectedAccount?.username || ""}
           validation={validation}
           error={error}
         />
       </div>
     );
 
-    const inputElement = selectedUsername ? (
+    const inputElement = selectedAccount ? (
       renderPillInput()
     ) : (
       <>

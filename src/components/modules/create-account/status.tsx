@@ -12,9 +12,15 @@ interface StatusProps {
   username: string;
   validation: ValidationState;
   error?: Error;
+  className?: string;
 }
 
-export function Status({ username, validation, error }: StatusProps) {
+export function Status({
+  username,
+  validation,
+  error,
+  className,
+}: StatusProps) {
   const isError = validation.status === "invalid" || error;
   const isTimeoutError = error?.message?.includes(
     "The operation either timed out or was not allowed",
@@ -48,7 +54,9 @@ export function Status({ username, validation, error }: StatusProps) {
 
   return (
     <div className="flex flex-col bg-translucent-dark-100 gap-y-px">
-      <Block error={!!isError}>{message}</Block>
+      <Block className={className} error={!!isError}>
+        {message}
+      </Block>
 
       {isTimeoutError && <HelpBlock />}
     </div>

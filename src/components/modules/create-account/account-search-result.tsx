@@ -11,7 +11,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import React, { HTMLAttributes } from "react";
 
 const accountSearchResultVariants = cva(
-  "p-3 flex gap-3 items-center select-none cursor-pointer transition-colors duration-150 relative",
+  "h-12 px-3 py-1 flex gap-3 items-center select-none cursor-pointer transition-colors duration-150 relative",
   {
     variants: {
       variant: {
@@ -50,7 +50,7 @@ export const AccountSearchResultItem = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "p-3 flex items-center gap-3 select-none cursor-pointer transition-colors duration-150",
+          "h-12 px-3 py-1 flex items-center gap-3 select-none cursor-pointer transition-colors duration-150",
           isSelected
             ? "bg-background-400"
             : "bg-background-200 hover:bg-background-300",
@@ -62,7 +62,9 @@ export const AccountSearchResultItem = React.forwardRef<
         <AchievementPlayerBadge
           rank="empty"
           icon={<PlusIcon variant="line" className="text-foreground-100" />}
-          variant="default"
+          variant="ghost"
+          size="lg"
+          className="!w-8 !h-8"
         />
 
         {/* Username text */}
@@ -94,26 +96,26 @@ export const AccountSearchResultItem = React.forwardRef<
       )}
       {...props}
     >
-      <div className="flex items-center gap-3 flex-1 min-w-0">
-        <AchievementPlayerBadge
-          icon={
-            <AchievementPlayerAvatar
-              username={result.username}
-              className="h-full w-full"
-            />
-          }
-          variant="default"
-        />
-        <div className="flex flex-row items-center justify-between gap-1 flex-1">
-          <p className="text-sm font-medium px-0.5 truncate">
-            {result.username}
-          </p>
+      <AchievementPlayerBadge
+        icon={
+          <AchievementPlayerAvatar
+            username={result.username}
+            className="!h-5 !w-5"
+          />
+        }
+        variant="ghost"
+        size="lg"
+        className="!w-8 !h-8"
+      />
+      <div className="flex flex-row items-center justify-between gap-1 flex-1">
+        <p className="text-sm font-normal px-0.5 truncate">{result.username}</p>
 
-          {result.points && (
-            <div className="flex items-center gap-0.5 text-foreground-300 p-3">
+        {result.points && (
+          <div className="flex items-start gap-2.5 p-2">
+            <div className="flex items-center justify-center gap-0.5 p-1 bg-background-300 rounded text-foreground-100">
               <SparklesIcon
                 variant="solid"
-                size="sm"
+                size="xs"
                 className="text-foreground-100"
               />
               <div className="flex items-center gap-1">
@@ -122,8 +124,8 @@ export const AccountSearchResultItem = React.forwardRef<
                 </p>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

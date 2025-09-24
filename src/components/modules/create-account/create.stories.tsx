@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { CreateAccount } from "./create";
 import { useState } from "react";
+import { AccountSearchResult } from "@/utils/hooks/useAccountSearch";
 
 const meta: Meta<typeof CreateAccount> = {
   title: "Modules/Create Account/CreateAccount",
@@ -37,7 +38,7 @@ type Story = StoryObj<typeof CreateAccount>;
 // Add the new props to the meta args for other stories to inherit
 meta.args = {
   ...meta.args,
-  selectedUsername: undefined,
+  selectedAccount: undefined,
   onSelectedUsernameRemove: fn(),
 };
 
@@ -252,8 +253,8 @@ export const LongError: Story = {
 export const InteractivePillDemo = {
   render: function InteractivePillDemoComponent() {
     const [usernameValue, setUsernameValue] = useState("");
-    const [selectedUsername, setSelectedUsername] = useState<
-      string | undefined
+    const [selectedAccount, setSelectedAccount] = useState<
+      AccountSearchResult | undefined
     >();
     const [validation, setValidation] = useState<{
       status: "idle" | "validating" | "valid" | "invalid";
@@ -291,9 +292,9 @@ export const InteractivePillDemo = {
         : result.username.toLowerCase().includes(usernameValue.toLowerCase()),
     );
 
-    const handleAccountSelect = (result: any) => {
+    const handleAccountSelect = (result: AccountSearchResult) => {
       console.log("Selected:", result);
-      setSelectedUsername(result.username);
+      setSelectedAccount(result);
       setUsernameValue("");
       setValidation({
         status: "valid",
@@ -303,8 +304,8 @@ export const InteractivePillDemo = {
     };
 
     const handleRemovePill = () => {
-      console.log("Removed pill:", selectedUsername);
-      setSelectedUsername(undefined);
+      console.log("Removed pill:", selectedAccount?.username);
+      setSelectedAccount(undefined);
       setUsernameValue("");
       setValidation({
         status: "idle",
@@ -325,10 +326,10 @@ export const InteractivePillDemo = {
           isLoading={false}
           autoFocus={true}
           showAutocomplete={true}
-          selectedUsername={selectedUsername}
+          selectedAccount={selectedAccount}
           onUsernameChange={(value) => {
             setUsernameValue(value);
-            if (!selectedUsername) {
+            if (!selectedAccount) {
               setValidation({
                 status: "idle",
                 error: undefined,
@@ -359,9 +360,13 @@ export const InteractivePillDemo = {
             <li>• Click the X button on the pill to remove it</li>
             <li>• Try "shin" to see matching results</li>
           </ul>
-          {selectedUsername && (
+          {selectedAccount && (
             <div className="mt-2 p-2 bg-primary/10 rounded">
-              <strong>Selected:</strong> {selectedUsername}
+              <strong>Selected:</strong> {selectedAccount.username} (
+              {selectedAccount.type === "create-new"
+                ? "New User"
+                : `${selectedAccount.points?.toLocaleString()} points`}
+              )
             </div>
           )}
         </div>
@@ -375,5 +380,61 @@ export const InteractivePillDemo = {
           "An interactive demo showing how pills are created when selecting from autocomplete and how they can be removed.",
       },
     },
+  },
+};
+
+// Demo story showing pill with existing user (with points)
+export const PillWithExistingUser: Story = {
+  args: {
+    selectedAccount: {
+      id: "existing-shinobi",
+      type: "existing",
+      username: "shinobi",
+      points: 20800,
+      lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+    },
+    usernameField: {
+      value: "",
+      error: undefined,
+    },
+    validation: {
+      status: "valid",
+      error: undefined,
+      exists: true,
+    },
+    error: undefined,
+    isLoading: false,
+    onUsernameChange: fn(),
+    onUsernameFocus: fn(),
+    onUsernameClear: fn(),
+    onKeyDown: fn(),
+    onSelectedUsernameRemove: fn(),
+  },
+};
+
+// Demo story showing pill with new user (create new)
+export const PillWithNewUser: Story = {
+  args: {
+    selectedAccount: {
+      id: "create-new-newbie",
+      type: "create-new",
+      username: "newbie",
+    },
+    usernameField: {
+      value: "",
+      error: undefined,
+    },
+    validation: {
+      status: "valid",
+      error: undefined,
+      exists: false,
+    },
+    error: undefined,
+    isLoading: false,
+    onUsernameChange: fn(),
+    onUsernameFocus: fn(),
+    onUsernameClear: fn(),
+    onKeyDown: fn(),
+    onSelectedUsernameRemove: fn(),
   },
 };
