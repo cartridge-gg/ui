@@ -65,6 +65,7 @@ export const AccountSearchResultItem = React.forwardRef<
           variant="ghost"
           size="lg"
           className="!w-8 !h-8"
+          badgeClassName="text-foreground-400"
         />
 
         {/* Username text */}

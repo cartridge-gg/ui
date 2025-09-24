@@ -15,6 +15,7 @@ export interface AchievementPlayerBadgeProps
     VariantProps<typeof achievementPlayerBadgeVariants> {
   username?: string;
   icon?: React.ReactNode;
+  badgeClassName?: string;
 }
 
 export const achievementPlayerBadgeVariants = cva(
@@ -63,6 +64,7 @@ export const AchievementPlayerBadge = ({
   rank,
   size,
   className,
+  badgeClassName,
   children,
   ...props
 }: AchievementPlayerBadgeProps) => {
@@ -70,27 +72,42 @@ export const AchievementPlayerBadge = ({
     switch (rank) {
       case "empty":
         return (
-          <EmptyPfpIcon className="absolute text-primary" size={size ?? "xl"} />
+          <EmptyPfpIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
         );
       case "gold":
         return (
-          <GoldIcon className="absolute text-primary" size={size ?? "xl"} />
+          <GoldIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
         );
       case "silver":
         return (
-          <SilverIcon className="absolute text-primary" size={size ?? "xl"} />
+          <SilverIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
         );
       case "bronze":
         return (
-          <BronzeIcon className="absolute text-primary" size={size ?? "xl"} />
+          <BronzeIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
         );
       case "default":
       default:
         return (
-          <DefaultIcon className="absolute text-primary" size={size ?? "xl"} />
+          <DefaultIcon
+            className={cn("absolute text-primary", badgeClassName)}
+            size={size ?? "xl"}
+          />
         );
     }
-  }, [rank, size]);
+  }, [rank, size, badgeClassName]);
 
   const ThumbnailIcon = useMemo(() => {
     if (icon) return icon;
