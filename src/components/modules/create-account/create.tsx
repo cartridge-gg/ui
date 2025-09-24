@@ -212,7 +212,8 @@ export const CreateAccount = React.forwardRef<
                   <div className="flex justify-start items-center gap-0.5">
                     <SeedlingIcon
                       variant="solid"
-                      className="w-4 h-4 text-primary"
+                      className="text-primary"
+                      size="xs"
                     />
                   </div>
                   <div className="px-0.5 flex justify-center items-center gap-2.5">
