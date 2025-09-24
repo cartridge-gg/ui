@@ -182,6 +182,7 @@ export const AccountSearchDropdown = React.forwardRef<
                   isSelected={selectedIndex === index}
                   onClick={() => handleSelect(result)}
                   onMouseEnter={() => onSelectedIndexChange?.(index)}
+                  onMouseLeave={() => onSelectedIndexChange?.(undefined)}
                 />
               ))}
           </PopoverContent>
