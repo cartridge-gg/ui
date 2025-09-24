@@ -73,14 +73,20 @@ export const AccountSearchResultItem = React.forwardRef<
         </p>
 
         {/* Create New tag with seedling icon */}
-        <div className="p-1 bg-background-300 rounded inline-flex justify-center items-center gap-0.5">
-          <div className="flex justify-start items-center gap-0.5">
-            <SeedlingIcon variant="solid" className="text-primary" size="xs" />
-          </div>
-          <div className="px-0.5 flex justify-center items-center gap-2.5">
-            <p className="text-center justify-center text-primary text-xs font-normal leading-none">
-              Create New
-            </p>
+        <div className="flex items-start gap-2.5 p-2">
+          <div className="p-1 bg-background-300 rounded inline-flex justify-center items-center gap-0.5">
+            <div className="flex justify-start items-center gap-0.5">
+              <SeedlingIcon
+                variant="solid"
+                className="text-primary"
+                size="xs"
+              />
+            </div>
+            <div className="px-0.5 flex justify-center items-center gap-2.5">
+              <p className="text-center justify-center text-primary text-xs font-normal leading-none">
+                Create New
+              </p>
+            </div>
           </div>
         </div>
       </div>
