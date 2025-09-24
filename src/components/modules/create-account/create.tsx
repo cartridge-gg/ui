@@ -184,7 +184,7 @@ export const CreateAccount = React.forwardRef<
       <div
         className={cn("flex flex-col rounded-md bg-background-150", className)}
       >
-        <div className="h-12 flex items-center justify-between gap-3 p-2 bg-background-200 rounded shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] z-10">
+        <div className="h-12 flex items-center justify-between gap-1 p-2 bg-background-200 rounded shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] z-10">
           <AchievementPlayerBadge
             icon={
               selectedAccount?.type === "create-new" ? (
@@ -241,7 +241,7 @@ export const CreateAccount = React.forwardRef<
               )}
               <TimesIcon
                 size="sm"
-                className="text-foreground-300 hover:text-foreground-100 cursor-pointer"
+                className="text-foreground-400 hover:text-foreground-300 cursor-pointer"
                 onClick={() => {
                   onSelectedUsernameRemove?.();
                   if (showAutocomplete) {

@@ -11,7 +11,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import React, { HTMLAttributes } from "react";
 
 const accountSearchResultVariants = cva(
-  "h-12 px-3 py-1 flex gap-3 items-center select-none cursor-pointer transition-colors duration-150 relative",
+  "h-12 px-3 py-1 flex gap-1 items-center select-none cursor-pointer transition-colors duration-150 relative",
   {
     variants: {
       variant: {
