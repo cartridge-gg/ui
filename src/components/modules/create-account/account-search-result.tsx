@@ -117,7 +117,7 @@ export const AccountSearchResultItem = React.forwardRef<
       <div className="flex flex-row items-center justify-between gap-1 flex-1">
         <p className="text-sm font-normal px-0.5 truncate">{result.username}</p>
 
-        {result.points && (
+        {result.points ? (
           <div className="flex items-start gap-2.5 p-2">
             <div className="flex items-center justify-center gap-0.5 p-1 bg-background-300 rounded text-foreground-100">
               <SparklesIcon
@@ -127,12 +127,12 @@ export const AccountSearchResultItem = React.forwardRef<
               />
               <div className="flex items-center gap-1">
                 <p className="text-xs font-medium text-foreground-100">
-                  {result.points.toLocaleString()}
+                  {result.points?.toLocaleString() || 0}
                 </p>
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

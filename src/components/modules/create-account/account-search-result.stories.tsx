@@ -36,6 +36,28 @@ export const ExistingUser: Story = {
   },
 };
 
+export const ExistingUserWithNoPoints: Story = {
+  args: {
+    result: {
+      id: "existing-shinobi",
+      type: "existing",
+      username: "shinobi",
+      points: 0,
+      lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+    },
+  },
+};
+
+export const NewUser: Story = {
+  args: {
+    result: {
+      id: "create-new-shin",
+      type: "create-new",
+      username: "shin",
+    },
+  },
+};
+
 export const MultipleResult: Story = {
   render: function MultipleResult() {
     const mockResults = [
@@ -65,15 +87,5 @@ export const MultipleResult: Story = {
         ))}
       </div>
     );
-  },
-};
-
-export const NewUser: Story = {
-  args: {
-    result: {
-      id: "create-new-shin",
-      type: "create-new",
-      username: "shin",
-    },
   },
 };
