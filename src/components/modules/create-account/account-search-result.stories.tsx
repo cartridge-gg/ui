@@ -70,6 +70,12 @@ export const MultipleResult: Story = {
         id: "existing-shints",
         type: "existing",
         username: "shints",
+        points: 0,
+      },
+      {
+        id: "existing-shints",
+        type: "existing",
+        username: "shints",
         points: 20800,
       },
       {

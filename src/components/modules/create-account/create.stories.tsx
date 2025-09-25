@@ -286,6 +286,13 @@ export const InteractivePillDemo = {
         points: 20800,
         lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
       },
+      {
+        id: "existing-shinto",
+        type: "existing" as const,
+        username: "shinto",
+        points: 0,
+        lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+      },
     ].filter((result) =>
       result.type === "create-new"
         ? usernameValue.length > 0
@@ -391,6 +398,34 @@ export const PillWithExistingUser: Story = {
       type: "existing",
       username: "shinobi",
       points: 20800,
+      lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+    },
+    usernameField: {
+      value: "",
+      error: undefined,
+    },
+    validation: {
+      status: "valid",
+      error: undefined,
+      exists: true,
+    },
+    error: undefined,
+    isLoading: false,
+    onUsernameChange: fn(),
+    onUsernameFocus: fn(),
+    onUsernameClear: fn(),
+    onKeyDown: fn(),
+    onSelectedUsernameRemove: fn(),
+  },
+};
+
+export const PillWithExistingUserWithoutPoints: Story = {
+  args: {
+    selectedAccount: {
+      id: "existing-shinobi",
+      type: "existing",
+      username: "shinobi",
+      points: 0,
       lastOnline: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
     },
     usernameField: {
