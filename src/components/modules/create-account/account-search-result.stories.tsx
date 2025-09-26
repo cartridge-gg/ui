@@ -67,9 +67,9 @@ export const MultipleResult: Story = {
         username: "shin",
       },
       {
-        id: "existing-shints",
+        id: "existing-shinto",
         type: "existing",
-        username: "shints",
+        username: "shinto",
         points: 0,
       },
       {
