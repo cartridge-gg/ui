@@ -225,22 +225,20 @@ export const CreateAccount = React.forwardRef<
                     </p>
                   </div>
                 </div>
-              ) : (
-                selectedAccount?.points && (
-                  <div className="flex items-center justify-center gap-0.5 p-1 bg-background-300 rounded text-foreground-100">
-                    <SparklesIcon
-                      variant="solid"
-                      size="xs"
-                      className="text-foreground-100"
-                    />
-                    <div className="flex items-center gap-1">
-                      <p className="text-xs font-medium text-foreground-100">
-                        {selectedAccount.points.toLocaleString()}
-                      </p>
-                    </div>
+              ) : selectedAccount?.points ? (
+                <div className="flex items-center justify-center gap-0.5 p-1 bg-background-300 rounded text-foreground-100">
+                  <SparklesIcon
+                    variant="solid"
+                    size="xs"
+                    className="text-foreground-100"
+                  />
+                  <div className="flex items-center gap-1">
+                    <p className="text-xs font-medium text-foreground-100">
+                      {selectedAccount.points.toLocaleString()}
+                    </p>
                   </div>
-                )
-              )}
+                </div>
+              ) : null}
               <TimesIcon
                 size="sm"
                 className="text-foreground-400 hover:text-foreground-300 cursor-pointer"
