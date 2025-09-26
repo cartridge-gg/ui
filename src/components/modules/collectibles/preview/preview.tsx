@@ -1,6 +1,6 @@
 import { PLACEHOLDER } from "@/assets";
 import { CollectibleTag, StackDiamondIcon, TagIcon } from "@/index";
-import { cn } from "@/utils";
+import { cn, formatNumber } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { useEffect, useMemo, useState } from "react";
 
@@ -104,12 +104,12 @@ export const CollectiblePreview = ({
       />
       <div className="flex gap-1 items-center flex-wrap justify-start absolute bottom-1.5 left-1.5">
         {!!totalCount && (
-          <CollectibleTag label={`${totalCount}`}>
+          <CollectibleTag label={`${formatNumber(totalCount)}`}>
             <StackDiamondIcon variant="solid" size="sm" />
           </CollectibleTag>
         )}
         {!!listingCount && (
-          <CollectibleTag label={`${listingCount}`}>
+          <CollectibleTag label={`${formatNumber(listingCount)}`}>
             <TagIcon variant="solid" size="sm" />
           </CollectibleTag>
         )}
