@@ -1,0 +1,25 @@
+import { ArcadeDiscoveryEvent } from "./discovery-event";
+const meta = {
+    title: "Modules/Arcade/Discovery Event",
+    component: ArcadeDiscoveryEvent,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "padded",
+    },
+    args: {
+        name: "bal7hazar",
+        achievement: {
+            title: "Squire",
+            icon: "fa-seedling",
+        },
+        timestamp: 1740388686,
+    },
+};
+export default meta;
+export const Default = {};
+export const Loading = {
+    args: {
+        loading: true,
+    },
+};
+//# sourceMappingURL=discovery-event.stories.js.map
