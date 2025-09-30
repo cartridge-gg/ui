@@ -34,12 +34,13 @@ jobs:
           # Create a fresh release branch from main
           git checkout -B release-temp
 
-          # Keep only dist/, storybook-static/, and package.json, remove everything else
-          git ls-files | grep -v "^dist/" | grep -v "^storybook-static/" | grep -v "^package.json" | xargs git rm -f
+          # Keep only dist/, storybook-static/, vercel.json, and package.json, remove everything else
+          git ls-files | grep -v "^dist/" | grep -v "^storybook-static/" | grep -v "^vercel.json" | grep -v "^package.json" | xargs git rm -f
 
           # Make sure all built files are included
           git add -f dist/
           git add -f storybook-static/
+          git add -f vercel.json
           git add package.json
 
           # Commit changes
