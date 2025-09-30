@@ -1,5 +1,13 @@
-export const formatNumber = (num: number | string): string => {
-    const numericValue = typeof num === 'string' ? parseFloat(num) : num;
+export const formatNumber = (num: number | string | bigint): string => {
+    // Handle BigInt by converting to number
+    let numericValue: number;
+    if (typeof num === 'bigint') {
+        numericValue = Number(num);
+    } else if (typeof num === 'string') {
+        numericValue = parseFloat(num);
+    } else {
+        numericValue = num;
+    }
 
     if (isNaN(numericValue)) {
         return '0';
