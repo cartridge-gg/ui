@@ -21,6 +21,7 @@ jobs:
 
       - run: pnpm install
       - run: pnpm build
+      - run: pnpm storybook:build
 
       # Configure Git and create or recreate release branch
       - name: Configure Git for release branch
@@ -33,11 +34,12 @@ jobs:
           # Create a fresh release branch from main
           git checkout -B release-temp
 
-          # Keep only dist/ and package.json, remove everything else
-          git ls-files | grep -v "^dist/" | grep -v "^package.json" | xargs git rm -f
+          # Keep only dist/, storybook-static/, and package.json, remove everything else
+          git ls-files | grep -v "^dist/" | grep -v "^storybook-static/" | grep -v "^package.json" | xargs git rm -f
 
-          # Make sure all built files in dist/ are included
+          # Make sure all built files are included
           git add -f dist/
+          git add -f storybook-static/
           git add package.json
 
           # Commit changes
