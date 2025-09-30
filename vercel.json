@@ -1,5 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "test -d storybook-static && echo 'Using pre-built storybook from release branch' || pnpm storybook:build",
-  "installCommand": "test -d storybook-static && echo 'Skipping install on release branch' || pnpm install"
+  "buildCommand": "test -d storybook-static && echo 'Using pre-built storybook from release branch' || (turbo run build:deps && pnpm storybook:build)"
 }
