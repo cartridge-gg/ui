@@ -1,0 +1,4 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "test -f .storybook/main.ts && (turbo run build:deps && pnpm storybook:build) || echo 'Skipping build on release branch - using pre-built artifacts'"
+}
