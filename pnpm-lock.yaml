@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@cartridge/presets':
-        specifier: github:cartridge-gg/presets#e6a5022
-        version: https://codeload.github.com/cartridge-gg/presets/tar.gz/e6a5022
+        specifier: github:cartridge-gg/presets#90a5fe0
+        version: https://codeload.github.com/cartridge-gg/presets/tar.gz/90a5fe0
       '@radix-ui/react-accordion':
         specifier: ^1.2.6
         version: 1.2.10(@types/react-dom@18.3.7(@types/react@18.3.21))(@types/react@18.3.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -672,8 +672,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cartridge/presets@https://codeload.github.com/cartridge-gg/presets/tar.gz/e6a5022':
-    resolution: {tarball: https://codeload.github.com/cartridge-gg/presets/tar.gz/e6a5022}
+  '@cartridge/presets@https://codeload.github.com/cartridge-gg/presets/tar.gz/90a5fe0':
+    resolution: {tarball: https://codeload.github.com/cartridge-gg/presets/tar.gz/90a5fe0}
     version: 0.0.1
 
   '@cspotcode/source-map-support@0.8.1':
@@ -6732,7 +6732,7 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
-  '@cartridge/presets@https://codeload.github.com/cartridge-gg/presets/tar.gz/e6a5022':
+  '@cartridge/presets@https://codeload.github.com/cartridge-gg/presets/tar.gz/90a5fe0':
     dependencies:
       '@starknet-io/types-js': 0.7.7
 
