@@ -103,19 +103,17 @@ export function LayoutHeader({
         }
       })()}
 
-      <div className="flex items-center justify-between absolute top-0 left-0 right-0 h-16 p-2 z-50">
-        <div>
-          {onBack ? (
-            <BackButton onClick={onBack} />
-          ) : shouldShowCloseButton ? (
-            <CloseButton
-              onClose={() => {
-                if (onClose) onClose();
-                if (closeModal) closeModal();
-              }}
-            />
-          ) : null}
-        </div>
+      <div className="flex items-center justify-between absolute top-0 left-0 right-0 h-16 p-3 z-50">
+        {onBack ? (
+          <BackButton onClick={onBack} />
+        ) : shouldShowCloseButton ? (
+          <CloseButton
+            onClose={() => {
+              if (onClose) onClose();
+              if (closeModal) closeModal();
+            }}
+          />
+        ) : null}
 
         <div className="flex items-center gap-2">
           {!!chainId &&
