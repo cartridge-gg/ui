@@ -3403,6 +3403,7 @@ export type Query = {
   price: Array<Price>;
   priceByAddresses: Array<Price>;
   pricePeriodByAddresses: Array<Price>;
+  searchAccounts: Array<Account>;
   session?: Maybe<Session>;
   sessions?: Maybe<SessionConnection>;
   starterpack?: Maybe<StarterpackDetails>;
@@ -3656,6 +3657,12 @@ export type QueryPricePeriodByAddressesArgs = {
   addresses: Array<Scalars['String']>;
   end: Scalars['Int'];
   start: Scalars['Int'];
+};
+
+
+export type QuerySearchAccountsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  query: Scalars['String'];
 };
 
 
