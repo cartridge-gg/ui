@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { EthereumIcon, TransferIcon } from "@/index";
+import { UIProvider } from "@/context";
 import { LayoutHeader } from "./index";
 
 const meta: Meta<typeof LayoutHeader> = {
@@ -149,6 +150,31 @@ export const WithCloseButton: Story = {
   args: {
     onClose: () => {},
   },
+};
+
+export const WithConnectedUser: Story = {
+  args: {
+    onOpenStarterPack: null,
+    onBack: () => {},
+  },
+  decorators: [
+    (Story) => {
+      // Mock the useUI hook to provide connected user state
+      const mockUIContext = {
+        account: {
+          username: "player.stark",
+          address: "0x1234567890abcdef1234567890abcdef12345678",
+        },
+        chainId: "0x534e5f4d41494e", // Starknet Mainnet
+      };
+
+      return (
+        <UIProvider value={mockUIContext}>
+          <Story />
+        </UIProvider>
+      );
+    },
+  ],
 };
 
 export const ReactiveThemeChanges: Story = {
