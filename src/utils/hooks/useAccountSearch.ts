@@ -64,34 +64,29 @@ export function useAccountSearch(
     const accountResults: AccountSearchResult[] = [];
 
     // Add existing accounts from search results
-    if (data?.accounts?.edges) {
+    if (data?.searchAccounts) {
       accountResults.push(
-        ...data.accounts.edges
-          .filter((edge) => edge?.node)
-          .map((edge) => {
-            const account = edge!.node!;
-            const credits = account.credits;
-            const points = credits
-              ? Math.floor(
-                  Number(credits.amount) / Math.pow(10, credits.decimals),
-                )
-              : undefined;
+        ...data.searchAccounts.map((user) => {
+          const points = user.credits
+            ? Math.floor(
+                Number(user.credits.amount) /
+                  Math.pow(10, user.credits.decimals),
+              )
+            : undefined;
 
-            return {
-              id: `existing-${account.username}`,
-              type: "existing" as const,
-              username: account.username,
-              points,
-              lastOnline: account.updatedAt
-                ? new Date(account.updatedAt)
-                : undefined,
-            };
-          }),
+          return {
+            id: `existing-${user.username}`,
+            type: "existing" as const,
+            username: user.username,
+            points: points,
+            lastOnline: user.updatedAt ? new Date(user.updatedAt) : undefined,
+          };
+        }),
       );
     }
 
     // Check if exact match exists
-    const exactMatch = accountResults.find(
+    const exactMatch = accountResults?.find(
       (result) =>
         result.username.toLowerCase() === debouncedQuery.toLowerCase(),
     );
