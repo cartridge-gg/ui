@@ -949,6 +949,12 @@ export type CreateMerkleDropInput = {
   updatedAt?: InputMaybe<Scalars['Time']>;
 };
 
+export type CreateRpcApiKeyPayload = {
+  __typename?: 'CreateRpcApiKeyPayload';
+  apiKey: RpcApiKey;
+  secretKey: Scalars['String'];
+};
+
 export type CreateServiceInput = {
   config: Scalars['String'];
   katana?: InputMaybe<KatanaCreateInput>;
@@ -2296,11 +2302,15 @@ export type Mutation = {
   createLayerswapPayment: LayerswapPayment;
   createMerkleDrop: MerkleDrop;
   createPaymaster: Paymaster;
+  createRpcApiKey: CreateRpcApiKeyPayload;
+  createRpcCorsDomain: RpcCorsDomain;
   createSession: Scalars['String'];
   createStripePaymentIntent: StripePaymentIntent;
   createTeam: Team;
   decreaseBudget: Paymaster;
   deleteDeployment: Scalars['Boolean'];
+  deleteRpcApiKey: Scalars['Boolean'];
+  deleteRpcCorsDomain: Scalars['Boolean'];
   deleteTeam: Scalars['Boolean'];
   finalizeLogin: Scalars['String'];
   finalizeRegistration: Account;
@@ -2317,6 +2327,8 @@ export type Mutation = {
   updateDeployment: Deployment;
   updateMe: Account;
   updatePaymaster: Scalars['Boolean'];
+  updateRpcApiKey: RpcApiKey;
+  updateRpcCorsDomain: RpcCorsDomain;
   updateTeam: Team;
 };
 
@@ -2395,6 +2407,19 @@ export type MutationCreatePaymasterArgs = {
 };
 
 
+export type MutationCreateRpcApiKeyArgs = {
+  name: Scalars['String'];
+  teamName: Scalars['String'];
+};
+
+
+export type MutationCreateRpcCorsDomainArgs = {
+  domain: Scalars['String'];
+  rateLimitPerMinute?: InputMaybe<Scalars['Int']>;
+  teamName: Scalars['String'];
+};
+
+
 export type MutationCreateSessionArgs = {
   appId: Scalars['String'];
   chainId: Scalars['String'];
@@ -2424,6 +2449,16 @@ export type MutationDecreaseBudgetArgs = {
 export type MutationDeleteDeploymentArgs = {
   name: Scalars['String'];
   service: DeploymentService;
+};
+
+
+export type MutationDeleteRpcApiKeyArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteRpcCorsDomainArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -2523,6 +2558,18 @@ export type MutationUpdatePaymasterArgs = {
   newName?: InputMaybe<Scalars['String']>;
   paymasterName: Scalars['ID'];
   teamName?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationUpdateRpcApiKeyArgs = {
+  id: Scalars['ID'];
+  update: RpcApiKeyInput;
+};
+
+
+export type MutationUpdateRpcCorsDomainArgs = {
+  id: Scalars['ID'];
+  update: RpcCorsDomainInput;
 };
 
 
@@ -3403,6 +3450,8 @@ export type Query = {
   price: Array<Price>;
   priceByAddresses: Array<Price>;
   pricePeriodByAddresses: Array<Price>;
+  rpcApiKeys?: Maybe<RpcApiKeyConnection>;
+  rpcCorsDomains?: Maybe<RpcCorsDomainConnection>;
   searchAccounts: Array<Account>;
   session?: Maybe<Session>;
   sessions?: Maybe<SessionConnection>;
@@ -3660,6 +3709,26 @@ export type QueryPricePeriodByAddressesArgs = {
 };
 
 
+export type QueryRpcApiKeysArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  teamName: Scalars['String'];
+  where?: InputMaybe<RpcApiKeyWhereInput>;
+};
+
+
+export type QueryRpcCorsDomainsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  teamName: Scalars['String'];
+  where?: InputMaybe<RpcCorsDomainWhereInput>;
+};
+
+
 export type QuerySearchAccountsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   query: Scalars['String'];
@@ -3722,6 +3791,523 @@ export type QueryTraceabilitiesArgs = {
 
 export type QueryTransfersArgs = {
   projects?: InputMaybe<Array<TransferProject>>;
+};
+
+export type RpcApiKey = Node & {
+  __typename?: 'RPCApiKey';
+  /** Whether this API key is active */
+  active: Scalars['Boolean'];
+  createdAt: Scalars['Time'];
+  id: Scalars['ID'];
+  /** SHA256 hash of the API key for secure storage */
+  keyHash: Scalars['String'];
+  /** First 8 characters of the key for display purposes */
+  keyPrefix: Scalars['String'];
+  /** Last time this API key was used */
+  lastUsedAt?: Maybe<Scalars['Time']>;
+  /** Human readable name for the API key */
+  name: Scalars['String'];
+  team: Team;
+  /** Team that owns this API key */
+  teamID: Scalars['ID'];
+};
+
+/** A connection to a list of items. */
+export type RpcApiKeyConnection = {
+  __typename?: 'RPCApiKeyConnection';
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<RpcApiKeyEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** Identifies the total count of items in the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** An edge in a connection. */
+export type RpcApiKeyEdge = {
+  __typename?: 'RPCApiKeyEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['Cursor'];
+  /** The item at the end of the edge. */
+  node?: Maybe<RpcApiKey>;
+};
+
+export type RpcApiKeyInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+/**
+ * RPCApiKeyWhereInput is used for filtering RPCApiKey objects.
+ * Input was generated by ent.
+ */
+export type RpcApiKeyWhereInput = {
+  /** active field predicates */
+  active?: InputMaybe<Scalars['Boolean']>;
+  activeNEQ?: InputMaybe<Scalars['Boolean']>;
+  and?: InputMaybe<Array<RpcApiKeyWhereInput>>;
+  /** created_at field predicates */
+  createdAt?: InputMaybe<Scalars['Time']>;
+  createdAtGT?: InputMaybe<Scalars['Time']>;
+  createdAtGTE?: InputMaybe<Scalars['Time']>;
+  createdAtIn?: InputMaybe<Array<Scalars['Time']>>;
+  createdAtLT?: InputMaybe<Scalars['Time']>;
+  createdAtLTE?: InputMaybe<Scalars['Time']>;
+  createdAtNEQ?: InputMaybe<Scalars['Time']>;
+  createdAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  /** team edge predicates */
+  hasTeam?: InputMaybe<Scalars['Boolean']>;
+  hasTeamWith?: InputMaybe<Array<TeamWhereInput>>;
+  /** id field predicates */
+  id?: InputMaybe<Scalars['ID']>;
+  idContainsFold?: InputMaybe<Scalars['ID']>;
+  idEqualFold?: InputMaybe<Scalars['ID']>;
+  idGT?: InputMaybe<Scalars['ID']>;
+  idGTE?: InputMaybe<Scalars['ID']>;
+  idIn?: InputMaybe<Array<Scalars['ID']>>;
+  idLT?: InputMaybe<Scalars['ID']>;
+  idLTE?: InputMaybe<Scalars['ID']>;
+  idNEQ?: InputMaybe<Scalars['ID']>;
+  idNotIn?: InputMaybe<Array<Scalars['ID']>>;
+  /** key_hash field predicates */
+  keyHash?: InputMaybe<Scalars['String']>;
+  keyHashContains?: InputMaybe<Scalars['String']>;
+  keyHashContainsFold?: InputMaybe<Scalars['String']>;
+  keyHashEqualFold?: InputMaybe<Scalars['String']>;
+  keyHashGT?: InputMaybe<Scalars['String']>;
+  keyHashGTE?: InputMaybe<Scalars['String']>;
+  keyHashHasPrefix?: InputMaybe<Scalars['String']>;
+  keyHashHasSuffix?: InputMaybe<Scalars['String']>;
+  keyHashIn?: InputMaybe<Array<Scalars['String']>>;
+  keyHashLT?: InputMaybe<Scalars['String']>;
+  keyHashLTE?: InputMaybe<Scalars['String']>;
+  keyHashNEQ?: InputMaybe<Scalars['String']>;
+  keyHashNotIn?: InputMaybe<Array<Scalars['String']>>;
+  /** key_prefix field predicates */
+  keyPrefix?: InputMaybe<Scalars['String']>;
+  keyPrefixContains?: InputMaybe<Scalars['String']>;
+  keyPrefixContainsFold?: InputMaybe<Scalars['String']>;
+  keyPrefixEqualFold?: InputMaybe<Scalars['String']>;
+  keyPrefixGT?: InputMaybe<Scalars['String']>;
+  keyPrefixGTE?: InputMaybe<Scalars['String']>;
+  keyPrefixHasPrefix?: InputMaybe<Scalars['String']>;
+  keyPrefixHasSuffix?: InputMaybe<Scalars['String']>;
+  keyPrefixIn?: InputMaybe<Array<Scalars['String']>>;
+  keyPrefixLT?: InputMaybe<Scalars['String']>;
+  keyPrefixLTE?: InputMaybe<Scalars['String']>;
+  keyPrefixNEQ?: InputMaybe<Scalars['String']>;
+  keyPrefixNotIn?: InputMaybe<Array<Scalars['String']>>;
+  /** last_used_at field predicates */
+  lastUsedAt?: InputMaybe<Scalars['Time']>;
+  lastUsedAtGT?: InputMaybe<Scalars['Time']>;
+  lastUsedAtGTE?: InputMaybe<Scalars['Time']>;
+  lastUsedAtIn?: InputMaybe<Array<Scalars['Time']>>;
+  lastUsedAtIsNil?: InputMaybe<Scalars['Boolean']>;
+  lastUsedAtLT?: InputMaybe<Scalars['Time']>;
+  lastUsedAtLTE?: InputMaybe<Scalars['Time']>;
+  lastUsedAtNEQ?: InputMaybe<Scalars['Time']>;
+  lastUsedAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  lastUsedAtNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** name field predicates */
+  name?: InputMaybe<Scalars['String']>;
+  nameContains?: InputMaybe<Scalars['String']>;
+  nameContainsFold?: InputMaybe<Scalars['String']>;
+  nameEqualFold?: InputMaybe<Scalars['String']>;
+  nameGT?: InputMaybe<Scalars['String']>;
+  nameGTE?: InputMaybe<Scalars['String']>;
+  nameHasPrefix?: InputMaybe<Scalars['String']>;
+  nameHasSuffix?: InputMaybe<Scalars['String']>;
+  nameIn?: InputMaybe<Array<Scalars['String']>>;
+  nameLT?: InputMaybe<Scalars['String']>;
+  nameLTE?: InputMaybe<Scalars['String']>;
+  nameNEQ?: InputMaybe<Scalars['String']>;
+  nameNotIn?: InputMaybe<Array<Scalars['String']>>;
+  not?: InputMaybe<RpcApiKeyWhereInput>;
+  or?: InputMaybe<Array<RpcApiKeyWhereInput>>;
+  /** team_id field predicates */
+  teamID?: InputMaybe<Scalars['ID']>;
+  teamIDContains?: InputMaybe<Scalars['ID']>;
+  teamIDContainsFold?: InputMaybe<Scalars['ID']>;
+  teamIDEqualFold?: InputMaybe<Scalars['ID']>;
+  teamIDGT?: InputMaybe<Scalars['ID']>;
+  teamIDGTE?: InputMaybe<Scalars['ID']>;
+  teamIDHasPrefix?: InputMaybe<Scalars['ID']>;
+  teamIDHasSuffix?: InputMaybe<Scalars['ID']>;
+  teamIDIn?: InputMaybe<Array<Scalars['ID']>>;
+  teamIDLT?: InputMaybe<Scalars['ID']>;
+  teamIDLTE?: InputMaybe<Scalars['ID']>;
+  teamIDNEQ?: InputMaybe<Scalars['ID']>;
+  teamIDNotIn?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export type RpcCorsDomain = Node & {
+  __typename?: 'RPCCorsDomain';
+  /** Whether this domain is active */
+  active: Scalars['Boolean'];
+  createdAt: Scalars['Time'];
+  /** Domain name for CORS access (e.g., example.com, *.example.com) */
+  domain: Scalars['String'];
+  id: Scalars['ID'];
+  /** Rate limit per IP per minute for this domain */
+  rateLimitPerMinute: Scalars['Int'];
+  team: Team;
+  /** Team that owns this CORS domain */
+  teamID: Scalars['ID'];
+};
+
+/** A connection to a list of items. */
+export type RpcCorsDomainConnection = {
+  __typename?: 'RPCCorsDomainConnection';
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<RpcCorsDomainEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** Identifies the total count of items in the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** An edge in a connection. */
+export type RpcCorsDomainEdge = {
+  __typename?: 'RPCCorsDomainEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['Cursor'];
+  /** The item at the end of the edge. */
+  node?: Maybe<RpcCorsDomain>;
+};
+
+export type RpcCorsDomainInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  domain?: InputMaybe<Scalars['String']>;
+  rateLimitPerMinute?: InputMaybe<Scalars['Int']>;
+};
+
+/**
+ * RPCCorsDomainWhereInput is used for filtering RPCCorsDomain objects.
+ * Input was generated by ent.
+ */
+export type RpcCorsDomainWhereInput = {
+  /** active field predicates */
+  active?: InputMaybe<Scalars['Boolean']>;
+  activeNEQ?: InputMaybe<Scalars['Boolean']>;
+  and?: InputMaybe<Array<RpcCorsDomainWhereInput>>;
+  /** created_at field predicates */
+  createdAt?: InputMaybe<Scalars['Time']>;
+  createdAtGT?: InputMaybe<Scalars['Time']>;
+  createdAtGTE?: InputMaybe<Scalars['Time']>;
+  createdAtIn?: InputMaybe<Array<Scalars['Time']>>;
+  createdAtLT?: InputMaybe<Scalars['Time']>;
+  createdAtLTE?: InputMaybe<Scalars['Time']>;
+  createdAtNEQ?: InputMaybe<Scalars['Time']>;
+  createdAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  /** domain field predicates */
+  domain?: InputMaybe<Scalars['String']>;
+  domainContains?: InputMaybe<Scalars['String']>;
+  domainContainsFold?: InputMaybe<Scalars['String']>;
+  domainEqualFold?: InputMaybe<Scalars['String']>;
+  domainGT?: InputMaybe<Scalars['String']>;
+  domainGTE?: InputMaybe<Scalars['String']>;
+  domainHasPrefix?: InputMaybe<Scalars['String']>;
+  domainHasSuffix?: InputMaybe<Scalars['String']>;
+  domainIn?: InputMaybe<Array<Scalars['String']>>;
+  domainLT?: InputMaybe<Scalars['String']>;
+  domainLTE?: InputMaybe<Scalars['String']>;
+  domainNEQ?: InputMaybe<Scalars['String']>;
+  domainNotIn?: InputMaybe<Array<Scalars['String']>>;
+  /** team edge predicates */
+  hasTeam?: InputMaybe<Scalars['Boolean']>;
+  hasTeamWith?: InputMaybe<Array<TeamWhereInput>>;
+  /** id field predicates */
+  id?: InputMaybe<Scalars['ID']>;
+  idContainsFold?: InputMaybe<Scalars['ID']>;
+  idEqualFold?: InputMaybe<Scalars['ID']>;
+  idGT?: InputMaybe<Scalars['ID']>;
+  idGTE?: InputMaybe<Scalars['ID']>;
+  idIn?: InputMaybe<Array<Scalars['ID']>>;
+  idLT?: InputMaybe<Scalars['ID']>;
+  idLTE?: InputMaybe<Scalars['ID']>;
+  idNEQ?: InputMaybe<Scalars['ID']>;
+  idNotIn?: InputMaybe<Array<Scalars['ID']>>;
+  not?: InputMaybe<RpcCorsDomainWhereInput>;
+  or?: InputMaybe<Array<RpcCorsDomainWhereInput>>;
+  /** rate_limit_per_minute field predicates */
+  rateLimitPerMinute?: InputMaybe<Scalars['Int']>;
+  rateLimitPerMinuteGT?: InputMaybe<Scalars['Int']>;
+  rateLimitPerMinuteGTE?: InputMaybe<Scalars['Int']>;
+  rateLimitPerMinuteIn?: InputMaybe<Array<Scalars['Int']>>;
+  rateLimitPerMinuteLT?: InputMaybe<Scalars['Int']>;
+  rateLimitPerMinuteLTE?: InputMaybe<Scalars['Int']>;
+  rateLimitPerMinuteNEQ?: InputMaybe<Scalars['Int']>;
+  rateLimitPerMinuteNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** team_id field predicates */
+  teamID?: InputMaybe<Scalars['ID']>;
+  teamIDContains?: InputMaybe<Scalars['ID']>;
+  teamIDContainsFold?: InputMaybe<Scalars['ID']>;
+  teamIDEqualFold?: InputMaybe<Scalars['ID']>;
+  teamIDGT?: InputMaybe<Scalars['ID']>;
+  teamIDGTE?: InputMaybe<Scalars['ID']>;
+  teamIDHasPrefix?: InputMaybe<Scalars['ID']>;
+  teamIDHasSuffix?: InputMaybe<Scalars['ID']>;
+  teamIDIn?: InputMaybe<Array<Scalars['ID']>>;
+  teamIDLT?: InputMaybe<Scalars['ID']>;
+  teamIDLTE?: InputMaybe<Scalars['ID']>;
+  teamIDNEQ?: InputMaybe<Scalars['ID']>;
+  teamIDNotIn?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export type RpcLog = Node & {
+  __typename?: 'RPCLog';
+  /** API key used (if any) */
+  apiKeyID?: Maybe<Scalars['String']>;
+  /** IP address of the client */
+  clientIP: Scalars['String'];
+  /** CORS domain used (if any) */
+  corsDomainID?: Maybe<Scalars['String']>;
+  /** Cost in micro-dollars (0.000001 USD per unit). Converted to team credits during billing. */
+  costCredits: Scalars['Int'];
+  /** Request duration in milliseconds */
+  durationMs: Scalars['Int'];
+  id: Scalars['ID'];
+  /** Whether this was an internal request (free) */
+  isInternal: Scalars['Boolean'];
+  /** RPC method called */
+  method?: Maybe<Scalars['String']>;
+  /** Starknet network used */
+  network: RpcLogNetwork;
+  /** When billing was processed. NULL indicates not yet processed. */
+  processedAt?: Maybe<Scalars['Time']>;
+  /** Referer header from the request */
+  referer?: Maybe<Scalars['String']>;
+  /** Size of the response in bytes */
+  responseSizeBytes: Scalars['Int'];
+  /** HTTP response status code */
+  responseStatus: Scalars['Int'];
+  /** Team that made this RPC request */
+  teamID?: Maybe<Scalars['String']>;
+  /** When the request was made */
+  timestamp: Scalars['Time'];
+  /** User agent of the client */
+  userAgent?: Maybe<Scalars['String']>;
+};
+
+/** A connection to a list of items. */
+export type RpcLogConnection = {
+  __typename?: 'RPCLogConnection';
+  /** A list of edges. */
+  edges?: Maybe<Array<Maybe<RpcLogEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** Identifies the total count of items in the connection. */
+  totalCount: Scalars['Int'];
+};
+
+/** An edge in a connection. */
+export type RpcLogEdge = {
+  __typename?: 'RPCLogEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['Cursor'];
+  /** The item at the end of the edge. */
+  node?: Maybe<RpcLog>;
+};
+
+/** RPCLogNetwork is enum for the field network */
+export enum RpcLogNetwork {
+  Mainnet = 'mainnet',
+  Sepolia = 'sepolia'
+}
+
+/**
+ * RPCLogWhereInput is used for filtering RPCLog objects.
+ * Input was generated by ent.
+ */
+export type RpcLogWhereInput = {
+  and?: InputMaybe<Array<RpcLogWhereInput>>;
+  /** api_key_id field predicates */
+  apiKeyID?: InputMaybe<Scalars['String']>;
+  apiKeyIDContains?: InputMaybe<Scalars['String']>;
+  apiKeyIDContainsFold?: InputMaybe<Scalars['String']>;
+  apiKeyIDEqualFold?: InputMaybe<Scalars['String']>;
+  apiKeyIDGT?: InputMaybe<Scalars['String']>;
+  apiKeyIDGTE?: InputMaybe<Scalars['String']>;
+  apiKeyIDHasPrefix?: InputMaybe<Scalars['String']>;
+  apiKeyIDHasSuffix?: InputMaybe<Scalars['String']>;
+  apiKeyIDIn?: InputMaybe<Array<Scalars['String']>>;
+  apiKeyIDIsNil?: InputMaybe<Scalars['Boolean']>;
+  apiKeyIDLT?: InputMaybe<Scalars['String']>;
+  apiKeyIDLTE?: InputMaybe<Scalars['String']>;
+  apiKeyIDNEQ?: InputMaybe<Scalars['String']>;
+  apiKeyIDNotIn?: InputMaybe<Array<Scalars['String']>>;
+  apiKeyIDNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** client_ip field predicates */
+  clientIP?: InputMaybe<Scalars['String']>;
+  clientIPContains?: InputMaybe<Scalars['String']>;
+  clientIPContainsFold?: InputMaybe<Scalars['String']>;
+  clientIPEqualFold?: InputMaybe<Scalars['String']>;
+  clientIPGT?: InputMaybe<Scalars['String']>;
+  clientIPGTE?: InputMaybe<Scalars['String']>;
+  clientIPHasPrefix?: InputMaybe<Scalars['String']>;
+  clientIPHasSuffix?: InputMaybe<Scalars['String']>;
+  clientIPIn?: InputMaybe<Array<Scalars['String']>>;
+  clientIPLT?: InputMaybe<Scalars['String']>;
+  clientIPLTE?: InputMaybe<Scalars['String']>;
+  clientIPNEQ?: InputMaybe<Scalars['String']>;
+  clientIPNotIn?: InputMaybe<Array<Scalars['String']>>;
+  /** cors_domain_id field predicates */
+  corsDomainID?: InputMaybe<Scalars['String']>;
+  corsDomainIDContains?: InputMaybe<Scalars['String']>;
+  corsDomainIDContainsFold?: InputMaybe<Scalars['String']>;
+  corsDomainIDEqualFold?: InputMaybe<Scalars['String']>;
+  corsDomainIDGT?: InputMaybe<Scalars['String']>;
+  corsDomainIDGTE?: InputMaybe<Scalars['String']>;
+  corsDomainIDHasPrefix?: InputMaybe<Scalars['String']>;
+  corsDomainIDHasSuffix?: InputMaybe<Scalars['String']>;
+  corsDomainIDIn?: InputMaybe<Array<Scalars['String']>>;
+  corsDomainIDIsNil?: InputMaybe<Scalars['Boolean']>;
+  corsDomainIDLT?: InputMaybe<Scalars['String']>;
+  corsDomainIDLTE?: InputMaybe<Scalars['String']>;
+  corsDomainIDNEQ?: InputMaybe<Scalars['String']>;
+  corsDomainIDNotIn?: InputMaybe<Array<Scalars['String']>>;
+  corsDomainIDNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** cost_credits field predicates */
+  costCredits?: InputMaybe<Scalars['Int']>;
+  costCreditsGT?: InputMaybe<Scalars['Int']>;
+  costCreditsGTE?: InputMaybe<Scalars['Int']>;
+  costCreditsIn?: InputMaybe<Array<Scalars['Int']>>;
+  costCreditsLT?: InputMaybe<Scalars['Int']>;
+  costCreditsLTE?: InputMaybe<Scalars['Int']>;
+  costCreditsNEQ?: InputMaybe<Scalars['Int']>;
+  costCreditsNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** duration_ms field predicates */
+  durationMs?: InputMaybe<Scalars['Int']>;
+  durationMsGT?: InputMaybe<Scalars['Int']>;
+  durationMsGTE?: InputMaybe<Scalars['Int']>;
+  durationMsIn?: InputMaybe<Array<Scalars['Int']>>;
+  durationMsLT?: InputMaybe<Scalars['Int']>;
+  durationMsLTE?: InputMaybe<Scalars['Int']>;
+  durationMsNEQ?: InputMaybe<Scalars['Int']>;
+  durationMsNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** id field predicates */
+  id?: InputMaybe<Scalars['ID']>;
+  idContainsFold?: InputMaybe<Scalars['ID']>;
+  idEqualFold?: InputMaybe<Scalars['ID']>;
+  idGT?: InputMaybe<Scalars['ID']>;
+  idGTE?: InputMaybe<Scalars['ID']>;
+  idIn?: InputMaybe<Array<Scalars['ID']>>;
+  idLT?: InputMaybe<Scalars['ID']>;
+  idLTE?: InputMaybe<Scalars['ID']>;
+  idNEQ?: InputMaybe<Scalars['ID']>;
+  idNotIn?: InputMaybe<Array<Scalars['ID']>>;
+  /** is_internal field predicates */
+  isInternal?: InputMaybe<Scalars['Boolean']>;
+  isInternalNEQ?: InputMaybe<Scalars['Boolean']>;
+  /** method field predicates */
+  method?: InputMaybe<Scalars['String']>;
+  methodContains?: InputMaybe<Scalars['String']>;
+  methodContainsFold?: InputMaybe<Scalars['String']>;
+  methodEqualFold?: InputMaybe<Scalars['String']>;
+  methodGT?: InputMaybe<Scalars['String']>;
+  methodGTE?: InputMaybe<Scalars['String']>;
+  methodHasPrefix?: InputMaybe<Scalars['String']>;
+  methodHasSuffix?: InputMaybe<Scalars['String']>;
+  methodIn?: InputMaybe<Array<Scalars['String']>>;
+  methodIsNil?: InputMaybe<Scalars['Boolean']>;
+  methodLT?: InputMaybe<Scalars['String']>;
+  methodLTE?: InputMaybe<Scalars['String']>;
+  methodNEQ?: InputMaybe<Scalars['String']>;
+  methodNotIn?: InputMaybe<Array<Scalars['String']>>;
+  methodNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** network field predicates */
+  network?: InputMaybe<RpcLogNetwork>;
+  networkIn?: InputMaybe<Array<RpcLogNetwork>>;
+  networkNEQ?: InputMaybe<RpcLogNetwork>;
+  networkNotIn?: InputMaybe<Array<RpcLogNetwork>>;
+  not?: InputMaybe<RpcLogWhereInput>;
+  or?: InputMaybe<Array<RpcLogWhereInput>>;
+  /** processed_at field predicates */
+  processedAt?: InputMaybe<Scalars['Time']>;
+  processedAtGT?: InputMaybe<Scalars['Time']>;
+  processedAtGTE?: InputMaybe<Scalars['Time']>;
+  processedAtIn?: InputMaybe<Array<Scalars['Time']>>;
+  processedAtIsNil?: InputMaybe<Scalars['Boolean']>;
+  processedAtLT?: InputMaybe<Scalars['Time']>;
+  processedAtLTE?: InputMaybe<Scalars['Time']>;
+  processedAtNEQ?: InputMaybe<Scalars['Time']>;
+  processedAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  processedAtNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** referer field predicates */
+  referer?: InputMaybe<Scalars['String']>;
+  refererContains?: InputMaybe<Scalars['String']>;
+  refererContainsFold?: InputMaybe<Scalars['String']>;
+  refererEqualFold?: InputMaybe<Scalars['String']>;
+  refererGT?: InputMaybe<Scalars['String']>;
+  refererGTE?: InputMaybe<Scalars['String']>;
+  refererHasPrefix?: InputMaybe<Scalars['String']>;
+  refererHasSuffix?: InputMaybe<Scalars['String']>;
+  refererIn?: InputMaybe<Array<Scalars['String']>>;
+  refererIsNil?: InputMaybe<Scalars['Boolean']>;
+  refererLT?: InputMaybe<Scalars['String']>;
+  refererLTE?: InputMaybe<Scalars['String']>;
+  refererNEQ?: InputMaybe<Scalars['String']>;
+  refererNotIn?: InputMaybe<Array<Scalars['String']>>;
+  refererNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** response_size_bytes field predicates */
+  responseSizeBytes?: InputMaybe<Scalars['Int']>;
+  responseSizeBytesGT?: InputMaybe<Scalars['Int']>;
+  responseSizeBytesGTE?: InputMaybe<Scalars['Int']>;
+  responseSizeBytesIn?: InputMaybe<Array<Scalars['Int']>>;
+  responseSizeBytesLT?: InputMaybe<Scalars['Int']>;
+  responseSizeBytesLTE?: InputMaybe<Scalars['Int']>;
+  responseSizeBytesNEQ?: InputMaybe<Scalars['Int']>;
+  responseSizeBytesNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** response_status field predicates */
+  responseStatus?: InputMaybe<Scalars['Int']>;
+  responseStatusGT?: InputMaybe<Scalars['Int']>;
+  responseStatusGTE?: InputMaybe<Scalars['Int']>;
+  responseStatusIn?: InputMaybe<Array<Scalars['Int']>>;
+  responseStatusLT?: InputMaybe<Scalars['Int']>;
+  responseStatusLTE?: InputMaybe<Scalars['Int']>;
+  responseStatusNEQ?: InputMaybe<Scalars['Int']>;
+  responseStatusNotIn?: InputMaybe<Array<Scalars['Int']>>;
+  /** team_id field predicates */
+  teamID?: InputMaybe<Scalars['String']>;
+  teamIDContains?: InputMaybe<Scalars['String']>;
+  teamIDContainsFold?: InputMaybe<Scalars['String']>;
+  teamIDEqualFold?: InputMaybe<Scalars['String']>;
+  teamIDGT?: InputMaybe<Scalars['String']>;
+  teamIDGTE?: InputMaybe<Scalars['String']>;
+  teamIDHasPrefix?: InputMaybe<Scalars['String']>;
+  teamIDHasSuffix?: InputMaybe<Scalars['String']>;
+  teamIDIn?: InputMaybe<Array<Scalars['String']>>;
+  teamIDIsNil?: InputMaybe<Scalars['Boolean']>;
+  teamIDLT?: InputMaybe<Scalars['String']>;
+  teamIDLTE?: InputMaybe<Scalars['String']>;
+  teamIDNEQ?: InputMaybe<Scalars['String']>;
+  teamIDNotIn?: InputMaybe<Array<Scalars['String']>>;
+  teamIDNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** timestamp field predicates */
+  timestamp?: InputMaybe<Scalars['Time']>;
+  timestampGT?: InputMaybe<Scalars['Time']>;
+  timestampGTE?: InputMaybe<Scalars['Time']>;
+  timestampIn?: InputMaybe<Array<Scalars['Time']>>;
+  timestampLT?: InputMaybe<Scalars['Time']>;
+  timestampLTE?: InputMaybe<Scalars['Time']>;
+  timestampNEQ?: InputMaybe<Scalars['Time']>;
+  timestampNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  /** user_agent field predicates */
+  userAgent?: InputMaybe<Scalars['String']>;
+  userAgentContains?: InputMaybe<Scalars['String']>;
+  userAgentContainsFold?: InputMaybe<Scalars['String']>;
+  userAgentEqualFold?: InputMaybe<Scalars['String']>;
+  userAgentGT?: InputMaybe<Scalars['String']>;
+  userAgentGTE?: InputMaybe<Scalars['String']>;
+  userAgentHasPrefix?: InputMaybe<Scalars['String']>;
+  userAgentHasSuffix?: InputMaybe<Scalars['String']>;
+  userAgentIn?: InputMaybe<Array<Scalars['String']>>;
+  userAgentIsNil?: InputMaybe<Scalars['Boolean']>;
+  userAgentLT?: InputMaybe<Scalars['String']>;
+  userAgentLTE?: InputMaybe<Scalars['String']>;
+  userAgentNEQ?: InputMaybe<Scalars['String']>;
+  userAgentNotIn?: InputMaybe<Array<Scalars['String']>>;
+  userAgentNotNil?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type Resources = {
@@ -4800,6 +5386,8 @@ export type Team = Node & {
   membership: AccountTeamConnection;
   name: Scalars['String'];
   paymasters: PaymasterConnection;
+  rpcAPIKeys: RpcApiKeyConnection;
+  rpcCorsDomains: RpcCorsDomainConnection;
   starterpacks: StarterpackConnection;
   /** Total amount debited for incubator stage tracking. 1 credit = 0.01 USD. */
   totalDebits: Scalars['Int'];
@@ -4852,6 +5440,24 @@ export type TeamPaymastersArgs = {
   last?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<PaymasterOrder>;
   where?: InputMaybe<PaymasterWhereInput>;
+};
+
+
+export type TeamRpcApiKeysArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RpcApiKeyWhereInput>;
+};
+
+
+export type TeamRpcCorsDomainsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RpcCorsDomainWhereInput>;
 };
 
 
@@ -5076,6 +5682,12 @@ export type TeamWhereInput = {
   /** paymasters edge predicates */
   hasPaymasters?: InputMaybe<Scalars['Boolean']>;
   hasPaymastersWith?: InputMaybe<Array<PaymasterWhereInput>>;
+  /** rpc_api_keys edge predicates */
+  hasRPCAPIKeys?: InputMaybe<Scalars['Boolean']>;
+  hasRPCAPIKeysWith?: InputMaybe<Array<RpcApiKeyWhereInput>>;
+  /** rpc_cors_domains edge predicates */
+  hasRPCCorsDomains?: InputMaybe<Scalars['Boolean']>;
+  hasRPCCorsDomainsWith?: InputMaybe<Array<RpcCorsDomainWhereInput>>;
   /** starterpacks edge predicates */
   hasStarterpacks?: InputMaybe<Scalars['Boolean']>;
   hasStarterpacksWith?: InputMaybe<Array<StarterpackWhereInput>>;
@@ -5346,7 +5958,7 @@ export type AccountSearchQueryVariables = Exact<{
 }>;
 
 
-export type AccountSearchQuery = { __typename?: 'Query', accounts?: { __typename?: 'AccountConnection', edges?: Array<{ __typename?: 'AccountEdge', node?: { __typename?: 'Account', username: string, updatedAt: string, credits: { __typename?: 'Credits', amount: string, decimals: number } } | null } | null> | null } | null };
+export type AccountSearchQuery = { __typename?: 'Query', searchAccounts: Array<{ __typename?: 'Account', username: string, updatedAt: string, credits: { __typename?: 'Credits', amount: string, decimals: number } }> };
 
 export type AchievementsQueryVariables = Exact<{
   projects: Array<Project> | Project;
@@ -5782,21 +6394,13 @@ export const useAddressByUsernameQuery = <
     );
 export const AccountSearchDocument = `
     query AccountSearch($query: String!, $limit: Int = 5) {
-  accounts(
-    where: {usernameHasPrefix: $query}
-    first: $limit
-    orderBy: {field: CREATED_AT, direction: DESC}
-  ) {
-    edges {
-      node {
-        username
-        credits {
-          amount
-          decimals
-        }
-        updatedAt
-      }
+  searchAccounts(query: $query, limit: $limit) {
+    username
+    credits {
+      amount
+      decimals
     }
+    updatedAt
   }
 }
     `;
