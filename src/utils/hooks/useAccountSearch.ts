@@ -78,7 +78,7 @@ export function useAccountSearch(
             id: `existing-${user.username}`,
             type: "existing" as const,
             username: user.username,
-            points: points ?? undefined,
+            points: points,
             lastOnline: user.updatedAt ? new Date(user.updatedAt) : undefined,
           };
         }),
@@ -86,7 +86,7 @@ export function useAccountSearch(
     }
 
     // Check if exact match exists
-    const exactMatch = data?.searchAccounts?.find(
+    const exactMatch = accountResults?.find(
       (result) =>
         result.username.toLowerCase() === debouncedQuery.toLowerCase(),
     );
