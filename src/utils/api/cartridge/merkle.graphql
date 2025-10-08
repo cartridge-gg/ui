@@ -12,8 +12,8 @@ query MerkleDropByKey($key: String!) {
 
 query MerkleClaimsForAddress($keys: [String!]!, $address: String!) {
   merkleClaimsForAddress(keys: $keys, address: $address) {
+    index
     data
-    claimed
     merkleProof
     merkleDrop {
       key
