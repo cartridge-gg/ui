@@ -926,6 +926,8 @@ export type CreateMerkleClaimInput = {
   claimedAt?: InputMaybe<Scalars['Time']>;
   createdAt?: InputMaybe<Scalars['Time']>;
   data: Array<Scalars['String']>;
+  /** Index of the claim in the merkle tree */
+  index?: InputMaybe<Scalars['Int']>;
   merkleDropID: Scalars['ID'];
   merkleProof?: InputMaybe<Array<Scalars['String']>>;
   updatedAt?: InputMaybe<Scalars['Time']>;
@@ -1921,6 +1923,8 @@ export type MerkleClaim = Node & {
   createdAt: Scalars['Time'];
   data: Array<Scalars['String']>;
   id: Scalars['ID'];
+  /** Index of the claim in the merkle tree */
+  index: Scalars['Int'];
   merkleDrop: MerkleDrop;
   merkleDropID: Scalars['ID'];
   merkleProof?: Maybe<Array<Scalars['String']>>;
@@ -1950,6 +1954,7 @@ export type MerkleClaimEdge = {
 export type MerkleClaimInput = {
   address: Scalars['Felt'];
   data: Array<Scalars['Felt']>;
+  index: Scalars['Int'];
 };
 
 /** Ordering options for MerkleClaim connections */
@@ -2022,6 +2027,15 @@ export type MerkleClaimWhereInput = {
   idLTE?: InputMaybe<Scalars['ID']>;
   idNEQ?: InputMaybe<Scalars['ID']>;
   idNotIn?: InputMaybe<Array<Scalars['ID']>>;
+  /** index field predicates */
+  index?: InputMaybe<Scalars['Int']>;
+  indexGT?: InputMaybe<Scalars['Int']>;
+  indexGTE?: InputMaybe<Scalars['Int']>;
+  indexIn?: InputMaybe<Array<Scalars['Int']>>;
+  indexLT?: InputMaybe<Scalars['Int']>;
+  indexLTE?: InputMaybe<Scalars['Int']>;
+  indexNEQ?: InputMaybe<Scalars['Int']>;
+  indexNotIn?: InputMaybe<Array<Scalars['Int']>>;
   /** merkle_drop_id field predicates */
   merkleDropID?: InputMaybe<Scalars['ID']>;
   merkleDropIDContains?: InputMaybe<Scalars['ID']>;
@@ -5871,6 +5885,8 @@ export type UpdateMerkleClaimInput = {
   clearMerkleProof?: InputMaybe<Scalars['Boolean']>;
   createdAt?: InputMaybe<Scalars['Time']>;
   data?: InputMaybe<Array<Scalars['String']>>;
+  /** Index of the claim in the merkle tree */
+  index?: InputMaybe<Scalars['Int']>;
   merkleDropID?: InputMaybe<Scalars['ID']>;
   merkleProof?: InputMaybe<Array<Scalars['String']>>;
   updatedAt?: InputMaybe<Scalars['Time']>;
@@ -6105,7 +6121,7 @@ export type MerkleClaimsForAddressQueryVariables = Exact<{
 }>;
 
 
-export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', data: Array<string>, claimed: boolean, merkleProof?: Array<string> | null, merkleDrop: { __typename?: 'MerkleDrop', key: string, salt: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } }> };
+export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', index: number, data: Array<string>, merkleProof?: Array<string> | null, merkleDrop: { __typename?: 'MerkleDrop', key: string, salt: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } }> };
 
 export type MetricsQueryVariables = Exact<{
   projects: Array<MetricsProject> | MetricsProject;
@@ -6958,8 +6974,8 @@ export const useMerkleDropByKeyQuery = <
 export const MerkleClaimsForAddressDocument = `
     query MerkleClaimsForAddress($keys: [String!]!, $address: String!) {
   merkleClaimsForAddress(keys: $keys, address: $address) {
+    index
     data
-    claimed
     merkleProof
     merkleDrop {
       key
