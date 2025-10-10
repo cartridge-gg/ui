@@ -1,0 +1,24 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import * as React from "react";
+import { cn } from "../../utils";
+export const Card = React.forwardRef(({ className, ...props }, ref) => (_jsx("div", { ref: ref, className: cn("flex flex-col rounded overflow-hidden text-foreground gap-y-px shrink-0", className), ...props })));
+Card.displayName = "Card";
+export const CardHeader = React.forwardRef(({ className, icon, ...props }, ref) => icon ? (_jsxs("div", { ref: ref, className: cn("h-10 flex items-center gap-x-px bg-background-200", className), children: [React.isValidElement(icon) ? (_jsx(CardIcon, { children: icon })) : (_jsx(CardIcon, { src: icon })), _jsx("div", { className: "w-px h-full bg-background" }), _jsx("div", { className: cn("p-3 w-full", className), ...props })] })) : (_jsx("div", { ref: ref, className: cn("flex flex-col gap-y-1 p-3 bg-background-200", className), ...props })));
+CardHeader.displayName = "CardHeader";
+export const CardHeaderRight = React.forwardRef(({ className, ...props }, ref) => (_jsx("div", { ref: ref, className: cn("ml-auto", className), ...props })));
+CardHeaderRight.displayName = "CardHeaderRight";
+export const CardIcon = React.forwardRef(({ className, src, ...props }, ref) => (_jsx("div", { ref: ref, className: "h-9 w-9 p-2 bg-background-200 flex items-center justify-center", children: src ? (_jsx("img", { src: src, className: cn("aspect-square rounded-sm", className), ...props })) : props.children ? (props.children) : (_jsx("div", { className: cn("h-8 aspect-square bg-[image:var(--theme-icon-url)] bg-cover bg-center place-content-center", className), ...props })) })));
+CardIcon.displayName = "CardIcon";
+export const CardTitle = React.forwardRef(({ className, ...props }, ref) => (_jsx("h3", { ref: ref, className: cn("text-xs font-semibold text-foreground-400 tracking-wide", className), ...props })));
+CardTitle.displayName = "CardTitle";
+export const CardDescription = React.forwardRef(({ className, ...props }, ref) => (_jsx("p", { ref: ref, className: cn("text-sm text-foreground-400", className), ...props })));
+CardDescription.displayName = "CardDescription";
+export const CardContent = React.forwardRef(({ className, ...props }, ref) => (_jsx("div", { ref: ref, className: cn("text-sm p-3 bg-background-200", className), ...props })));
+CardContent.displayName = "CardContent";
+export const CardListContent = React.forwardRef(({ className, ...props }, ref) => (_jsx("div", { ref: ref, className: cn("flex flex-col gap-px text-sm font-medium", className), ...props })));
+CardListContent.displayName = "CardListContent";
+export const CardListItem = React.forwardRef(({ className, icon, ...props }, ref) => icon ? (_jsxs("div", { ref: ref, className: cn("h-11 flex items-center gap-x-px bg-background", className), children: [React.isValidElement(icon) ? (_jsx(CardListItemIcon, { children: icon })) : (_jsx(CardListItemIcon, { src: icon })), _jsx("div", { className: cn("px-3 flex-1 h-full flex items-center justify-between bg-background-200", className), ...props })] })) : (_jsx("div", { ref: ref, className: cn("flex flex-col gap-y-1 p-3 bg-background-200 justify-between", className), ...props })));
+CardListItem.displayName = "CardListItem";
+const CardListItemIcon = React.forwardRef(({ className, src, ...props }, ref) => (_jsx("div", { ref: ref, className: "h-11 w-11 bg-background-200 flex items-center justify-center", children: src ? (_jsx("img", { src: src, className: cn("h-6 aspect-square rounded-sm", className), ...props })) : props.children ? (props.children) : (_jsx("div", { className: cn("h-6 aspect-square bg-[image:var(--theme-icon-url)] bg-cover bg-center place-content-center", className), ...props })) })));
+CardListItemIcon.displayName = "CardListItemIcon";
+//# sourceMappingURL=card.js.map
