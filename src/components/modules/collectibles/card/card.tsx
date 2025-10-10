@@ -46,6 +46,7 @@ export function CollectibleCard({
   onSelect,
   variant,
   className,
+  onError,
   ...props
 }: CollectibleCardProps) {
   return (
@@ -67,6 +68,7 @@ export function CollectibleCard({
         size="sm"
         totalCount={totalCount}
         listingCount={listingCount}
+        onError={onError}
       />
       <CollectibleCardFooter
         price={price}

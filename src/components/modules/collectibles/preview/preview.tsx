@@ -39,6 +39,7 @@ export const CollectiblePreview = ({
   variant,
   size,
   className,
+  onError,
   ...props
 }: CollectiblePreviewProps) => {
   const [data, setData] = useState<string | null>(null);
@@ -85,6 +86,7 @@ export const CollectiblePreview = ({
           className={cn(
             "object-cover absolute inset-0 w-full h-full image-pixelated",
           )}
+          onError={onError}
         />
         <div
           className="bg-center bg-cover h-full w-full relative"
@@ -98,9 +100,13 @@ export const CollectiblePreview = ({
         style={{ imageRendering: "pixelated" }}
         draggable={false}
         src={data || image}
-        onError={(e) => {
-          e.currentTarget.src = PLACEHOLDER;
-        }}
+        onError={
+          onError
+            ? onError
+            : (e) => {
+                e.currentTarget.src = PLACEHOLDER;
+              }
+        }
       />
       <div className="flex gap-1 items-center flex-wrap justify-start absolute bottom-1.5 left-1.5">
         {!!totalCount && (

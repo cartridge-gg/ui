@@ -154,6 +154,29 @@ export const Duelists: Story = {
   },
 };
 
+export const Fallback: Story = {
+  render: function Render(args) {
+    const [selected, setSelected] = useState(false);
+
+    return (
+      <div className="flex gap-2">
+        <CollectibleCard
+          {...args}
+          image="https://api.cartridge.gg/x/arcade-pistols/torii/static/0x07aaa9866750a0db82a54ba8674c38620fa2f967d2fbb31133def48e0527c87f/0x0000000000000000000000000000000000000000000000000000000000000577/image"
+          totalCount={1}
+          selected={selected}
+          onSelect={() => setSelected(!selected)}
+          onClick={selected ? () => setSelected(!selected) : undefined}
+          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+            e.currentTarget.src =
+              "https://api.cartridge.gg/x/arcade-pistols/torii/static/0x7aaa9866750a0db82a54ba8674c38620fa2f967d2fbb31133def48e0527c87f/0x0000000000000000000000000000000000000000000000000000000000000577/image";
+          }}
+        />
+      </div>
+    );
+  },
+};
+
 export const Unselectable: Story = {
   args: {
     selectable: false,
