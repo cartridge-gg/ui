@@ -7,7 +7,7 @@ export interface CollectibleCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectibleCardVariants> {
   title: string;
-  image: string;
+  images: string[];
   icon?: string;
   totalCount?: number;
   listingCount?: number;
@@ -35,7 +35,7 @@ const collectibleCardVariants = cva(
 
 export function CollectibleCard({
   title,
-  image,
+  images,
   icon,
   totalCount,
   listingCount,
@@ -64,7 +64,7 @@ export function CollectibleCard({
         variant={variant}
       />
       <CollectiblePreview
-        image={image}
+        images={images}
         size="sm"
         totalCount={totalCount}
         listingCount={listingCount}
