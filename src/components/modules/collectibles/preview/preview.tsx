@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export interface CollectiblePreviewProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectiblePreviewVariants> {
-  images: string[]; // maintenant on prend un tableau
+  images: string[];
   totalCount?: number;
   listingCount?: number;
 }
@@ -71,7 +71,7 @@ export const CollectiblePreview = ({
   const handleImageError = (
     e: React.SyntheticEvent<HTMLImageElement, Event>,
   ) => {
-    if (currentSrcIndex < images.length - 1) {
+    if (currentSrcIndex < images.length - 1 && !!images[currentSrcIndex + 1]) {
       setCurrentSrcIndex(currentSrcIndex + 1);
     } else {
       e.currentTarget.src = PLACEHOLDER;
