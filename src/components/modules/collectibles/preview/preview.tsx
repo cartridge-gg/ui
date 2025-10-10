@@ -2,12 +2,12 @@ import { PLACEHOLDER } from "@/assets";
 import { CollectibleTag, StackDiamondIcon, TagIcon } from "@/index";
 import { cn, formatNumber } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface CollectiblePreviewProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectiblePreviewVariants> {
-  image: string;
+  images: string[]; // maintenant on prend un tableau
   totalCount?: number;
   listingCount?: number;
 }
@@ -33,7 +33,7 @@ const collectiblePreviewVariants = cva(
 );
 
 export const CollectiblePreview = ({
-  image,
+  images,
   totalCount,
   listingCount,
   variant,
@@ -42,38 +42,42 @@ export const CollectiblePreview = ({
   onError,
   ...props
 }: CollectiblePreviewProps) => {
+  const [currentSrcIndex, setCurrentSrcIndex] = useState(0);
   const [data, setData] = useState<string | null>(null);
+
+  const currentSrc =
+    images && images.length > 0 ? images[currentSrcIndex] : PLACEHOLDER;
 
   useEffect(() => {
     const fetchData = async () => {
-      // A trick only for Beasts and Golden Tokens
-      // All other images must return early and not set data
+      if (!currentSrc) return;
+
       try {
-        const res = await fetch(image);
-        if (!res.ok) {
-          // Optionally handle non-OK responses
-          console.error(
-            `Failed to fetch image: ${res.status} ${res.statusText}`,
-          );
-          return;
-        }
-        const data = await res.text();
-        if (!data.includes('width="100width="100%"')) return;
-        // Extract b64 image from the text
-        const match = data.match(/data:image\/png;base64,[^)"]+/);
-        if (!match || match.length === 0) return;
-        setData(match[0]);
+        const res = await fetch(currentSrc);
+        if (!res.ok) return;
+
+        const text = await res.text();
+        if (!text.includes('width="100width="100%"')) return;
+
+        const match = text.match(/data:image\/png;base64,[^)"]+/);
+        if (match && match.length > 0) setData(match[0]);
       } catch (error) {
         console.error("Error fetching image:", error);
       }
     };
     fetchData();
-  }, [image]);
+  }, [currentSrc]);
 
-  const uri = useMemo(() => {
-    if (!image) return PLACEHOLDER;
-    return image;
-  }, [image]);
+  const handleImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>,
+  ) => {
+    if (currentSrcIndex < images.length - 1) {
+      setCurrentSrcIndex(currentSrcIndex + 1);
+    } else {
+      e.currentTarget.src = PLACEHOLDER;
+      if (onError) onError(e);
+    }
+  };
 
   return (
     <div
@@ -82,11 +86,9 @@ export const CollectiblePreview = ({
     >
       <div className="absolute grow inset-0 blur-[8px] transition-opacity duration-150 opacity-75 group-hover:opacity-100">
         <img
-          src={data || uri}
-          className={cn(
-            "object-cover absolute inset-0 w-full h-full image-pixelated",
-          )}
-          onError={onError}
+          src={data || currentSrc}
+          className="object-cover absolute inset-0 w-full h-full image-pixelated"
+          onError={handleImageError}
         />
         <div
           className="bg-center bg-cover h-full w-full relative"
@@ -99,14 +101,8 @@ export const CollectiblePreview = ({
         className="object-contain h-full w-full relative transition duration-150 ease-in-out group-hover:scale-[1.02]"
         style={{ imageRendering: "pixelated" }}
         draggable={false}
-        src={data || image}
-        onError={
-          onError
-            ? onError
-            : (e) => {
-                e.currentTarget.src = PLACEHOLDER;
-              }
-        }
+        src={data || currentSrc}
+        onError={handleImageError}
       />
       <div className="flex gap-1 items-center flex-wrap justify-start absolute bottom-1.5 left-1.5">
         {!!totalCount && (
