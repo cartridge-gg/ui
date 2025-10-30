@@ -944,6 +944,7 @@ export type CreateMerkleDropInput = {
   description?: InputMaybe<Scalars['String']>;
   entrypoint: Scalars['String'];
   key: Scalars['String'];
+  matchStarterpackItem?: InputMaybe<Scalars['Boolean']>;
   merkleRoot: Scalars['String'];
   network: MerkleDropNetwork;
   salt: Scalars['String'];
@@ -1155,6 +1156,7 @@ export type Deployment = Node & {
   events?: Maybe<Array<DeploymentLog>>;
   id: Scalars['ID'];
   logs: Logs;
+  observabilitySecret?: Maybe<Scalars['String']>;
   project: Scalars['String'];
   regions: Array<Scalars['String']>;
   replicas: Scalars['Int'];
@@ -1773,8 +1775,13 @@ export type InvoiceWhereInput = {
 
 export type KatanaCreateInput = {
   network?: InputMaybe<Scalars['String']>;
+  observability?: InputMaybe<Scalars['Boolean']>;
   provable?: InputMaybe<Scalars['Boolean']>;
   saya?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type KatanaUpdateInput = {
+  observability?: InputMaybe<Scalars['Boolean']>;
 };
 
 export enum LayerswapDestinationNetwork {
@@ -2072,6 +2079,7 @@ export type MerkleDrop = Node & {
   entrypoint: Scalars['String'];
   id: Scalars['ID'];
   key: Scalars['String'];
+  matchStarterpackItem: Scalars['Boolean'];
   merkleRoot: Scalars['String'];
   network: MerkleDropNetwork;
   salt: Scalars['String'];
@@ -2222,6 +2230,9 @@ export type MerkleDropWhereInput = {
   keyLTE?: InputMaybe<Scalars['String']>;
   keyNEQ?: InputMaybe<Scalars['String']>;
   keyNotIn?: InputMaybe<Array<Scalars['String']>>;
+  /** match_starterpack_item field predicates */
+  matchStarterpackItem?: InputMaybe<Scalars['Boolean']>;
+  matchStarterpackItemNEQ?: InputMaybe<Scalars['Boolean']>;
   /** merkle_root field predicates */
   merkleRoot?: InputMaybe<Scalars['String']>;
   merkleRootContains?: InputMaybe<Scalars['String']>;
@@ -3466,6 +3477,7 @@ export type Query = {
   pricePeriodByAddresses: Array<Price>;
   rpcApiKeys?: Maybe<RpcApiKeyConnection>;
   rpcCorsDomains?: Maybe<RpcCorsDomainConnection>;
+  rpcLogs?: Maybe<RpcLogConnection>;
   searchAccounts: Array<Account>;
   session?: Maybe<Session>;
   sessions?: Maybe<SessionConnection>;
@@ -3740,6 +3752,16 @@ export type QueryRpcCorsDomainsArgs = {
   last?: InputMaybe<Scalars['Int']>;
   teamName: Scalars['String'];
   where?: InputMaybe<RpcCorsDomainWhereInput>;
+};
+
+
+export type QueryRpcLogsArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  teamName: Scalars['String'];
+  where?: InputMaybe<RpcLogWhereInput>;
 };
 
 
@@ -5757,11 +5779,13 @@ export enum TokenPair {
 }
 
 export type ToriiCreateInput = {
+  observability?: InputMaybe<Scalars['Boolean']>;
   replicas?: InputMaybe<Scalars['Int']>;
   replication?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ToriiUpdateInput = {
+  observability?: InputMaybe<Scalars['Boolean']>;
   replicas?: InputMaybe<Scalars['Int']>;
 };
 
@@ -5906,6 +5930,7 @@ export type UpdateMerkleDropInput = {
   description?: InputMaybe<Scalars['String']>;
   entrypoint?: InputMaybe<Scalars['String']>;
   key?: InputMaybe<Scalars['String']>;
+  matchStarterpackItem?: InputMaybe<Scalars['Boolean']>;
   merkleRoot?: InputMaybe<Scalars['String']>;
   network?: InputMaybe<MerkleDropNetwork>;
   removeClaimIDs?: InputMaybe<Array<Scalars['ID']>>;
@@ -5916,6 +5941,7 @@ export type UpdateMerkleDropInput = {
 
 export type UpdateServiceInput = {
   config?: InputMaybe<Scalars['String']>;
+  katana?: InputMaybe<KatanaUpdateInput>;
   torii?: InputMaybe<ToriiUpdateInput>;
   type: DeploymentService;
   version?: InputMaybe<Scalars['String']>;
@@ -6113,7 +6139,7 @@ export type MerkleDropByKeyQueryVariables = Exact<{
 }>;
 
 
-export type MerkleDropByKeyQuery = { __typename?: 'Query', merkleDropByKey?: { __typename?: 'MerkleDrop', key: string, salt: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } | null };
+export type MerkleDropByKeyQuery = { __typename?: 'Query', merkleDropByKey?: { __typename?: 'MerkleDrop', key: string, salt: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null, matchStarterpackItem: boolean } | null };
 
 export type MerkleClaimsForAddressQueryVariables = Exact<{
   keys: Array<Scalars['String']> | Scalars['String'];
@@ -6121,7 +6147,7 @@ export type MerkleClaimsForAddressQueryVariables = Exact<{
 }>;
 
 
-export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', index: number, data: Array<string>, merkleProof?: Array<string> | null, merkleDrop: { __typename?: 'MerkleDrop', key: string, salt: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null } }> };
+export type MerkleClaimsForAddressQuery = { __typename?: 'Query', merkleClaimsForAddress: Array<{ __typename?: 'MerkleClaim', index: number, data: Array<string>, merkleProof?: Array<string> | null, merkleDrop: { __typename?: 'MerkleDrop', key: string, salt: string, network: MerkleDropNetwork, contract: string, entrypoint: string, merkleRoot: string, description?: string | null, matchStarterpackItem: boolean } }> };
 
 export type MetricsQueryVariables = Exact<{
   projects: Array<MetricsProject> | MetricsProject;
@@ -6956,6 +6982,7 @@ export const MerkleDropByKeyDocument = `
     entrypoint
     merkleRoot
     description
+    matchStarterpackItem
   }
 }
     `;
@@ -6985,6 +7012,7 @@ export const MerkleClaimsForAddressDocument = `
       entrypoint
       merkleRoot
       description
+      matchStarterpackItem
     }
   }
 }
