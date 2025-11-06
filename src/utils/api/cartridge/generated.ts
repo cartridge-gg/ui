@@ -904,11 +904,17 @@ export type CreateCryptoPaymentInput = {
   username: Scalars['String'];
 };
 
+export type CreateLayerswapDepositInput = {
+  amount: Scalars['BigInt'];
+  layerswapFees?: InputMaybe<Scalars['BigInt']>;
+  sourceNetwork: LayerswapSourceNetwork;
+  username: Scalars['String'];
+};
+
 export type CreateLayerswapPaymentInput = {
   credits?: InputMaybe<CreditsInput>;
   destinationNetwork: LayerswapDestinationNetwork;
   layerswapFees?: InputMaybe<Scalars['BigInt']>;
-  outsideExecution?: InputMaybe<OutsideExecution>;
   purchaseType: PurchaseType;
   sourceNetwork: LayerswapSourceNetwork;
   starterpackId?: InputMaybe<Scalars['ID']>;
@@ -1156,6 +1162,7 @@ export type Deployment = Node & {
   events?: Maybe<Array<DeploymentLog>>;
   id: Scalars['ID'];
   logs: Logs;
+  observability: Scalars['Boolean'];
   observabilitySecret?: Maybe<Scalars['String']>;
   project: Scalars['String'];
   regions: Array<Scalars['String']>;
@@ -1174,6 +1181,7 @@ export type Deployment = Node & {
 
 
 export type DeploymentLogsArgs = {
+  container?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
   order?: InputMaybe<Order>;
   region?: InputMaybe<Scalars['String']>;
@@ -1415,6 +1423,9 @@ export type DeploymentWhereInput = {
   idNEQ?: InputMaybe<Scalars['ID']>;
   idNotIn?: InputMaybe<Array<Scalars['ID']>>;
   not?: InputMaybe<DeploymentWhereInput>;
+  /** observability field predicates */
+  observability?: InputMaybe<Scalars['Boolean']>;
+  observabilityNEQ?: InputMaybe<Scalars['Boolean']>;
   or?: InputMaybe<Array<DeploymentWhereInput>>;
   /** project field predicates */
   project?: InputMaybe<Scalars['String']>;
@@ -1775,13 +1786,8 @@ export type InvoiceWhereInput = {
 
 export type KatanaCreateInput = {
   network?: InputMaybe<Scalars['String']>;
-  observability?: InputMaybe<Scalars['Boolean']>;
   provable?: InputMaybe<Scalars['Boolean']>;
   saya?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type KatanaUpdateInput = {
-  observability?: InputMaybe<Scalars['Boolean']>;
 };
 
 export enum LayerswapDestinationNetwork {
@@ -2324,6 +2330,7 @@ export type Mutation = {
   claimFreeStarterpack: Scalars['String'];
   createCryptoPayment: CryptoPayment;
   createDeployment: Deployment;
+  createLayerswapDeposit: LayerswapPayment;
   createLayerswapPayment: LayerswapPayment;
   createMerkleDrop: MerkleDrop;
   createPaymaster: Paymaster;
@@ -2400,11 +2407,17 @@ export type MutationCreateCryptoPaymentArgs = {
 
 export type MutationCreateDeploymentArgs = {
   name: Scalars['String'];
+  observability?: InputMaybe<Scalars['Boolean']>;
   regions?: InputMaybe<Array<Scalars['String']>>;
   service: CreateServiceInput;
   team?: InputMaybe<Scalars['String']>;
   tier?: InputMaybe<DeploymentTier>;
   wait?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateLayerswapDepositArgs = {
+  input: CreateLayerswapDepositInput;
 };
 
 
@@ -2567,6 +2580,7 @@ export type MutationTransferDeploymentArgs = {
 
 export type MutationUpdateDeploymentArgs = {
   name: Scalars['String'];
+  observability?: InputMaybe<Scalars['Boolean']>;
   service: UpdateServiceInput;
   tier?: InputMaybe<DeploymentTier>;
   wait?: InputMaybe<Scalars['Boolean']>;
@@ -2629,13 +2643,6 @@ export enum OrderDirection {
   /** Specifies a descending order for a given `orderBy` argument. */
   Desc = 'DESC'
 }
-
-export type OutsideExecution = {
-  address: Scalars['String'];
-  execution: Scalars['JSON'];
-  signature: Array<Scalars['String']>;
-  swap: SwapAmount;
-};
 
 export type Ownership = {
   __typename?: 'Ownership';
@@ -3006,6 +3013,8 @@ export type PaymasterPolicy = Node & {
   paymasters?: Maybe<Paymaster>;
   /** Predicate configuration for the policy */
   predicate?: Maybe<PolicyPredicate>;
+  /** If set, this policy only applies to requests from the specified katana project (e.g., 'myproject' for /x/myproject/katana) */
+  requiredKatanaProject?: Maybe<Scalars['String']>;
   selector: Scalars['String'];
   updatedAt: Scalars['Time'];
 };
@@ -3121,6 +3130,22 @@ export type PaymasterPolicyWhereInput = {
   paymasterIDNEQ?: InputMaybe<Scalars['ID']>;
   paymasterIDNotIn?: InputMaybe<Array<Scalars['ID']>>;
   paymasterIDNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** required_katana_project field predicates */
+  requiredKatanaProject?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectContains?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectContainsFold?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectEqualFold?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectGT?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectGTE?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectHasPrefix?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectHasSuffix?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectIn?: InputMaybe<Array<Scalars['String']>>;
+  requiredKatanaProjectIsNil?: InputMaybe<Scalars['Boolean']>;
+  requiredKatanaProjectLT?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectLTE?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectNEQ?: InputMaybe<Scalars['String']>;
+  requiredKatanaProjectNotIn?: InputMaybe<Array<Scalars['String']>>;
+  requiredKatanaProjectNotNil?: InputMaybe<Scalars['Boolean']>;
   /** selector field predicates */
   selector?: InputMaybe<Scalars['String']>;
   selectorContains?: InputMaybe<Scalars['String']>;
@@ -3431,7 +3456,7 @@ export type Project = {
 
 export enum PurchaseType {
   Credits = 'CREDITS',
-  OutsideExecution = 'OUTSIDE_EXECUTION',
+  /** @deprecated Starterpack purchases are now handled client-side */
   Starterpack = 'STARTERPACK'
 }
 
@@ -5400,13 +5425,9 @@ export type StripePricingDetails = {
   totalInCents: Scalars['Int'];
 };
 
-export type SwapAmount = {
-  amount: Scalars['BigInt'];
-  tokenAddress: Scalars['String'];
-};
-
 export type Team = Node & {
   __typename?: 'Team';
+  address?: Maybe<Scalars['String']>;
   /** Credits to use for slot billing. 1 credit = 0.01 USD. */
   credits: Scalars['Int'];
   /** Soft delete flag for legal and billing purposes. */
@@ -5425,6 +5446,7 @@ export type Team = Node & {
   rpcAPIKeys: RpcApiKeyConnection;
   rpcCorsDomains: RpcCorsDomainConnection;
   starterpacks: StarterpackConnection;
+  taxID?: Maybe<Scalars['String']>;
   /** Total amount debited for incubator stage tracking. 1 credit = 0.01 USD. */
   totalDebits: Scalars['Int'];
 };
@@ -5658,6 +5680,22 @@ export type TeamInput = {
  * Input was generated by ent.
  */
 export type TeamWhereInput = {
+  /** address field predicates */
+  address?: InputMaybe<Scalars['String']>;
+  addressContains?: InputMaybe<Scalars['String']>;
+  addressContainsFold?: InputMaybe<Scalars['String']>;
+  addressEqualFold?: InputMaybe<Scalars['String']>;
+  addressGT?: InputMaybe<Scalars['String']>;
+  addressGTE?: InputMaybe<Scalars['String']>;
+  addressHasPrefix?: InputMaybe<Scalars['String']>;
+  addressHasSuffix?: InputMaybe<Scalars['String']>;
+  addressIn?: InputMaybe<Array<Scalars['String']>>;
+  addressIsNil?: InputMaybe<Scalars['Boolean']>;
+  addressLT?: InputMaybe<Scalars['String']>;
+  addressLTE?: InputMaybe<Scalars['String']>;
+  addressNEQ?: InputMaybe<Scalars['String']>;
+  addressNotIn?: InputMaybe<Array<Scalars['String']>>;
+  addressNotNil?: InputMaybe<Scalars['Boolean']>;
   and?: InputMaybe<Array<TeamWhereInput>>;
   /** credits field predicates */
   credits?: InputMaybe<Scalars['Int']>;
@@ -5761,6 +5799,22 @@ export type TeamWhereInput = {
   nameNotIn?: InputMaybe<Array<Scalars['String']>>;
   not?: InputMaybe<TeamWhereInput>;
   or?: InputMaybe<Array<TeamWhereInput>>;
+  /** tax_id field predicates */
+  taxID?: InputMaybe<Scalars['String']>;
+  taxIDContains?: InputMaybe<Scalars['String']>;
+  taxIDContainsFold?: InputMaybe<Scalars['String']>;
+  taxIDEqualFold?: InputMaybe<Scalars['String']>;
+  taxIDGT?: InputMaybe<Scalars['String']>;
+  taxIDGTE?: InputMaybe<Scalars['String']>;
+  taxIDHasPrefix?: InputMaybe<Scalars['String']>;
+  taxIDHasSuffix?: InputMaybe<Scalars['String']>;
+  taxIDIn?: InputMaybe<Array<Scalars['String']>>;
+  taxIDIsNil?: InputMaybe<Scalars['Boolean']>;
+  taxIDLT?: InputMaybe<Scalars['String']>;
+  taxIDLTE?: InputMaybe<Scalars['String']>;
+  taxIDNEQ?: InputMaybe<Scalars['String']>;
+  taxIDNotIn?: InputMaybe<Array<Scalars['String']>>;
+  taxIDNotNil?: InputMaybe<Scalars['Boolean']>;
   /** total_debits field predicates */
   totalDebits?: InputMaybe<Scalars['Int']>;
   totalDebitsGT?: InputMaybe<Scalars['Int']>;
@@ -5779,13 +5833,11 @@ export enum TokenPair {
 }
 
 export type ToriiCreateInput = {
-  observability?: InputMaybe<Scalars['Boolean']>;
   replicas?: InputMaybe<Scalars['Int']>;
   replication?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ToriiUpdateInput = {
-  observability?: InputMaybe<Scalars['Boolean']>;
   replicas?: InputMaybe<Scalars['Int']>;
 };
 
@@ -5941,7 +5993,6 @@ export type UpdateMerkleDropInput = {
 
 export type UpdateServiceInput = {
   config?: InputMaybe<Scalars['String']>;
-  katana?: InputMaybe<KatanaUpdateInput>;
   torii?: InputMaybe<ToriiUpdateInput>;
   type: DeploymentService;
   version?: InputMaybe<Scalars['String']>;
@@ -6205,6 +6256,13 @@ export type CreateLayerswapPaymentMutationVariables = Exact<{
 
 
 export type CreateLayerswapPaymentMutation = { __typename?: 'Mutation', createLayerswapPayment: { __typename?: 'LayerswapPayment', cryptoPaymentId: string, swapId: string, status: LayerswapPaymentStatus, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } };
+
+export type CreateLayerswapDepositMutationVariables = Exact<{
+  input: CreateLayerswapDepositInput;
+}>;
+
+
+export type CreateLayerswapDepositMutation = { __typename?: 'Mutation', createLayerswapDeposit: { __typename?: 'LayerswapPayment', cryptoPaymentId: string, swapId: string, status: LayerswapPaymentStatus, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } };
 
 export type LayerswapQuoteQueryVariables = Exact<{
   input: CreateLayerswapPaymentInput;
@@ -7233,6 +7291,29 @@ export const useCreateLayerswapPaymentMutation = <
     useMutation<CreateLayerswapPaymentMutation, TError, CreateLayerswapPaymentMutationVariables, TContext>(
       ['CreateLayerswapPayment'],
       useFetchData<CreateLayerswapPaymentMutation, CreateLayerswapPaymentMutationVariables>(CreateLayerswapPaymentDocument),
+      options
+    );
+export const CreateLayerswapDepositDocument = `
+    mutation CreateLayerswapDeposit($input: CreateLayerswapDepositInput!) {
+  createLayerswapDeposit(input: $input) {
+    cryptoPaymentId
+    swapId
+    status
+    sourceNetwork
+    sourceTokenAmount
+    sourceTokenAddress
+    sourceDepositAddress
+    expiresAt
+  }
+}
+    `;
+export const useCreateLayerswapDepositMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateLayerswapDepositMutation, TError, CreateLayerswapDepositMutationVariables, TContext>) =>
+    useMutation<CreateLayerswapDepositMutation, TError, CreateLayerswapDepositMutationVariables, TContext>(
+      ['CreateLayerswapDeposit'],
+      useFetchData<CreateLayerswapDepositMutation, CreateLayerswapDepositMutationVariables>(CreateLayerswapDepositDocument),
       options
     );
 export const LayerswapQuoteDocument = `
