@@ -84,11 +84,15 @@ mutation CreateLayerswapDeposit($input: CreateLayerswapDepositInput!) {
   }
 }
 
-query LayerswapQuote($input: CreateLayerswapPaymentInput!) {
+query LayerswapQuote($input: CreateLayerswapDepositInput!) {
   layerswapQuote(input: $input) {
     requestedAmount
     receivedAmount
     totalFees
     averageCompletionTime
   }
+}
+
+query LayerswapStatus($swapId: ID!, $isMainnet: Boolean) {
+  layerswapStatus(swapId: $swapId, isMainnet: $isMainnet) 
 }
