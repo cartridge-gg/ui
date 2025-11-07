@@ -907,6 +907,7 @@ export type CreateCryptoPaymentInput = {
 export type CreateLayerswapDepositInput = {
   amount: Scalars['BigInt'];
   layerswapFees?: InputMaybe<Scalars['BigInt']>;
+  marginPercent?: InputMaybe<Scalars['Int']>;
   sourceNetwork: LayerswapSourceNetwork;
   username: Scalars['String'];
 };
@@ -1803,16 +1804,9 @@ export type LayerswapPayment = {
   sourceNetwork: LayerswapSourceNetwork;
   sourceTokenAddress: Scalars['String'];
   sourceTokenAmount: Scalars['BigInt'];
-  status: LayerswapPaymentStatus;
+  status: LayerswapStatus;
   swapId: Scalars['String'];
 };
-
-export enum LayerswapPaymentStatus {
-  Confirmed = 'CONFIRMED',
-  Expired = 'EXPIRED',
-  Failed = 'FAILED',
-  Pending = 'PENDING'
-}
 
 export type LayerswapQuote = {
   __typename?: 'LayerswapQuote';
@@ -1862,6 +1856,13 @@ export type LayerswapSourceToken = {
   status: Scalars['String'];
   symbol: Scalars['String'];
 };
+
+export enum LayerswapStatus {
+  Confirmed = 'CONFIRMED',
+  Expired = 'EXPIRED',
+  Failed = 'FAILED',
+  Pending = 'PENDING'
+}
 
 export type Lock = Node & {
   __typename?: 'Lock';
@@ -3480,6 +3481,7 @@ export type Query = {
   layerswapPayment?: Maybe<LayerswapPayment>;
   layerswapQuote: LayerswapQuote;
   layerswapSources: Array<LayerswapSource>;
+  layerswapStatus: LayerswapStatus;
   me?: Maybe<Account>;
   merkleClaims: MerkleClaimConnection;
   merkleClaimsForAddress: Array<MerkleClaim>;
@@ -3642,13 +3644,19 @@ export type QueryLayerswapPaymentArgs = {
 
 
 export type QueryLayerswapQuoteArgs = {
-  input: CreateLayerswapPaymentInput;
+  input: CreateLayerswapDepositInput;
 };
 
 
 export type QueryLayerswapSourcesArgs = {
   isMainnet?: InputMaybe<Scalars['Boolean']>;
   token: Scalars['String'];
+};
+
+
+export type QueryLayerswapStatusArgs = {
+  isMainnet?: InputMaybe<Scalars['Boolean']>;
+  swapId: Scalars['ID'];
 };
 
 
@@ -5672,7 +5680,9 @@ export enum TeamIncubatorStage {
 }
 
 export type TeamInput = {
+  address?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
+  taxId?: InputMaybe<Scalars['String']>;
 };
 
 /**
@@ -6255,21 +6265,29 @@ export type CreateLayerswapPaymentMutationVariables = Exact<{
 }>;
 
 
-export type CreateLayerswapPaymentMutation = { __typename?: 'Mutation', createLayerswapPayment: { __typename?: 'LayerswapPayment', cryptoPaymentId: string, swapId: string, status: LayerswapPaymentStatus, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } };
+export type CreateLayerswapPaymentMutation = { __typename?: 'Mutation', createLayerswapPayment: { __typename?: 'LayerswapPayment', cryptoPaymentId: string, swapId: string, status: LayerswapStatus, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } };
 
 export type CreateLayerswapDepositMutationVariables = Exact<{
   input: CreateLayerswapDepositInput;
 }>;
 
 
-export type CreateLayerswapDepositMutation = { __typename?: 'Mutation', createLayerswapDeposit: { __typename?: 'LayerswapPayment', cryptoPaymentId: string, swapId: string, status: LayerswapPaymentStatus, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } };
+export type CreateLayerswapDepositMutation = { __typename?: 'Mutation', createLayerswapDeposit: { __typename?: 'LayerswapPayment', cryptoPaymentId: string, swapId: string, status: LayerswapStatus, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } };
 
 export type LayerswapQuoteQueryVariables = Exact<{
-  input: CreateLayerswapPaymentInput;
+  input: CreateLayerswapDepositInput;
 }>;
 
 
 export type LayerswapQuoteQuery = { __typename?: 'Query', layerswapQuote: { __typename?: 'LayerswapQuote', requestedAmount: string, receivedAmount: string, totalFees: string, averageCompletionTime: string } };
+
+export type LayerswapStatusQueryVariables = Exact<{
+  swapId: Scalars['ID'];
+  isMainnet?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+
+export type LayerswapStatusQuery = { __typename?: 'Query', layerswapStatus: LayerswapStatus };
 
 export type PlaythroughsQueryVariables = Exact<{
   projects: Array<PlaythroughProject> | PlaythroughProject;
@@ -7317,7 +7335,7 @@ export const useCreateLayerswapDepositMutation = <
       options
     );
 export const LayerswapQuoteDocument = `
-    query LayerswapQuote($input: CreateLayerswapPaymentInput!) {
+    query LayerswapQuote($input: CreateLayerswapDepositInput!) {
   layerswapQuote(input: $input) {
     requestedAmount
     receivedAmount
@@ -7336,6 +7354,23 @@ export const useLayerswapQuoteQuery = <
     useQuery<LayerswapQuoteQuery, TError, TData>(
       ['LayerswapQuote', variables],
       useFetchData<LayerswapQuoteQuery, LayerswapQuoteQueryVariables>(LayerswapQuoteDocument).bind(null, variables),
+      options
+    );
+export const LayerswapStatusDocument = `
+    query LayerswapStatus($swapId: ID!, $isMainnet: Boolean) {
+  layerswapStatus(swapId: $swapId, isMainnet: $isMainnet)
+}
+    `;
+export const useLayerswapStatusQuery = <
+      TData = LayerswapStatusQuery,
+      TError = unknown
+    >(
+      variables: LayerswapStatusQueryVariables,
+      options?: UseQueryOptions<LayerswapStatusQuery, TError, TData>
+    ) =>
+    useQuery<LayerswapStatusQuery, TError, TData>(
+      ['LayerswapStatus', variables],
+      useFetchData<LayerswapStatusQuery, LayerswapStatusQueryVariables>(LayerswapStatusDocument).bind(null, variables),
       options
     );
 export const PlaythroughsDocument = `
