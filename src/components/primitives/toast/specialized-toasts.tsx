@@ -233,12 +233,12 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
       duration={duration}
       {...props}
     >
-      <div className="flex items-center justify-between px-3 py-3 w-full h-full">
+      <div className="flex items-center justify-between p-3.5 w-full h-full">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
             {networkIcon || <StarknetIcon size="default" />}
           </div>
-          <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+          <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.16px] truncate">
             Switched to {networkName}
           </span>
         </div>

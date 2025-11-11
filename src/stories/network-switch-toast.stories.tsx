@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { NetworkSwitchToast } from "@/components/primitives/toast/specialized-toasts";
 import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
-import { StarknetIcon } from "@/components/icons/brand";
+import { StarknetColorIcon } from "@/components";
 
 const meta: Meta<typeof NetworkSwitchToast> = {
   title: "Primitives/Toast/Network Switch Toast",
@@ -36,7 +36,7 @@ type Story = StoryObj<typeof NetworkSwitchToast>;
 export const StarknetMainnet: Story = {
   args: {
     networkName: "Starknet Mainnet",
-    networkIcon: <StarknetIcon size="default" />,
+    networkIcon: <StarknetColorIcon size="default" />,
   },
 };
 
