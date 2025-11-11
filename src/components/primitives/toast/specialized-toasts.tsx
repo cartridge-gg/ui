@@ -278,13 +278,10 @@ const ErrorToast = memo<ErrorToastProps>(
       duration={duration}
       {...props}
     >
-      <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <AlertIcon
-            size="default"
-            className="text-destructive-foreground flex-shrink-0"
-          />
-          <span className="text-destructive-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+      <div className="flex items-center justify-between px-3 pt-3 pb-4 w-full flex-1">
+        <div className="flex items-center gap-2 flex-1 min-w-0">
+          <AlertIcon size="default" className="text-spacer-100 flex-shrink-0" />
+          <span className="text-spacer-100 text-base/5 font-medium leading-5 tracking-[0.16px] truncate">
             {message}
           </span>
         </div>
