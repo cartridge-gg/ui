@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, ComponentProps } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "@/utils";
 import {
@@ -36,30 +36,31 @@ const specializedToastVariants = cva(
 );
 
 // Close Button Component
-interface CloseButtonProps {
+interface CloseButtonProps extends ComponentProps<typeof ToastClose> {
   onClick?: () => void;
   variant?: "default" | "translucent";
   className?: string;
 }
 
 const CloseButton = memo<CloseButtonProps>(
-  ({ onClick, variant = "default", className }) => {
+  ({ onClick, variant = "default", className, ...props }) => {
     const iconColorClass =
       variant === "translucent"
-        ? "text-translucent-dark-200 hover:text-translucent-dark-300"
-        : "text-foreground-200 hover:text-foreground";
+        ? "text-translucent-dark-200 hover:text-translucent-dark-300  hover:bg-translucent-dark-100"
+        : "text-foreground-200 hover:text-foreground hover:bg-background-150";
 
     return (
-      <button
+      <ToastClose
         className={cn(
-          "flex items-center justify-center w-6 h-6 rounded transition-colors",
+          "flex items-center justify-center !w-10 !h-10 rounded transition-colors",
           iconColorClass,
           className,
         )}
         onClick={onClick}
+        {...props}
       >
         <TimesIcon size="sm" />
-      </button>
+      </ToastClose>
     );
   },
 );
@@ -214,11 +215,7 @@ const AchievementToast = memo<AchievementToastProps>(
           </div>
           <div className="flex items-center gap-2 flex-shrink-0 ml-2">
             <XPTag amount={xpAmount} isMainnet={!isDraft} />
-            {showClose && (
-              <ToastClose asChild>
-                <CloseButton />
-              </ToastClose>
-            )}
+            {showClose && <CloseButton />}
           </div>
         </div>
         <ToastProgressBar progress={progress} variant="achievement" />
@@ -280,9 +277,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
           </div>
           {showClose && (
             <div className="flex-shrink-0 ml-2">
-              <ToastClose asChild>
-                <CloseButton />
-              </ToastClose>
+              <CloseButton />
             </div>
           )}
         </div>
@@ -330,9 +325,7 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
         </div>
         {showClose && (
           <div className="flex-shrink-0 ml-2">
-            <ToastClose asChild>
-              <CloseButton />
-            </ToastClose>
+            <CloseButton />
           </div>
         )}
       </div>
@@ -364,18 +357,16 @@ const ErrorToast = memo<ErrorToastProps>(
       duration={duration}
       {...props}
     >
-      <div className="flex items-center justify-between px-3 pt-3 pb-4 w-full flex-1">
-        <div className="flex items-center gap-2 flex-1 min-w-0">
+      <div className="flex items-center justify-between w-full flex-1">
+        <div className="flex items-center gap-2 flex-1 min-w-0 px-3 pt-3 pb-4">
           <AlertIcon size="default" className="text-spacer-100 flex-shrink-0" />
           <span className="text-spacer-100 text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
             {message}
           </span>
         </div>
         {showClose && (
-          <div className="flex-shrink-0 ml-2">
-            <ToastClose asChild>
-              <CloseButton variant="translucent" />
-            </ToastClose>
+          <div className="flex-shrink-0 p-1">
+            <CloseButton variant="translucent" />
           </div>
         )}
       </div>
@@ -465,9 +456,7 @@ const TransactionNotification = memo<TransactionNotificationProps>(
           </div>
           {showClose && (
             <div className="flex-shrink-0 ml-2">
-              <ToastClose asChild>
-                <CloseButton />
-              </ToastClose>
+              <CloseButton />
             </div>
           )}
         </div>

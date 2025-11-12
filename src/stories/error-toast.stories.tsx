@@ -15,6 +15,9 @@ const meta: Meta<typeof ErrorToast> = {
       ],
     },
   },
+  args: {
+    showClose: true,
+  },
   decorators: [
     (Story) => (
       <ToastProvider>

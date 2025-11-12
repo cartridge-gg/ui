@@ -15,6 +15,9 @@ const meta: Meta<typeof MarketplaceToast> = {
       ],
     },
   },
+  args: {
+    showClose: true,
+  },
   decorators: [
     (Story) => (
       <ToastProvider>
