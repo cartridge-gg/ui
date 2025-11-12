@@ -15,6 +15,9 @@ const meta: Meta<typeof TransactionNotification> = {
       ],
     },
   },
+  args: {
+    showClose: true,
+  },
   decorators: [
     (Story) => (
       <ToastProvider>

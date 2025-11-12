@@ -10,6 +10,7 @@ import {
   AlertIcon,
   SparklesIcon,
   DraftSparklesIcon,
+  PulseIcon,
 } from "@/components/icons";
 import { StarknetIcon } from "@/components/icons/brand";
 import { Toast, ToastClose, type ToastProps } from "./toast";
@@ -213,7 +214,7 @@ const AchievementToast = memo<AchievementToastProps>(
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+          <div className="flex items-center gap-2 flex-shrink-0 p-1">
             <XPTag amount={xpAmount} isMainnet={!isDraft} />
             {showClose && <CloseButton />}
           </div>
@@ -276,7 +277,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
             </div>
           </div>
           {showClose && (
-            <div className="flex-shrink-0 ml-2">
+            <div className="flex-shrink-0 p-1">
               <CloseButton />
             </div>
           )}
@@ -324,7 +325,7 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
           </span>
         </div>
         {showClose && (
-          <div className="flex-shrink-0 ml-2">
+          <div className="flex-shrink-0 p-1">
             <CloseButton />
           </div>
         )}
@@ -440,13 +441,17 @@ const TransactionNotification = memo<TransactionNotificationProps>(
                 <CheckIcon size="default" className="text-foreground" />
               )}
             </div>
-            <span className="text-foreground text-base font-normal leading-5 tracking-[0.01em] truncate">
+            <span className="text-foreground text-base/5 font-normal leading-5 tracking-[0.01em] truncate">
               {status === "confirming" ? "Confirming" : "Confirmed"}
             </span>
             {status === "confirming" && (
               <div className="flex items-center px-2 py-1 bg-translucent-dark-100 rounded-[2px] ml-2 flex-shrink-0">
                 <div className="w-4 h-4 mr-1 flex items-center justify-center">
-                  <div className="w-[10px] h-[8px] bg-achievement" />
+                  <PulseIcon
+                    variant="solid"
+                    size="xs"
+                    className="text-achievement"
+                  />
                 </div>
                 <span className="text-achievement text-xs font-normal leading-4 whitespace-nowrap">
                   {label}
@@ -456,7 +461,9 @@ const TransactionNotification = memo<TransactionNotificationProps>(
           </div>
           {showClose && (
             <div className="flex-shrink-0 ml-2">
-              <CloseButton />
+              <ToastClose asChild>
+                <CloseButton />
+              </ToastClose>
             </div>
           )}
         </div>
