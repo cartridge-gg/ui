@@ -8,12 +8,13 @@ import {
   CheckIcon,
   SpinnerIcon,
   AlertIcon,
-  AwardIcon,
-  CreditIcon as CreditsIcon,
   SparklesIcon,
+  DraftSparklesIcon,
 } from "@/components/icons";
 import { StarknetIcon } from "@/components/icons/brand";
 import { Toast, ToastClose, type ToastProps } from "./toast";
+import { AchievementIcon } from "@/components/icons/utility/achievement";
+import { Thumbnail } from "@/index";
 
 // Base toast container for specialized toasts
 const specializedToastVariants = cva(
@@ -22,6 +23,7 @@ const specializedToastVariants = cva(
     variants: {
       variant: {
         achievement: "w-[360px] h-[68px]",
+        marketplace: "w-[360px] h-[68px]",
         network: "w-[360px] h-[52px]",
         error: "w-[360px] h-[52px] bg-destructive",
         transaction: "w-[360px] h-[52px]",
@@ -71,12 +73,16 @@ interface XPTagProps {
 }
 
 const XPTag = memo<XPTagProps>(({ amount, isMainnet = true }) => (
-  <div className="flex items-center gap-[2px]">
+  <div className="flex items-center gap-0.5">
     <div className="w-5 h-5 flex items-center justify-center">
       {isMainnet ? (
         <SparklesIcon variant="solid" size="sm" className="text-foreground" />
       ) : (
-        <div className="w-3 h-3 bg-foreground rounded-sm" />
+        <DraftSparklesIcon
+          variant="solid"
+          size="sm"
+          className="text-foreground"
+        />
       )}
     </div>
     <span className="text-foreground text-sm font-normal leading-5">
@@ -141,7 +147,8 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
 ToastProgressBar.displayName = "ToastProgressBar";
 
 // Achievement Toast Component
-interface AchievementToastProps extends Omit<ToastProps, "children"> {
+interface AchievementToastProps
+  extends Omit<ToastProps, "children" | "variant"> {
   title: string;
   subtitle?: string;
   xpAmount: number;
@@ -163,7 +170,6 @@ const AchievementToast = memo<AchievementToastProps>(
     className,
     ...props
   }) => {
-    const IconComponent = isDraft ? CreditsIcon : AwardIcon;
     const iconColor = isDraft
       ? "var(--achievement-200)"
       : "var(--achievement-100)";
@@ -177,13 +183,22 @@ const AchievementToast = memo<AchievementToastProps>(
         duration={duration}
         {...props}
       >
-        <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
+        <div className="flex items-center justify-between px-3 pt-3 pb-4 w-full flex-1">
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="flex items-center justify-center w-10 h-10 bg-background rounded p-[5px] flex-shrink-0">
-              <IconComponent size="lg" style={{ color: iconColor }} />
-            </div>
+            <Thumbnail
+              centered={true}
+              icon={
+                <AchievementIcon
+                  variant={isDraft ? "diamond" : "sprout"}
+                  size="lg"
+                  style={{ color: iconColor }}
+                />
+              }
+              size="lg"
+              variant="darker"
+            />
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
-              <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+              <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
                 {title}
               </span>
               <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
@@ -207,6 +222,70 @@ const AchievementToast = memo<AchievementToastProps>(
 );
 
 AchievementToast.displayName = "AchievementToast";
+
+// Marketplace Toast Component
+interface MarketplaceToastProps extends Omit<ToastProps, "children"> {
+  itemName: string;
+  itemImage: string;
+  action: "Purchased!" | "Sold!";
+  progress: number;
+  duration?: number;
+  showClose?: boolean;
+}
+
+const MarketplaceToast = memo<MarketplaceToastProps>(
+  ({
+    itemName,
+    itemImage,
+    action,
+    progress,
+    duration,
+    showClose = false,
+    className,
+    ...props
+  }) => {
+    return (
+      <Toast
+        className={cn(
+          specializedToastVariants({ variant: "marketplace" }),
+          className,
+        )}
+        duration={duration}
+        {...props}
+      >
+        <div className="flex items-center justify-between px-3 pt-3 pb-4 w-full flex-1 bg-background-200">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0">
+              <img
+                src={itemImage}
+                alt={itemName}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
+              <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
+                {action}
+              </span>
+              <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
+                {itemName}
+              </span>
+            </div>
+          </div>
+          {showClose && (
+            <div className="flex-shrink-0 ml-2">
+              <ToastClose asChild>
+                <CloseButton />
+              </ToastClose>
+            </div>
+          )}
+        </div>
+        <ToastProgressBar progress={progress} variant="achievement" />
+      </Toast>
+    );
+  },
+);
+
+MarketplaceToast.displayName = "MarketplaceToast";
 
 // Network Switch Toast Component
 interface NetworkSwitchToastProps extends Omit<ToastProps, "children"> {
@@ -238,7 +317,7 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
           <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
             {networkIcon || <StarknetIcon size="default" />}
           </div>
-          <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.16px] truncate">
+          <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
             Switched to {networkName}
           </span>
         </div>
@@ -281,7 +360,7 @@ const ErrorToast = memo<ErrorToastProps>(
       <div className="flex items-center justify-between px-3 pt-3 pb-4 w-full flex-1">
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <AlertIcon size="default" className="text-spacer-100 flex-shrink-0" />
-          <span className="text-spacer-100 text-base/5 font-medium leading-5 tracking-[0.16px] truncate">
+          <span className="text-spacer-100 text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
             {message}
           </span>
         </div>
@@ -474,6 +553,7 @@ export const showTransactionToast = (
 
 export {
   AchievementToast,
+  MarketplaceToast,
   NetworkSwitchToast,
   ErrorToast,
   TransactionNotification,
@@ -481,6 +561,7 @@ export {
   XPTag,
   ToastProgressBar,
   type AchievementToastProps,
+  type MarketplaceToastProps,
   type NetworkSwitchToastProps,
   type ErrorToastProps,
   type TransactionNotificationProps,
