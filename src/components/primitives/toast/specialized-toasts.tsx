@@ -96,7 +96,7 @@ XPTag.displayName = "XPTag";
 // Toast Progress Bar Component
 interface ToastProgressBarProps {
   progress: number; // 0-100
-  variant?: "achievement" | "error";
+  variant?: "achievement" | "error" | "marketplace";
   className?: string;
 }
 
@@ -114,6 +114,12 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
         return {
           bg: "bg-translucent-dark-100",
           fill: "bg-translucent-dark-200",
+        };
+      }
+      if (variant === "marketplace") {
+        return {
+          bg: "bg-background-300",
+          fill: "bg-achievement",
         };
       }
       return {
@@ -256,10 +262,11 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
         <div className="flex items-center justify-between px-3 pt-3 pb-4 w-full flex-1 bg-background-200">
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0">
-              <img
-                src={itemImage}
-                alt={itemName}
-                className="w-full h-full object-cover"
+              <Thumbnail
+                centered={true}
+                icon={itemImage}
+                variant="darker"
+                size="lg"
               />
             </div>
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
@@ -279,7 +286,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
             </div>
           )}
         </div>
-        <ToastProgressBar progress={progress} variant="achievement" />
+        <ToastProgressBar progress={progress} variant="marketplace" />
       </Toast>
     );
   },
