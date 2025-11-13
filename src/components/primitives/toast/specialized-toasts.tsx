@@ -87,9 +87,7 @@ const XPTag = memo<XPTagProps>(({ amount, isMainnet = true }) => (
         />
       )}
     </div>
-    <span className="text-foreground text-sm font-normal leading-5">
-      {amount}
-    </span>
+    <span className="text-foreground text-sm font-normal">{amount}</span>
   </div>
 ));
 
@@ -206,10 +204,10 @@ const AchievementToast = memo<AchievementToastProps>(
               variant="darker"
             />
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
-              <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
+              <span className="text-foreground text-sm font-medium truncate">
                 {title}
               </span>
-              <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
+              <span className="text-foreground-300 text-xs font-normal truncate">
                 {subtitle}
               </span>
             </div>
@@ -261,10 +259,10 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <Thumbnail icon={itemImage} variant="darker" size="lg" />
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
-              <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
+              <span className="text-foreground text-sm font-medium truncate">
                 {action}
               </span>
-              <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
+              <span className="text-foreground-300 text-xs font-normal truncate">
                 {itemName}
               </span>
             </div>
@@ -313,7 +311,7 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
           <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
             {networkIcon || <StarknetIcon size="default" />}
           </div>
-          <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
+          <span className="text-foreground text-sm font-medium truncate">
             Switched to {networkName}
           </span>
         </div>
@@ -354,7 +352,7 @@ const ErrorToast = memo<ErrorToastProps>(
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-2 flex-1 min-w-0 px-3 py-3">
           <AlertIcon size="default" className="text-spacer-100 flex-shrink-0" />
-          <span className="text-spacer-100 text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
+          <span className="text-spacer-100 text-sm font-medium leading-5 tracking-[0.01em] truncate">
             {message}
           </span>
         </div>
@@ -432,19 +430,17 @@ const TransactionNotification = memo<TransactionNotificationProps>(
             ) : (
               <CheckIcon size="default" className="text-foreground" />
             )}
-            <span className="text-foreground text-base/5 font-normal leading-5 tracking-[0.01em] truncate">
+            <span className="text-foreground text-sm font-medium truncate">
               {status === "confirming" ? "Confirming" : "Confirmed"}
             </span>
             {status === "confirming" && (
-              <div className="flex items-center px-2 py-1 bg-translucent-dark-100 rounded-[2px] ml-2 flex-shrink-0">
-                <div className="w-4 h-4 mr-1 flex items-center justify-center">
-                  <PulseIcon
-                    variant="solid"
-                    size="xs"
-                    className="text-achievement"
-                  />
-                </div>
-                <span className="text-achievement text-xs font-normal leading-4 whitespace-nowrap">
+              <div className="flex items-center p-0.5 bg-translucent-dark-100 rounded-0.5 flex-shrink-0">
+                <PulseIcon
+                  variant="solid"
+                  size="xs"
+                  className="text-achievement"
+                />
+                <span className="text-achievement text-xs font-normal whitespace-nowrap pl-0.5">
                   {label}
                 </span>
               </div>
