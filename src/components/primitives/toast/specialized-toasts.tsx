@@ -24,7 +24,7 @@ const specializedToastVariants = cva(
     variants: {
       variant: {
         achievement: "w-[360px] h-[68px]",
-        marketplace: "w-[360px] h-[68px]",
+        marketplace: "w-[400px] h-[68px]",
         network: "w-[360px] h-[52px]",
         error: "w-[360px] h-[52px] bg-destructive",
         transaction: "w-[360px] h-[52px]",
@@ -47,8 +47,8 @@ const CloseButton = memo<CloseButtonProps>(
   ({ onClick, variant = "default", className, ...props }) => {
     const iconColorClass =
       variant === "translucent"
-        ? "text-translucent-dark-200 hover:text-translucent-dark-300  hover:bg-translucent-dark-100"
-        : "text-foreground-200 hover:text-foreground hover:bg-background-150";
+        ? "text-translucent-dark-200 hover:text-translucent-dark-300 hover:bg-translucent-dark-100"
+        : "text-foreground-400 hover:text-foreground hover:bg-background-125";
 
     return (
       <ToastClose
@@ -257,16 +257,9 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
         duration={duration}
         {...props}
       >
-        <div className="flex items-center justify-between px-3 pt-3 pb-4 w-full flex-1 bg-background-200">
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0">
-              <Thumbnail
-                centered={true}
-                icon={itemImage}
-                variant="darker"
-                size="lg"
-              />
-            </div>
+        <div className="flex items-center justify-between w-full flex-1 bg-background-200">
+          <div className="flex items-center gap-3 flex-1 min-w-0 px-3 pt-3 pb-4">
+            <Thumbnail icon={itemImage} variant="darker" size="lg" />
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
               <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
                 {action}
