@@ -1,0 +1,13 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { LeaderboardRow } from "./row";
+declare const meta: Meta<typeof LeaderboardRow>;
+export default meta;
+type Story = StoryObj<typeof LeaderboardRow>;
+export declare const Default: Story;
+export declare const Icon: Story;
+export declare const Highlight: Story;
+export declare const HighlightTop1: Story;
+export declare const Top1: Story;
+export declare const Top2: Story;
+export declare const Top3: Story;
+export declare const LowRank: Story;
