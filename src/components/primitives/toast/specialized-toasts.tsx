@@ -23,11 +23,11 @@ const specializedToastVariants = cva(
   {
     variants: {
       variant: {
-        achievement: "w-[360px] h-[68px]",
-        marketplace: "w-[400px] h-[68px]",
-        network: "w-[360px] h-[52px]",
-        error: "w-[360px] h-[52px] bg-destructive",
-        transaction: "w-[360px] h-[52px]",
+        achievement: "w-[360px] !h-[68px]",
+        marketplace: "w-[400px] !h-[68px]",
+        network: "w-[360px] !h-[52px]",
+        error: "w-[360px] !h-[52px] bg-destructive",
+        transaction: "w-[360px] !h-[52px]",
       },
     },
     defaultVariants: {
@@ -214,7 +214,7 @@ const AchievementToast = memo<AchievementToastProps>(
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0 p-1">
+          <div className="flex items-center gap-2 flex-shrink-0 p-1 pb-2">
             <XPTag amount={xpAmount} isMainnet={!isDraft} />
             {showClose && <CloseButton />}
           </div>
@@ -270,7 +270,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
             </div>
           </div>
           {showClose && (
-            <div className="flex-shrink-0 p-1">
+            <div className="flex-shrink-0 p-1 pb-2">
               <CloseButton />
             </div>
           )}
@@ -318,7 +318,7 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
           </span>
         </div>
         {showClose && (
-          <div className="flex-shrink-0 p-1">
+          <div className="flex-shrink-0 p-1 pb-2">
             <CloseButton />
           </div>
         )}
@@ -359,7 +359,7 @@ const ErrorToast = memo<ErrorToastProps>(
           </span>
         </div>
         {showClose && (
-          <div className="flex-shrink-0 p-1">
+          <div className="flex-shrink-0 p-1 pb-2">
             <CloseButton variant="translucent" />
           </div>
         )}
@@ -422,18 +422,16 @@ const TransactionNotification = memo<TransactionNotificationProps>(
         duration={duration}
         {...props}
       >
-        <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
-              {status === "confirming" ? (
-                <SpinnerIcon
-                  size="default"
-                  className="text-foreground animate-spin"
-                />
-              ) : (
-                <CheckIcon size="default" className="text-foreground" />
-              )}
-            </div>
+        <div className="flex items-center justify-between w-full flex-1">
+          <div className="flex items-center gap-2 flex-1 min-w-0 px-3 pt-3 pb-4">
+            {status === "confirming" ? (
+              <SpinnerIcon
+                size="default"
+                className="text-foreground animate-spin"
+              />
+            ) : (
+              <CheckIcon size="default" className="text-foreground" />
+            )}
             <span className="text-foreground text-base/5 font-normal leading-5 tracking-[0.01em] truncate">
               {status === "confirming" ? "Confirming" : "Confirmed"}
             </span>
@@ -453,17 +451,12 @@ const TransactionNotification = memo<TransactionNotificationProps>(
             )}
           </div>
           {showClose && (
-            <div className="flex-shrink-0 ml-2">
-              <ToastClose asChild>
-                <CloseButton />
-              </ToastClose>
+            <div className="flex-shrink-0 p-1 pb-2">
+              <CloseButton />
             </div>
           )}
         </div>
-        <ToastProgressBar
-          progress={status === "confirmed" ? 100 : progress}
-          variant="achievement"
-        />
+        <ToastProgressBar progress={progress} variant="achievement" />
       </Toast>
     );
   },
