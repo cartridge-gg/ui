@@ -257,8 +257,8 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
         duration={duration}
         {...props}
       >
-        <div className="flex items-center justify-between w-full flex-1 bg-background-200">
-          <div className="flex items-center gap-3 flex-1 min-w-0 px-3 pt-3 pb-4">
+        <div className="flex items-center justify-between w-full px-3 pt-3 pb-4 flex-1 bg-background-200">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
             <Thumbnail icon={itemImage} variant="darker" size="lg" />
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
               <span className="text-foreground text-base/5 font-medium leading-5 tracking-[0.01em] truncate">
@@ -270,7 +270,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
             </div>
           </div>
           {showClose && (
-            <div className="flex-shrink-0 p-1 pb-2">
+            <div className="flex-shrink-0">
               <CloseButton />
             </div>
           )}
