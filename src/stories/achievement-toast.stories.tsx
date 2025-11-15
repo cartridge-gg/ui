@@ -15,6 +15,9 @@ const meta: Meta<typeof AchievementToast> = {
       ],
     },
   },
+  args: {
+    showClose: true,
+  },
   decorators: [
     (Story) => (
       <ToastProvider>

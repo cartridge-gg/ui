@@ -15,6 +15,7 @@ export * from "./details";
 export * from "./desktop";
 export * from "./disconnect";
 export * from "./dove";
+export * from "./draft-sparkles";
 export * from "./earth";
 export * from "./eye";
 export * from "./filter";
