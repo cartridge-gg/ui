@@ -953,6 +953,8 @@ export type CreateMerkleDropInput = {
   key: Scalars['String'];
   matchStarterpackItem?: InputMaybe<Scalars['Boolean']>;
   merkleRoot: Scalars['String'];
+  /** Additional metadata for the merkle drop */
+  metadata?: InputMaybe<Scalars['JSON']>;
   network: MerkleDropNetwork;
   salt: Scalars['String'];
   starterpackID?: InputMaybe<Scalars['ID']>;
@@ -1786,7 +1788,9 @@ export type InvoiceWhereInput = {
 };
 
 export type KatanaCreateInput = {
+  forkProviderUrl?: InputMaybe<Scalars['String']>;
   network?: InputMaybe<Scalars['String']>;
+  optimistic?: InputMaybe<Scalars['Boolean']>;
   provable?: InputMaybe<Scalars['Boolean']>;
   saya?: InputMaybe<Scalars['Boolean']>;
 };
@@ -2088,6 +2092,8 @@ export type MerkleDrop = Node & {
   key: Scalars['String'];
   matchStarterpackItem: Scalars['Boolean'];
   merkleRoot: Scalars['String'];
+  /** Additional metadata for the merkle drop */
+  metadata?: Maybe<Scalars['JSON']>;
   network: MerkleDropNetwork;
   salt: Scalars['String'];
   starterpack?: Maybe<Starterpack>;
@@ -5984,8 +5990,10 @@ export type UpdateMerkleClaimInput = {
  */
 export type UpdateMerkleDropInput = {
   addClaimIDs?: InputMaybe<Array<Scalars['ID']>>;
+  appendMetadata?: InputMaybe<Scalars['JSON']>;
   clearClaims?: InputMaybe<Scalars['Boolean']>;
   clearDescription?: InputMaybe<Scalars['Boolean']>;
+  clearMetadata?: InputMaybe<Scalars['Boolean']>;
   clearStarterpack?: InputMaybe<Scalars['Boolean']>;
   contract?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['Time']>;
@@ -5994,6 +6002,8 @@ export type UpdateMerkleDropInput = {
   key?: InputMaybe<Scalars['String']>;
   matchStarterpackItem?: InputMaybe<Scalars['Boolean']>;
   merkleRoot?: InputMaybe<Scalars['String']>;
+  /** Additional metadata for the merkle drop */
+  metadata?: InputMaybe<Scalars['JSON']>;
   network?: InputMaybe<MerkleDropNetwork>;
   removeClaimIDs?: InputMaybe<Array<Scalars['ID']>>;
   salt?: InputMaybe<Scalars['String']>;
