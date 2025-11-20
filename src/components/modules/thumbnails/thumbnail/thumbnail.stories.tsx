@@ -35,7 +35,7 @@ export const Default: Story = {
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
-              icon="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/icon.png"
+              icon="https://storage.googleapis.com/c7e-prod-static/media/devconnect/PAPER_3000000000000000000000.png"
               size={size}
               variant={variant}
             />
@@ -43,7 +43,7 @@ export const Default: Story = {
           {["lg", "xl"].includes(size) && (
             <Thumbnail
               key={`${size}-subicon`}
-              icon="https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/icon.png"
+              icon="https://storage.googleapis.com/c7e-prod-static/media/devconnect/PAPER_3000000000000000000000.png"
               size={size}
               subIcon={
                 <ThumbnailsSubIcon
@@ -388,6 +388,74 @@ export const Error: Story = {
           )}
         </div>
       ))}
+    </div>
+  ),
+};
+
+export const ObjectFit: Story = {
+  render: () => (
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-3">
+        <h3 className="text-sm font-semibold">Default (aspect-square)</h3>
+        <div className="flex gap-3">
+          {sizes.map((size) => (
+            <Thumbnail
+              key={`default-${size}`}
+              icon="https://storage.googleapis.com/c7e-prod-static/media/devconnect/PAPER_3000000000000000000000.png"
+              size={size}
+              variant="default"
+            />
+          ))}
+        </div>
+      </div>
+      <div className="flex flex-col gap-3">
+        <h3 className="text-sm font-semibold">
+          Object Contain (fits entire image)
+        </h3>
+        <div className="flex gap-3">
+          {sizes.map((size) => (
+            <Thumbnail
+              key={`contain-${size}`}
+              icon="https://storage.googleapis.com/c7e-prod-static/media/devconnect/PAPER_3000000000000000000000.png"
+              size={size}
+              variant="default"
+              objectFit="contain"
+            />
+          ))}
+        </div>
+      </div>
+      <div className="flex flex-col gap-3">
+        <h3 className="text-sm font-semibold">
+          Object Cover (fills container, may crop)
+        </h3>
+        <div className="flex gap-3">
+          {sizes.map((size) => (
+            <Thumbnail
+              key={`cover-${size}`}
+              icon="https://storage.googleapis.com/c7e-prod-static/media/devconnect/PAPER_3000000000000000000000.png"
+              size={size}
+              variant="default"
+              objectFit="cover"
+            />
+          ))}
+        </div>
+      </div>
+      <div className="flex flex-col gap-3">
+        <h3 className="text-sm font-semibold">
+          Object Fill (stretches to fill)
+        </h3>
+        <div className="flex gap-3">
+          {sizes.map((size) => (
+            <Thumbnail
+              key={`fill-${size}`}
+              icon="https://storage.googleapis.com/c7e-prod-static/media/devconnect/PAPER_3000000000000000000000.png"
+              size={size}
+              variant="default"
+              objectFit="fill"
+            />
+          ))}
+        </div>
+      </div>
     </div>
   ),
 };

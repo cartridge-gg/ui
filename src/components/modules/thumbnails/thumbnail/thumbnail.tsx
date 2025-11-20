@@ -49,6 +49,7 @@ export interface ThumbnailProps extends VariantProps<typeof thumbnailVariants> {
   error?: boolean;
   transdark?: boolean;
   translight?: boolean;
+  objectFit?: "contain" | "cover" | "fill" | "none" | "scale-down";
   className?: string;
 }
 
@@ -61,6 +62,7 @@ export const Thumbnail = ({
   error,
   transdark,
   translight,
+  objectFit,
   variant,
   size,
   className,
@@ -110,7 +112,8 @@ export const Thumbnail = ({
             src={icon}
             alt="icon"
             className={cn(
-              "w-full h-full aspect-square",
+              "w-full h-full",
+              objectFit ? `object-${objectFit}` : "aspect-square",
               rounded ? "rounded-full" : "rounded-sm",
             )}
             onError={(e) => {
