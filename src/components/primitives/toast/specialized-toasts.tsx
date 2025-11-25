@@ -12,7 +12,6 @@ import {
   DraftSparklesIcon,
   PulseIcon,
 } from "@/components/icons";
-import { StarknetIcon } from "@/components/icons/brand";
 import { Toast, ToastClose, type ToastProps } from "./toast";
 import { AchievementIcon } from "@/components/icons/utility/achievement";
 import { Thumbnail } from "@/index";
