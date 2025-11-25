@@ -6,7 +6,6 @@ import {
   TransactionNotification,
 } from "@/components/primitives/toast/specialized-toasts";
 import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
-import { StarknetIcon } from "@/components/icons/brand";
 
 const meta: Meta = {
   title: "Primitives/Toast/Showcase",
@@ -114,7 +113,7 @@ export const AllToastTypes: Story = {
               <p className="text-gray-400 text-xs mb-2">Starknet Mainnet</p>
               <NetworkSwitchToast
                 networkName="Starknet Mainnet"
-                networkIcon={<StarknetIcon size="default" />}
+                networkIcon="https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/1b126320-367c-48ed-cf5a-ba7580e49600/logo"
                 showClose={false}
                 open={true}
                 onOpenChange={() => {}}
@@ -125,11 +124,7 @@ export const AllToastTypes: Story = {
               <p className="text-gray-400 text-xs mb-2">Custom Network</p>
               <NetworkSwitchToast
                 networkName="Nums Chain"
-                networkIcon={
-                  <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                    N
-                  </div>
-                }
+                networkIcon="Nums"
                 showClose={false}
                 open={true}
                 onOpenChange={() => {}}
@@ -140,11 +135,7 @@ export const AllToastTypes: Story = {
               <p className="text-gray-400 text-xs mb-2">Ethereum Mainnet</p>
               <NetworkSwitchToast
                 networkName="Ethereum Mainnet"
-                networkIcon={
-                  <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                    E
-                  </div>
-                }
+                networkIcon="Ethereum"
                 showClose={false}
                 open={true}
                 onOpenChange={() => {}}
@@ -293,11 +284,7 @@ export const ToastStack: Story = {
         />
         <NetworkSwitchToast
           networkName="Ethereum Mainnet"
-          networkIcon={
-            <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-              E
-            </div>
-          }
+          networkIcon="Ethereum"
           showClose={false}
           open={true}
           onOpenChange={() => {}}
@@ -603,7 +590,7 @@ export const WithCloseButtons: Story = {
               </p>
               <NetworkSwitchToast
                 networkName="Starknet Mainnet"
-                networkIcon={<StarknetIcon size="default" />}
+                networkIcon="https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/1b126320-367c-48ed-cf5a-ba7580e49600/logo"
                 showClose={true}
                 open={true}
                 onOpenChange={() => {}}
@@ -616,11 +603,7 @@ export const WithCloseButtons: Story = {
               </p>
               <NetworkSwitchToast
                 networkName="Ethereum Mainnet"
-                networkIcon={
-                  <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                    E
-                  </div>
-                }
+                networkIcon="Ethereum"
                 showClose={true}
                 open={true}
                 onOpenChange={() => {}}

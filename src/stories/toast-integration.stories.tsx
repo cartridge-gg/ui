@@ -8,7 +8,6 @@ import {
   showErrorToast,
   showTransactionToast,
 } from "@/components/primitives/toast/specialized-toasts";
-import { StarknetIcon } from "@/components/icons/brand";
 import { useState, useCallback } from "react";
 
 const meta: Meta = {
@@ -83,7 +82,6 @@ function ToastIntegrationDemo() {
       toast(
         showNetworkSwitchToast({
           networkName: "Starknet Mainnet",
-          networkIcon: <StarknetIcon size="default" />,
           duration: 3000, // 3 seconds
         }),
       );
@@ -285,11 +283,11 @@ export const UsageExample: Story = {
             1. Import the convenience functions:
           </h3>
           <pre className="bg-gray-800 p-2 rounded mt-1 text-xs">
-            {`import { 
-  showAchievementToast, 
+            {`import {
+  showAchievementToast,
   showNetworkSwitchToast,
   showErrorToast,
-  showTransactionToast 
+  showTransactionToast
 } from "@/components/primitives/toast";`}
           </pre>
         </div>
@@ -314,7 +312,7 @@ toast(showAchievementToast({
 // Show network switch with default duration (5s)
 toast(showNetworkSwitchToast({
   networkName: "Ethereum Mainnet",
-  networkIcon: <EthereumIcon />
+  networkIcon: "Ethereum" // String for first letter, or URL for image
 }));
 
 // Show error with long duration
@@ -340,7 +338,7 @@ toast(showTransactionToast({
           <pre className="bg-gray-800 p-2 rounded mt-1 text-xs">
             {`// Default duration: 5000ms (5 seconds)
 // Quick notifications: 2000-3000ms
-// Standard: 4000-6000ms  
+// Standard: 4000-6000ms
 // Important/Error: 6000-10000ms
 // Persistent: omit duration (manual dismiss only)`}
           </pre>

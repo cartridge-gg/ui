@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useState, useEffect, ComponentProps } from "react";
+import { memo, useState, useEffect, ComponentProps } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "@/utils";
 import {
@@ -284,7 +284,7 @@ MarketplaceToast.displayName = "MarketplaceToast";
 // Network Switch Toast Component
 interface NetworkSwitchToastProps extends Omit<ToastProps, "children"> {
   networkName: string;
-  networkIcon?: React.ReactNode;
+  networkIcon?: string;
   duration?: number;
   showClose?: boolean;
 }
@@ -297,32 +297,72 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
     showClose = false,
     className,
     ...props
-  }) => (
-    <Toast
-      className={cn(
-        specializedToastVariants({ variant: "network" }),
-        className,
-      )}
-      duration={duration}
-      {...props}
-    >
-      <div className="flex items-center justify-between p-3.5 w-full h-full">
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-            {networkIcon || <StarknetIcon size="default" />}
-          </div>
-          <span className="text-foreground text-sm font-medium truncate">
-            Switched to {networkName}
+  }) => {
+    // Helper function to check if string is a URL
+    const isUrl = (str: string) => {
+      try {
+        new URL(str);
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
+    // Render network icon based on string type
+    const renderNetworkIcon = () => {
+      if (!networkIcon) {
+        return (
+          <span className="text-foreground text-sm font-semibold uppercase">
+            {networkName.charAt(0)}
           </span>
-        </div>
-        {showClose && (
-          <div className="flex-shrink-0">
-            <CloseButton />
-          </div>
+        );
+      }
+
+      if (isUrl(networkIcon)) {
+        return (
+          <img
+            src={networkIcon}
+            alt={networkName}
+            className="w-full h-full object-cover"
+          />
+        );
+      }
+
+      // Show first letter if not a URL
+      return (
+        <span className="text-foreground text-sm font-semibold uppercase">
+          {networkIcon.charAt(0)}
+        </span>
+      );
+    };
+
+    return (
+      <Toast
+        className={cn(
+          specializedToastVariants({ variant: "network" }),
+          className,
         )}
-      </div>
-    </Toast>
-  ),
+        duration={duration}
+        {...props}
+      >
+        <div className="flex items-center justify-between p-3.5 w-full h-full">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 bg-background-200">
+              {renderNetworkIcon()}
+            </div>
+            <span className="text-foreground text-sm font-medium truncate">
+              Switched to {networkName}
+            </span>
+          </div>
+          {showClose && (
+            <div className="flex-shrink-0">
+              <CloseButton />
+            </div>
+          )}
+        </div>
+      </Toast>
+    );
+  },
 );
 
 NetworkSwitchToast.displayName = "NetworkSwitchToast";

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { NetworkSwitchToast } from "@/components/primitives/toast/specialized-toasts";
 import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
-import { StarknetColorIcon } from "@/components";
 
 const meta: Meta<typeof NetworkSwitchToast> = {
   title: "Primitives/Toast/Network Switch Toast",
@@ -36,39 +35,42 @@ type Story = StoryObj<typeof NetworkSwitchToast>;
 export const StarknetMainnet: Story = {
   args: {
     networkName: "Starknet Mainnet",
-    networkIcon: <StarknetColorIcon size="default" />,
+    networkIcon:
+      "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/1b126320-367c-48ed-cf5a-ba7580e49600/logo",
   },
 };
 
 export const NumsChain: Story = {
   args: {
     networkName: "Nums Chain",
-    networkIcon: (
-      <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-        N
-      </div>
-    ),
+    networkIcon: "Nums", // Will show first letter "N"
   },
 };
 
 export const EthereumMainnet: Story = {
   args: {
     networkName: "Ethereum Mainnet",
-    networkIcon: (
-      <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-        E
-      </div>
-    ),
+    networkIcon: "Ethereum", // Will show first letter "E"
   },
 };
 
 export const CustomNetwork: Story = {
   args: {
     networkName: "Custom Network",
-    networkIcon: (
-      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-        C
-      </div>
-    ),
+    networkIcon: "Custom", // Will show first letter "C"
+  },
+};
+
+export const WithImageUrl: Story = {
+  args: {
+    networkName: "Polygon",
+    networkIcon: "https://cryptologos.cc/logos/polygon-matic-logo.png", // Will show image from URL
+  },
+};
+
+export const WithSingleLetter: Story = {
+  args: {
+    networkName: "Avalanche",
+    networkIcon: "A", // Will show single letter "A"
   },
 };
