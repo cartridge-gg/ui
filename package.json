@@ -49,6 +49,7 @@
   },
   "scripts": {
     "build": "pnpm graphql:gen && tsc && tsc-alias && pnpm copyThemes && pnpm copyAssets",
+    "build:toaster": "vite build --config vite.config.toaster.ts",
     "dev": "npm-run-all --parallel dev:tsc dev:alias dev:assets",
     "dev:tsc": "tsc --watch --preserveWatchOutput",
     "dev:alias": "tsc-alias --watch",
