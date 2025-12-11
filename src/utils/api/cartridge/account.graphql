@@ -79,3 +79,11 @@ query AccountSearch($query: String!, $limit: Int = 5) {
     updatedAt
   }
 }
+
+query AccountContractInfo($username: String!) {
+  account(username: $username) {
+    email
+    phoneNumber
+    phoneNumberVerifiedAt
+  }
+}
