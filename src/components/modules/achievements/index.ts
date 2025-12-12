@@ -15,7 +15,6 @@ export * from "./icon";
 export * from "./content";
 export * from "./counter";
 export * from "./card";
-export * from "./summary";
 export * from "./player-avatar";
 export * from "./player-header";
 export * from "./player-label";

@@ -1,7 +1,6 @@
 export * from "./achievements";
 export * from "./activities";
 export * from "./amount";
-export * from "./arcade";
 export * from "./collectibles";
 export * from "./common";
 export * from "./connection";
