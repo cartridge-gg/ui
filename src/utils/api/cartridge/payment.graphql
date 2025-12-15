@@ -96,3 +96,29 @@ query LayerswapQuote($input: CreateLayerswapDepositInput!) {
 query LayerswapStatus($swapId: ID!, $isMainnet: Boolean) {
   layerswapStatus(swapId: $swapId, isMainnet: $isMainnet) 
 }
+
+query CoinbaseOnrampRequirements($username: String!) {
+  coinbaseOnrampRequirements(username: $username) {
+    needsEmail
+    needsPhoneNumber
+    needsPhoneVerification
+  }
+}
+
+mutation CreateCoinbaseOnRampOrder($input: CreateCoinbaseOnrampOrderInput!) {
+  createCoinbaseOnrampOrder(input: $input) {
+    orderId
+    paymentLink
+    paymentLinkType
+    paymentSubtotal
+    paymentTotal
+    purchaseAmount
+    purchaseCurrency
+    status
+    fees {
+      type
+      amount
+      currency
+    }
+  }
+}
