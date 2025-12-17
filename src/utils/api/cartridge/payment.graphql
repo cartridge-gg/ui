@@ -72,7 +72,7 @@ mutation CreateLayerswapPayment($input: CreateLayerswapPaymentInput!) {
 }
 
 mutation CreateLayerswapDeposit($input: CreateLayerswapDepositInput!) {
-    createLayerswapDeposit(input: $input) {
+  createLayerswapDeposit(input: $input) {
     cryptoPaymentId
     swapId
     status
@@ -94,7 +94,7 @@ query LayerswapQuote($input: CreateLayerswapDepositInput!) {
 }
 
 query LayerswapStatus($swapId: ID!, $isMainnet: Boolean) {
-  layerswapStatus(swapId: $swapId, isMainnet: $isMainnet) 
+  layerswapStatus(swapId: $swapId, isMainnet: $isMainnet)
 }
 
 query CoinbaseOnrampRequirements($username: String!) {
@@ -102,6 +102,38 @@ query CoinbaseOnrampRequirements($username: String!) {
     needsEmail
     needsPhoneNumber
     needsPhoneVerification
+  }
+}
+
+query CoinbaseOnrampTransactions($input: CoinbaseTransactionsInput!) {
+  coinbaseOnrampTransactions(input: $input) {
+    transactions {
+      transactionId
+      walletAddress
+      type
+      txHash
+      status
+      purchaseCurrency
+      purchaseNetwork
+      purchaseAmount {
+        amount
+        currency
+      }
+      paymentTotal {
+        amount
+        currency
+      }
+      coinbaseFee {
+        amount
+        currency
+      }
+      networkFee {
+        amount
+        currency
+      }
+    }
+    nextPageKey
+    totalCount
   }
 }
 
