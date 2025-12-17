@@ -916,13 +916,10 @@ export type CoinbaseTransactionsInput = {
   pageKey?: InputMaybe<Scalars['String']>;
   /** Number of transactions to return per page. Default is 1. */
   pageSize?: InputMaybe<Scalars['Int']>;
-  /**
-   * The partner user reference ID to get transactions for.
-   * This should match the partnerUserRef used when creating orders.
-   */
-  partnerUserRef: Scalars['String'];
-  /** If true, prepend "sandbox-" to partnerUserRef to query sandbox transactions. */
+  /** If true, use sandbox mode to query sandbox transactions. */
   sandbox?: InputMaybe<Scalars['Boolean']>;
+  /** The controller username to get transactions for. */
+  username: Scalars['String'];
 };
 
 export type CoinbaseTransactionsResponse = {
@@ -6652,6 +6649,13 @@ export type CoinbaseOnrampRequirementsQueryVariables = Exact<{
 
 export type CoinbaseOnrampRequirementsQuery = { __typename?: 'Query', coinbaseOnrampRequirements: { __typename?: 'CoinbaseOnrampRequirements', needsEmail: boolean, needsPhoneNumber: boolean, needsPhoneVerification: boolean } };
 
+export type CoinbaseOnrampTransactionsQueryVariables = Exact<{
+  input: CoinbaseTransactionsInput;
+}>;
+
+
+export type CoinbaseOnrampTransactionsQuery = { __typename?: 'Query', coinbaseOnrampTransactions: { __typename?: 'CoinbaseTransactionsResponse', nextPageKey?: string | null, totalCount?: string | null, transactions: Array<{ __typename?: 'CoinbaseTransaction', transactionId: string, walletAddress?: string | null, type?: string | null, txHash?: string | null, status: CoinbaseTransactionStatus, purchaseCurrency: string, purchaseNetwork: string, purchaseAmount: { __typename?: 'CoinbaseAmount', amount: string, currency: string }, paymentTotal: { __typename?: 'CoinbaseAmount', amount: string, currency: string }, coinbaseFee: { __typename?: 'CoinbaseAmount', amount: string, currency: string }, networkFee: { __typename?: 'CoinbaseAmount', amount: string, currency: string } }> } };
+
 export type CreateCoinbaseOnRampOrderMutationVariables = Exact<{
   input: CreateCoinbaseOnrampOrderInput;
 }>;
@@ -7762,6 +7766,51 @@ export const useCoinbaseOnrampRequirementsQuery = <
     useQuery<CoinbaseOnrampRequirementsQuery, TError, TData>(
       ['CoinbaseOnrampRequirements', variables],
       useFetchData<CoinbaseOnrampRequirementsQuery, CoinbaseOnrampRequirementsQueryVariables>(CoinbaseOnrampRequirementsDocument).bind(null, variables),
+      options
+    );
+export const CoinbaseOnrampTransactionsDocument = `
+    query CoinbaseOnrampTransactions($input: CoinbaseTransactionsInput!) {
+  coinbaseOnrampTransactions(input: $input) {
+    transactions {
+      transactionId
+      walletAddress
+      type
+      txHash
+      status
+      purchaseCurrency
+      purchaseNetwork
+      purchaseAmount {
+        amount
+        currency
+      }
+      paymentTotal {
+        amount
+        currency
+      }
+      coinbaseFee {
+        amount
+        currency
+      }
+      networkFee {
+        amount
+        currency
+      }
+    }
+    nextPageKey
+    totalCount
+  }
+}
+    `;
+export const useCoinbaseOnrampTransactionsQuery = <
+      TData = CoinbaseOnrampTransactionsQuery,
+      TError = unknown
+    >(
+      variables: CoinbaseOnrampTransactionsQueryVariables,
+      options?: UseQueryOptions<CoinbaseOnrampTransactionsQuery, TError, TData>
+    ) =>
+    useQuery<CoinbaseOnrampTransactionsQuery, TError, TData>(
+      ['CoinbaseOnrampTransactions', variables],
+      useFetchData<CoinbaseOnrampTransactionsQuery, CoinbaseOnrampTransactionsQueryVariables>(CoinbaseOnrampTransactionsDocument).bind(null, variables),
       options
     );
 export const CreateCoinbaseOnRampOrderDocument = `
