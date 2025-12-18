@@ -42,7 +42,7 @@ export function CollectibleCard({
   listingCount,
   price,
   lastSale,
-  selectable = true,
+  selectable = false,
   selected,
   onSelect,
   variant,
@@ -60,7 +60,7 @@ export function CollectibleCard({
       <CollectibleHeader
         title={title}
         icon={icon}
-        selectable={!selected && selectable}
+        selectable={selectable}
         selected={selected}
         onSelect={onSelect}
         variant={variant}
