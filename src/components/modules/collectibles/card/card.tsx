@@ -16,6 +16,7 @@ export interface CollectibleCardProps
   selectable?: boolean;
   selected?: boolean;
   onSelect?: () => void;
+  backgroundColor?: string;
 }
 
 const collectibleCardVariants = cva(
@@ -47,6 +48,7 @@ export function CollectibleCard({
   variant,
   className,
   onError,
+  backgroundColor,
   ...props
 }: CollectibleCardProps) {
   return (
@@ -69,6 +71,7 @@ export function CollectibleCard({
         totalCount={totalCount}
         listingCount={listingCount}
         onError={onError}
+        backgroundColor={backgroundColor}
       />
       <CollectibleCardFooter
         price={price}

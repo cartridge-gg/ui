@@ -10,10 +10,11 @@ export interface CollectiblePreviewProps
   images: string[];
   totalCount?: number;
   listingCount?: number;
+  backgroundColor?: string;
 }
 
 const collectiblePreviewVariants = cva(
-  "relative flex items-center justify-center overflow-hidden shrink-0",
+  "relative flex items-center justify-center overflow-hidden shrink-0 rounded-[8px]",
   {
     variants: {
       variant: {
@@ -36,6 +37,7 @@ export const CollectiblePreview = ({
   images,
   totalCount,
   listingCount,
+  backgroundColor,
   variant,
   size,
   className,
@@ -84,16 +86,11 @@ export const CollectiblePreview = ({
       className={cn(collectiblePreviewVariants({ variant, size }), className)}
       {...props}
     >
-      <div className="absolute grow inset-0 blur-[8px] transition-opacity duration-150 opacity-75 group-hover:opacity-100">
-        <img
-          src={data || currentSrc}
-          className="object-cover absolute inset-0 w-full h-full image-pixelated"
-          onError={handleImageError}
-        />
+      <div className="absolute grow inset-0">
         <div
-          className="bg-center bg-cover h-full w-full relative"
+          className="h-full w-full relative"
           style={{
-            backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.64), rgba(0, 0, 0, 0.64))`,
+            backgroundColor: backgroundColor || `#000`,
           }}
         />
       </div>
