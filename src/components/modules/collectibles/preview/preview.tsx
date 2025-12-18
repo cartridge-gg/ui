@@ -20,9 +20,9 @@ const collectiblePreviewVariants = cva(
         default: "",
       },
       size: {
-        sm: "p-2 h-[128px]",
-        md: "p-2 h-[128px]",
-        lg: "p-2 h-[200px] rounded-lg",
+        sm: "p-[20px] h-[160px]",
+        md: "p-[20px] h-[160px]",
+        lg: "p-[20px] h-[200px] rounded-lg",
       },
     },
     defaultVariants: {
@@ -98,7 +98,7 @@ export const CollectiblePreview = ({
         />
       </div>
       <img
-        className="object-contain h-full w-full relative transition duration-150 ease-in-out group-hover:scale-[1.02]"
+        className="object-contain h-full w-full relative transition duration-150 ease-in-out group-hover:scale-[1.1]"
         style={{ imageRendering: "pixelated" }}
         draggable={false}
         src={data || currentSrc}

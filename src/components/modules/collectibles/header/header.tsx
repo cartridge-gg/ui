@@ -14,14 +14,14 @@ export interface CollectibleHeaderProps
 }
 
 const collectibleHeaderVariants = cva(
-  "group h-9 relative flex gap-2 px-1.5 py-1.5 justify-between items-center text-sm font-medium transition-all duration-150",
+  "group h-9 absolute w-full flex gap-2 px-1.5 py-1.5 justify-between items-center text-sm font-medium transition-all duration-150 z-10 bg-transparent",
   {
     variants: {
       variant: {
         default:
-          "bg-background-200 group-hover:bg-background-300 text-foreground-100",
+          "",
         faded:
-          "bg-background-100 group-hover:bg-background-200 text-foreground-100",
+          "",
       },
     },
     defaultVariants: {
