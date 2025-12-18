@@ -5,10 +5,10 @@ import { CollectibleHeader } from "../header";
 
 export interface CollectibleCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof collectibleCardVariants> {
+  VariantProps<typeof collectibleCardVariants> {
   title: string;
   images: string[];
-  icon?: string;
+  icon?: string | null;
   totalCount?: number;
   listingCount?: number;
   price?: string | { value: string; image: string } | null;
@@ -58,14 +58,14 @@ export function CollectibleCard({
       {...props}
     >
       <CollectibleHeader
-        title={title}
-        icon={icon}
         selectable={selectable}
         selected={selected}
         onSelect={onSelect}
         variant={variant}
       />
       <CollectiblePreview
+        title={title}
+        icon={icon}
         images={images}
         size="sm"
         totalCount={totalCount}

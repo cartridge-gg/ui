@@ -1,12 +1,14 @@
-import { PLACEHOLDER } from "@/assets";
-import { CollectibleTag, StackDiamondIcon, TagIcon } from "@/index";
-import { cn, formatNumber } from "@/utils";
-import { cva, VariantProps } from "class-variance-authority";
 import { useEffect, useState } from "react";
+import { PLACEHOLDER } from "@/assets";
+import { CollectibleTag, TagIcon, Thumbnail } from "@/index";
+import { cva, VariantProps } from "class-variance-authority";
+import { cn, formatNumber } from "@/utils";
 
 export interface CollectiblePreviewProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof collectiblePreviewVariants> {
+  VariantProps<typeof collectiblePreviewVariants> {
+  title: string;
+  icon?: string | null;
   images: string[];
   totalCount?: number;
   listingCount?: number;
@@ -14,7 +16,7 @@ export interface CollectiblePreviewProps
 }
 
 const collectiblePreviewVariants = cva(
-  "relative flex items-center justify-center overflow-hidden shrink-0 rounded-[8px]",
+  "relative flex items-center justify-center overflow-hidden shrink-0 rounded-md",
   {
     variants: {
       variant: {
@@ -34,6 +36,8 @@ const collectiblePreviewVariants = cva(
 );
 
 export const CollectiblePreview = ({
+  title,
+  icon,
   images,
   totalCount,
   listingCount,
@@ -90,7 +94,7 @@ export const CollectiblePreview = ({
         <div
           className="h-full w-full relative"
           style={{
-            backgroundColor: backgroundColor || `#000`,
+            backgroundColor: backgroundColor || `#000000`,
           }}
         />
       </div>
@@ -101,16 +105,35 @@ export const CollectiblePreview = ({
         src={data || currentSrc}
         onError={handleImageError}
       />
-      <div className="flex gap-1 items-center flex-wrap justify-start absolute bottom-1.5 left-1.5">
+      <div
+        className="absolute bottom-0 w-full h-[48px] p-[12px]"
+        style={{
+          backgroundImage: "linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent)",
+        }}
+      >
+        <div className="flex items-center overflow-hidden">
+          {icon !== undefined && (
+            <Thumbnail
+              variant="light"
+              size="sm"
+              icon={icon}
+              className="w-6 h-6 mr-[6px]"
+            />
+          )}
+          {!!listingCount && (
+            <TagIcon variant="solid" size="sm" className="mr-[6px]" />
+          )}
+          <p className="truncate">
+            {title}
+          </p>
+
+        </div>
+
         {!!totalCount && (
-          <CollectibleTag label={`${formatNumber(totalCount)}`}>
-            <StackDiamondIcon variant="solid" size="sm" />
-          </CollectibleTag>
-        )}
-        {!!listingCount && (
-          <CollectibleTag label={`${formatNumber(listingCount)}`}>
-            <TagIcon variant="solid" size="sm" />
-          </CollectibleTag>
+          <CollectibleTag
+            label={`${formatNumber(totalCount)}x`}
+            className="absolute bottom-[12px] right-[12px] rounded-md bg-translucent-light-100"
+          />
         )}
       </div>
     </div>

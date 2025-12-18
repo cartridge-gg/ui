@@ -1,13 +1,11 @@
-import { CheckboxIcon, Thumbnail } from "@/index";
-import { cn } from "@/utils";
-import { cva, VariantProps } from "class-variance-authority";
 import { useCallback } from "react";
+import { CheckboxIcon } from "@/index";
+import { cva, VariantProps } from "class-variance-authority";
+import { cn } from "@/utils";
 
 export interface CollectibleHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof collectibleHeaderVariants> {
-  title: string;
-  icon?: string | null;
+  VariantProps<typeof collectibleHeaderVariants> {
   selectable?: boolean;
   selected?: boolean;
   onSelect?: () => void;
@@ -31,8 +29,6 @@ const collectibleHeaderVariants = cva(
 );
 
 export function CollectibleHeader({
-  title,
-  icon,
   selectable,
   selected,
   onSelect,
@@ -54,27 +50,9 @@ export function CollectibleHeader({
       className={cn(
         collectibleHeaderVariants({ variant }),
         className,
-        icon === undefined && "pl-2.5",
       )}
       {...props}
     >
-      <div className="flex items-center gap-1.5 overflow-hidden">
-        <Thumbnail
-          variant="light"
-          size="sm"
-          icon={icon === null ? undefined : icon}
-          className={icon === undefined ? "hidden" : ""}
-        />
-        <p
-          className={cn(
-            "truncate",
-            (selected || selectable) && "pr-6",
-            icon === undefined && "pl-2.5",
-          )}
-        >
-          {title}
-        </p>
-      </div>
       {selected && (
         <div
           className="absolute right-[9px] top-1/2 -translate-y-1/2 text-foreground-100 cursor-pointer"
