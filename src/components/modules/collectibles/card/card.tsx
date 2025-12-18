@@ -20,7 +20,7 @@ export interface CollectibleCardProps
 }
 
 const collectibleCardVariants = cva(
-  "group relative grow rounded overflow-hidden cursor-pointer border-transparent border-[2px] data-[selected=true]:border-foreground-100",
+  "group relative grow rounded overflow-hidden cursor-pointer border-transparent border-[2px] data-[selected=true]:border-foreground-100 data-[selected=true]:rounded-[10px]",
   {
     variants: {
       variant: {

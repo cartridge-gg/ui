@@ -83,7 +83,7 @@ export const Beast: Story = {
           selectable={true}
           selected={selected}
           onSelect={() => setSelected(!selected)}
-          onClick={() => setSelected(!selected)}
+          onClick={selected ? () => setSelected(!selected) : undefined}
         />
       </div>
     );
@@ -109,7 +109,7 @@ export const GoldenToken: Story = {
           selectable={true}
           selected={selected}
           onSelect={() => setSelected(!selected)}
-          onClick={() => setSelected(!selected)}
+          onClick={selected ? () => setSelected(!selected) : undefined}
         />
       </div>
     );
@@ -219,6 +219,13 @@ export const Realms: Story = {
   },
 };
 
+export const Selected: Story = {
+  args: {
+    selectable: true,
+    selected: true,
+  },
+};
+
 export const Selectable: Story = {
   render: function Render(args) {
     const [selected, setSelected] = useState(false);
@@ -231,8 +238,7 @@ export const Selectable: Story = {
           selectable={true}
           selected={selected}
           onSelect={() => setSelected(!selected)}
-          onClick={() => setSelected(!selected)}
-          price="$2"
+          onClick={selected ? () => setSelected(!selected) : undefined}
         />
       </div>
     );
@@ -243,20 +249,6 @@ export const Unselectable: Story = {
   args: {
     selectable: false,
     totalCount: 2,
-  },
-};
-
-export const Selected: Story = {
-  args: {
-    selectable: true,
-    selected: true,
-  },
-};
-
-export const Unselected: Story = {
-  args: {
-    selectable: true,
-    selected: false,
   },
 };
 

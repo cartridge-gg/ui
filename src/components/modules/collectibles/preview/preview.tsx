@@ -16,7 +16,7 @@ export interface CollectiblePreviewProps
 }
 
 const collectiblePreviewVariants = cva(
-  "relative flex items-center justify-center overflow-hidden shrink-0 rounded-md",
+  "relative flex items-center justify-center overflow-hidden shrink-0 rounded-[8px]",
   {
     variants: {
       variant: {
@@ -132,7 +132,7 @@ export const CollectiblePreview = ({
         {!!totalCount && (
           <CollectibleTag
             label={`${formatNumber(totalCount)}x`}
-            className="absolute bottom-[12px] right-[12px] rounded-md bg-translucent-light-100"
+            className="absolute bottom-[12px] right-[12px] rounded-[8px] bg-translucent-light-100"
           />
         )}
       </div>
