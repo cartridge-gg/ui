@@ -9,6 +9,7 @@ export interface CollectibleCardProps
   title: string;
   images: string[];
   icon?: string | null;
+  backgroundColor?: string;
   totalCount?: number;
   listingCount?: number;
   price?: string | { value: string; image: string } | null;
@@ -16,10 +17,9 @@ export interface CollectibleCardProps
   selectable?: boolean;
   selected?: boolean;
   onSelect?: () => void;
-  backgroundColor?: string;
 }
 
-const collectibleCardVariants = cva(
+export const collectibleCardVariants = cva(
   "group relative grow rounded overflow-hidden cursor-pointer border-transparent border-[2px] data-[selected=true]:border-foreground-100 data-[selected=true]:rounded-[10px]",
   {
     variants: {
@@ -38,6 +38,7 @@ export function CollectibleCard({
   title,
   images,
   icon,
+  backgroundColor,
   totalCount,
   listingCount,
   price,
@@ -48,7 +49,6 @@ export function CollectibleCard({
   variant,
   className,
   onError,
-  backgroundColor,
   ...props
 }: CollectibleCardProps) {
   return (
