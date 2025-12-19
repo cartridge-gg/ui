@@ -1,5 +1,4 @@
-import { useCallback } from "react";
-import { CheckboxIcon } from "@/index";
+import { CollectibleSelected } from "@/index";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/utils";
 
@@ -36,14 +35,6 @@ export function CollectibleHeader({
   className,
   ...props
 }: CollectibleHeaderProps) {
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
-      onSelect?.();
-    },
-    [onSelect],
-  );
 
   return (
     <div
@@ -53,21 +44,12 @@ export function CollectibleHeader({
       )}
       {...props}
     >
-      {selected && (
-        <div
-          className="absolute right-[9px] top-1/2 -translate-y-1/2 text-foreground-100 cursor-pointer"
-          onClick={handleClick}
-        >
-          <CheckboxIcon variant="line" size="sm" />
-        </div>
-      )}
-      {selectable && !selected && (
-        <div
-          className="absolute right-[9px] top-1/2 -translate-y-1/2 text-background-500 hover:text-foreground-200 cursor-pointer"
-          onClick={handleClick}
-        >
-          <CheckboxIcon variant="unchecked-line" size="sm" />
-        </div>
+      {(selected || selectable) && (
+        <CollectibleSelected
+          className="absolute top-[8px] right-[8px]"
+          selected={selected ?? false}
+          onSelect={onSelect}
+        />
       )}
     </div>
   );

@@ -12,6 +12,7 @@ export * from "./header";
 export * from "./pill";
 export * from "./properties";
 export * from "./property";
+export * from "./selected";
 export * from "./tabs";
 export * from "./tab";
 export * from "./tag";
