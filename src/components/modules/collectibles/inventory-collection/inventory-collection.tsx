@@ -1,51 +1,51 @@
 import { CollectibleCard, collectibleCardVariants } from "@/index";
 import { VariantProps } from "class-variance-authority";
 
-export interface InventoryItemCardProps
+export interface InventoryCollectionCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
   VariantProps<typeof collectibleCardVariants> {
   title: string;
   images: string[];
-  // icon?: string | null;
+  icon: string | null;
   backgroundColor?: string;
-  // totalCount?: number;
-  listingCount?: number;
+  totalCount?: number;
+  // listingCount?: number;
   // price?: string | { value: string; image: string } | null;
   // lastSale?: string | { value: string; image: string } | null;
-  selectable?: boolean;
-  selected?: boolean;
+  // selectable?: boolean;
+  // selected?: boolean;
   onSelect?: () => void;
 }
 
-export function InventoryItemCard({
+export function InventoryCollectionCard({
   title,
   images,
-  // icon,
+  icon,
   backgroundColor,
-  // totalCount,
-  listingCount,
+  totalCount,
+  // listingCount,
   // price,
   // lastSale,
-  selectable = true,
-  selected,
+  // selectable = true,
+  // selected,
   onSelect,
   variant,
   className,
   onError,
   ...props
-}: InventoryItemCardProps) {
+}: InventoryCollectionCardProps) {
   return (
     <CollectibleCard
       title={title}
       images={images}
-      icon={undefined}
+      icon={icon}
       backgroundColor={backgroundColor}
-      totalCount={undefined}
-      listingCount={listingCount}
+      totalCount={totalCount}
+      listingCount={undefined}
       price={undefined}
       lastSale={undefined}
-      selected={selected}
-      selectable={selectable}
+      selected={false}
+      selectable={false}
       onSelect={onSelect}
       variant={variant}
       className={className}
@@ -55,4 +55,4 @@ export function InventoryItemCard({
   );
 }
 
-export default InventoryItemCard;
+export default InventoryCollectionCard;

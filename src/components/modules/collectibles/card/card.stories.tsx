@@ -44,7 +44,7 @@ export const Collection: Story = {
 };
 
 export const Beasts: Story = {
-  render: function Render(args) {
+  render: function Render(args: CollectibleCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -66,7 +66,7 @@ export const Beasts: Story = {
 };
 
 export const Beast: Story = {
-  render: function Render(args) {
+  render: function Render(args: CollectibleCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -91,7 +91,7 @@ export const Beast: Story = {
 };
 
 export const GoldenToken: Story = {
-  render: function Render(args) {
+  render: function Render(args: CollectibleCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -117,7 +117,7 @@ export const GoldenToken: Story = {
 };
 
 export const Karat: Story = {
-  render: function Render(args) {
+  render: function Render(args: CollectibleCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -142,7 +142,7 @@ export const Karat: Story = {
 };
 
 export const Bloberts: Story = {
-  render: function Render(args) {
+  render: function Render(args: CollectibleCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -168,7 +168,7 @@ export const Bloberts: Story = {
 };
 
 export const Duelists: Story = {
-  render: function Render(args) {
+  render: function Render(args: CollectibleCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -194,7 +194,7 @@ export const Duelists: Story = {
 };
 
 export const Realms: Story = {
-  render: function Render(args) {
+  render: function Render(args: CollectibleCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -227,7 +227,7 @@ export const Selected: Story = {
 };
 
 export const Selectable: Story = {
-  render: function Render(args) {
+  render: function Render(args: CollectibleCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (

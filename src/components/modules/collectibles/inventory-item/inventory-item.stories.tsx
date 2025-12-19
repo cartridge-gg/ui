@@ -26,7 +26,7 @@ type Story = StoryObj<typeof InventoryItemCard>;
 
 
 export const Beast: Story = {
-  render: function Render(args) {
+  render: function Render(args: InventoryItemCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -44,7 +44,7 @@ export const Beast: Story = {
 };
 
 export const GoldenToken: Story = {
-  render: function Render(args) {
+  render: function Render(args: InventoryItemCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -67,7 +67,7 @@ export const GoldenToken: Story = {
 };
 
 export const Karat: Story = {
-  render: function Render(args) {
+  render: function Render(args: InventoryItemCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -90,7 +90,7 @@ export const Karat: Story = {
 };
 
 export const Blobert: Story = {
-  render: function Render(args) {
+  render: function Render(args: InventoryItemCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -114,7 +114,7 @@ export const Blobert: Story = {
 };
 
 export const Duelist: Story = {
-  render: function Render(args) {
+  render: function Render(args: InventoryItemCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -138,7 +138,7 @@ export const Duelist: Story = {
 };
 
 export const Realm: Story = {
-  render: function Render(args) {
+  render: function Render(args: InventoryItemCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -162,7 +162,7 @@ export const Realm: Story = {
 };
 
 export const DopeWarsGear: Story = {
-  render: function Render(args) {
+  render: function Render(args: InventoryItemCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -193,7 +193,7 @@ export const Selected: Story = {
 };
 
 export const Selectable: Story = {
-  render: function Render(args) {
+  render: function Render(args: InventoryItemCardProps) {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -216,5 +216,16 @@ export const Unselectable: Story = {
     selectable: false,
     selected: false,
     listingCount: 0,
+  },
+};
+
+export const Unavailable: Story = {
+  args: {
+    images: [
+      "https://static.cartridge.gg/xxx.png",
+    ],
+    selectable: true,
+    selected: true,
+    listingCount: 10,
   },
 };
