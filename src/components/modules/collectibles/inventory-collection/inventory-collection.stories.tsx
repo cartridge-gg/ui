@@ -4,7 +4,7 @@ import { fn } from "@storybook/test";
 import { useState } from "react";
 
 const meta: Meta<typeof InventoryCollectionCard> = {
-  title: "Modules/Collectibles/InventoryCollectionCard",
+  title: "Modules/Collectibles/Inventory Collection Card",
   component: InventoryCollectionCard,
   tags: ["autodocs"],
   parameters: {
@@ -121,8 +121,5 @@ export const Unavailable: Story = {
     images: [
       "https://static.cartridge.gg/xxx.png",
     ],
-    title: "Dope Wars Gear",
-    // backgroundColor: "#97ADCC",
-    totalCount: 13,
   },
 };

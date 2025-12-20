@@ -1,6 +1,7 @@
 export * from "./preview";
 export * from "./card";
 export * from "./inventory-item";
+export * from "./inventory-collection";
 export * from "./card-footer";
 export * from "./details";
 export * from "./asset-card";

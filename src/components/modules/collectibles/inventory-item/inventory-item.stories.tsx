@@ -4,7 +4,7 @@ import { fn } from "@storybook/test";
 import { useState } from "react";
 
 const meta: Meta<typeof InventoryItemCard> = {
-  title: "Modules/Collectibles/InventoryItemCard",
+  title: "Modules/Collectibles/Inventory Item Card",
   component: InventoryItemCard,
   tags: ["autodocs"],
   parameters: {
