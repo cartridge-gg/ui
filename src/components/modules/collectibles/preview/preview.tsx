@@ -1,28 +1,31 @@
-import { PLACEHOLDER } from "@/assets";
-import { CollectibleTag, StackDiamondIcon, TagIcon } from "@/index";
-import { cn, formatNumber } from "@/utils";
-import { cva, VariantProps } from "class-variance-authority";
 import { useEffect, useState } from "react";
+import { PLACEHOLDER } from "@/assets";
+import { CollectibleTag, TagIcon, Thumbnail } from "@/index";
+import { cva, VariantProps } from "class-variance-authority";
+import { cn, formatNumber } from "@/utils";
 
 export interface CollectiblePreviewProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectiblePreviewVariants> {
+  title: string;
+  icon?: string | null;
   images: string[];
   totalCount?: number;
   listingCount?: number;
+  backgroundColor?: string;
 }
 
 const collectiblePreviewVariants = cva(
-  "relative flex items-center justify-center overflow-hidden shrink-0",
+  "relative flex items-center justify-center overflow-hidden shrink-0 rounded-[8px]",
   {
     variants: {
       variant: {
         default: "",
       },
       size: {
-        sm: "p-2 h-[128px]",
-        md: "p-2 h-[128px]",
-        lg: "p-2 h-[200px] rounded-lg",
+        sm: "p-[20px] h-[160px]",
+        md: "p-[20px] h-[160px]",
+        lg: "p-[20px] h-[200px] rounded-lg",
       },
     },
     defaultVariants: {
@@ -33,9 +36,12 @@ const collectiblePreviewVariants = cva(
 );
 
 export const CollectiblePreview = ({
+  title,
+  icon,
   images,
   totalCount,
   listingCount,
+  backgroundColor,
   variant,
   size,
   className,
@@ -84,36 +90,48 @@ export const CollectiblePreview = ({
       className={cn(collectiblePreviewVariants({ variant, size }), className)}
       {...props}
     >
-      <div className="absolute grow inset-0 blur-[8px] transition-opacity duration-150 opacity-75 group-hover:opacity-100">
-        <img
-          src={data || currentSrc}
-          className="object-cover absolute inset-0 w-full h-full image-pixelated"
-          onError={handleImageError}
-        />
+      <div className="absolute grow inset-0">
         <div
-          className="bg-center bg-cover h-full w-full relative"
+          className="h-full w-full relative"
           style={{
-            backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.64), rgba(0, 0, 0, 0.64))`,
+            backgroundColor: backgroundColor || `#000000`,
           }}
         />
       </div>
       <img
-        className="object-contain h-full w-full relative transition duration-150 ease-in-out group-hover:scale-[1.02]"
+        className="object-contain h-full w-full relative transition duration-150 ease-in-out group-hover:scale-[1.1]"
         style={{ imageRendering: "pixelated" }}
         draggable={false}
         src={data || currentSrc}
         onError={handleImageError}
       />
-      <div className="flex gap-1 items-center flex-wrap justify-start absolute bottom-1.5 left-1.5">
+      <div
+        className="absolute bottom-0 w-full h-[48px] p-[12px]"
+        style={{
+          backgroundImage:
+            "linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent)",
+        }}
+      >
+        <div className="flex items-center overflow-hidden rounded-[3px]">
+          {icon !== undefined && (
+            <Thumbnail
+              variant="light"
+              size="sm"
+              icon={icon}
+              className="w-[20px] h-[20px] m-[2px] rounded-[1px] bg-translucent-light-100"
+            />
+          )}
+          {!!listingCount && (
+            <TagIcon variant="solid" size="sm" className="mr-[6px]" />
+          )}
+          <p className="truncate">{title}</p>
+        </div>
+
         {!!totalCount && (
-          <CollectibleTag label={`${formatNumber(totalCount)}`}>
-            <StackDiamondIcon variant="solid" size="sm" />
-          </CollectibleTag>
-        )}
-        {!!listingCount && (
-          <CollectibleTag label={`${formatNumber(listingCount)}`}>
-            <TagIcon variant="solid" size="sm" />
-          </CollectibleTag>
+          <CollectibleTag
+            label={`${formatNumber(totalCount)}x`}
+            className="absolute bottom-[12px] right-[12px] rounded-[8px] bg-translucent-light-100"
+          />
         )}
       </div>
     </div>

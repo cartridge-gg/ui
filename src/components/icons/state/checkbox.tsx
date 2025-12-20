@@ -8,6 +8,7 @@ export const CheckboxIcon = memo(
     Omit<StateIconProps, "variant"> & {
       variant:
         | StateIconProps["variant"]
+        | "check"
         | "minus-solid"
         | "minus-line"
         | "plus-solid"
@@ -24,6 +25,13 @@ export const CheckboxIcon = memo(
     >
       {(() => {
         switch (variant) {
+          case "check":
+            return (
+              <path
+                d="M11.2607 14.6893L15.8322 10.1179C16.0536 9.89644 16.0536 9.53215 15.8322 9.31072C15.6107 9.0893 15.2464 9.0893 15.025 9.31072L10.8572 13.4786L8.97502 11.5964C8.75359 11.375 8.3893 11.375 8.16787 11.5964C7.94644 11.8179 7.94644 12.1822 8.16787 12.4036L10.4536 14.6893C10.675 14.9107 11.0393 14.9107 11.2607 14.6893Z"
+                className="fill-current"
+              />
+            );
           case "solid":
             return (
               <path
