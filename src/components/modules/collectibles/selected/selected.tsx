@@ -5,26 +5,23 @@ import { cn } from "@/utils";
 
 export interface CollectibleSelectedProps
   extends React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof collectibleSelectedVariants> {
+    VariantProps<typeof collectibleSelectedVariants> {
   size?: "xs" | "sm" | "lg" | "xl";
   selected: boolean;
   onSelect?: () => void;
 }
 
-const collectibleSelectedVariants = cva(
-  "cursor-pointer p-[4px]",
-  {
-    variants: {
-      variant: {
-        default: "",
-        faded: "",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
+const collectibleSelectedVariants = cva("cursor-pointer p-[4px]", {
+  variants: {
+    variant: {
+      default: "",
+      faded: "",
     },
   },
-);
+  defaultVariants: {
+    variant: "default",
+  },
+});
 
 export function CollectibleSelected({
   size = "sm",
@@ -72,7 +69,6 @@ export function CollectibleSelected({
             </div>
           </>
         )}
-
       </div>
     </div>
   );

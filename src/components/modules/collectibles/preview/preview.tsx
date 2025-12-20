@@ -6,7 +6,7 @@ import { cn, formatNumber } from "@/utils";
 
 export interface CollectiblePreviewProps
   extends React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof collectiblePreviewVariants> {
+    VariantProps<typeof collectiblePreviewVariants> {
   title: string;
   icon?: string | null;
   images: string[];
@@ -108,7 +108,8 @@ export const CollectiblePreview = ({
       <div
         className="absolute bottom-0 w-full h-[48px] p-[12px]"
         style={{
-          backgroundImage: "linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent)",
+          backgroundImage:
+            "linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent)",
         }}
       >
         <div className="flex items-center overflow-hidden rounded-[3px]">
@@ -123,10 +124,7 @@ export const CollectiblePreview = ({
           {!!listingCount && (
             <TagIcon variant="solid" size="sm" className="mr-[6px]" />
           )}
-          <p className="truncate">
-            {title}
-          </p>
-
+          <p className="truncate">{title}</p>
         </div>
 
         {!!totalCount && (

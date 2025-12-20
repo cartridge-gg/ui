@@ -24,7 +24,6 @@ const meta: Meta<typeof InventoryItemCard> = {
 export default meta;
 type Story = StoryObj<typeof InventoryItemCard>;
 
-
 export const Beast: Story = {
   render: function Render(args: InventoryItemCardProps) {
     const [selected, setSelected] = useState(false);
@@ -221,9 +220,7 @@ export const Unselectable: Story = {
 
 export const Unavailable: Story = {
   args: {
-    images: [
-      "https://static.cartridge.gg/xxx.png",
-    ],
+    images: ["https://static.cartridge.gg/xxx.png"],
     selectable: true,
     selected: true,
     listingCount: 10,
