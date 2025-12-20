@@ -3,7 +3,7 @@ import { VariantProps } from "class-variance-authority";
 
 export interface InventoryCollectionCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof collectibleCardVariants> {
+    VariantProps<typeof collectibleCardVariants> {
   title: string;
   images: string[];
   icon: string | null;

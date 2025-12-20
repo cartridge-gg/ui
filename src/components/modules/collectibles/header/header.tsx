@@ -4,7 +4,7 @@ import { cn } from "@/utils";
 
 export interface CollectibleHeaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof collectibleHeaderVariants> {
+    VariantProps<typeof collectibleHeaderVariants> {
   selectable?: boolean;
   selected?: boolean;
   onSelect?: () => void;
@@ -15,10 +15,8 @@ const collectibleHeaderVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "",
-        faded:
-          "",
+        default: "",
+        faded: "",
       },
     },
     defaultVariants: {
@@ -35,13 +33,9 @@ export function CollectibleHeader({
   className,
   ...props
 }: CollectibleHeaderProps) {
-
   return (
     <div
-      className={cn(
-        collectibleHeaderVariants({ variant }),
-        className,
-      )}
+      className={cn(collectibleHeaderVariants({ variant }), className)}
       {...props}
     >
       {(selected || selectable) && (

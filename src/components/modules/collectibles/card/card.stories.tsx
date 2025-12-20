@@ -38,7 +38,11 @@ export const Collection: Story = {
           totalCount={1}
           selected={selected}
           onSelect={() => setSelected(!selected)}
-          onClick={selected ? () => setSelected(!selected) : () => toast.success("Clicked")}
+          onClick={
+            selected
+              ? () => setSelected(!selected)
+              : () => toast.success("Clicked")
+          }
         />
       </div>
     );
@@ -60,7 +64,11 @@ export const Beasts: Story = {
           ]}
           totalCount={1}
           selected={selected}
-          onClick={selected ? () => setSelected(!selected) : () => toast.success("Clicked")}
+          onClick={
+            selected
+              ? () => setSelected(!selected)
+              : () => toast.success("Clicked")
+          }
         />
       </div>
     );
@@ -85,7 +93,11 @@ export const Beast: Story = {
           selectable={true}
           selected={selected}
           onSelect={() => setSelected(!selected)}
-          onClick={selected ? () => setSelected(!selected) : () => toast.success("Clicked")}
+          onClick={
+            selected
+              ? () => setSelected(!selected)
+              : () => toast.success("Clicked")
+          }
         />
       </div>
     );

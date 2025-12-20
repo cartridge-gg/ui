@@ -85,41 +85,25 @@ export const CheckboxIconVariants: Story = {
       <div className="flex justify-center items-end gap-4">
         xs:
         {variants.map((variant) => (
-          <CheckboxIcon
-            key={variant}
-            variant={variant}
-            size="xs"
-          />
+          <CheckboxIcon key={variant} variant={variant} size="xs" />
         ))}
       </div>
       <div className="flex justify-center items-end gap-4">
         sm:
         {variants.map((variant) => (
-          <CheckboxIcon
-            key={variant}
-            variant={variant}
-            size="sm"
-          />
+          <CheckboxIcon key={variant} variant={variant} size="sm" />
         ))}
       </div>
       <div className="flex justify-center items-end gap-4">
         lg:
         {variants.map((variant) => (
-          <CheckboxIcon
-            key={variant}
-            variant={variant}
-            size="lg"
-          />
+          <CheckboxIcon key={variant} variant={variant} size="lg" />
         ))}
       </div>
       <div className="flex justify-center items-end gap-4">
         xl:
         {variants.map((variant) => (
-          <CheckboxIcon
-            key={variant}
-            variant={variant}
-            size="xl"
-          />
+          <CheckboxIcon key={variant} variant={variant} size="xl" />
         ))}
       </div>
     </div>

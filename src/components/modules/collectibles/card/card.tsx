@@ -5,7 +5,7 @@ import { CollectibleHeader } from "../header";
 
 export interface CollectibleCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-  VariantProps<typeof collectibleCardVariants> {
+    VariantProps<typeof collectibleCardVariants> {
   title: string;
   images: string[];
   icon?: string | null;

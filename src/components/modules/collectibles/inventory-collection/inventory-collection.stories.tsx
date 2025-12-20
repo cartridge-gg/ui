@@ -26,7 +26,6 @@ const meta: Meta<typeof InventoryCollectionCard> = {
 export default meta;
 type Story = StoryObj<typeof InventoryCollectionCard>;
 
-
 export const Beasts: Story = {
   render: function Render(args: InventoryCollectionCardProps) {
     const [selected, setSelected] = useState(false);
@@ -36,7 +35,11 @@ export const Beasts: Story = {
         <InventoryCollectionCard
           {...args}
           onSelect={() => setSelected(!selected)}
-          onClick={selected ? () => setSelected(!selected) : () => toast.success("Clicked")}
+          onClick={
+            selected
+              ? () => setSelected(!selected)
+              : () => toast.success("Clicked")
+          }
           totalCount={45}
         />
       </div>
@@ -83,9 +86,7 @@ export const Bloberts: Story = {
 export const Duelists: Story = {
   args: {
     icon: "https://static.cartridge.gg/presets/pistols/icon.png",
-    images: [
-      "https://static.cartridge.gg/presets/pistols/icon.png",
-    ],
+    images: ["https://static.cartridge.gg/presets/pistols/icon.png"],
     title: "Pistols at Dawn Duelists",
     backgroundColor: "#57493e",
     totalCount: 52,
@@ -120,8 +121,6 @@ export const DopeWarsGear: Story = {
 export const Unavailable: Story = {
   args: {
     icon: "https://static.cartridge.gg/xxx.png",
-    images: [
-      "https://static.cartridge.gg/xxx.png",
-    ],
+    images: ["https://static.cartridge.gg/xxx.png"],
   },
 };
