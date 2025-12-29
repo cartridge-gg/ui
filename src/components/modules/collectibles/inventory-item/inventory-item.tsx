@@ -15,6 +15,7 @@ export interface InventoryItemCardProps
   selectable?: boolean;
   selected?: boolean;
   onSelect?: () => void;
+  onClick?: () => void;
 }
 
 export function InventoryItemCard({

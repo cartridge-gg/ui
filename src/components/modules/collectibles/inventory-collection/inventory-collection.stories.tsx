@@ -1,7 +1,8 @@
+import { useState } from "react";
+import { toast } from "sonner";
 import type { Meta, StoryObj } from "@storybook/react";
 import { InventoryCollectionCard, InventoryCollectionCardProps } from ".";
 import { fn } from "@storybook/test";
-import { useState } from "react";
 
 const meta: Meta<typeof InventoryCollectionCard> = {
   title: "Modules/Collectibles/Inventory Collection Card",
@@ -18,6 +19,7 @@ const meta: Meta<typeof InventoryCollectionCard> = {
     title: "Beasts",
     totalCount: 1,
     onSelect: fn(),
+    onClick: () => toast.success("Clicked"),
   },
 };
 
@@ -34,7 +36,7 @@ export const Beasts: Story = {
         <InventoryCollectionCard
           {...args}
           onSelect={() => setSelected(!selected)}
-          onClick={selected ? () => setSelected(!selected) : undefined}
+          onClick={selected ? () => setSelected(!selected) : () => toast.success("Clicked")}
           totalCount={45}
         />
       </div>

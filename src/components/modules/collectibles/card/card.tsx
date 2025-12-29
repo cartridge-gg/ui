@@ -17,10 +17,11 @@ export interface CollectibleCardProps
   selectable?: boolean;
   selected?: boolean;
   onSelect?: () => void;
+  onClick?: () => void;
 }
 
 export const collectibleCardVariants = cva(
-  "group relative grow rounded overflow-hidden cursor-pointer border-transparent border-[2px] data-[selected=true]:border-foreground-100 data-[selected=true]:rounded-[10px]",
+  "group relative grow rounded overflow-hidden border-transparent border-[2px] data-[selected=true]:border-foreground-100 data-[selected=true]:rounded-[10px]",
   {
     variants: {
       variant: {
@@ -54,7 +55,11 @@ export function CollectibleCard({
   return (
     <div
       data-selected={selected}
-      className={cn(collectibleCardVariants({ variant }), className)}
+      className={cn(
+        collectibleCardVariants({ variant }),
+        props.onClick !== undefined ? "cursor-pointer" : "cursor-default",
+        className,
+      )}
       {...props}
     >
       <CollectibleHeader

@@ -1,7 +1,8 @@
+import { useState } from "react";
+import { toast } from "sonner";
 import type { Meta, StoryObj } from "@storybook/react";
 import { CollectibleCard, CollectibleCardProps } from ".";
 import { fn } from "@storybook/test";
-import { useState } from "react";
 
 const meta: Meta<typeof CollectibleCard> = {
   title: "Modules/Collectibles/Card",
@@ -18,6 +19,7 @@ const meta: Meta<typeof CollectibleCard> = {
     title: "Beasts",
     selected: false,
     onSelect: fn(),
+    onClick: undefined,
   },
 };
 
@@ -36,7 +38,7 @@ export const Collection: Story = {
           totalCount={1}
           selected={selected}
           onSelect={() => setSelected(!selected)}
-          onClick={selected ? () => setSelected(!selected) : undefined}
+          onClick={selected ? () => setSelected(!selected) : () => toast.success("Clicked")}
         />
       </div>
     );
@@ -58,7 +60,7 @@ export const Beasts: Story = {
           ]}
           totalCount={1}
           selected={selected}
-          onSelect={() => setSelected(!selected)}
+          onClick={selected ? () => setSelected(!selected) : () => toast.success("Clicked")}
         />
       </div>
     );
@@ -83,7 +85,7 @@ export const Beast: Story = {
           selectable={true}
           selected={selected}
           onSelect={() => setSelected(!selected)}
-          onClick={selected ? () => setSelected(!selected) : undefined}
+          onClick={selected ? () => setSelected(!selected) : () => toast.success("Clicked")}
         />
       </div>
     );
@@ -213,6 +215,23 @@ export const Realms: Story = {
           onSelect={() => setSelected(!selected)}
           onClick={selected ? () => setSelected(!selected) : undefined}
           backgroundColor="#ffffff"
+        />
+      </div>
+    );
+  },
+};
+
+export const Clickable: Story = {
+  render: function Render(args: CollectibleCardProps) {
+    return (
+      <div className="flex gap-2">
+        <CollectibleCard
+          {...args}
+          totalCount={2}
+          selectable={false}
+          selected={false}
+          onSelect={undefined}
+          onClick={() => toast.success("Clicked")}
         />
       </div>
     );

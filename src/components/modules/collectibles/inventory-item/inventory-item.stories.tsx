@@ -1,7 +1,8 @@
+import { useState } from "react";
+import { toast } from "sonner";
 import type { Meta, StoryObj } from "@storybook/react";
 import { InventoryItemCard, InventoryItemCardProps } from ".";
 import { fn } from "@storybook/test";
-import { useState } from "react";
 
 const meta: Meta<typeof InventoryItemCard> = {
   title: "Modules/Collectibles/Inventory Item Card",
@@ -18,6 +19,7 @@ const meta: Meta<typeof InventoryItemCard> = {
     title: '"Grim Sun" Hippogriff',
     listingCount: 1,
     onSelect: fn(),
+    onClick: undefined,
   },
 };
 
@@ -36,7 +38,7 @@ export const Beast: Story = {
           selectable={true}
           selected={selected}
           onSelect={() => setSelected(!selected)}
-          onClick={selected ? () => setSelected(!selected) : undefined}
+          onClick={selected ? () => setSelected(!selected) : () => toast.success("Clicked")}
         />
       </div>
     );
@@ -163,8 +165,6 @@ export const Realm: Story = {
 
 export const DopeWarsGear: Story = {
   render: function Render(args: InventoryItemCardProps) {
-    const [selected, setSelected] = useState(false);
-
     return (
       <div className="flex gap-2">
         <InventoryItemCard
@@ -174,10 +174,27 @@ export const DopeWarsGear: Story = {
           ]}
           title="Rolls Royce from Mob Town"
           selectable={false}
-          selected={selected}
-          onSelect={() => setSelected(!selected)}
-          onClick={selected ? () => setSelected(!selected) : undefined}
+          selected={false}
+          onSelect={undefined}
+          onClick={() => toast.success("Clicked")}
           backgroundColor="#97ADCC"
+        />
+      </div>
+    );
+  },
+};
+
+export const Clickable: Story = {
+  render: function Render(args: InventoryItemCardProps) {
+    return (
+      <div className="flex gap-2">
+        <InventoryItemCard
+          {...args}
+          listingCount={0}
+          selectable={false}
+          selected={false}
+          onSelect={undefined}
+          onClick={() => toast.success("Clicked")}
         />
       </div>
     );
