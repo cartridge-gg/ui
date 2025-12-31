@@ -118,9 +118,19 @@ export const DopeWarsGear: Story = {
   },
 };
 
-export const Unavailable: Story = {
+export const BadUrl: Story = {
   args: {
-    icon: "https://static.cartridge.gg/xxx.png",
-    images: ["https://static.cartridge.gg/xxx.png"],
+    icon: "/this_icon_does_not_exist.png",
+    images: ["/this_image_does_not_exist.png"],
+  },
+};
+
+export const BadUrlWithFallback: Story = {
+  args: {
+    icon: "/this_icon_does_not_exist.png",
+    images: [
+      "/this_image_does_not_exist.png",
+      "https://static.cartridge.gg/presets/loot-survivor/icon.png",
+    ],
   },
 };

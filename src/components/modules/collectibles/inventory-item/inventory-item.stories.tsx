@@ -239,11 +239,19 @@ export const Unselectable: Story = {
   },
 };
 
-export const Unavailable: Story = {
+export const BadUrl: Story = {
   args: {
-    images: ["https://static.cartridge.gg/xxx.png"],
-    selectable: true,
-    selected: true,
-    listingCount: 10,
+    images: ["/this_image_does_not_exist.png"],
+    selectable: false,
+  },
+};
+
+export const BadUrlWithFallback: Story = {
+  args: {
+    images: [
+      "/this_image_does_not_exist.png",
+      "https://static.cartridge.gg/presets/loot-survivor/icon.png",
+    ],
+    selectable: false,
   },
 };

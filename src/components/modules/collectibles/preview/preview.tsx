@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { PLACEHOLDER } from "@/assets";
-import { CollectibleTag, TagIcon, Thumbnail } from "@/index";
+import { CollectibleTag, TagIcon, Thumbnail, CollectibleImage } from "@/index";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn, formatNumber } from "@/utils";
 
@@ -48,43 +46,6 @@ export const CollectiblePreview = ({
   onError,
   ...props
 }: CollectiblePreviewProps) => {
-  const [currentSrcIndex, setCurrentSrcIndex] = useState(0);
-  const [data, setData] = useState<string | null>(null);
-
-  const currentSrc =
-    images && images.length > 0 ? images[currentSrcIndex] : PLACEHOLDER;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!currentSrc) return;
-
-      try {
-        const res = await fetch(currentSrc);
-        if (!res.ok) return;
-
-        const text = await res.text();
-        if (!text.includes('width="100width="100%"')) return;
-
-        const match = text.match(/data:image\/png;base64,[^)"]+/);
-        if (match && match.length > 0) setData(match[0]);
-      } catch (error) {
-        console.error("Error fetching image:", error);
-      }
-    };
-    fetchData();
-  }, [currentSrc]);
-
-  const handleImageError = (
-    e: React.SyntheticEvent<HTMLImageElement, Event>,
-  ) => {
-    if (currentSrcIndex < images.length - 1 && !!images[currentSrcIndex + 1]) {
-      setCurrentSrcIndex(currentSrcIndex + 1);
-    } else {
-      e.currentTarget.src = PLACEHOLDER;
-      if (onError) onError(e);
-    }
-  };
-
   return (
     <div
       className={cn(collectiblePreviewVariants({ variant, size }), className)}
@@ -98,12 +59,9 @@ export const CollectiblePreview = ({
           }}
         />
       </div>
-      <img
-        className="object-contain h-full w-full relative transition duration-150 ease-in-out group-hover:scale-[1.1]"
-        style={{ imageRendering: "pixelated" }}
-        draggable={false}
-        src={data || currentSrc}
-        onError={handleImageError}
+      <CollectibleImage
+        className="transition duration-150 ease-in-out hover:scale-[1.1]"
+        images={images}
       />
       <div
         className="absolute bottom-0 w-full h-[48px] p-[12px]"

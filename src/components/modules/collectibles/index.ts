@@ -5,6 +5,7 @@ export * from "./inventory-collection";
 export * from "./card-footer";
 export * from "./details";
 export * from "./asset-card";
+export * from "./image";
 export * from "./items";
 export * from "./item";
 export * from "./item-details";
