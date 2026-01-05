@@ -8,7 +8,7 @@ export interface InventoryItemCardProps
   images: string[];
   // icon?: string | null;
   backgroundColor?: string;
-  // totalCount?: number;
+  totalCount?: number;
   listingCount?: number;
   // price?: string | { value: string; image: string } | null;
   // lastSale?: string | { value: string; image: string } | null;
@@ -23,7 +23,7 @@ export function InventoryItemCard({
   images,
   // icon,
   backgroundColor,
-  // totalCount,
+  totalCount,
   listingCount,
   // price,
   // lastSale,
@@ -41,7 +41,7 @@ export function InventoryItemCard({
       images={images}
       icon={undefined}
       backgroundColor={backgroundColor}
-      totalCount={undefined}
+      totalCount={totalCount && totalCount > 1 ? totalCount : undefined}
       listingCount={listingCount}
       price={undefined}
       lastSale={undefined}

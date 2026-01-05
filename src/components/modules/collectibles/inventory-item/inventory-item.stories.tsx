@@ -166,7 +166,7 @@ export const Realm: Story = {
   },
 };
 
-export const DopeWarsGear: Story = {
+export const DopeWarsGearSingle: Story = {
   render: function Render(args: InventoryItemCardProps) {
     return (
       <div className="flex gap-2">
@@ -181,6 +181,29 @@ export const DopeWarsGear: Story = {
           onSelect={undefined}
           onClick={() => toast.success("Clicked")}
           backgroundColor="#97ADCC"
+          totalCount={1}
+        />
+      </div>
+    );
+  },
+};
+
+export const DopeWarsGearMultiple: Story = {
+  render: function Render(args: InventoryItemCardProps) {
+    return (
+      <div className="flex gap-2">
+        <InventoryItemCard
+          {...args}
+          images={[
+            "https://raw2.seadn.io/optimism/0x0e55e1913c50e015e0f60386ff56a4bfb00d7110/448cb89b7c9c6673de179a7d5bef21/b8448cb89b7c9c6673de179a7d5bef21.svg",
+          ]}
+          title="Rolls Royce from Mob Town"
+          selectable={false}
+          selected={false}
+          onSelect={undefined}
+          onClick={() => toast.success("Clicked")}
+          backgroundColor="#97ADCC"
+          totalCount={3}
         />
       </div>
     );
