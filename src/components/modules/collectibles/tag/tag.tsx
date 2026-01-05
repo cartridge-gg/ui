@@ -9,11 +9,11 @@ export interface CollectibleTagProps
 }
 
 const collectibleTagVariants = cva(
-  "relative px-1 py-0.5 rounded-sm h-6 flex justify-center items-center text-sm tracking-wider font-normal select-none",
+  "relative px-1 py-0.5 rounded-[4px] h-6 flex justify-center items-center text-sm tracking-wider font-normal select-none",
   {
     variants: {
       variant: {
-        default: "text-foreground-100 bg-[#1E221FA3] backdrop-blur-[8px]",
+        default: "text-foreground-100 bg-translucent-light-100 backdrop-blur-[8px]",
       },
     },
     defaultVariants: {

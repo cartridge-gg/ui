@@ -14,7 +14,7 @@ export const thumbnailVariants = cva(
           "bg-background-100 data-[transdark=true]:bg-translucent-dark-200 data-[translight=true]:bg-translucent-light-100",
         dark: "bg-background-100 data-[transdark=true]:bg-translucent-dark-200 data-[translight=true]:bg-translucent-light-150",
         default:
-          "bg-background-200 data-[transdark=true]:bg-translucent-dark-150 data-[translight=true]:bg-translucent-light-150",
+          "bg-background-200 data-[transdark=true]:bg-translucent-dark-150 data-[translight=true]:bg-translucent-light-100",
         light:
           "bg-background-300 data-[transdark=true]:bg-translucent-dark-150 data-[translight=true]:bg-translucent-light-200",
         lighter:

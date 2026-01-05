@@ -83,7 +83,7 @@ export const CollectiblePreview = ({
         <div className="flex items-center overflow-hidden rounded-[3px] gap-[6px]">
           {icon !== undefined && (
             <Thumbnail
-              className="w-[20px] h-[20px] rounded-[1px] bg-translucent-light-100"
+              className="w-[20px] h-[20px] bg-translucent-light-100"
               variant="light"
               size="sm"
               icon={icon}
@@ -98,7 +98,7 @@ export const CollectiblePreview = ({
         {!!totalCount && (
           <CollectibleTag
             label={`${formatNumber(totalCount)}x`}
-            className="absolute bottom-[12px] right-[12px] rounded-[8px] bg-translucent-light-100"
+            className="absolute bottom-[12px] right-[12px] bg-translucent-light-100"
           />
         )}
       </div>
