@@ -278,3 +278,9 @@ export const BadUrlWithFallback: Story = {
     selectable: false,
   },
 };
+
+export const IpfsUnpinnedFile: Story = {
+  args: {
+    images: ["https://ipfs.io/ipfs/QmWqqT4awbuzaHM7e5EBf9GGzNDQRz4WauUDSctVe9ZeBW"],
+  },
+};

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PLACEHOLDER } from "@/assets";
-import { SpinnerIcon } from "@/index";
+import { Skeleton, SpinnerIcon } from "@/index";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/utils";
 
@@ -8,6 +8,9 @@ export interface CollectibleImageProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectibleImageVariants> {
   images: string[];
+  loadingSpinner?: boolean;
+  loadingSkeleton?: boolean;
+  onLoaded?: () => void;
 }
 
 const collectibleImageVariants = cva("relative h-full w-full object-contain", {
@@ -24,6 +27,9 @@ const collectibleImageVariants = cva("relative h-full w-full object-contain", {
 export const CollectibleImage = ({
   title,
   images,
+  loadingSpinner = false,
+  loadingSkeleton = false,
+  onLoaded,
   variant,
   className,
   onError,
@@ -32,6 +38,11 @@ export const CollectibleImage = ({
   const [displayImage, setDisplayImage] = useState<string | undefined>(
     undefined,
   );
+  useEffect(() => {
+    if (onLoaded && displayImage !== undefined) {
+      onLoaded();
+    }
+  }, [displayImage]);
 
   useEffect(() => {
     let isMounted = true;
@@ -106,10 +117,15 @@ export const CollectibleImage = ({
       className={cn(collectibleImageVariants({ variant }), className)}
       {...props}
     >
-      {displayImage === undefined && (
+      {displayImage === undefined && loadingSpinner && (
         <SpinnerIcon
           size="xl"
           className="absolute inset-0 m-auto animate-spin"
+        />
+      )}
+      {displayImage === undefined && loadingSkeleton && (
+        <Skeleton
+          className="absolute inset-0 full-w full-h"
         />
       )}
       {displayImage !== undefined && (

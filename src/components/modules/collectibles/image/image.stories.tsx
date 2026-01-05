@@ -12,6 +12,7 @@ const meta: Meta<typeof CollectibleImage> = {
     images: [
       "https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png",
     ],
+    onLoaded: undefined,
   },
 };
 
@@ -113,6 +114,21 @@ export const BadUrlWithFallback: Story = {
   },
 };
 
+export const IpfsDirect: Story = {
+  render: function Render(args: CollectibleImageProps) {
+    return (
+      <div className="flex gap-2 w-full h-[200px] border border-foreground-400">
+        <CollectibleImage
+          {...args}
+          images={[
+            "ipfs://bafkreih5aznjvttude6c3wbvqeebb6rlx5wkbzyppv7garjiubll2ceym4",
+          ]}
+        />
+      </div>
+    );
+  },
+};
+
 export const IpfsPinnedFile: Story = {
   render: function Render(args: CollectibleImageProps) {
     return (
@@ -143,15 +159,32 @@ export const IpfsUnpinnedFile: Story = {
   },
 };
 
-export const IpfsDirect: Story = {
+export const IpfsUnpinnedLoadingSkeleton: Story = {
   render: function Render(args: CollectibleImageProps) {
     return (
       <div className="flex gap-2 w-full h-[200px] border border-foreground-400">
         <CollectibleImage
           {...args}
           images={[
-            "ipfs://bafkreih5aznjvttude6c3wbvqeebb6rlx5wkbzyppv7garjiubll2ceym4",
+            "https://ipfs.io/ipfs/QmWqqT4awbuzaHM7e5EBf9GGzNDQRz4WauUDSctVe9ZeBW",
           ]}
+          loadingSkeleton={true}
+        />
+      </div>
+    );
+  },
+};
+
+export const IpfsUnpinnedLoadingSpinner: Story = {
+  render: function Render(args: CollectibleImageProps) {
+    return (
+      <div className="flex gap-2 w-full h-[200px] border border-foreground-400">
+        <CollectibleImage
+          {...args}
+          images={[
+            "https://ipfs.io/ipfs/QmWqqT4awbuzaHM7e5EBf9GGzNDQRz4WauUDSctVe9ZeBW",
+          ]}
+          loadingSpinner={true}
         />
       </div>
     );

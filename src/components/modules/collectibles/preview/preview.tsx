@@ -1,6 +1,7 @@
-import { CollectibleTag, TagIcon, Thumbnail, CollectibleImage } from "@/index";
+import { CollectibleTag, TagIcon, Thumbnail, CollectibleImage, Skeleton } from "@/index";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn, formatNumber } from "@/utils";
+import { useState } from "react";
 
 export interface CollectiblePreviewProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -46,6 +47,7 @@ export const CollectiblePreview = ({
   onError,
   ...props
 }: CollectiblePreviewProps) => {
+  const [loaded, setLoaded] = useState(false);
   return (
     <div
       className={cn(collectiblePreviewVariants({ variant, size }), className)}
@@ -59,9 +61,15 @@ export const CollectiblePreview = ({
           }}
         />
       </div>
+      {!loaded && (
+        <Skeleton
+          className="absolute inset-0 full-w full-h"
+        />
+      )}
       <CollectibleImage
         className="transition duration-150 ease-in-out hover:scale-[1.1]"
         images={images}
+        onLoaded={() => setLoaded(true)}
       />
       <div
         className="absolute bottom-0 w-full h-[48px] p-[12px]"
