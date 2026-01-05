@@ -124,9 +124,7 @@ export const CollectibleImage = ({
         />
       )}
       {displayImage === undefined && loadingSkeleton && (
-        <Skeleton
-          className="absolute inset-0 full-w full-h"
-        />
+        <Skeleton className="absolute inset-0 full-w full-h" />
       )}
       {displayImage !== undefined && (
         <img

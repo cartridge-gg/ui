@@ -1,4 +1,10 @@
-import { CollectibleTag, TagIcon, Thumbnail, CollectibleImage, Skeleton } from "@/index";
+import {
+  CollectibleTag,
+  TagIcon,
+  Thumbnail,
+  CollectibleImage,
+  Skeleton,
+} from "@/index";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn, formatNumber } from "@/utils";
 import { useState } from "react";
@@ -61,11 +67,7 @@ export const CollectiblePreview = ({
           }}
         />
       </div>
-      {!loaded && (
-        <Skeleton
-          className="absolute inset-0 full-w full-h"
-        />
-      )}
+      {!loaded && <Skeleton className="absolute inset-0 full-w full-h" />}
       <CollectibleImage
         className="transition duration-150 ease-in-out hover:scale-[1.1]"
         images={images}
