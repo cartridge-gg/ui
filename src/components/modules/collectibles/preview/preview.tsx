@@ -70,13 +70,13 @@ export const CollectiblePreview = ({
             "linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent)",
         }}
       >
-        <div className="flex items-center overflow-hidden rounded-[3px]">
+        <div className="flex items-center overflow-hidden rounded-[3px] gap-[6px]">
           {icon !== undefined && (
             <Thumbnail
+              className="w-[20px] h-[20px] rounded-[1px] bg-translucent-light-100"
               variant="light"
               size="sm"
               icon={icon}
-              className="w-[20px] h-[20px] m-[2px] rounded-[1px] bg-translucent-light-100"
             />
           )}
           {!!listingCount && (
