@@ -8,7 +8,8 @@ export interface CollectibleCardProps
     VariantProps<typeof collectibleCardVariants> {
   title: string;
   images: string[];
-  icon?: string;
+  icon?: string | null;
+  backgroundColor?: string;
   totalCount?: number;
   listingCount?: number;
   price?: string | { value: string; image: string } | null;
@@ -16,10 +17,11 @@ export interface CollectibleCardProps
   selectable?: boolean;
   selected?: boolean;
   onSelect?: () => void;
+  onClick?: () => void;
 }
 
-const collectibleCardVariants = cva(
-  "group relative grow rounded overflow-hidden cursor-pointer border-transparent border-[2px] data-[selected=true]:border-foreground-100",
+export const collectibleCardVariants = cva(
+  "group relative grow rounded overflow-hidden border-transparent border-[2px] data-[selected=true]:border-foreground-100 data-[selected=true]:rounded-[10px]",
   {
     variants: {
       variant: {
@@ -37,11 +39,12 @@ export function CollectibleCard({
   title,
   images,
   icon,
+  backgroundColor,
   totalCount,
   listingCount,
   price,
   lastSale,
-  selectable = true,
+  selectable = false,
   selected,
   onSelect,
   variant,
@@ -52,23 +55,28 @@ export function CollectibleCard({
   return (
     <div
       data-selected={selected}
-      className={cn(collectibleCardVariants({ variant }), className)}
+      className={cn(
+        collectibleCardVariants({ variant }),
+        props.onClick !== undefined ? "cursor-pointer" : "cursor-default",
+        className,
+      )}
       {...props}
     >
       <CollectibleHeader
-        title={title}
-        icon={icon}
-        selectable={!selected && selectable}
+        selectable={selectable}
         selected={selected}
         onSelect={onSelect}
         variant={variant}
       />
       <CollectiblePreview
+        title={title}
+        icon={icon}
         images={images}
         size="sm"
         totalCount={totalCount}
         listingCount={listingCount}
         onError={onError}
+        backgroundColor={backgroundColor}
       />
       <CollectibleCardFooter
         price={price}
