@@ -11,6 +11,7 @@ export * from "./item";
 export * from "./item-details";
 export * from "./item-action";
 export * from "./header";
+export * from "./footer";
 export * from "./pill";
 export * from "./properties";
 export * from "./property";
