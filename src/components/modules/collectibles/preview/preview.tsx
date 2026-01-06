@@ -1,18 +1,12 @@
-import {
-  CollectibleTag,
-  TagIcon,
-  Thumbnail,
-  CollectibleImage,
-  Skeleton,
-} from "@/index";
-import { cva, VariantProps } from "class-variance-authority";
-import { cn, formatNumber } from "@/utils";
 import { useState } from "react";
+import { CollectibleImage, Skeleton, CollectibleFooter } from "@/index";
+import { cva, VariantProps } from "class-variance-authority";
+import { cn } from "@/utils";
 
 export interface CollectiblePreviewProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectiblePreviewVariants> {
-  title: string;
+  title?: string;
   icon?: string | null;
   images: string[];
   totalCount?: number;
@@ -73,35 +67,14 @@ export const CollectiblePreview = ({
         images={images}
         onLoaded={() => setLoaded(true)}
       />
-      <div
-        className="absolute bottom-0 w-full h-[48px] p-[12px]"
-        style={{
-          backgroundImage:
-            "linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent)",
-        }}
-      >
-        <div className="flex items-center overflow-hidden rounded-[3px] gap-[6px]">
-          {icon !== undefined && (
-            <Thumbnail
-              className="w-[20px] h-[20px] bg-translucent-light-100"
-              variant="light"
-              size="sm"
-              icon={icon}
-            />
-          )}
-          {!!listingCount && (
-            <TagIcon variant="solid" size="sm" className="mr-[6px]" />
-          )}
-          <p className="truncate">{title}</p>
-        </div>
-
-        {!!totalCount && (
-          <CollectibleTag
-            label={`${formatNumber(totalCount)}x`}
-            className="absolute bottom-[12px] right-[12px] bg-translucent-light-100"
-          />
-        )}
-      </div>
+      <CollectibleFooter
+        className="absolute bottom-0"
+        title={title}
+        icon={icon}
+        totalCount={totalCount}
+        listingCount={listingCount}
+        variant={variant}
+      />
     </div>
   );
 };
