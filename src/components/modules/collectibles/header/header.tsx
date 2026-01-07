@@ -40,7 +40,7 @@ export function CollectibleHeader({
     >
       {(selected || selectable) && (
         <CollectibleSelected
-          className="absolute top-[8px] right-[8px]"
+          className="absolute top-0 right-0"
           selected={selected ?? false}
           onSelect={onSelect}
         />

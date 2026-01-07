@@ -6,12 +6,12 @@ import { cn } from "@/utils";
 export interface CollectibleSelectedProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof collectibleSelectedVariants> {
-  size?: "xs" | "sm" | "lg" | "xl";
+  size?: "xs" | "sm" | "lg" | "xl" | "collectible";
   selected: boolean;
   onSelect?: () => void;
 }
 
-const collectibleSelectedVariants = cva("cursor-pointer p-[4px]", {
+const collectibleSelectedVariants = cva("cursor-pointer w-[40px] h-[40px]", {
   variants: {
     variant: {
       default: "",
@@ -24,7 +24,7 @@ const collectibleSelectedVariants = cva("cursor-pointer p-[4px]", {
 });
 
 export function CollectibleSelected({
-  size = "sm",
+  size = "collectible",
   selected,
   onSelect,
   variant,
@@ -46,25 +46,25 @@ export function CollectibleSelected({
       {...props}
     >
       <div
-        className="relative cursor-pointer hover:brightness-150"
+        className="relative cursor-pointer hover:brightness-150 w-full h-full"
         onClick={handleClick}
       >
-        <div className="text-foreground-400">
+        <div className="absolute top-[8px] right-[8px] text-foreground-400">
           <CheckboxIcon variant="unchecked-solid" size={size} />
         </div>
 
         {!selected && (
-          <div className="absolute top-0 right-0 text-foreground-300">
+          <div className="absolute top-[8px] right-[8px] text-foreground-300">
             <CheckboxIcon variant="unchecked-line" size={size} />
           </div>
         )}
 
         {selected && (
           <>
-            <div className="absolute top-0 right-0">
+            <div className="absolute top-[8px] right-[8px]">
               <CheckboxIcon variant="check" size={size} />
             </div>
-            <div className="absolute top-0 right-0 text-foreground-100">
+            <div className="absolute top-[8px] right-[8px] text-foreground-100">
               <CheckboxIcon variant="unchecked-line" size={size} />
             </div>
           </>
