@@ -29,14 +29,12 @@ export type Account = Node & {
   credentials: Credentials;
   credits: Credits;
   creditsPlain: Scalars['Int'];
-  /** Optional email for account, required for slot billing and coinbase onramp */
   email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   membership: AccountTeamConnection;
   name?: Maybe<Scalars['String']>;
-  /** Optional phone number, required for coinbase onramp */
+  oauthConnections?: Maybe<Array<OAuthConnection>>;
   phoneNumber?: Maybe<Scalars['String']>;
-  /** Timestamp of when the phone number was verified via OTP */
   phoneNumberVerifiedAt?: Maybe<Scalars['String']>;
   /** If true, the account is billed for paid slot deployments */
   slotBilling: Scalars['Boolean'];
@@ -208,22 +206,6 @@ export type AccountWhereInput = {
   createdAtLTE?: InputMaybe<Scalars['Time']>;
   createdAtNEQ?: InputMaybe<Scalars['Time']>;
   createdAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
-  /** email field predicates */
-  email?: InputMaybe<Scalars['String']>;
-  emailContains?: InputMaybe<Scalars['String']>;
-  emailContainsFold?: InputMaybe<Scalars['String']>;
-  emailEqualFold?: InputMaybe<Scalars['String']>;
-  emailGT?: InputMaybe<Scalars['String']>;
-  emailGTE?: InputMaybe<Scalars['String']>;
-  emailHasPrefix?: InputMaybe<Scalars['String']>;
-  emailHasSuffix?: InputMaybe<Scalars['String']>;
-  emailIn?: InputMaybe<Array<Scalars['String']>>;
-  emailIsNil?: InputMaybe<Scalars['Boolean']>;
-  emailLT?: InputMaybe<Scalars['String']>;
-  emailLTE?: InputMaybe<Scalars['String']>;
-  emailNEQ?: InputMaybe<Scalars['String']>;
-  emailNotIn?: InputMaybe<Array<Scalars['String']>>;
-  emailNotNil?: InputMaybe<Scalars['Boolean']>;
   /** activities edge predicates */
   hasActivities?: InputMaybe<Scalars['Boolean']>;
   hasActivitiesWith?: InputMaybe<Array<ActivityWhereInput>>;
@@ -233,6 +215,9 @@ export type AccountWhereInput = {
   /** membership edge predicates */
   hasMembership?: InputMaybe<Scalars['Boolean']>;
   hasMembershipWith?: InputMaybe<Array<AccountTeamWhereInput>>;
+  /** oauth_connections edge predicates */
+  hasOauthConnections?: InputMaybe<Scalars['Boolean']>;
+  hasOauthConnectionsWith?: InputMaybe<Array<OAuthConnectionWhereInput>>;
   /** starterpack_mint edge predicates */
   hasStarterpackMint?: InputMaybe<Scalars['Boolean']>;
   hasStarterpackMintWith?: InputMaybe<Array<StarterpackMintWhereInput>>;
@@ -268,38 +253,6 @@ export type AccountWhereInput = {
   nameNotNil?: InputMaybe<Scalars['Boolean']>;
   not?: InputMaybe<AccountWhereInput>;
   or?: InputMaybe<Array<AccountWhereInput>>;
-  /** phone_number field predicates */
-  phoneNumber?: InputMaybe<Scalars['String']>;
-  phoneNumberContains?: InputMaybe<Scalars['String']>;
-  phoneNumberContainsFold?: InputMaybe<Scalars['String']>;
-  phoneNumberEqualFold?: InputMaybe<Scalars['String']>;
-  phoneNumberGT?: InputMaybe<Scalars['String']>;
-  phoneNumberGTE?: InputMaybe<Scalars['String']>;
-  phoneNumberHasPrefix?: InputMaybe<Scalars['String']>;
-  phoneNumberHasSuffix?: InputMaybe<Scalars['String']>;
-  phoneNumberIn?: InputMaybe<Array<Scalars['String']>>;
-  phoneNumberIsNil?: InputMaybe<Scalars['Boolean']>;
-  phoneNumberLT?: InputMaybe<Scalars['String']>;
-  phoneNumberLTE?: InputMaybe<Scalars['String']>;
-  phoneNumberNEQ?: InputMaybe<Scalars['String']>;
-  phoneNumberNotIn?: InputMaybe<Array<Scalars['String']>>;
-  phoneNumberNotNil?: InputMaybe<Scalars['Boolean']>;
-  /** phone_number_verified_at field predicates */
-  phoneNumberVerifiedAt?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtContains?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtContainsFold?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtEqualFold?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtGT?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtGTE?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtHasPrefix?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtHasSuffix?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtIn?: InputMaybe<Array<Scalars['String']>>;
-  phoneNumberVerifiedAtIsNil?: InputMaybe<Scalars['Boolean']>;
-  phoneNumberVerifiedAtLT?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtLTE?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtNEQ?: InputMaybe<Scalars['String']>;
-  phoneNumberVerifiedAtNotIn?: InputMaybe<Array<Scalars['String']>>;
-  phoneNumberVerifiedAtNotNil?: InputMaybe<Scalars['Boolean']>;
   /** slot_billing field predicates */
   slotBilling?: InputMaybe<Scalars['Boolean']>;
   slotBillingNEQ?: InputMaybe<Scalars['Boolean']>;
@@ -2637,6 +2590,8 @@ export type Mutation = {
   deleteRpcApiKey: Scalars['Boolean'];
   deleteRpcCorsDomain: Scalars['Boolean'];
   deleteTeam: Scalars['Boolean'];
+  deploy: Account;
+  disconnectOAuth: Scalars['Boolean'];
   finalizeLogin: Scalars['String'];
   finalizeRegistration: Account;
   increaseBudget: Paymaster;
@@ -2647,6 +2602,16 @@ export type Mutation = {
   removePaymaster: Scalars['Boolean'];
   removePolicy: Scalars['Boolean'];
   revokeSessions: Scalars['Boolean'];
+  /**
+   * Send a verification code via email to the specified email address.
+   * The code expires after 10 minutes.
+   */
+  sendEmailVerification: SendVerificationResponse;
+  /**
+   * Send a verification code via SMS to the specified phone number.
+   * The code expires after 10 minutes.
+   */
+  sendPhoneVerification: SendVerificationResponse;
   transfer: TransferResponse;
   transferDeployment: Scalars['Boolean'];
   updateDeployment: Deployment;
@@ -2655,6 +2620,16 @@ export type Mutation = {
   updateRpcApiKey: RpcApiKey;
   updateRpcCorsDomain: RpcCorsDomain;
   updateTeam: Team;
+  /**
+   * Verify an email address using the code sent via email.
+   * Updates the user's email and verification timestamp on success.
+   */
+  verifyEmail: VerifyResponse;
+  /**
+   * Verify a phone number using the code sent via SMS.
+   * Updates the user's phone number and verification timestamp on success.
+   */
+  verifyPhone: VerifyResponse;
 };
 
 
@@ -2808,6 +2783,17 @@ export type MutationDeleteTeamArgs = {
 };
 
 
+export type MutationDeployArgs = {
+  chainId: Scalars['String'];
+  username: Scalars['String'];
+};
+
+
+export type MutationDisconnectOAuthArgs = {
+  provider: OAuthProvider;
+};
+
+
 export type MutationFinalizeLoginArgs = {
   credentials: Scalars['String'];
 };
@@ -2869,6 +2855,16 @@ export type MutationRevokeSessionsArgs = {
 };
 
 
+export type MutationSendEmailVerificationArgs = {
+  input: SendEmailVerificationInput;
+};
+
+
+export type MutationSendPhoneVerificationArgs = {
+  input: SendPhoneVerificationInput;
+};
+
+
 export type MutationTransferArgs = {
   data: TransferInput;
 };
@@ -2920,6 +2916,16 @@ export type MutationUpdateTeamArgs = {
   update: TeamInput;
 };
 
+
+export type MutationVerifyEmailArgs = {
+  input: VerifyEmailInput;
+};
+
+
+export type MutationVerifyPhoneArgs = {
+  input: VerifyPhoneInput;
+};
+
 export enum Network {
   Solana = 'SOLANA',
   Starknet = 'STARKNET'
@@ -2933,6 +2939,187 @@ export type Node = {
   /** The id of the object. */
   id: Scalars['ID'];
 };
+
+export type OAuthConnection = Node & {
+  __typename?: 'OAuthConnection';
+  /** When the access token expires */
+  accessTokenExpiresAt: Scalars['Time'];
+  account: Account;
+  accountID: Scalars['ID'];
+  createdAt: Scalars['Time'];
+  id: Scalars['ID'];
+  isExpired: Scalars['Boolean'];
+  profile: OAuthConnectionProfile;
+  /** OAuth provider identifier */
+  provider: OAuthConnectionProvider;
+  /** User's avatar URL on the provider */
+  providerAvatarURL?: Maybe<Scalars['String']>;
+  /** User's ID on the provider platform */
+  providerUserID: Scalars['String'];
+  /** User's display name/username on the provider */
+  providerUsername?: Maybe<Scalars['String']>;
+  /** When the refresh token expires */
+  refreshTokenExpiresAt?: Maybe<Scalars['Time']>;
+  /** Granted OAuth scopes */
+  scopes: Array<Scalars['String']>;
+  updatedAt: Scalars['Time'];
+};
+
+/** Ordering options for OAuthConnection connections */
+export type OAuthConnectionOrder = {
+  /** The ordering direction. */
+  direction?: OrderDirection;
+  /** The field by which to order OAuthConnections. */
+  field: OAuthConnectionOrderField;
+};
+
+/** Properties by which OAuthConnection connections can be ordered. */
+export enum OAuthConnectionOrderField {
+  CreatedAt = 'CREATED_AT'
+}
+
+export type OAuthConnectionProfile = {
+  __typename?: 'OAuthConnectionProfile';
+  avatarUrl?: Maybe<Scalars['String']>;
+  providerUserId: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
+};
+
+/** OAuthConnectionProvider is enum for the field provider */
+export enum OAuthConnectionProvider {
+  Tiktok = 'TIKTOK'
+}
+
+/**
+ * OAuthConnectionWhereInput is used for filtering OAuthConnection objects.
+ * Input was generated by ent.
+ */
+export type OAuthConnectionWhereInput = {
+  /** access_token_expires_at field predicates */
+  accessTokenExpiresAt?: InputMaybe<Scalars['Time']>;
+  accessTokenExpiresAtGT?: InputMaybe<Scalars['Time']>;
+  accessTokenExpiresAtGTE?: InputMaybe<Scalars['Time']>;
+  accessTokenExpiresAtIn?: InputMaybe<Array<Scalars['Time']>>;
+  accessTokenExpiresAtLT?: InputMaybe<Scalars['Time']>;
+  accessTokenExpiresAtLTE?: InputMaybe<Scalars['Time']>;
+  accessTokenExpiresAtNEQ?: InputMaybe<Scalars['Time']>;
+  accessTokenExpiresAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  /** account_id field predicates */
+  accountID?: InputMaybe<Scalars['ID']>;
+  accountIDContains?: InputMaybe<Scalars['ID']>;
+  accountIDContainsFold?: InputMaybe<Scalars['ID']>;
+  accountIDEqualFold?: InputMaybe<Scalars['ID']>;
+  accountIDGT?: InputMaybe<Scalars['ID']>;
+  accountIDGTE?: InputMaybe<Scalars['ID']>;
+  accountIDHasPrefix?: InputMaybe<Scalars['ID']>;
+  accountIDHasSuffix?: InputMaybe<Scalars['ID']>;
+  accountIDIn?: InputMaybe<Array<Scalars['ID']>>;
+  accountIDLT?: InputMaybe<Scalars['ID']>;
+  accountIDLTE?: InputMaybe<Scalars['ID']>;
+  accountIDNEQ?: InputMaybe<Scalars['ID']>;
+  accountIDNotIn?: InputMaybe<Array<Scalars['ID']>>;
+  and?: InputMaybe<Array<OAuthConnectionWhereInput>>;
+  /** created_at field predicates */
+  createdAt?: InputMaybe<Scalars['Time']>;
+  createdAtGT?: InputMaybe<Scalars['Time']>;
+  createdAtGTE?: InputMaybe<Scalars['Time']>;
+  createdAtIn?: InputMaybe<Array<Scalars['Time']>>;
+  createdAtLT?: InputMaybe<Scalars['Time']>;
+  createdAtLTE?: InputMaybe<Scalars['Time']>;
+  createdAtNEQ?: InputMaybe<Scalars['Time']>;
+  createdAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  /** account edge predicates */
+  hasAccount?: InputMaybe<Scalars['Boolean']>;
+  hasAccountWith?: InputMaybe<Array<AccountWhereInput>>;
+  /** id field predicates */
+  id?: InputMaybe<Scalars['ID']>;
+  idContainsFold?: InputMaybe<Scalars['ID']>;
+  idEqualFold?: InputMaybe<Scalars['ID']>;
+  idGT?: InputMaybe<Scalars['ID']>;
+  idGTE?: InputMaybe<Scalars['ID']>;
+  idIn?: InputMaybe<Array<Scalars['ID']>>;
+  idLT?: InputMaybe<Scalars['ID']>;
+  idLTE?: InputMaybe<Scalars['ID']>;
+  idNEQ?: InputMaybe<Scalars['ID']>;
+  idNotIn?: InputMaybe<Array<Scalars['ID']>>;
+  not?: InputMaybe<OAuthConnectionWhereInput>;
+  or?: InputMaybe<Array<OAuthConnectionWhereInput>>;
+  /** provider field predicates */
+  provider?: InputMaybe<OAuthConnectionProvider>;
+  /** provider_avatar_url field predicates */
+  providerAvatarURL?: InputMaybe<Scalars['String']>;
+  providerAvatarURLContains?: InputMaybe<Scalars['String']>;
+  providerAvatarURLContainsFold?: InputMaybe<Scalars['String']>;
+  providerAvatarURLEqualFold?: InputMaybe<Scalars['String']>;
+  providerAvatarURLGT?: InputMaybe<Scalars['String']>;
+  providerAvatarURLGTE?: InputMaybe<Scalars['String']>;
+  providerAvatarURLHasPrefix?: InputMaybe<Scalars['String']>;
+  providerAvatarURLHasSuffix?: InputMaybe<Scalars['String']>;
+  providerAvatarURLIn?: InputMaybe<Array<Scalars['String']>>;
+  providerAvatarURLIsNil?: InputMaybe<Scalars['Boolean']>;
+  providerAvatarURLLT?: InputMaybe<Scalars['String']>;
+  providerAvatarURLLTE?: InputMaybe<Scalars['String']>;
+  providerAvatarURLNEQ?: InputMaybe<Scalars['String']>;
+  providerAvatarURLNotIn?: InputMaybe<Array<Scalars['String']>>;
+  providerAvatarURLNotNil?: InputMaybe<Scalars['Boolean']>;
+  providerIn?: InputMaybe<Array<OAuthConnectionProvider>>;
+  providerNEQ?: InputMaybe<OAuthConnectionProvider>;
+  providerNotIn?: InputMaybe<Array<OAuthConnectionProvider>>;
+  /** provider_user_id field predicates */
+  providerUserID?: InputMaybe<Scalars['String']>;
+  providerUserIDContains?: InputMaybe<Scalars['String']>;
+  providerUserIDContainsFold?: InputMaybe<Scalars['String']>;
+  providerUserIDEqualFold?: InputMaybe<Scalars['String']>;
+  providerUserIDGT?: InputMaybe<Scalars['String']>;
+  providerUserIDGTE?: InputMaybe<Scalars['String']>;
+  providerUserIDHasPrefix?: InputMaybe<Scalars['String']>;
+  providerUserIDHasSuffix?: InputMaybe<Scalars['String']>;
+  providerUserIDIn?: InputMaybe<Array<Scalars['String']>>;
+  providerUserIDLT?: InputMaybe<Scalars['String']>;
+  providerUserIDLTE?: InputMaybe<Scalars['String']>;
+  providerUserIDNEQ?: InputMaybe<Scalars['String']>;
+  providerUserIDNotIn?: InputMaybe<Array<Scalars['String']>>;
+  /** provider_username field predicates */
+  providerUsername?: InputMaybe<Scalars['String']>;
+  providerUsernameContains?: InputMaybe<Scalars['String']>;
+  providerUsernameContainsFold?: InputMaybe<Scalars['String']>;
+  providerUsernameEqualFold?: InputMaybe<Scalars['String']>;
+  providerUsernameGT?: InputMaybe<Scalars['String']>;
+  providerUsernameGTE?: InputMaybe<Scalars['String']>;
+  providerUsernameHasPrefix?: InputMaybe<Scalars['String']>;
+  providerUsernameHasSuffix?: InputMaybe<Scalars['String']>;
+  providerUsernameIn?: InputMaybe<Array<Scalars['String']>>;
+  providerUsernameIsNil?: InputMaybe<Scalars['Boolean']>;
+  providerUsernameLT?: InputMaybe<Scalars['String']>;
+  providerUsernameLTE?: InputMaybe<Scalars['String']>;
+  providerUsernameNEQ?: InputMaybe<Scalars['String']>;
+  providerUsernameNotIn?: InputMaybe<Array<Scalars['String']>>;
+  providerUsernameNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** refresh_token_expires_at field predicates */
+  refreshTokenExpiresAt?: InputMaybe<Scalars['Time']>;
+  refreshTokenExpiresAtGT?: InputMaybe<Scalars['Time']>;
+  refreshTokenExpiresAtGTE?: InputMaybe<Scalars['Time']>;
+  refreshTokenExpiresAtIn?: InputMaybe<Array<Scalars['Time']>>;
+  refreshTokenExpiresAtIsNil?: InputMaybe<Scalars['Boolean']>;
+  refreshTokenExpiresAtLT?: InputMaybe<Scalars['Time']>;
+  refreshTokenExpiresAtLTE?: InputMaybe<Scalars['Time']>;
+  refreshTokenExpiresAtNEQ?: InputMaybe<Scalars['Time']>;
+  refreshTokenExpiresAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+  refreshTokenExpiresAtNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** updated_at field predicates */
+  updatedAt?: InputMaybe<Scalars['Time']>;
+  updatedAtGT?: InputMaybe<Scalars['Time']>;
+  updatedAtGTE?: InputMaybe<Scalars['Time']>;
+  updatedAtIn?: InputMaybe<Array<Scalars['Time']>>;
+  updatedAtLT?: InputMaybe<Scalars['Time']>;
+  updatedAtLTE?: InputMaybe<Scalars['Time']>;
+  updatedAtNEQ?: InputMaybe<Scalars['Time']>;
+  updatedAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
+};
+
+export enum OAuthProvider {
+  Tiktok = 'TIKTOK'
+}
 
 export enum Order {
   Asc = 'asc',
@@ -4754,6 +4941,27 @@ export type SiwsCredentials = {
   siws?: Maybe<Array<SiwsCredential>>;
 };
 
+export type SendEmailVerificationInput = {
+  /** The email address to send the verification code to. */
+  email: Scalars['String'];
+};
+
+export type SendPhoneVerificationInput = {
+  /**
+   * The phone number to send the verification code to.
+   * Must be in E.164 format (e.g., +14155551234).
+   */
+  phoneNumber: Scalars['String'];
+};
+
+export type SendVerificationResponse = {
+  __typename?: 'SendVerificationResponse';
+  /** Human-readable message about the verification status. */
+  message: Scalars['String'];
+  /** Whether the verification code was sent successfully. */
+  success: Scalars['Boolean'];
+};
+
 export type Service = Node & {
   __typename?: 'Service';
   createdAt: Scalars['Time'];
@@ -6359,6 +6567,36 @@ export type UpdateServiceInput = {
   version?: InputMaybe<Scalars['String']>;
 };
 
+export type VerifyEmailInput = {
+  /** The 6-digit verification code received via email. */
+  code: Scalars['String'];
+  /**
+   * The email address that was sent the verification code.
+   * Must match the email used in sendEmailVerification.
+   */
+  email: Scalars['String'];
+};
+
+export type VerifyPhoneInput = {
+  /** The 6-digit verification code received via SMS. */
+  code: Scalars['String'];
+  /**
+   * The phone number that was sent the verification code.
+   * Must match the phone number used in sendPhoneVerification.
+   */
+  phoneNumber: Scalars['String'];
+};
+
+export type VerifyResponse = {
+  __typename?: 'VerifyResponse';
+  /** Human-readable message about the verification result. */
+  message: Scalars['String'];
+  /** Whether the verification was successful. */
+  success: Scalars['Boolean'];
+  /** The verified value (phone number or email) if verification succeeded. */
+  verifiedValue?: Maybe<Scalars['String']>;
+};
+
 export type WebauthnCredential = {
   __typename?: 'WebauthnCredential';
   AAGUID: Scalars['String'];
@@ -6544,7 +6782,7 @@ export type FinalizeLoginMutation = { __typename?: 'Mutation', finalizeLogin: st
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'Account', id: string } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'Account', id: string, email?: string | null, phoneNumber?: string | null, phoneNumberVerifiedAt?: string | null } | null };
 
 export type MerkleDropByKeyQueryVariables = Exact<{
   key: Scalars['String'];
@@ -7405,6 +7643,9 @@ export const MeDocument = `
     query Me {
   me {
     id
+    email
+    phoneNumber
+    phoneNumberVerifiedAt
   }
 }
     `;
