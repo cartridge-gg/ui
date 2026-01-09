@@ -1,0 +1,21 @@
+import{j as e}from"./jsx-runtime-Cf8x2fCZ.js";import"./context-DHheWSmn.js";import"./alert-HkMSTgu9.js";import"./badge-CF9VCaa2.js";import"./breadcrumb-V3TW3CaT.js";import"./index-CXU5yUf2.js";import"./card-CHJmWtwN.js";import"./checkbox-qMrJ6QPd.js";import"./drawer-xE2kwbAV.js";import"./dropdown-menu-C7nQ35UG.js";import"./radio-group-BQACWc2R.js";import"./menubar-Bg0fvWch.js";import"./popover-BvzVgOqp.js";import"./progress-Dkom_LNH.js";import{S as k,a as u}from"./select-DFnuJnNs.js";import"./separator-DLNkf967.js";import"./sheet-B_rs-mB8.js";import"./skeleton-CV1PtUMd.js";import"./switch-ssHJkgb5.js";import"./table-2Lq_Rdjg.js";import"./tabs-Baec46jY.js";import"./index-BlmOqGMO.js";import"./specialized-toasts-DEH3pG23.js";import"./toggle-group-C7AVasTd.js";import"./index-XwABQy1c.js";import"./tooltip-gQAcybeF.js";import{T as n,a as T}from"./row-HTz7CoJC.js";import"./index-yBjzXJbu.js";import"./index-KnJS0CU8.js";import"./index-Dkb_ZYRU.js";import"./index-yBYjIlgW.js";import"./index-C_Dn7qTj.js";import"./index-DKk_hhWv.js";import"./index-CVWIyhAF.js";import"./index-DuqhnXMO.js";import"./index-fNjTmf9T.js";import"./index-BigR8kad.js";import"./index-CQ2Y0WLn.js";import"./index-xprPBo3d.js";import"./wedge-Ek6y42Ws.js";import"./utils-GTnaulzv.js";import"./index-CRGxjvZy.js";import"./index-D31t_0wX.js";import"./index-Ms1lWa6I.js";import"./index-DZCApzUK.js";import"./index-C-QU4qAu.js";import"./index-BZkNnodj.js";import"./alert-DG-IKYwr.js";import"./times-zfpenlOA.js";import"./times-circle-BPxv1pFA.js";import"./spinner-gN6xF-9l.js";import"./dots-CqQy5XBj.js";import"./external-CfODMYJ8.js";import"./index-DZ2oWOeb.js";import"./index-BWkk9jnE.js";import"./checkbox-BNhnVxLV.js";import"./index-Ck-mJuwY.js";import"./index-wyL_HbYX.js";import"./index-DfuoQG06.js";import"./check-BknbCD27.js";import"./circle-Ddb5-e2i.js";import"./index-Bbf5mMoM.js";import"./circle-check-B84UAr7O.js";import"./award-DeRbG8h3.js";import"./toast-BzlTG7tn.js";import"./sparkles-CY9lzZpH.js";import"./utils-CZiDjOgf.js";import"./thumbnail-WWg6V_dv.js";import"./index-DTUS6EFt.js";import"./warning-CVvTL8z7.js";import"./info-BgozbEzj.js";const t={balance:{amount:71521921165994e-18,value:.12851233577956853,change:-.0003482251426370486},metadata:{name:"Ether",symbol:"ETH",decimals:18,address:"0x049D36570D4e46f48e99674bd3fcc84644DdD6c96F7C741B1562B82f9e004dC7",image:"https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/e07829b7-0382-4e03-7ecd-a478c5aa9f00/logo"}},Be={title:"Modules/ERC20/Token Select/Header",component:n,parameters:{layout:"centered"},args:{}},o={render:()=>{const m=t;return e.jsxs(k,{defaultValue:t.metadata.address,value:t.metadata.address,children:[e.jsx(n,{onClick:()=>{}}),e.jsx(u,{className:"invisible",children:[t].map(r=>e.jsx(T,{token:r,currentToken:m},r.metadata.address))})]})}},a={render:()=>{const m=t;return e.jsxs(k,{defaultValue:t.metadata.address,value:t.metadata.address,children:[e.jsx(n,{disabled:!0}),e.jsx(u,{className:"invisible",children:[t].map(r=>e.jsx(T,{token:r,currentToken:m},r.metadata.address))})]})}};var i,s,p;o.parameters={...o.parameters,docs:{...(i=o.parameters)==null?void 0:i.docs,source:{originalSource:`{
+  render: () => {
+    const currentToken = mockToken;
+    return <Select defaultValue={mockToken.metadata.address} value={mockToken.metadata.address}>
+        <TokenSelectHeader onClick={() => {}} />
+        <SelectContent className="invisible">
+          {[mockToken].map(token => <TokenSelectRow key={token.metadata.address} token={token} currentToken={currentToken} />)}
+        </SelectContent>
+      </Select>;
+  }
+}`,...(p=(s=o.parameters)==null?void 0:s.docs)==null?void 0:p.source}}};var d,c,l;a.parameters={...a.parameters,docs:{...(d=a.parameters)==null?void 0:d.docs,source:{originalSource:`{
+  render: () => {
+    const currentToken = mockToken;
+    return <Select defaultValue={mockToken.metadata.address} value={mockToken.metadata.address}>
+        <TokenSelectHeader disabled={true} />
+        <SelectContent className="invisible">
+          {[mockToken].map(token => <TokenSelectRow key={token.metadata.address} token={token} currentToken={currentToken} />)}
+        </SelectContent>
+      </Select>;
+  }
+}`,...(l=(c=a.parameters)==null?void 0:c.docs)==null?void 0:l.source}}};const Ie=["Default","Disabled"];export{o as Default,a as Disabled,Ie as __namedExportsOrder,Be as default};
