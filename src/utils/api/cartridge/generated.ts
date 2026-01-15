@@ -2987,7 +2987,9 @@ export type OAuthConnectionProfile = {
 
 /** OAuthConnectionProvider is enum for the field provider */
 export enum OAuthConnectionProvider {
-  Tiktok = 'TIKTOK'
+  Instagram = 'INSTAGRAM',
+  Tiktok = 'TIKTOK',
+  Twitter = 'TWITTER'
 }
 
 /**
@@ -3118,7 +3120,9 @@ export type OAuthConnectionWhereInput = {
 };
 
 export enum OAuthProvider {
-  Tiktok = 'TIKTOK'
+  Instagram = 'INSTAGRAM',
+  Tiktok = 'TIKTOK',
+  Twitter = 'TWITTER'
 }
 
 export enum Order {
@@ -3290,6 +3294,11 @@ export type PaymasterEdge = {
   cursor: Scalars['Cursor'];
   /** The item at the end of the edge. */
   node?: Maybe<Paymaster>;
+};
+
+export type PaymasterLookupResult = {
+  __typename?: 'PaymasterLookupResult';
+  paymaster?: Maybe<Paymaster>;
 };
 
 /** Ordering options for Paymaster connections */
@@ -3915,6 +3924,11 @@ export type PlaythroughResult = {
   items: Array<PlaythroughItem>;
 };
 
+export type PolicyCallInput = {
+  contractAddress: Scalars['String'];
+  entryPoint: Scalars['String'];
+};
+
 export type PolicyInput = {
   contractAddress: Scalars['String'];
   entryPoint: Scalars['String'];
@@ -4001,6 +4015,7 @@ export type Query = {
   layerswapQuote: LayerswapQuote;
   layerswapSources: Array<LayerswapSource>;
   layerswapStatus: LayerswapStatus;
+  lookupPaymaster: PaymasterLookupResult;
   me?: Maybe<Account>;
   merkleClaims: MerkleClaimConnection;
   merkleClaimsForAddress: Array<MerkleClaim>;
@@ -4191,6 +4206,11 @@ export type QueryLayerswapSourcesArgs = {
 export type QueryLayerswapStatusArgs = {
   isMainnet?: InputMaybe<Scalars['Boolean']>;
   swapId: Scalars['ID'];
+};
+
+
+export type QueryLookupPaymasterArgs = {
+  calls: Array<PolicyCallInput>;
 };
 
 
@@ -6976,6 +6996,34 @@ export type TransfersQueryVariables = Exact<{
 
 export type TransfersQuery = { __typename?: 'Query', transfers: { __typename?: 'TransferResult', items: Array<{ __typename?: 'TransferItem', meta: { __typename?: 'TransferMeta', project: string, address: string, date: string, limit: number, count: number }, transfers: Array<{ __typename?: 'Transfer', amount: string, decimals: number, metadata: string, name: string, symbol: string, contractAddress: string, executedAt: string, fromAddress: string, toAddress: string, tokenId: string, eventId: string, transactionHash: string }> }> } };
 
+export type SendEmailVerificationMutationVariables = Exact<{
+  input: SendEmailVerificationInput;
+}>;
+
+
+export type SendEmailVerificationMutation = { __typename?: 'Mutation', sendEmailVerification: { __typename?: 'SendVerificationResponse', success: boolean, message: string } };
+
+export type SendPhoneVerificationMutationVariables = Exact<{
+  input: SendPhoneVerificationInput;
+}>;
+
+
+export type SendPhoneVerificationMutation = { __typename?: 'Mutation', sendPhoneVerification: { __typename?: 'SendVerificationResponse', success: boolean, message: string } };
+
+export type VerifyEmailMutationVariables = Exact<{
+  input: VerifyEmailInput;
+}>;
+
+
+export type VerifyEmailMutation = { __typename?: 'Mutation', verifyEmail: { __typename?: 'VerifyResponse', success: boolean, message: string, verifiedValue?: string | null } };
+
+export type VerifyPhoneMutationVariables = Exact<{
+  input: VerifyPhoneInput;
+}>;
+
+
+export type VerifyPhoneMutation = { __typename?: 'Mutation', verifyPhone: { __typename?: 'VerifyResponse', success: boolean, message: string, verifiedValue?: string | null } };
+
 export type TxsHistoryQueryVariables = Exact<{
   username: Scalars['String'];
 }>;
@@ -8442,6 +8490,76 @@ export const useTransfersQuery = <
     useQuery<TransfersQuery, TError, TData>(
       ['Transfers', variables],
       useFetchData<TransfersQuery, TransfersQueryVariables>(TransfersDocument).bind(null, variables),
+      options
+    );
+export const SendEmailVerificationDocument = `
+    mutation SendEmailVerification($input: SendEmailVerificationInput!) {
+  sendEmailVerification(input: $input) {
+    success
+    message
+  }
+}
+    `;
+export const useSendEmailVerificationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SendEmailVerificationMutation, TError, SendEmailVerificationMutationVariables, TContext>) =>
+    useMutation<SendEmailVerificationMutation, TError, SendEmailVerificationMutationVariables, TContext>(
+      ['SendEmailVerification'],
+      useFetchData<SendEmailVerificationMutation, SendEmailVerificationMutationVariables>(SendEmailVerificationDocument),
+      options
+    );
+export const SendPhoneVerificationDocument = `
+    mutation SendPhoneVerification($input: SendPhoneVerificationInput!) {
+  sendPhoneVerification(input: $input) {
+    success
+    message
+  }
+}
+    `;
+export const useSendPhoneVerificationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SendPhoneVerificationMutation, TError, SendPhoneVerificationMutationVariables, TContext>) =>
+    useMutation<SendPhoneVerificationMutation, TError, SendPhoneVerificationMutationVariables, TContext>(
+      ['SendPhoneVerification'],
+      useFetchData<SendPhoneVerificationMutation, SendPhoneVerificationMutationVariables>(SendPhoneVerificationDocument),
+      options
+    );
+export const VerifyEmailDocument = `
+    mutation VerifyEmail($input: VerifyEmailInput!) {
+  verifyEmail(input: $input) {
+    success
+    message
+    verifiedValue
+  }
+}
+    `;
+export const useVerifyEmailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<VerifyEmailMutation, TError, VerifyEmailMutationVariables, TContext>) =>
+    useMutation<VerifyEmailMutation, TError, VerifyEmailMutationVariables, TContext>(
+      ['VerifyEmail'],
+      useFetchData<VerifyEmailMutation, VerifyEmailMutationVariables>(VerifyEmailDocument),
+      options
+    );
+export const VerifyPhoneDocument = `
+    mutation VerifyPhone($input: VerifyPhoneInput!) {
+  verifyPhone(input: $input) {
+    success
+    message
+    verifiedValue
+  }
+}
+    `;
+export const useVerifyPhoneMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<VerifyPhoneMutation, TError, VerifyPhoneMutationVariables, TContext>) =>
+    useMutation<VerifyPhoneMutation, TError, VerifyPhoneMutationVariables, TContext>(
+      ['VerifyPhone'],
+      useFetchData<VerifyPhoneMutation, VerifyPhoneMutationVariables>(VerifyPhoneDocument),
       options
     );
 export const TxsHistoryDocument = `
