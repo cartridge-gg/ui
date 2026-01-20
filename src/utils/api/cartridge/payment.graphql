@@ -97,14 +97,6 @@ query LayerswapStatus($swapId: ID!, $isMainnet: Boolean) {
   layerswapStatus(swapId: $swapId, isMainnet: $isMainnet)
 }
 
-query CoinbaseOnrampRequirements($username: String!) {
-  coinbaseOnrampRequirements(username: $username) {
-    needsEmail
-    needsPhoneNumber
-    needsPhoneVerification
-  }
-}
-
 query CoinbaseOnrampTransactions($input: CoinbaseTransactionsInput!) {
   coinbaseOnrampTransactions(input: $input) {
     transactions {
@@ -139,18 +131,31 @@ query CoinbaseOnrampTransactions($input: CoinbaseTransactionsInput!) {
 
 mutation CreateCoinbaseOnRampOrder($input: CreateCoinbaseOnrampOrderInput!) {
   createCoinbaseOnrampOrder(input: $input) {
-    orderId
-    paymentLink
-    paymentLinkType
-    paymentSubtotal
-    paymentTotal
-    purchaseAmount
-    purchaseCurrency
-    status
-    fees {
-      type
-      amount
-      currency
+    coinbaseOrder {
+      orderId
+      paymentLink
+      paymentLinkType
+      paymentTotal
+      paymentCurrency
+      purchaseAmount
+      purchaseCurrency
+      destinationAddress
+      destinationNetwork
+      fees {
+        type
+        amount
+        currency
+      }
+    }
+
+    layerswapPayment {
+      swapId
+      cryptoPaymentId
+      sourceNetwork
+      sourceTokenAmount
+      sourceTokenAddress
+      sourceDepositAddress
+      expiresAt
     }
   }
 }
