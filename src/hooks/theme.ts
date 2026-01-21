@@ -31,28 +31,34 @@ export function useThemeEffect({
           "--theme-cover-url",
           coverUrl,
         );
+      } else {
+        document.documentElement.style.removeProperty("--theme-cover-url");
       }
 
       // Set colors if they exist
-      if (theme.colors) {
-        if (theme.colors.primary) {
-          const val =
-            typeof theme.colors.primary === "string"
-              ? theme.colors.primary
-              : theme.colors.primary[colorMode];
-          document.documentElement.style.setProperty("--primary-100", val);
-        }
+      if (theme.colors?.primary) {
+        const val =
+          typeof theme.colors.primary === "string"
+            ? theme.colors.primary
+            : theme.colors.primary[colorMode];
+        document.documentElement.style.setProperty("--primary-100", val);
+      } else {
+        document.documentElement.style.removeProperty("--primary-100");
+      }
 
-        if (theme.colors.primaryForeground) {
-          const val =
-            typeof theme.colors.primaryForeground === "string"
-              ? theme.colors.primaryForeground
-              : theme.colors.primaryForeground[colorMode];
-          document.documentElement.style.setProperty(
-            "--primary-foreground-100",
-            val,
-          );
-        }
+      if (theme.colors?.primaryForeground) {
+        const val =
+          typeof theme.colors.primaryForeground === "string"
+            ? theme.colors.primaryForeground
+            : theme.colors.primaryForeground[colorMode];
+        document.documentElement.style.setProperty(
+          "--primary-foreground-100",
+          val,
+        );
+      } else {
+        document.documentElement.style.removeProperty(
+          "--primary-foreground-100",
+        );
       }
     };
 
