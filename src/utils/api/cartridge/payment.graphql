@@ -159,3 +159,29 @@ mutation CreateCoinbaseOnRampOrder($input: CreateCoinbaseOnrampOrderInput!) {
     }
   }
 }
+
+query CoinbaseOnRampQuote($input: CoinbaseOnrampQuoteInput!) {
+  coinbaseOnrampQuote(input: $input) {
+    quoteId
+    paymentTotal {
+      amount
+      currency
+    }
+    purchaseAmount {
+      amount
+      currency
+    }
+    layerswapFees {
+      amount
+      currency
+    }
+    coinbaseFee {
+      amount
+      currency
+    }
+    networkFee {
+      amount
+      currency
+    }
+  }
+}
