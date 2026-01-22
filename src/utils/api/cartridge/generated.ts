@@ -360,6 +360,8 @@ export type Activity = Node & {
   status: ActivityStatus;
   /** Transaction hash if this is a blockchain transaction */
   transactionHash?: Maybe<Scalars['String']>;
+  /** External transaction tracking ID for sponsored transactions */
+  transactionID?: Maybe<Scalars['String']>;
   /** Type of activity */
   type: ActivityType;
   updatedAt: Scalars['Time'];
@@ -645,6 +647,22 @@ export type ActivityWhereInput = {
   transactionHashNEQ?: InputMaybe<Scalars['String']>;
   transactionHashNotIn?: InputMaybe<Array<Scalars['String']>>;
   transactionHashNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** transaction_id field predicates */
+  transactionID?: InputMaybe<Scalars['String']>;
+  transactionIDContains?: InputMaybe<Scalars['String']>;
+  transactionIDContainsFold?: InputMaybe<Scalars['String']>;
+  transactionIDEqualFold?: InputMaybe<Scalars['String']>;
+  transactionIDGT?: InputMaybe<Scalars['String']>;
+  transactionIDGTE?: InputMaybe<Scalars['String']>;
+  transactionIDHasPrefix?: InputMaybe<Scalars['String']>;
+  transactionIDHasSuffix?: InputMaybe<Scalars['String']>;
+  transactionIDIn?: InputMaybe<Array<Scalars['String']>>;
+  transactionIDIsNil?: InputMaybe<Scalars['Boolean']>;
+  transactionIDLT?: InputMaybe<Scalars['String']>;
+  transactionIDLTE?: InputMaybe<Scalars['String']>;
+  transactionIDNEQ?: InputMaybe<Scalars['String']>;
+  transactionIDNotIn?: InputMaybe<Array<Scalars['String']>>;
+  transactionIDNotNil?: InputMaybe<Scalars['Boolean']>;
   /** type field predicates */
   type?: InputMaybe<ActivityType>;
   typeIn?: InputMaybe<Array<ActivityType>>;
@@ -772,6 +790,8 @@ export type CoinbaseOnrampQuote = {
   __typename?: 'CoinbaseOnrampQuote';
   /** Fee charged by Coinbase. */
   coinbaseFee: CoinbaseAmount;
+  /** Fees charged by Layerswap for bridging. */
+  layerswapFees: CoinbaseAmount;
   /** Network fee for sending the crypto. */
   networkFee: CoinbaseAmount;
   /** Ready-to-use one-click-buy URL. Only returned when destinationAddress is provided. */
@@ -787,20 +807,10 @@ export type CoinbaseOnrampQuote = {
 };
 
 export type CoinbaseOnrampQuoteInput = {
-  /** The client's IP address. Required by Coinbase for compliance. */
-  clientIP: Scalars['String'];
-  /** ISO 3166-1 two-digit country code (e.g., "US"). */
-  country: Scalars['String'];
-  /** Optional destination wallet address. If provided, the response will include a one-click-buy URL. */
-  destinationAddress?: InputMaybe<Scalars['String']>;
-  /** The destination network for the USDC purchase. */
-  destinationNetwork: CoinbaseNetwork;
-  /** The amount of fiat currency to pay (e.g., "100.00" for $100 USD). */
-  paymentAmount: Scalars['String'];
-  /** The fiat currency to pay with (e.g., "USD"). */
-  paymentCurrency: Scalars['String'];
-  /** ISO 3166-2 subdivision code (e.g., "NY"). Required for US users. */
-  subdivision?: InputMaybe<Scalars['String']>;
+  /** The amount of USDC to purchase (e.g., "100.00" for 100 USDC). */
+  purchaseUSDCAmount: Scalars['String'];
+  /** If true, use sandbox mode to get a quote for testnet bridging. */
+  sandbox?: InputMaybe<Scalars['Boolean']>;
 };
 
 export enum CoinbaseOnrampStatus {
@@ -6841,6 +6851,13 @@ export type CreateCoinbaseOnRampOrderMutationVariables = Exact<{
 
 export type CreateCoinbaseOnRampOrderMutation = { __typename?: 'Mutation', createCoinbaseOnrampOrder: { __typename?: 'CoinbaseOnrampOrderResponse', coinbaseOrder: { __typename?: 'CoinbaseOnrampOrder', orderId: string, paymentLink: string, paymentLinkType: string, paymentTotal: string, paymentCurrency: string, purchaseAmount: string, purchaseCurrency: string, destinationAddress: string, destinationNetwork: string, fees: Array<{ __typename?: 'CoinbaseOnrampFee', type: string, amount: string, currency: string }> }, layerswapPayment: { __typename?: 'LayerswapPayment', swapId: string, cryptoPaymentId: string, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } } };
 
+export type CoinbaseOnRampQuoteQueryVariables = Exact<{
+  input: CoinbaseOnrampQuoteInput;
+}>;
+
+
+export type CoinbaseOnRampQuoteQuery = { __typename?: 'Query', coinbaseOnrampQuote: { __typename?: 'CoinbaseOnrampQuote', quoteId: string, paymentTotal: { __typename?: 'CoinbaseAmount', amount: string, currency: string }, purchaseAmount: { __typename?: 'CoinbaseAmount', amount: string, currency: string }, layerswapFees: { __typename?: 'CoinbaseAmount', amount: string, currency: string }, coinbaseFee: { __typename?: 'CoinbaseAmount', amount: string, currency: string }, networkFee: { __typename?: 'CoinbaseAmount', amount: string, currency: string } } };
+
 export type PlaythroughsQueryVariables = Exact<{
   projects: Array<PlaythroughProject> | PlaythroughProject;
 }>;
@@ -8039,6 +8056,45 @@ export const useCreateCoinbaseOnRampOrderMutation = <
     useMutation<CreateCoinbaseOnRampOrderMutation, TError, CreateCoinbaseOnRampOrderMutationVariables, TContext>(
       ['CreateCoinbaseOnRampOrder'],
       useFetchData<CreateCoinbaseOnRampOrderMutation, CreateCoinbaseOnRampOrderMutationVariables>(CreateCoinbaseOnRampOrderDocument),
+      options
+    );
+export const CoinbaseOnRampQuoteDocument = `
+    query CoinbaseOnRampQuote($input: CoinbaseOnrampQuoteInput!) {
+  coinbaseOnrampQuote(input: $input) {
+    quoteId
+    paymentTotal {
+      amount
+      currency
+    }
+    purchaseAmount {
+      amount
+      currency
+    }
+    layerswapFees {
+      amount
+      currency
+    }
+    coinbaseFee {
+      amount
+      currency
+    }
+    networkFee {
+      amount
+      currency
+    }
+  }
+}
+    `;
+export const useCoinbaseOnRampQuoteQuery = <
+      TData = CoinbaseOnRampQuoteQuery,
+      TError = unknown
+    >(
+      variables: CoinbaseOnRampQuoteQueryVariables,
+      options?: UseQueryOptions<CoinbaseOnRampQuoteQuery, TError, TData>
+    ) =>
+    useQuery<CoinbaseOnRampQuoteQuery, TError, TData>(
+      ['CoinbaseOnRampQuote', variables],
+      useFetchData<CoinbaseOnRampQuoteQuery, CoinbaseOnRampQuoteQueryVariables>(CoinbaseOnRampQuoteDocument).bind(null, variables),
       options
     );
 export const PlaythroughsDocument = `
