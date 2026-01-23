@@ -679,6 +679,14 @@ export type ActivityWhereInput = {
   updatedAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
 };
 
+export enum AdminBudgetReason {
+  Advance = 'ADVANCE',
+  Correction = 'CORRECTION',
+  Promotion = 'PROMOTION',
+  Refund = 'REFUND',
+  Settlement = 'SETTLEMENT'
+}
+
 export type AssetEdge = {
   __typename?: 'AssetEdge';
   amount: Scalars['Float'];
@@ -1096,7 +1104,6 @@ export type CreateLayerswapDepositInput = {
   layerswapFees?: InputMaybe<Scalars['BigInt']>;
   marginPercent?: InputMaybe<Scalars['Int']>;
   sourceNetwork: LayerswapSourceNetwork;
-  username: Scalars['String'];
 };
 
 export type CreateLayerswapPaymentInput = {
@@ -1107,7 +1114,6 @@ export type CreateLayerswapPaymentInput = {
   sourceNetwork: LayerswapSourceNetwork;
   starterpackId?: InputMaybe<Scalars['ID']>;
   teamId?: InputMaybe<Scalars['ID']>;
-  username: Scalars['String'];
 };
 
 /**
@@ -2706,8 +2712,10 @@ export type MutationCreateTeamArgs = {
 
 
 export type MutationDecreaseBudgetArgs = {
+  admin?: InputMaybe<Scalars['Boolean']>;
   amount: Scalars['Int'];
   paymasterName: Scalars['ID'];
+  reason?: InputMaybe<AdminBudgetReason>;
   unit: FeeUnit;
 };
 
@@ -2756,8 +2764,10 @@ export type MutationFinalizeRegistrationArgs = {
 
 
 export type MutationIncreaseBudgetArgs = {
+  admin?: InputMaybe<Scalars['Boolean']>;
   amount: Scalars['Int'];
   paymasterName: Scalars['ID'];
+  reason?: InputMaybe<AdminBudgetReason>;
   unit: FeeUnit;
 };
 
