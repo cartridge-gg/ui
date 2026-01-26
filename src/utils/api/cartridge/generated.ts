@@ -790,8 +790,11 @@ export type CoinbaseOnrampOrderResponse = {
   __typename?: 'CoinbaseOnrampOrderResponse';
   /** The Coinbase onramp order details. */
   coinbaseOrder: CoinbaseOnrampOrder;
-  /** The Layerswap payment details for tracking the bridge. */
-  layerswapPayment: LayerswapPayment;
+  /**
+   * The Layerswap payment details for tracking the bridge.
+   * Only available for createCoinbaseLayerswapOrder.
+   */
+  layerswapPayment?: Maybe<LayerswapPayment>;
 };
 
 export type CoinbaseOnrampQuote = {
@@ -1079,13 +1082,24 @@ export type ControllerWhereInput = {
   updatedAtNotIn?: InputMaybe<Array<Scalars['Time']>>;
 };
 
-export type CreateCoinbaseOnrampOrderInput = {
+export type CreateCoinbaseLayerswapOrderInput = {
   /**
    * The amount of USDC to purchase (e.g., "100.000000" for 100 USDC).
    * This is the amount that will be delivered to the bridge.
    */
   purchaseUSDCAmount: Scalars['String'];
   /** If true, use sandbox mode (Base Sepolia -> Starknet Sepolia). */
+  sandbox?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type CreateCoinbaseOnrampOrderInput = {
+  /** The temporary burner address that will receive the funds initially. */
+  burnerAddress: Scalars['String'];
+  /** The presigned transaction to execute after the purchase. */
+  presignedTxn: Scalars['String'];
+  /** The amount of USDC to purchase (e.g., "100.000000" for 100 USDC). */
+  purchaseUSDCAmount: Scalars['String'];
+  /** If true, use sandbox mode (Base Sepolia). */
   sandbox?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -2534,6 +2548,11 @@ export type Mutation = {
    * Create a unified Coinbase onramp order.
    * This mutation orchestrates both Coinbase and Layerswap to bridge USDC from Apple Pay to Starknet.
    */
+  createCoinbaseLayerswapOrder: CoinbaseOnrampOrderResponse;
+  /**
+   * Create a Coinbase onramp order with a presigned transaction.
+   * This mutation sends USDC to a burner address, which then transfers to the presigned destination.
+   */
   createCoinbaseOnrampOrder: CoinbaseOnrampOrderResponse;
   createCryptoPayment: CryptoPayment;
   createDeployment: Deployment;
@@ -2626,6 +2645,11 @@ export type MutationBeginRegistrationArgs = {
 
 export type MutationClaimFreeStarterpackArgs = {
   input: StarterpackInput;
+};
+
+
+export type MutationCreateCoinbaseLayerswapOrderArgs = {
+  input: CreateCoinbaseLayerswapOrderInput;
 };
 
 
@@ -6859,7 +6883,7 @@ export type CreateCoinbaseOnRampOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateCoinbaseOnRampOrderMutation = { __typename?: 'Mutation', createCoinbaseOnrampOrder: { __typename?: 'CoinbaseOnrampOrderResponse', coinbaseOrder: { __typename?: 'CoinbaseOnrampOrder', orderId: string, paymentLink: string, paymentLinkType: string, paymentTotal: string, paymentCurrency: string, purchaseAmount: string, purchaseCurrency: string, destinationAddress: string, destinationNetwork: string, fees: Array<{ __typename?: 'CoinbaseOnrampFee', type: string, amount: string, currency: string }> }, layerswapPayment: { __typename?: 'LayerswapPayment', swapId: string, cryptoPaymentId: string, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } } };
+export type CreateCoinbaseOnRampOrderMutation = { __typename?: 'Mutation', createCoinbaseOnrampOrder: { __typename?: 'CoinbaseOnrampOrderResponse', coinbaseOrder: { __typename?: 'CoinbaseOnrampOrder', orderId: string, paymentLink: string, paymentLinkType: string, paymentTotal: string, paymentCurrency: string, purchaseAmount: string, purchaseCurrency: string, destinationAddress: string, destinationNetwork: string, fees: Array<{ __typename?: 'CoinbaseOnrampFee', type: string, amount: string, currency: string }> }, layerswapPayment?: { __typename?: 'LayerswapPayment', swapId: string, cryptoPaymentId: string, sourceNetwork: LayerswapSourceNetwork, sourceTokenAmount: string, sourceTokenAddress: string, sourceDepositAddress: string, expiresAt: string } | null } };
 
 export type CoinbaseOnRampQuoteQueryVariables = Exact<{
   input: CoinbaseOnrampQuoteInput;
