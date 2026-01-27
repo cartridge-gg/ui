@@ -1,0 +1,12 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { Empty } from "./index";
+declare const meta: Meta<typeof Empty>;
+export default meta;
+type Story = StoryObj<typeof meta>;
+export declare const Default: Story;
+export declare const Discover: Story;
+export declare const Activity: Story;
+export declare const Achievements: Story;
+export declare const Guild: Story;
+export declare const Inventory: Story;
+export declare const Claim: Story;

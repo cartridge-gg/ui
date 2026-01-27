@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { CollectibleFooter } from ".";
+declare const meta: Meta<typeof CollectibleFooter>;
+export default meta;
+type Story = StoryObj<typeof CollectibleFooter>;
+export declare const Default: Story;
+export declare const InventoryCollection: Story;
+export declare const InventoryItem: Story;
+export declare const InventoryItemListed: Story;
+export declare const InventoryItem1155: Story;
+export declare const Packed: Story;
