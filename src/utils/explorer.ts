@@ -1,8 +1,8 @@
 import { constants } from "starknet";
 
 const STARKSCAN_URL = {
-  [constants.StarknetChainId.SN_MAIN]: "https://starkscan.co",
-  [constants.StarknetChainId.SN_SEPOLIA]: "https://sepolia.starkscan.co",
+  [constants.StarknetChainId.SN_MAIN]: "https://voyager.online",
+  [constants.StarknetChainId.SN_SEPOLIA]: "https://sepolia.voyager.online",
 };
 
 const VOYAGER_URL = {

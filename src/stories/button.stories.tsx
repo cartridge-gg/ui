@@ -172,7 +172,7 @@ export const ThumnailToggle: Story = {
 
 export const ExternalLink: Story = {
   args: {
-    children: "View on Starkscan",
+    children: "View on Voyager",
     variant: "link",
   },
 };
