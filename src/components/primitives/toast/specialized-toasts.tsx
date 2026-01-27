@@ -13,6 +13,7 @@ import {
   SparklesIcon,
 } from "@/components/icons";
 import { StarknetIcon } from "@/components/icons/brand";
+import { CollectibleImage } from "@/components/modules/collectibles";
 import { Toast, ToastClose, type ToastProps } from "./toast";
 
 // Base toast container for specialized toasts
@@ -92,10 +93,11 @@ interface ToastProgressBarProps {
   progress: number; // 0-100
   variant?: "achievement" | "error";
   className?: string;
+  color?: string;
 }
 
 const ToastProgressBar = memo<ToastProgressBarProps>(
-  ({ progress, variant = "achievement", className }) => {
+  ({ progress, variant = "achievement", className, color }) => {
     const [animatedProgress, setAnimatedProgress] = useState(0);
 
     useEffect(() => {
@@ -112,7 +114,7 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
       }
       return {
         bg: "bg-background-200",
-        fill: "bg-achievement",
+        fill: color ? undefined : "bg-achievement",
       };
     };
 
@@ -131,7 +133,7 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
             "h-full transition-all duration-1000 ease-out",
             colors.fill,
           )}
-          style={{ width: `${animatedProgress}%` }}
+          style={{ width: `${animatedProgress}%`, backgroundColor: color }}
         />
       </div>
     );
@@ -207,6 +209,76 @@ const AchievementToast = memo<AchievementToastProps>(
 );
 
 AchievementToast.displayName = "AchievementToast";
+
+// Marketplace Toast Component
+interface MarketplaceToastProps extends Omit<ToastProps, "children"> {
+  title: string;
+  collectionName: string;
+  items: string[];
+  images: string[];
+  progress?: number;
+  duration?: number;
+  color?: string;
+  showClose?: boolean;
+}
+
+const MarketplaceToast = memo<MarketplaceToastProps>(
+  ({
+    title,
+    collectionName,
+    items,
+    images,
+    duration,
+    progress = 100,
+    showClose = true,
+    color = "#fbcb4a",
+    className,
+    ...props
+  }) => {
+    return (
+      <Toast
+        className={cn(
+          specializedToastVariants({ variant: "achievement" }),
+          className,
+        )}
+        duration={duration}
+        {...props}
+      >
+        <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="flex items-center justify-center w-10 h-10 bg-background rounded p-[5px] flex-shrink-0">
+              <CollectibleImage images={images} />
+            </div>
+            <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
+              <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+                {title}
+              </span>
+              <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
+                {items.length > 1
+                  ? `${items.length} ${collectionName}`
+                  : (items[0] ?? "1 Item")}
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+            {showClose && (
+              <ToastClose asChild>
+                <CloseButton />
+              </ToastClose>
+            )}
+          </div>
+        </div>
+        <ToastProgressBar
+          progress={progress}
+          variant="achievement"
+          color={color}
+        />
+      </Toast>
+    );
+  },
+);
+
+MarketplaceToast.displayName = "MarketplaceToast";
 
 // Network Switch Toast Component
 interface NetworkSwitchToastProps extends Omit<ToastProps, "children"> {
@@ -477,6 +549,7 @@ export const showTransactionToast = (
 
 export {
   AchievementToast,
+  MarketplaceToast,
   NetworkSwitchToast,
   ErrorToast,
   TransactionNotification,
@@ -484,6 +557,7 @@ export {
   XPTag,
   ToastProgressBar,
   type AchievementToastProps,
+  type MarketplaceToastProps,
   type NetworkSwitchToastProps,
   type ErrorToastProps,
   type TransactionNotificationProps,
