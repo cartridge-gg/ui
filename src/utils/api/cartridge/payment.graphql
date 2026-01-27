@@ -1,11 +1,6 @@
 query CryptoPayment($id: ID!) {
   cryptoPayment(id: $id) {
-    tokenAmount
-    status
-    network
-    tokenAddress
-    depositAddress
-    expiresAt
+    ...CryptoPaymentFields
   }
 }
 
@@ -36,13 +31,7 @@ query LayerswapSources($token: String!, $isMainnet: Boolean) {
 
 mutation CreateCryptoPayment($input: CreateCryptoPaymentInput!) {
   createCryptoPayment(input: $input) {
-    id
-    tokenAmount
-    status
-    network
-    tokenAddress
-    depositAddress
-    expiresAt
+    ...CryptoPaymentFields
   }
 }
 
@@ -60,27 +49,13 @@ mutation CreateStripePaymentIntent($input: CreateStripePaymentIntentInput!) {
 
 mutation CreateLayerswapPayment($input: CreateLayerswapPaymentInput!) {
   createLayerswapPayment(input: $input) {
-    cryptoPaymentId
-    swapId
-    status
-    sourceNetwork
-    sourceTokenAmount
-    sourceTokenAddress
-    sourceDepositAddress
-    expiresAt
+    ...LayerswapPaymentFields
   }
 }
 
 mutation CreateLayerswapDeposit($input: CreateLayerswapDepositInput!) {
   createLayerswapDeposit(input: $input) {
-    cryptoPaymentId
-    swapId
-    status
-    sourceNetwork
-    sourceTokenAmount
-    sourceTokenAddress
-    sourceDepositAddress
-    expiresAt
+    ...LayerswapPaymentFields
   }
 }
 
@@ -131,32 +106,22 @@ query CoinbaseOnrampTransactions($input: CoinbaseTransactionsInput!) {
 
 mutation CreateCoinbaseOnRampOrder($input: CreateCoinbaseOnrampOrderInput!) {
   createCoinbaseOnrampOrder(input: $input) {
-    coinbaseOrder {
-      orderId
-      paymentLink
-      paymentLinkType
-      paymentTotal
-      paymentCurrency
-      purchaseAmount
-      purchaseCurrency
-      destinationAddress
-      destinationNetwork
-      fees {
-        type
-        amount
-        currency
-      }
-    }
+    ...CoinbaseOnrampOrderResponseFields
+  }
+}
 
-    layerswapPayment {
-      swapId
-      cryptoPaymentId
-      sourceNetwork
-      sourceTokenAmount
-      sourceTokenAddress
-      sourceDepositAddress
-      expiresAt
-    }
+mutation CreateCoinbaseLayerswapOrder(
+  $input: CreateCoinbaseLayerswapOrderInput!
+) {
+  createCoinbaseLayerswapOrder(input: $input) {
+    ...CoinbaseOnrampOrderResponseFields
+  }
+}
+
+query CoinbaseOnRampOrder($orderId: String!) {
+  coinbaseOnrampOrder(orderId: $orderId) {
+    txHash
+    status
   }
 }
 
@@ -183,5 +148,52 @@ query CoinbaseOnRampQuote($input: CoinbaseOnrampQuoteInput!) {
       amount
       currency
     }
+  }
+}
+
+fragment CryptoPaymentFields on CryptoPayment {
+  id
+  tokenAmount
+  status
+  network
+  tokenAddress
+  depositAddress
+  expiresAt
+}
+
+fragment LayerswapPaymentFields on LayerswapPayment {
+  cryptoPaymentId
+  swapId
+  status
+  sourceNetwork
+  sourceTokenAmount
+  sourceTokenAddress
+  sourceDepositAddress
+  expiresAt
+}
+
+fragment CoinbaseOnrampOrderFields on CoinbaseOnrampOrder {
+  orderId
+  paymentLink
+  paymentLinkType
+  paymentTotal
+  paymentCurrency
+  purchaseAmount
+  purchaseCurrency
+  destinationAddress
+  destinationNetwork
+  fees {
+    type
+    amount
+    currency
+  }
+}
+
+fragment CoinbaseOnrampOrderResponseFields on CoinbaseOnrampOrderResponse {
+  coinbaseOrder {
+    ...CoinbaseOnrampOrderFields
+  }
+  layerswapPayment {
+    ...LayerswapPaymentFields
   }
 }
