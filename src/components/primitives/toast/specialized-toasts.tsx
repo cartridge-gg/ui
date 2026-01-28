@@ -375,6 +375,53 @@ const ErrorToast = memo<ErrorToastProps>(
 
 ErrorToast.displayName = "ErrorToast";
 
+// Success Toast Component
+interface SuccessToastProps extends Omit<ToastProps, "children"> {
+  message: string;
+  progress?: number;
+  duration?: number;
+  showClose?: boolean;
+}
+
+const SuccessToast = memo<SuccessToastProps>(
+  ({
+    message,
+    progress = 100,
+    duration,
+    showClose = false,
+    className,
+    ...props
+  }) => (
+    <Toast
+      className={cn(
+        specializedToastVariants({ variant: "transaction" }),
+        className,
+      )}
+      duration={duration}
+      {...props}
+    >
+      <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <CheckIcon size="default" className="text-foreground" />
+          <span className="text-foreground text-base font-normal leading-5 tracking-[0.01em] truncate">
+            {message}
+          </span>
+        </div>
+        {showClose && (
+          <div className="flex-shrink-0 ml-2">
+            <ToastClose asChild>
+              <CloseButton variant="translucent" />
+            </ToastClose>
+          </div>
+        )}
+      </div>
+      <ToastProgressBar progress={progress} variant="achievement" />
+    </Toast>
+  ),
+);
+
+SuccessToast.displayName = "SuccessToast";
+
 // Transaction Notification Component
 interface TransactionNotificationProps extends Omit<ToastProps, "children"> {
   status: "confirming" | "confirmed";
@@ -492,6 +539,32 @@ export const showAchievementToast = (
   };
 };
 
+export const showMarketplaceToast = (
+  props: Pick<
+    MarketplaceToastProps,
+    | "title"
+    | "collectionName"
+    | "items"
+    | "images"
+    | "progress"
+    | "duration"
+    | "color"
+  >,
+) => {
+  return {
+    duration: props.duration,
+    action: (
+      <MarketplaceToast
+        {...props}
+        showClose={true}
+        // Remove Radix props to avoid conflicts
+        open={undefined}
+        onOpenChange={undefined}
+      />
+    ),
+  };
+};
+
 export const showNetworkSwitchToast = (
   props: Pick<
     NetworkSwitchToastProps,
@@ -528,6 +601,23 @@ export const showErrorToast = (
   };
 };
 
+export const showSuccessToast = (
+  props: Pick<SuccessToastProps, "message" | "progress" | "duration">,
+) => {
+  return {
+    variant: "default" as const,
+    duration: props.duration,
+    action: (
+      <SuccessToast
+        {...props}
+        showClose={true}
+        open={undefined}
+        onOpenChange={undefined}
+      />
+    ),
+  };
+};
+
 export const showTransactionToast = (
   props: Pick<
     TransactionNotificationProps,
@@ -552,6 +642,7 @@ export {
   MarketplaceToast,
   NetworkSwitchToast,
   ErrorToast,
+  SuccessToast,
   TransactionNotification,
   CloseButton,
   XPTag,
@@ -560,5 +651,6 @@ export {
   type MarketplaceToastProps,
   type NetworkSwitchToastProps,
   type ErrorToastProps,
+  type SuccessToastProps,
   type TransactionNotificationProps,
 };
