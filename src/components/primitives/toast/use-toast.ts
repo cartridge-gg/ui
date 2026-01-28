@@ -8,7 +8,7 @@ import type { ToastActionElement, ToastProps } from "./toast";
 const TOAST_LIMIT = 5;
 const TOAST_REMOVE_DELAY = 5000; // 5 seconds default
 
-type ToasterToast = ToastProps & {
+export type ToasterToast = ToastProps & {
   id: string;
   title?: React.ReactNode;
   description?: React.ReactNode;

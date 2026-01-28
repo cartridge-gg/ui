@@ -4,6 +4,7 @@ import { useToast } from "@/components/primitives/toast/use-toast";
 import { Toaster } from "@/components/primitives/toast/toaster";
 import {
   showAchievementToast,
+  showMarketplaceToast,
   showNetworkSwitchToast,
   showErrorToast,
   showTransactionToast,
@@ -73,6 +74,37 @@ function ToastIntegrationDemo() {
           progress: 16.7,
           isDraft: true,
           duration: 6000, // 6 seconds
+        }),
+      );
+    });
+  };
+
+  const showMarketplacePurchase = () => {
+    showToastWithDebounce("purchase", () => {
+      toast(
+        showMarketplaceToast({
+          title: "Purchased",
+          collectionName: "Beasts",
+          items: ["Beast #111"],
+          images: [
+            "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
+          ],
+          color: "#33FF33",
+        }),
+      );
+    });
+  };
+
+  const showMarketplaceSentToken = () => {
+    showToastWithDebounce("sentToken", () => {
+      toast(
+        showMarketplaceToast({
+          title: "Sent",
+          collectionName: "LORDS",
+          items: ["500 LORDS"],
+          images: [
+            "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo",
+          ],
         }),
       );
     });
@@ -195,6 +227,24 @@ function ToastIntegrationDemo() {
         </div>
 
         <div className="space-y-2">
+          <h3 className="text-white text-sm font-medium">Marketplace Toasts</h3>
+          <Button
+            onClick={showMarketplacePurchase}
+            className="w-full"
+            disabled={isLoading.purchase}
+          >
+            {isLoading.purchase ? "Loading..." : "Marketplace Purchase"}
+          </Button>
+          <Button
+            onClick={showMarketplaceSentToken}
+            className="w-full"
+            disabled={isLoading.sentToken}
+          >
+            {isLoading.sentToken ? "Loading..." : "Marketplace Sent Token"}
+          </Button>
+        </div>
+
+        <div className="space-y-2">
           <h3 className="text-white text-sm font-medium">Network & Error</h3>
           <Button
             onClick={showNetworkSwitch}
@@ -247,17 +297,17 @@ function ToastIntegrationDemo() {
             {isLoading.long ? "Loading..." : "Long Toast (10s)"}
           </Button>
         </div>
-      </div>
 
-      <div className="space-y-2">
-        <h3 className="text-white text-sm font-medium">Collapsed View</h3>
-        <Button
-          onClick={showCollapsedTransaction}
-          className="w-full max-w-48"
-          disabled={isLoading.collapsed}
-        >
-          {isLoading.collapsed ? "Loading..." : "Show Collapsed (4s)"}
-        </Button>
+        <div className="space-y-2">
+          <h3 className="text-white text-sm font-medium">Collapsed View</h3>
+          <Button
+            onClick={showCollapsedTransaction}
+            className="w-full max-w-48"
+            disabled={isLoading.collapsed}
+          >
+            {isLoading.collapsed ? "Loading..." : "Show Collapsed (4s)"}
+          </Button>
+        </div>
       </div>
 
       <div className="text-xs text-gray-400 mt-4">
