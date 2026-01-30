@@ -11,10 +11,12 @@ import {
   AwardIcon,
   CreditIcon as CreditsIcon,
   SparklesIcon,
+  EmptyStateActivityIcon,
 } from "@/components/icons";
 import { StarknetIcon } from "@/components/icons/brand";
 import { CollectibleImage } from "@/components/modules/collectibles";
 import { Toast, ToastClose, type ToastProps } from "./toast";
+import { usePresetColor } from "@/utils/hooks/presets";
 
 // Base toast container for specialized toasts
 const specializedToastVariants = cva(
@@ -93,12 +95,13 @@ interface ToastProgressBarProps {
   progress: number; // 0-100
   variant?: "achievement" | "error";
   className?: string;
-  color?: string;
+  preset?: string | null;
 }
 
 const ToastProgressBar = memo<ToastProgressBarProps>(
-  ({ progress, variant = "achievement", className, color }) => {
+  ({ progress, variant = "achievement", className, preset }) => {
     const [animatedProgress, setAnimatedProgress] = useState(0);
+    const color = usePresetColor(preset);
 
     useEffect(() => {
       const timer = setTimeout(() => setAnimatedProgress(progress), 100);
@@ -133,7 +136,10 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
             "h-full transition-all duration-1000 ease-out",
             colors.fill,
           )}
-          style={{ width: `${animatedProgress}%`, backgroundColor: color }}
+          style={{
+            width: `${animatedProgress}%`,
+            backgroundColor: color ?? undefined,
+          }}
         />
       </div>
     );
@@ -150,6 +156,7 @@ interface AchievementToastProps extends Omit<ToastProps, "children"> {
   progress: number;
   isDraft?: boolean;
   duration?: number;
+  preset?: string;
   showClose?: boolean;
 }
 
@@ -162,6 +169,7 @@ const AchievementToast = memo<AchievementToastProps>(
     isDraft = false,
     duration,
     showClose = false,
+    preset,
     className,
     ...props
   }) => {
@@ -202,7 +210,11 @@ const AchievementToast = memo<AchievementToastProps>(
             )}
           </div>
         </div>
-        <ToastProgressBar progress={progress} variant="achievement" />
+        <ToastProgressBar
+          progress={progress}
+          variant="achievement"
+          preset={preset}
+        />
       </Toast>
     );
   },
@@ -218,7 +230,7 @@ interface MarketplaceToastProps extends Omit<ToastProps, "children"> {
   itemImages: string[];
   progress?: number;
   duration?: number;
-  color?: string;
+  preset?: string;
   showClose?: boolean;
 }
 
@@ -231,7 +243,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
     duration,
     progress = 100,
     showClose = true,
-    color = "#fbcb4a",
+    preset,
     className,
     ...props
   }) => {
@@ -271,7 +283,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
         <ToastProgressBar
           progress={progress}
           variant="achievement"
-          color={color}
+          preset={preset}
         />
       </Toast>
     );
@@ -334,6 +346,7 @@ interface ErrorToastProps extends Omit<ToastProps, "children"> {
   progress?: number;
   duration?: number;
   showClose?: boolean;
+  preset?: string;
 }
 
 const ErrorToast = memo<ErrorToastProps>(
@@ -342,6 +355,7 @@ const ErrorToast = memo<ErrorToastProps>(
     progress = 66.7,
     duration,
     showClose = false,
+    preset,
     className,
     ...props
   }) => (
@@ -368,7 +382,7 @@ const ErrorToast = memo<ErrorToastProps>(
           </div>
         )}
       </div>
-      <ToastProgressBar progress={progress} variant="error" />
+      <ToastProgressBar progress={progress} variant="error" preset={preset} />
     </Toast>
   ),
 );
@@ -381,6 +395,7 @@ interface SuccessToastProps extends Omit<ToastProps, "children"> {
   progress?: number;
   duration?: number;
   showClose?: boolean;
+  preset?: string;
 }
 
 const SuccessToast = memo<SuccessToastProps>(
@@ -389,6 +404,7 @@ const SuccessToast = memo<SuccessToastProps>(
     progress = 100,
     duration,
     showClose = false,
+    preset,
     className,
     ...props
   }) => (
@@ -415,7 +431,11 @@ const SuccessToast = memo<SuccessToastProps>(
           </div>
         )}
       </div>
-      <ToastProgressBar progress={progress} variant="achievement" />
+      <ToastProgressBar
+        progress={progress}
+        variant="achievement"
+        preset={preset}
+      />
     </Toast>
   ),
 );
@@ -430,16 +450,18 @@ interface TransactionNotificationProps extends Omit<ToastProps, "children"> {
   progress?: number;
   duration?: number;
   showClose?: boolean;
+  preset?: string;
 }
 
 const TransactionNotification = memo<TransactionNotificationProps>(
   ({
     status,
     isExpanded = true,
-    label = "New Game",
+    label,
     progress = 66.7,
     duration,
     showClose = false,
+    preset,
     className,
     ...props
   }) => {
@@ -510,6 +532,7 @@ const TransactionNotification = memo<TransactionNotificationProps>(
         <ToastProgressBar
           progress={status === "confirmed" ? 100 : progress}
           variant="achievement"
+          preset={preset}
         />
       </Toast>
     );

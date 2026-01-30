@@ -89,6 +89,7 @@ function ToastIntegrationDemo() {
     const options: TransactionToastOptions = {
       variant: "transaction",
       status: "confirming",
+      label: "Purchase",
       progress: 50,
     };
     emitControllerToast("transactionConfirming", options);
