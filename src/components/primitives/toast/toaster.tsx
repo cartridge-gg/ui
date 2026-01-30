@@ -10,8 +10,13 @@ import {
   ToastViewport,
 } from "./toast";
 import { useToast } from "./use-toast";
+import { ToastPosition } from "./types";
 
-export function Toaster() {
+export function Toaster({
+  // position = "bottom-right",
+}: {
+  position?: ToastPosition;
+}) {
   const { toasts } = useToast();
 
   return (

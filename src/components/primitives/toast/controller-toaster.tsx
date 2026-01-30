@@ -1,47 +1,92 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
-  showSuccessToast,
   showErrorToast,
-  // showMarketplaceToast,
+  showSuccessToast,
+  showTransactionToast,
+  showMarketplaceToast,
+  showAchievementToast,
 } from "@/components/primitives/toast/specialized-toasts";
 import { Toaster } from "./toaster";
 import { useToast, ToasterToast } from "./use-toast";
-import { type ToastT } from "sonner";
+import {
+  ToastPosition,
+  ErrorToastOptions,
+  SuccessToastOptions,
+  TransactionToastOptions,
+  MarketplaceToastOptions,
+  AchievementToastOptions,
+  CONTROLLER_TOAST_MESSAGE_TYPE,
+} from "./types";
 
-// sonner example
-// {
-//   "title": "Listing transaction submitted successfully!",
-//   "duration": 10000,
-//   "type": "success",
-//   "dismissible": true,
-//   "id": 1
-// }
-
-export function ControllerToaster() {
+export function ControllerToaster({
+  // preset,
+  position = "bottom-right",
+  disableErrors = false,
+  disableTransactions = false,
+  disableMarketplace = false,
+  disableAchievements = false,
+  // disableQuests = false,
+}: {
+  preset?: string;
+  position?: ToastPosition;
+  disableErrors?: boolean;
+  disableTransactions?: boolean;
+  disableMarketplace?: boolean;
+  disableAchievements?: boolean;
+  // disableQuests?: boolean;
+}) {
   const { toast } = useToast();
-  const [content, setContent] = useState<ToasterToast | undefined>();
 
   useEffect(() => {
     const eventHandler = (event: any) => {
       // Sonner toast
-      if (!event.data.toast) return;
-      const toastData = event.data.toast as ToastT;
-      if (toastData.type == "success") {
-        setContent(
-          showSuccessToast({
-            message: toastData.title as string,
-            duration: toastData.duration,
-            progress: 100,
+      const variant =
+        event.data.type === CONTROLLER_TOAST_MESSAGE_TYPE
+          ? event.data.options.variant
+          : undefined;
+      console.log(
+        ">>> CONTROLLER EVENT?:",
+        variant ? event.data.options : null,
+      );
+      if (!variant) return;
+
+      if (variant == "error" && !disableErrors) {
+        const options = event.data.options as ErrorToastOptions;
+        toast(
+          showErrorToast({
+            ...options,
           }) as ToasterToast,
         );
-      } else if (toastData.type == "error") {
-        setContent(
-          showErrorToast({
-            message: toastData.title as string,
-            duration: toastData.duration,
-            progress: 100,
+      } else if (variant == "success" && !disableErrors) {
+        const options = event.data.options as SuccessToastOptions;
+        toast(
+          showSuccessToast({
+            ...options,
+          }) as ToasterToast,
+        );
+      } else if (variant == "transaction" && !disableTransactions) {
+        const options = event.data.options as TransactionToastOptions;
+        toast(
+          showTransactionToast({
+            ...options,
+            // duration: options.status == "confirming" ? 0 : options.duration,
+          }) as ToasterToast,
+        );
+      } else if (variant == "marketplace" && !disableMarketplace) {
+        const options = event.data.options as MarketplaceToastOptions;
+        toast(
+          showMarketplaceToast({
+            title: `${options.action[0].toUpperCase()}${options.action.slice(1)}`,
+            ...options,
+          }) as ToasterToast,
+        );
+      } else if (variant == "achievement" && !disableAchievements) {
+        const options = event.data.options as AchievementToastOptions;
+        toast(
+          showAchievementToast({
+            ...options,
           }) as ToasterToast,
         );
       }
@@ -52,11 +97,5 @@ export function ControllerToaster() {
     };
   }, []);
 
-  useEffect(() => {
-    if (content) {
-      toast(content);
-    }
-  }, [content]);
-
-  return <Toaster />;
+  return <Toaster position={position} />;
 }

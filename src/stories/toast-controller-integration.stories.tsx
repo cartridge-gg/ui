@@ -1,10 +1,17 @@
 import { useState, useCallback } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@/components/primitives/button";
-import { useToast } from "@/components/primitives/toast/use-toast";
-import { Toaster } from "@/components/primitives/toast/toaster";
+import {
+  ErrorToastOptions,
+  SuccessToastOptions,
+  TransactionToastOptions,
+  MarketplaceToastOptions,
+  AchievementToastOptions,
+  // QuestToastOptions,
+  ToastOptions,
+  CONTROLLER_TOAST_MESSAGE_TYPE,
+} from "@/components/primitives/toast/types";
 import { ControllerToaster } from "@/components/primitives/toast/controller-toaster";
-import { showMarketplaceToast } from "@/components/primitives/toast/specialized-toasts";
 
 const meta: Meta = {
   title: "Primitives/Toast/Controller Integration",
@@ -25,7 +32,6 @@ export default meta;
 type Story = StoryObj;
 
 function ToastIntegrationDemo() {
-  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
 
   // Debounced toast function to prevent multiple rapid clicks
@@ -43,65 +49,12 @@ function ToastIntegrationDemo() {
     [isLoading],
   );
 
-  const showMarketplacePurchase = () => {
-    showToastWithDebounce("purchase", () => {
-      toast(
-        showMarketplaceToast({
-          title: "Purchased",
-          collectionName: "Beasts",
-          items: ["Beast #111"],
-          images: [
-            "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
-          ],
-          color: "#33FF33",
-        }),
-      );
-    });
-  };
-
-  const showMarketplaceSentToken = () => {
-    showToastWithDebounce("sentToken", () => {
-      toast(
-        showMarketplaceToast({
-          title: "Sent",
-          collectionName: "LORDS",
-          items: ["500 LORDS"],
-          images: [
-            "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo",
-          ],
-        }),
-      );
-    });
-  };
-
-  const showSuccess = () => {
-    showToastWithDebounce("success", () => {
+  const emitControllerToast = (key: string, options: ToastOptions) => {
+    showToastWithDebounce(key, () => {
       window.postMessage(
         {
-          toast: {
-            title: "Purchase completed successfully!",
-            duration: 10000,
-            type: "success",
-            dismissible: true,
-            id: 1,
-          },
-        },
-        "*",
-      );
-    });
-  };
-
-  const showSuccessLonger = () => {
-    showToastWithDebounce("successLonger", () => {
-      window.postMessage(
-        {
-          toast: {
-            title: "Listing transaction submitted successfully!",
-            duration: 10000,
-            type: "success",
-            dismissible: true,
-            id: 1,
-          },
+          type: CONTROLLER_TOAST_MESSAGE_TYPE,
+          options,
         },
         "*",
       );
@@ -109,21 +62,121 @@ function ToastIntegrationDemo() {
   };
 
   const showError = () => {
-    showToastWithDebounce("error", () => {
-      window.postMessage(
-        {
-          toast: {
-            title: "Failed to purchase asset(s)",
-            duration: 10000,
-            type: "error",
-            dismissible: true,
-            id: 1,
-          },
-        },
-        "*",
-      );
-    });
+    const options: ErrorToastOptions = {
+      variant: "error",
+      message: "Failed to purchase asset!",
+    };
+    emitControllerToast("error", options);
   };
+
+  const showSuccess = () => {
+    const options: SuccessToastOptions = {
+      variant: "success",
+      message: "Address copied",
+    };
+    emitControllerToast("success", options);
+  };
+
+  const showSuccessLonger = () => {
+    const options: SuccessToastOptions = {
+      variant: "success",
+      message: "You did something that really remarkable and profound!",
+    };
+    emitControllerToast("successLonger", options);
+  };
+
+  const showTransactionConfirming = () => {
+    const options: TransactionToastOptions = {
+      variant: "transaction",
+      status: "confirming",
+      progress: 50,
+    };
+    emitControllerToast("transactionConfirming", options);
+  };
+
+  const showTransactionConfirmed = () => {
+    const options: TransactionToastOptions = {
+      variant: "transaction",
+      status: "confirmed",
+      progress: 50,
+    };
+    emitControllerToast("transactionConfirmed", options);
+  };
+
+  const showMarketplacePurchaseBeast = () => {
+    const options: MarketplaceToastOptions = {
+      variant: "marketplace",
+      action: "purchased",
+      collectionName: "Beasts",
+      itemNames: [`Beast #${Math.floor(Math.random() * 93225) + 1}`],
+      itemImages: [
+        "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
+      ],
+      preset: "loot-survivor",
+    };
+    emitControllerToast("purchaseBeast", options);
+  };
+
+  const showMarketplacePurchaseDuelists = () => {
+    const options: MarketplaceToastOptions = {
+      variant: "marketplace",
+      action: "purchased",
+      collectionName: "Pistols at Dawn Duelists",
+      itemNames: ["Duelist #111", "Duelist #222", "Duelist #333"],
+      itemImages: [
+        "https://api.cartridge.gg/x/arcade-pistols/torii/static/0x07aaa9866750a0db82a54ba8674c38620fa2f967d2fbb31133def48e0527c87f/0x0000000000000000000000000000000000000000000000000000000000000577/image",
+        "https://api.cartridge.gg/x/arcade-pistols/torii/static/0x7aaa9866750a0db82a54ba8674c38620fa2f967d2fbb31133def48e0527c87f/0x0000000000000000000000000000000000000000000000000000000000000577/image",
+        "https://api.cartridge.gg/x/arcade-pistols/torii/static/0x7aaa9866750a0db82a54ba8674c38620fa2f967d2fbb31133def48e0527c87f/0x0000000000000000000000000000000000000000000000000000000000000577/image",
+      ],
+      preset: "pistols",
+    };
+    emitControllerToast("PurchaseDuelists", options);
+  };
+
+  const showMarketplaceSentToken = () => {
+    const options: MarketplaceToastOptions = {
+      variant: "marketplace",
+      action: "sent",
+      collectionName: "LORDS",
+      itemNames: ["500 LORDS"],
+      itemImages: [
+        "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo",
+      ],
+    };
+    emitControllerToast("sentToken", options);
+  };
+
+  const showAchievementDraftToast = () => {
+    const options: AchievementToastOptions = {
+      variant: "achievement",
+      title: "Pacifist Path",
+      subtitle: "Earned!",
+      xpAmount: 50,
+      progress: 50,
+      isDraft: true,
+    };
+    emitControllerToast("achievement", options);
+  };
+
+  const showAchievementToast = () => {
+    const options: AchievementToastOptions = {
+      variant: "achievement",
+      title: "Pacifist Path",
+      subtitle: "Earned!",
+      xpAmount: 100,
+      progress: 100,
+    };
+    emitControllerToast("achievement", options);
+  };
+
+  // const showQuestToast = () => {
+  //   const options: QuestToastOptions = {
+  //     variant: "quest",
+  //     title: "Daily Quest",
+  //     subtitle: "Conquered!",
+  //   };
+  //   emitControllerToast("quest", options);
+  // };
 
   return (
     <div className="space-y-4">
@@ -131,49 +184,106 @@ function ToastIntegrationDemo() {
         Controller Toast Integration
       </div>
 
-      <div className="space-y-2">
-        <h3 className="text-white text-sm font-medium">
-          Simulate Controller events
-        </h3>
-        <Button
-          onClick={showMarketplacePurchase}
-          className="w-full"
-          disabled={isLoading.purchase}
-        >
-          {isLoading.purchase ? "Loading..." : "Marketplace Purchase"}
-        </Button>
-        <Button
-          onClick={showMarketplaceSentToken}
-          className="w-full"
-          disabled={isLoading.sentToken}
-        >
-          {isLoading.sentToken ? "Loading..." : "Marketplace Sent Token"}
-        </Button>
-        <Button
-          onClick={showSuccess}
-          className="w-full"
-          disabled={isLoading.success}
-        >
-          {isLoading.success ? "Loading..." : "Success"}
-        </Button>
-        <Button
-          onClick={showSuccessLonger}
-          className="w-full"
-          disabled={isLoading.successLonger}
-        >
-          {isLoading.successLonger ? "Loading..." : "Success (longer message)"}
-        </Button>
-        <Button
-          onClick={showError}
-          className="w-full"
-          disabled={isLoading.error}
-        >
-          {isLoading.error ? "Loading..." : "Error"}
-        </Button>
+      <div className="grid grid-cols-3 gap-4">
+        <div className="space-y-2">
+          <h3 className="text-white text-sm font-medium">
+            Generic Controller events
+          </h3>
+          <Button
+            onClick={showError}
+            className="w-full"
+            disabled={isLoading.error}
+          >
+            {isLoading.error ? "Loading..." : "Error"}
+          </Button>
+          <Button
+            onClick={showSuccess}
+            className="w-full"
+            disabled={isLoading.success}
+          >
+            {isLoading.success ? "Loading..." : "Success"}
+          </Button>
+          <Button
+            onClick={showSuccessLonger}
+            className="w-full"
+            disabled={isLoading.successLonger}
+          >
+            {isLoading.successLonger ? "Loading..." : "Success (long message)"}
+          </Button>
+          <Button
+            onClick={showTransactionConfirming}
+            className="w-full"
+            disabled={isLoading.transactionConfirming}
+          >
+            {isLoading.transactionConfirming
+              ? "Loading..."
+              : "Transaction Confirming"}
+          </Button>
+          <Button
+            onClick={showTransactionConfirmed}
+            className="w-full"
+            disabled={isLoading.transactionConfirmed}
+          >
+            {isLoading.transactionConfirmed
+              ? "Loading..."
+              : "Transaction Confirmed"}
+          </Button>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="text-white text-sm font-medium">Specialized events</h3>
+          <Button
+            onClick={showMarketplacePurchaseBeast}
+            className="w-full"
+            disabled={isLoading.purchaseBeast}
+          >
+            {isLoading.purchaseBeast
+              ? "Loading..."
+              : "Marketplace Purchase Beast"}
+          </Button>
+          <Button
+            onClick={showMarketplacePurchaseDuelists}
+            className="w-full"
+            disabled={isLoading.PurchaseDuelists}
+          >
+            {isLoading.PurchaseDuelists
+              ? "Loading..."
+              : "Marketplace Purchase Duelists"}
+          </Button>
+          <Button
+            onClick={showMarketplaceSentToken}
+            className="w-full"
+            disabled={isLoading.sentToken}
+          >
+            {isLoading.sentToken ? "Loading..." : "Marketplace Sent Token"}
+          </Button>
+          <Button
+            onClick={showAchievementDraftToast}
+            className="w-full"
+            disabled={isLoading.achievementDraft}
+          >
+            {isLoading.achievementDraft ? "Loading..." : "Achievement Draft"}
+          </Button>
+          <Button
+            onClick={showAchievementToast}
+            className="w-full"
+            disabled={isLoading.achievement}
+          >
+            {isLoading.achievement ? "Loading..." : "Achievement"}
+          </Button>
+          {/* <Button
+            onClick={showQuestToast}
+            className="w-full"
+            disabled={isLoading.quest}
+          >
+            {isLoading.quest ? "Loading..." : "Quest"}
+          </Button> */}
+        </div>
+
+        <div></div>
       </div>
 
       <ControllerToaster />
-      <Toaster />
     </div>
   );
 }

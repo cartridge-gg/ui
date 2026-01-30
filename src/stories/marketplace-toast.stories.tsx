@@ -26,8 +26,8 @@ const meta: Meta<typeof MarketplaceToast> = {
   argTypes: {
     title: { control: "text" },
     collectionName: { control: "text" },
-    items: { array: "text" },
-    images: { array: "text" },
+    itemNames: { array: "text" },
+    itemImages: { array: "text" },
     color: { control: "color" },
     progress: { control: { type: "range", min: 0, max: 100, step: 1 } },
   },
@@ -41,8 +41,8 @@ export const PurchasedBeast: Story = {
   args: {
     title: "Purchased",
     collectionName: "Beasts",
-    items: ["Beast #111"],
-    images: [
+    itemNames: ["Beast #111"],
+    itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
     ],
     color: "#33FF33",
@@ -53,8 +53,8 @@ export const PurchasedBeasts: Story = {
   args: {
     title: "Purchased",
     collectionName: "Beasts",
-    items: ["Beast #111", "Beast #222", "Beast #333"],
-    images: [
+    itemNames: ["Beast #111", "Beast #222", "Beast #333"],
+    itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
     ],
     color: "#33FF33",
@@ -65,8 +65,8 @@ export const SentBeast: Story = {
   args: {
     title: "Sent",
     collectionName: "Beasts",
-    items: ["Beast #111"],
-    images: [
+    itemNames: ["Beast #111"],
+    itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
     ],
     color: "#33FF33",
@@ -77,8 +77,8 @@ export const SentBeasts: Story = {
   args: {
     title: "Sent",
     collectionName: "Beasts",
-    items: ["Beast #111", "Beast #222", "Beast #333"],
-    images: [
+    itemNames: ["Beast #111", "Beast #222", "Beast #333"],
+    itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
     ],
     color: "#33FF33",
@@ -89,8 +89,8 @@ export const SoldJoker: Story = {
   args: {
     title: "Sold",
     collectionName: "Jokers of Neon: Cards",
-    items: ["Jack of Diamonds #222"],
-    images: [
+    itemNames: ["Jack of Diamonds #222"],
+    itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x04ddbbab7aa237c1b73c931b6f836ded6036f5e12d4898fccdcde81d494f7956/0x0000000000000000000000000000000000000000000000000000000000000953/image?width=300&height=300",
     ],
     color: "#A144B2",
@@ -101,8 +101,8 @@ export const PurchasedStarterPack: Story = {
   args: {
     title: "Purchased",
     collectionName: "Eternum Season Pass",
-    items: ["Eternum Season Pass"],
-    images: ["https://static.cartridge.gg/presets/eternum/icon.svg"],
+    itemNames: ["Eternum Season Pass"],
+    itemImages: ["https://static.cartridge.gg/presets/eternum/icon.svg"],
   },
 };
 
@@ -110,8 +110,8 @@ export const SentLords: Story = {
   args: {
     title: "Sent",
     collectionName: "LORDS",
-    items: ["500 LORDS"],
-    images: [
+    itemNames: ["500 LORDS"],
+    itemImages: [
       "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo",
     ],
   },

@@ -85,8 +85,8 @@ function ToastIntegrationDemo() {
         showMarketplaceToast({
           title: "Purchased",
           collectionName: "Beasts",
-          items: ["Beast #111"],
-          images: [
+          itemNames: ["Beast #111"],
+          itemImages: [
             "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
           ],
           color: "#33FF33",
@@ -101,8 +101,8 @@ function ToastIntegrationDemo() {
         showMarketplaceToast({
           title: "Sent",
           collectionName: "LORDS",
-          items: ["500 LORDS"],
-          images: [
+          itemNames: ["500 LORDS"],
+          itemImages: [
             "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo",
           ],
         }),

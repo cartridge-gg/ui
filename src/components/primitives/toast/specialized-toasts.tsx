@@ -214,8 +214,8 @@ AchievementToast.displayName = "AchievementToast";
 interface MarketplaceToastProps extends Omit<ToastProps, "children"> {
   title: string;
   collectionName: string;
-  items: string[];
-  images: string[];
+  itemNames: string[];
+  itemImages: string[];
   progress?: number;
   duration?: number;
   color?: string;
@@ -226,8 +226,8 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
   ({
     title,
     collectionName,
-    items,
-    images,
+    itemNames,
+    itemImages,
     duration,
     progress = 100,
     showClose = true,
@@ -247,16 +247,16 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
         <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div className="flex items-center justify-center w-10 h-10 bg-background rounded p-[5px] flex-shrink-0">
-              <CollectibleImage images={images} />
+              <CollectibleImage images={itemImages} />
             </div>
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
               <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
                 {title}
               </span>
               <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
-                {items.length > 1
-                  ? `${items.length} ${collectionName}`
-                  : (items[0] ?? "1 Item")}
+                {itemNames.length > 1
+                  ? `${itemNames.length} ${collectionName}`
+                  : (itemNames[0] ?? "1 Item")}
               </span>
             </div>
           </div>
@@ -544,8 +544,8 @@ export const showMarketplaceToast = (
     MarketplaceToastProps,
     | "title"
     | "collectionName"
-    | "items"
-    | "images"
+    | "itemNames"
+    | "itemImages"
     | "progress"
     | "duration"
     | "color"
