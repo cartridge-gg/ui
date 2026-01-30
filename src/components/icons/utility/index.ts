@@ -55,6 +55,7 @@ export * from "./spinner-pixel";
 export * from "./spinner";
 export * from "./times-circle";
 export * from "./times";
+export * from "./transaction";
 export * from "./transfer";
 export * from "./trash";
 export * from "./verified";

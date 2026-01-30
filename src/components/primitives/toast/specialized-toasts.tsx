@@ -11,7 +11,7 @@ import {
   AwardIcon,
   CreditIcon as CreditsIcon,
   SparklesIcon,
-  EmptyStateActivityIcon,
+  TransactionIcon,
 } from "@/components/icons";
 import { StarknetIcon } from "@/components/icons/brand";
 import { CollectibleImage } from "@/components/modules/collectibles";
@@ -513,7 +513,7 @@ const TransactionNotification = memo<TransactionNotificationProps>(
             {status === "confirming" && (
               <div className="flex items-center px-2 py-1 bg-translucent-dark-100 rounded-[2px] ml-2 flex-shrink-0">
                 <div className="w-4 h-4 mr-1 flex items-center justify-center">
-                  <div className="w-[10px] h-[8px] bg-achievement" />
+                  <TransactionIcon className="w-[11px] h-[9px] text-achievement" />
                 </div>
                 <span className="text-achievement text-xs font-normal leading-4 whitespace-nowrap">
                   {label}
