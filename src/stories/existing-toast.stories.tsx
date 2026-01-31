@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@/components/primitives/button";
 import { useToast } from "@/components/primitives/toast/use-toast";
-import { Toaster } from "@/components/primitives/toast/toaster";
+import { Toaster } from "sonner";
 
 const meta: Meta = {
   title: "Primitives/Toast/Existing Toast System",

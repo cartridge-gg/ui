@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { NetworkSwitchToast } from "@/components/primitives/toast/specialized-toasts";
-import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
 import { StarknetIcon } from "@/components/icons/brand";
+import { Toaster } from "sonner";
 
 const meta: Meta<typeof NetworkSwitchToast> = {
   title: "Primitives/Toast/Network Switch Toast",
@@ -18,10 +18,10 @@ const meta: Meta<typeof NetworkSwitchToast> = {
   },
   decorators: [
     (Story) => (
-      <ToastProvider>
+      <div>
         <Story />
-        <ToastViewport />
-      </ToastProvider>
+        <Toaster />
+      </div>
     ),
   ],
   argTypes: {

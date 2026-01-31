@@ -3,10 +3,10 @@ import {
   AchievementToast,
   NetworkSwitchToast,
   ErrorToast,
-  TransactionNotification,
+  TransactionToast,
 } from "@/components/primitives/toast/specialized-toasts";
-import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
 import { StarknetIcon } from "@/components/icons/brand";
+import { Toaster } from "sonner";
 
 const meta: Meta = {
   title: "Primitives/Toast/Showcase",
@@ -22,10 +22,10 @@ const meta: Meta = {
   },
   decorators: [
     (Story) => (
-      <ToastProvider>
+      <div>
         <Story />
-        <ToastViewport />
-      </ToastProvider>
+        <Toaster />
+      </div>
     ),
   ],
 };
@@ -64,9 +64,7 @@ export const AllToastTypes: Story = {
                 progress={66.7}
                 isDraft={false}
                 showClose={false}
-                // Prevent auto-dismiss for showcase
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -81,8 +79,7 @@ export const AllToastTypes: Story = {
                 progress={16.7}
                 isDraft={true}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -97,8 +94,7 @@ export const AllToastTypes: Story = {
                 progress={100}
                 isDraft={false}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -116,8 +112,7 @@ export const AllToastTypes: Story = {
                 networkName="Starknet Mainnet"
                 networkIcon={<StarknetIcon size="default" />}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -131,8 +126,7 @@ export const AllToastTypes: Story = {
                   </div>
                 }
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -146,8 +140,7 @@ export const AllToastTypes: Story = {
                   </div>
                 }
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -167,8 +160,7 @@ export const AllToastTypes: Story = {
                 message="Execution Error"
                 progress={66.7}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -180,8 +172,7 @@ export const AllToastTypes: Story = {
                 message="Network Timeout"
                 progress={30}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -193,8 +184,7 @@ export const AllToastTypes: Story = {
                 message="Transaction Failed"
                 progress={10}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -210,14 +200,13 @@ export const AllToastTypes: Story = {
               <p className="text-gray-400 text-xs mb-2">
                 Confirming Transaction (66.7% progress)
               </p>
-              <TransactionNotification
+              <TransactionToast
                 status="confirming"
                 isExpanded={true}
                 label="New Game"
                 progress={66.7}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -225,14 +214,13 @@ export const AllToastTypes: Story = {
               <p className="text-gray-400 text-xs mb-2">
                 Confirmed Transaction (100% progress)
               </p>
-              <TransactionNotification
+              <TransactionToast
                 status="confirmed"
                 isExpanded={true}
                 label="Token Swap"
                 progress={100}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -241,22 +229,20 @@ export const AllToastTypes: Story = {
               <div className="flex gap-2">
                 <div>
                   <p className="text-gray-400 text-xs mb-1">Confirming</p>
-                  <TransactionNotification
+                  <TransactionToast
                     status="confirming"
                     isExpanded={false}
                     showClose={false}
-                    open={true}
-                    onOpenChange={() => {}}
+                    duration={0}
                   />
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs mb-1">Confirmed</p>
-                  <TransactionNotification
+                  <TransactionToast
                     status="confirmed"
                     isExpanded={false}
                     showClose={false}
-                    open={true}
-                    onOpenChange={() => {}}
+                    duration={0}
                   />
                 </div>
               </div>
@@ -288,8 +274,7 @@ export const ToastStack: Story = {
           progress={100}
           isDraft={false}
           showClose={false}
-          open={true}
-          onOpenChange={() => {}}
+          duration={0}
         />
         <NetworkSwitchToast
           networkName="Ethereum Mainnet"
@@ -299,24 +284,21 @@ export const ToastStack: Story = {
             </div>
           }
           showClose={false}
-          open={true}
-          onOpenChange={() => {}}
+          duration={0}
         />
-        <TransactionNotification
+        <TransactionToast
           status="confirming"
           isExpanded={true}
           label="Token Swap"
           progress={45}
           showClose={false}
-          open={true}
-          onOpenChange={() => {}}
+          duration={0}
         />
         <ErrorToast
           message="Network Timeout"
           progress={30}
           showClose={false}
-          open={true}
-          onOpenChange={() => {}}
+          duration={0}
         />
       </div>
     </div>
@@ -353,8 +335,7 @@ export const ProgressStates: Story = {
                   progress={progress}
                   isDraft={progress < 100}
                   showClose={false}
-                  open={true}
-                  onOpenChange={() => {}}
+                  duration={0}
                 />
               </div>
             ))}
@@ -375,8 +356,7 @@ export const ProgressStates: Story = {
                   message={`Error at ${progress}%`}
                   progress={progress}
                   showClose={false}
-                  open={true}
-                  onOpenChange={() => {}}
+                  duration={0}
                 />
               </div>
             ))}
@@ -414,8 +394,7 @@ export const DurationGuide: Story = {
               <NetworkSwitchToast
                 networkName="Quick Switch"
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -423,14 +402,13 @@ export const DurationGuide: Story = {
               <p className="text-gray-400 text-xs mb-1">
                 Confirmed Transaction (3s)
               </p>
-              <TransactionNotification
+              <TransactionToast
                 status="confirmed"
                 isExpanded={true}
                 label="Quick Action"
                 progress={100}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -454,8 +432,7 @@ export const DurationGuide: Story = {
                 progress={75}
                 isDraft={false}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -465,8 +442,7 @@ export const DurationGuide: Story = {
                 message="Standard Error"
                 progress={50}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -485,14 +461,13 @@ export const DurationGuide: Story = {
               <p className="text-gray-400 text-xs mb-1">
                 Confirming Transaction (8s)
               </p>
-              <TransactionNotification
+              <TransactionToast
                 status="confirming"
                 isExpanded={true}
                 label="Important Process"
                 progress={40}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -502,8 +477,7 @@ export const DurationGuide: Story = {
                 message="Critical System Error"
                 progress={20}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -527,8 +501,7 @@ export const DurationGuide: Story = {
                 progress={100}
                 isDraft={false}
                 showClose={false}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -568,8 +541,7 @@ export const WithCloseButtons: Story = {
                 progress={66.7}
                 isDraft={false}
                 showClose={true}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -584,8 +556,7 @@ export const WithCloseButtons: Story = {
                 progress={16.7}
                 isDraft={true}
                 showClose={true}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -605,8 +576,7 @@ export const WithCloseButtons: Story = {
                 networkName="Starknet Mainnet"
                 networkIcon={<StarknetIcon size="default" />}
                 showClose={true}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -622,8 +592,7 @@ export const WithCloseButtons: Story = {
                   </div>
                 }
                 showClose={true}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -643,8 +612,7 @@ export const WithCloseButtons: Story = {
                 message="Execution Error"
                 progress={66.7}
                 showClose={true}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -656,8 +624,7 @@ export const WithCloseButtons: Story = {
                 message="Network Timeout"
                 progress={30}
                 showClose={true}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
           </div>
@@ -673,14 +640,13 @@ export const WithCloseButtons: Story = {
               <p className="text-gray-400 text-xs mb-2">
                 Confirming Transaction with Close Button
               </p>
-              <TransactionNotification
+              <TransactionToast
                 status="confirming"
                 isExpanded={true}
                 label="New Game"
                 progress={66.7}
                 showClose={true}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -688,14 +654,13 @@ export const WithCloseButtons: Story = {
               <p className="text-gray-400 text-xs mb-2">
                 Confirmed Transaction with Close Button
               </p>
-              <TransactionNotification
+              <TransactionToast
                 status="confirmed"
                 isExpanded={true}
                 label="Token Swap"
                 progress={100}
                 showClose={true}
-                open={true}
-                onOpenChange={() => {}}
+                duration={0}
               />
             </div>
 
@@ -706,22 +671,20 @@ export const WithCloseButtons: Story = {
               <div className="flex gap-2">
                 <div>
                   <p className="text-gray-400 text-xs mb-1">Confirming</p>
-                  <TransactionNotification
+                  <TransactionToast
                     status="confirming"
                     isExpanded={false}
                     showClose={false}
-                    open={true}
-                    onOpenChange={() => {}}
+                    duration={0}
                   />
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs mb-1">Confirmed</p>
-                  <TransactionNotification
+                  <TransactionToast
                     status="confirmed"
                     isExpanded={false}
                     showClose={false}
-                    open={true}
-                    onOpenChange={() => {}}
+                    duration={0}
                   />
                 </div>
               </div>

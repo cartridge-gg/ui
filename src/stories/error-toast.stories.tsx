@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ErrorToast } from "@/components/primitives/toast/specialized-toasts";
-import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
+import { Toaster } from "sonner";
 
 const meta: Meta<typeof ErrorToast> = {
   title: "Primitives/Toast/Error Toast",
@@ -17,10 +17,10 @@ const meta: Meta<typeof ErrorToast> = {
   },
   decorators: [
     (Story) => (
-      <ToastProvider>
+      <div>
         <Story />
-        <ToastViewport />
-      </ToastProvider>
+        <Toaster />
+      </div>
     ),
   ],
   argTypes: {
