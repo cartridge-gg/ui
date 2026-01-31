@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@/components/primitives/button";
-import { useToast } from "@/components/primitives/toast/use-toast";
-import { Toaster } from "@/components/primitives/toast/toaster";
+import {
+  useToast,
+  ToasterToast,
+} from "@/components/primitives/toast/use-toast";
 import {
   showAchievementToast,
   showMarketplaceToast,
@@ -59,7 +61,7 @@ function ToastIntegrationDemo() {
           progress: 66.7,
           isDraft: false,
           duration: 4000, // 4 seconds
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -74,7 +76,7 @@ function ToastIntegrationDemo() {
           progress: 16.7,
           isDraft: true,
           duration: 6000, // 6 seconds
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -89,8 +91,8 @@ function ToastIntegrationDemo() {
           itemImages: [
             "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
           ],
-          color: "#33FF33",
-        }),
+          preset: "loot-survivor",
+        }) as ToasterToast,
       );
     });
   };
@@ -105,7 +107,7 @@ function ToastIntegrationDemo() {
           itemImages: [
             "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo",
           ],
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -117,7 +119,7 @@ function ToastIntegrationDemo() {
           networkName: "Starknet Mainnet",
           networkIcon: <StarknetIcon size="default" />,
           duration: 3000, // 3 seconds
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -129,7 +131,7 @@ function ToastIntegrationDemo() {
           message: "Execution Error",
           progress: 66.7,
           duration: 5000, // 5 seconds
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -143,7 +145,7 @@ function ToastIntegrationDemo() {
           label: "New Game",
           progress: 66.7,
           duration: 8000, // 8 seconds for confirming
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -157,7 +159,7 @@ function ToastIntegrationDemo() {
           label: "Token Swap",
           progress: 100,
           duration: 3000, // 3 seconds for confirmed
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -169,7 +171,7 @@ function ToastIntegrationDemo() {
           status: "confirming",
           isExpanded: false,
           duration: 4000, // 4 seconds
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -184,7 +186,7 @@ function ToastIntegrationDemo() {
           progress: 100,
           isDraft: false,
           duration: 2000, // 2 seconds
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -196,7 +198,7 @@ function ToastIntegrationDemo() {
           message: "Long Duration Error",
           progress: 33.3,
           duration: 10000, // 10 seconds
-        }),
+        }) as ToasterToast,
       );
     });
   };
@@ -314,8 +316,6 @@ function ToastIntegrationDemo() {
         Click buttons to trigger specialized toasts with different durations.
         Buttons are debounced to prevent multiple toasts.
       </div>
-
-      <Toaster />
     </div>
   );
 }

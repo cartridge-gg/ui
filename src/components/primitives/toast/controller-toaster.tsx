@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { Toaster as SonnerToaster } from "sonner";
 import {
   showErrorToast,
   showSuccessToast,
@@ -8,7 +9,6 @@ import {
   showMarketplaceToast,
   showAchievementToast,
 } from "@/components/primitives/toast/specialized-toasts";
-import { Toaster } from "./toaster";
 import { useToast, ToasterToast } from "./use-toast";
 import {
   ToastPosition,
@@ -19,6 +19,7 @@ import {
   AchievementToastOptions,
   CONTROLLER_TOAST_MESSAGE_TYPE,
 } from "./types";
+import { ControllerPresetProvider } from "@/utils/context/presets";
 
 export function ControllerToaster({
   // preset,
@@ -28,6 +29,7 @@ export function ControllerToaster({
   disableMarketplace = false,
   disableAchievements = false,
   // disableQuests = false,
+  disableSonnerToaster = false,
 }: {
   preset?: string;
   position?: ToastPosition;
@@ -36,6 +38,7 @@ export function ControllerToaster({
   disableMarketplace?: boolean;
   disableAchievements?: boolean;
   // disableQuests?: boolean;
+  disableSonnerToaster?: boolean;
 }) {
   const { toast } = useToast();
 
@@ -97,5 +100,11 @@ export function ControllerToaster({
     };
   }, []);
 
-  return <Toaster position={position} />;
+  if (disableSonnerToaster) return null;
+
+  return (
+    <ControllerPresetProvider>
+      <SonnerToaster id="controller" position={position} />
+    </ControllerPresetProvider>
+  );
 }

@@ -65,6 +65,7 @@ function ToastIntegrationDemo() {
     const options: ErrorToastOptions = {
       variant: "error",
       message: "Failed to purchase asset!",
+      duration: 5000,
     };
     emitControllerToast("error", options);
   };
@@ -73,6 +74,7 @@ function ToastIntegrationDemo() {
     const options: SuccessToastOptions = {
       variant: "success",
       message: "Address copied",
+      duration: 5000,
     };
     emitControllerToast("success", options);
   };
@@ -81,6 +83,7 @@ function ToastIntegrationDemo() {
     const options: SuccessToastOptions = {
       variant: "success",
       message: "You did something that really remarkable and profound!",
+      duration: 5000,
     };
     emitControllerToast("successLonger", options);
   };
@@ -91,6 +94,7 @@ function ToastIntegrationDemo() {
       status: "confirming",
       label: "Purchase",
       progress: 50,
+      duration: 5000,
     };
     emitControllerToast("transactionConfirming", options);
   };
@@ -100,6 +104,7 @@ function ToastIntegrationDemo() {
       variant: "transaction",
       status: "confirmed",
       progress: 50,
+      duration: 5000,
     };
     emitControllerToast("transactionConfirmed", options);
   };
@@ -114,6 +119,7 @@ function ToastIntegrationDemo() {
         "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
       ],
       preset: "loot-survivor",
+      duration: 10000,
     };
     emitControllerToast("purchaseBeast", options);
   };
@@ -130,6 +136,7 @@ function ToastIntegrationDemo() {
         "https://api.cartridge.gg/x/arcade-pistols/torii/static/0x7aaa9866750a0db82a54ba8674c38620fa2f967d2fbb31133def48e0527c87f/0x0000000000000000000000000000000000000000000000000000000000000577/image",
       ],
       preset: "pistols",
+      duration: 10000,
     };
     emitControllerToast("PurchaseDuelists", options);
   };
@@ -153,8 +160,9 @@ function ToastIntegrationDemo() {
       title: "Pacifist Path",
       subtitle: "Earned!",
       xpAmount: 50,
-      progress: 50,
       isDraft: true,
+      progress: 50,
+      duration: 5000,
     };
     emitControllerToast("achievement", options);
   };
@@ -166,6 +174,7 @@ function ToastIntegrationDemo() {
       subtitle: "Earned!",
       xpAmount: 100,
       progress: 100,
+      duration: 5000,
     };
     emitControllerToast("achievement", options);
   };
@@ -175,6 +184,7 @@ function ToastIntegrationDemo() {
   //     variant: "quest",
   //     title: "Daily Quest",
   //     subtitle: "Conquered!",
+  //     duration: 5000,
   //   };
   //   emitControllerToast("quest", options);
   // };

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { TransactionNotification } from "@/components/primitives/toast/specialized-toasts";
-import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
+import { TransactionToast } from "@/components/primitives/toast/specialized-toasts";
+import { Toaster } from "sonner";
 
-const meta: Meta<typeof TransactionNotification> = {
+const meta: Meta<typeof TransactionToast> = {
   title: "Primitives/Toast/Transaction Notification",
-  component: TransactionNotification,
+  component: TransactionToast,
   parameters: {
     layout: "centered",
     backgrounds: {
@@ -17,10 +17,10 @@ const meta: Meta<typeof TransactionNotification> = {
   },
   decorators: [
     (Story) => (
-      <ToastProvider>
+      <div>
         <Story />
-        <ToastViewport />
-      </ToastProvider>
+        <Toaster />
+      </div>
     ),
   ],
   argTypes: {
@@ -36,7 +36,7 @@ const meta: Meta<typeof TransactionNotification> = {
 
 export default meta;
 
-type Story = StoryObj<typeof TransactionNotification>;
+type Story = StoryObj<typeof TransactionToast>;
 
 export const ConfirmingExpanded: Story = {
   args: {

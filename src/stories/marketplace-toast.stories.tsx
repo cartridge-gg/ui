@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MarketplaceToast } from "@/components/primitives/toast/specialized-toasts";
-import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
+import { ControllerToaster } from "@/components/primitives/toast/controller-toaster";
 
 const meta: Meta<typeof MarketplaceToast> = {
   title: "Primitives/Toast/Marketplace Toast",
@@ -17,10 +17,10 @@ const meta: Meta<typeof MarketplaceToast> = {
   },
   decorators: [
     (Story) => (
-      <ToastProvider>
+      <div>
         <Story />
-        <ToastViewport />
-      </ToastProvider>
+        <ControllerToaster />
+      </div>
     ),
   ],
   argTypes: {
@@ -45,7 +45,7 @@ export const PurchasedBeast: Story = {
     itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
     ],
-    color: "#33FF33",
+    preset: "loot-survivor",
   },
 };
 
@@ -57,7 +57,7 @@ export const PurchasedBeasts: Story = {
     itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
     ],
-    color: "#33FF33",
+    preset: "loot-survivor",
   },
 };
 
@@ -69,7 +69,7 @@ export const SentBeast: Story = {
     itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
     ],
-    color: "#33FF33",
+    preset: "loot-survivor",
   },
 };
 
@@ -81,7 +81,7 @@ export const SentBeasts: Story = {
     itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image",
     ],
-    color: "#33FF33",
+    preset: "loot-survivor",
   },
 };
 
@@ -93,7 +93,7 @@ export const SoldJoker: Story = {
     itemImages: [
       "https://api.cartridge.gg/x/arcade-main/torii/static/0x04ddbbab7aa237c1b73c931b6f836ded6036f5e12d4898fccdcde81d494f7956/0x0000000000000000000000000000000000000000000000000000000000000953/image?width=300&height=300",
     ],
-    color: "#A144B2",
+    preset: "jokers-of-neon",
   },
 };
 
