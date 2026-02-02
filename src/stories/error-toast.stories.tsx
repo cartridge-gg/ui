@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ErrorToast } from "@/components/primitives/toast/specialized-toasts";
-import { Toaster } from "sonner";
 
 const meta: Meta<typeof ErrorToast> = {
   title: "Primitives/Toast/Error Toast",
@@ -19,7 +18,6 @@ const meta: Meta<typeof ErrorToast> = {
     (Story) => (
       <div>
         <Story />
-        <Toaster />
       </div>
     ),
   ],

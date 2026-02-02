@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { TransactionToast } from "@/components/primitives/toast/specialized-toasts";
-import { Toaster } from "sonner";
 
 const meta: Meta<typeof TransactionToast> = {
   title: "Primitives/Toast/Transaction Notification",
@@ -19,7 +18,6 @@ const meta: Meta<typeof TransactionToast> = {
     (Story) => (
       <div>
         <Story />
-        <Toaster />
       </div>
     ),
   ],

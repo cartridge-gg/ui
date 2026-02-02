@@ -6,7 +6,6 @@ import {
   TransactionToast,
 } from "@/components/primitives/toast/specialized-toasts";
 import { StarknetIcon } from "@/components/icons/brand";
-import { Toaster } from "sonner";
 
 const meta: Meta = {
   title: "Primitives/Toast/Showcase",
@@ -24,7 +23,6 @@ const meta: Meta = {
     (Story) => (
       <div>
         <Story />
-        <Toaster />
       </div>
     ),
   ],

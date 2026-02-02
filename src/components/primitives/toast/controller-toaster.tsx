@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { Toaster as SonnerToaster } from "sonner";
 import {
   showErrorToast,
   showSuccessToast,
@@ -19,7 +18,7 @@ import {
   AchievementToastOptions,
   CONTROLLER_TOAST_MESSAGE_TYPE,
 } from "./types";
-import { ControllerPresetProvider } from "@/utils/context/presets";
+import { SonnerToaster } from "@/components/primitives/sonner";
 
 export function ControllerToaster({
   // preset,
@@ -103,8 +102,6 @@ export function ControllerToaster({
   if (disableSonnerToaster) return null;
 
   return (
-    <ControllerPresetProvider>
-      <SonnerToaster id="controller" position={position} />
-    </ControllerPresetProvider>
+    <SonnerToaster position={position} />
   );
 }

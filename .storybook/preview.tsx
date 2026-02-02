@@ -60,7 +60,9 @@ const preview: Preview = {
       return (
         <>
           <Story />
-          <SonnerToaster />
+          {Story().type.name !== "ControllerToasterDemo" &&
+            <SonnerToaster />
+          }
         </>
       )
     },

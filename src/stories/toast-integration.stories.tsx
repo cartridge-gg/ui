@@ -401,13 +401,13 @@ toast(showTransactionToast({
             4. Add Toaster to your app:
           </h3>
           <pre className="bg-gray-800 p-2 rounded mt-1 text-xs">
-            {`import { Toaster } from "@/components/primitives/toast";
+            {`import { SonnerToaster } from "@/components/primitives/sonner";
 
 function App() {
   return (
     <div>
       {/* Your app content */}
-      <Toaster />
+      <SonnerToaster />
     </div>
   );
 }`}

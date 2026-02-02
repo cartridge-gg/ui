@@ -12,6 +12,7 @@ import {
   CONTROLLER_TOAST_MESSAGE_TYPE,
 } from "@/components/primitives/toast/types";
 import { ControllerToaster } from "@/components/primitives/toast/controller-toaster";
+import { toast as sonnerToast } from "sonner";
 
 const meta: Meta = {
   title: "Primitives/Toast/Controller Integration",
@@ -31,7 +32,7 @@ export default meta;
 
 type Story = StoryObj;
 
-function ToastIntegrationDemo() {
+function ControllerToasterDemo() {
   const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
 
   // Debounced toast function to prevent multiple rapid clicks
@@ -164,7 +165,7 @@ function ToastIntegrationDemo() {
       progress: 50,
       duration: 5000,
     };
-    emitControllerToast("achievement", options);
+    emitControllerToast("achievementDraft", options);
   };
 
   const showAchievementToast = () => {
@@ -239,6 +240,12 @@ function ToastIntegrationDemo() {
               ? "Loading..."
               : "Transaction Confirmed"}
           </Button>
+          <Button
+            onClick={() => sonnerToast.success("sonner.success()", { duration: 5000 })}
+            className="w-full"
+          >
+            sonner.success()
+          </Button>
         </div>
 
         <div className="space-y-2">
@@ -300,7 +307,7 @@ function ToastIntegrationDemo() {
 }
 
 export const IntegrationDemo: Story = {
-  render: () => <ToastIntegrationDemo />,
+  render: () => <ControllerToasterDemo />,
 };
 
 export const UsageExample: Story = {

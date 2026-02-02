@@ -18,7 +18,6 @@ function useToast() {
       (_id) => toast.action ?? <SuccessToast message={toast.title ?? ""} />,
       {
         duration: toast.duration,
-        toasterId: "controller",
       },
     );
   }, []);

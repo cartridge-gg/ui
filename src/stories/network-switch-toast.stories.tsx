@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { NetworkSwitchToast } from "@/components/primitives/toast/specialized-toasts";
 import { StarknetIcon } from "@/components/icons/brand";
-import { Toaster } from "sonner";
 
 const meta: Meta<typeof NetworkSwitchToast> = {
   title: "Primitives/Toast/Network Switch Toast",
@@ -20,7 +19,6 @@ const meta: Meta<typeof NetworkSwitchToast> = {
     (Story) => (
       <div>
         <Story />
-        <Toaster />
       </div>
     ),
   ],
