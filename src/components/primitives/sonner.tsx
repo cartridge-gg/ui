@@ -24,7 +24,7 @@ const SonnerToaster = ({ toasterId, ...props }: SonnerToasterProps) => {
         toastOptions={{
           classNames: {
             toast:
-              "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
+              "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg rounded-lg",
             description: "group-[.toast]:text-foreground-400",
             actionButton:
               "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",

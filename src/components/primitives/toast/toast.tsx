@@ -86,7 +86,10 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
           </div>
           {showClose && (
             <div className="flex-shrink-0 ml-2 px-4">
-              <CloseButton toastId={toastId} />
+              <CloseButton
+                toastId={toastId}
+                variant={variant === "destructive" ? "translucent" : "default"}
+              />
             </div>
           )}
         </div>

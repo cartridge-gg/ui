@@ -3,7 +3,7 @@
 import React, { useCallback } from "react";
 import { toast as sonnerToast, ExternalToast } from "sonner";
 import { ToastProps } from "./toast";
-import { SuccessToast } from "./specialized-toasts";
+import { ErrorToast, SuccessToast } from "./specialized-toasts";
 
 export type ToasterToast = ToastProps & {
   // id: string;
@@ -25,12 +25,18 @@ function useToast() {
     if (toast.element) options.id = toast.toastId;
     sonnerToast.custom(
       (id) =>
-        toast.element ?? (
+        toast.element ??
+        (toast.variant == "destructive" ? (
+          <ErrorToast
+            message={toast.title ?? ""}
+            toastId={(toast.toastId as string) ?? id}
+          />
+        ) : (
           <SuccessToast
             message={toast.title ?? ""}
             toastId={(toast.toastId as string) ?? id}
           />
-        ),
+        )),
       options,
     );
   }, []);

@@ -160,7 +160,11 @@ const AchievementToast = memo<AchievementToastProps>(
         <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div className="flex items-center justify-center w-10 h-10 bg-background rounded p-[5px] flex-shrink-0">
-              <IconComponent size="lg" style={{ color: iconColor }} />
+              <IconComponent
+                size="lg"
+                className="min-w-6"
+                style={{ color: iconColor }}
+              />
             </div>
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
               <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
@@ -269,7 +273,7 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
       <div className="flex items-center justify-between px-3 py-3 w-full h-full">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-            {networkIcon || <StarknetIcon size="default" />}
+            {networkIcon || <StarknetIcon size="default" className="min-w-6" />}
           </div>
           <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
             Switched to {networkName}
@@ -304,12 +308,13 @@ const ErrorToast = memo<ErrorToastProps>(
       showClose={showClose}
       toastId={toastId}
       {...props}
+      variant="destructive"
     >
       <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <AlertIcon
             size="default"
-            className="text-destructive-foreground flex-shrink-0"
+            className="text-destructive-foreground min-w-6"
           />
           <span className="text-destructive-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
             {message}
@@ -351,7 +356,7 @@ const SuccessToast = memo<SuccessToastProps>(
     >
       <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <CheckIcon size="default" className="text-foreground" />
+          <CheckIcon size="default" className="text-foreground min-w-6" />
           <span className="text-foreground text-base font-normal leading-5 tracking-[0.01em] truncate">
             {message}
           </span>
@@ -401,10 +406,10 @@ const TransactionToast = memo<TransactionToastProps>(
             {status === "confirming" ? (
               <SpinnerIcon
                 size="default"
-                className="text-achievement animate-spin"
+                className="text-achievement animate-spin min-w-6"
               />
             ) : (
-              <CheckIcon size="default" className="text-achievement" />
+              <CheckIcon size="default" className="text-achievement min-w-6" />
             )}
           </div>
         </Toast>
@@ -423,14 +428,19 @@ const TransactionToast = memo<TransactionToastProps>(
       >
         <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
+            <div className="w-6 h-6 flex items-center justify-center">
               {status === "confirming" ? (
                 <SpinnerIcon
                   size="default"
-                  className="text-foreground animate-spin"
+                  className="text-foreground animate-spin min-w-6"
                 />
               ) : (
-                <CheckIcon size="default" className="text-foreground" />
+                [
+                  <CheckIcon
+                    size="default"
+                    className="text-foreground min-w-6"
+                  />,
+                ]
               )}
             </div>
             <span className="text-foreground text-base font-normal leading-5 tracking-[0.01em] truncate">
