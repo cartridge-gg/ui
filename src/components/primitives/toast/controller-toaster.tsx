@@ -23,6 +23,7 @@ import { SonnerToaster } from "@/components/primitives/sonner";
 export function ControllerToaster({
   // preset,
   position = "bottom-right",
+  toasterId,
   disableErrors = false,
   disableTransactions = false,
   disableMarketplace = false,
@@ -32,6 +33,7 @@ export function ControllerToaster({
 }: {
   preset?: string;
   position?: ToastPosition;
+  toasterId?: string | undefined;
   disableErrors?: boolean;
   disableTransactions?: boolean;
   disableMarketplace?: boolean;
@@ -59,6 +61,7 @@ export function ControllerToaster({
         toast(
           showErrorToast({
             ...options,
+            toasterId,
           }) as ToasterToast,
         );
       } else if (variant == "success" && !disableErrors) {
@@ -66,6 +69,7 @@ export function ControllerToaster({
         toast(
           showSuccessToast({
             ...options,
+            toasterId,
           }) as ToasterToast,
         );
       } else if (variant == "transaction" && !disableTransactions) {
@@ -74,6 +78,7 @@ export function ControllerToaster({
           showTransactionToast({
             ...options,
             // duration: options.status == "confirming" ? 0 : options.duration,
+            toasterId,
           }) as ToasterToast,
         );
       } else if (variant == "marketplace" && !disableMarketplace) {
@@ -82,6 +87,7 @@ export function ControllerToaster({
           showMarketplaceToast({
             title: `${options.action[0].toUpperCase()}${options.action.slice(1)}`,
             ...options,
+            toasterId,
           }) as ToasterToast,
         );
       } else if (variant == "achievement" && !disableAchievements) {
@@ -89,6 +95,7 @@ export function ControllerToaster({
         toast(
           showAchievementToast({
             ...options,
+            toasterId,
           }) as ToasterToast,
         );
       }
@@ -101,5 +108,5 @@ export function ControllerToaster({
 
   if (disableSonnerToaster) return null;
 
-  return <SonnerToaster position={position} />;
+  return <SonnerToaster position={position} toasterId={toasterId} />;
 }

@@ -14,7 +14,8 @@ import {
 } from "@/components/icons";
 import { StarknetIcon } from "@/components/icons/brand";
 import { CollectibleImage } from "@/components/modules/collectibles";
-import { Toast, type ToastProps } from "./toast";
+import { ToasterToast } from "./use-toast";
+import { Toast } from "./toast";
 import { usePresetColor } from "@/utils/context/presets";
 
 // Base toast container for specialized toasts
@@ -117,7 +118,7 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
 ToastProgressBar.displayName = "ToastProgressBar";
 
 // Achievement Toast Component
-interface AchievementToastProps extends Omit<ToastProps, "children"> {
+interface AchievementToastProps extends Omit<ToasterToast, "children"> {
   title: string;
   subtitle?: string;
   xpAmount: number;
@@ -152,7 +153,6 @@ const AchievementToast = memo<AchievementToastProps>(
           specializedToastVariants({ variant: "achievement" }),
           className,
         )}
-        duration={duration}
         showClose={showClose}
         toastId={toastId}
         {...props}
@@ -188,13 +188,12 @@ const AchievementToast = memo<AchievementToastProps>(
 AchievementToast.displayName = "AchievementToast";
 
 // Marketplace Toast Component
-interface MarketplaceToastProps extends Omit<ToastProps, "children"> {
+interface MarketplaceToastProps extends Omit<ToasterToast, "children"> {
   title: string;
   collectionName: string;
   itemNames: string[];
   itemImages: string[];
   progress?: number;
-  duration?: number;
   preset?: string;
 }
 
@@ -206,7 +205,6 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
     itemImages,
     progress = 100,
     preset,
-    duration,
     showClose,
     toastId,
     className,
@@ -218,7 +216,6 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
           specializedToastVariants({ variant: "achievement" }),
           className,
         )}
-        duration={duration}
         showClose={showClose}
         toastId={toastId}
         {...props}
@@ -253,17 +250,15 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
 MarketplaceToast.displayName = "MarketplaceToast";
 
 // Network Switch Toast Component
-interface NetworkSwitchToastProps extends Omit<ToastProps, "children"> {
+interface NetworkSwitchToastProps extends Omit<ToasterToast, "children"> {
   networkName: string;
   networkIcon?: React.ReactNode;
-  duration?: number;
 }
 
 const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
   ({
     networkName,
     networkIcon,
-    duration,
     showClose,
     toastId,
     className,
@@ -274,7 +269,6 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
         specializedToastVariants({ variant: "network" }),
         className,
       )}
-      duration={duration}
       showClose={showClose}
       toastId={toastId}
       {...props}
@@ -296,10 +290,9 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
 NetworkSwitchToast.displayName = "NetworkSwitchToast";
 
 // Error Toast Component
-interface ErrorToastProps extends Omit<ToastProps, "children"> {
+interface ErrorToastProps extends Omit<ToasterToast, "children"> {
   message: string;
   progress?: number;
-  duration?: number;
   preset?: string;
 }
 
@@ -308,7 +301,6 @@ const ErrorToast = memo<ErrorToastProps>(
     message,
     progress = 100,
     preset,
-    duration,
     showClose,
     toastId,
     className,
@@ -316,7 +308,6 @@ const ErrorToast = memo<ErrorToastProps>(
   }) => (
     <Toast
       className={cn(specializedToastVariants({ variant: "error" }), className)}
-      duration={duration}
       showClose={showClose}
       toastId={toastId}
       {...props}
@@ -340,10 +331,9 @@ const ErrorToast = memo<ErrorToastProps>(
 ErrorToast.displayName = "ErrorToast";
 
 // Success Toast Component
-interface SuccessToastProps extends Omit<ToastProps, "children"> {
+interface SuccessToastProps extends Omit<ToasterToast, "children"> {
   message: string;
   progress?: number;
-  duration?: number;
   preset?: string;
 }
 
@@ -352,7 +342,6 @@ const SuccessToast = memo<SuccessToastProps>(
     message,
     progress = 100,
     preset,
-    duration,
     showClose,
     toastId,
     className,
@@ -363,7 +352,6 @@ const SuccessToast = memo<SuccessToastProps>(
         specializedToastVariants({ variant: "transaction" }),
         className,
       )}
-      duration={duration}
       showClose={showClose}
       toastId={toastId}
       {...props}
@@ -388,12 +376,11 @@ const SuccessToast = memo<SuccessToastProps>(
 SuccessToast.displayName = "SuccessToast";
 
 // Transaction Notification Component
-interface TransactionToastProps extends Omit<ToastProps, "children"> {
+interface TransactionToastProps extends Omit<ToasterToast, "children"> {
   status: "confirming" | "confirmed";
   isExpanded?: boolean;
   label?: string;
   progress?: number;
-  duration?: number;
   preset?: string;
 }
 
@@ -404,7 +391,6 @@ const TransactionToast = memo<TransactionToastProps>(
     label,
     progress = 100,
     preset,
-    duration,
     showClose,
     toastId,
     className,
@@ -414,7 +400,6 @@ const TransactionToast = memo<TransactionToastProps>(
       return (
         <Toast
           className="flex items-center justify-center p-[10px] w-12 h-12 bg-background shadow-lg rounded-lg border-0 overflow-hidden"
-          duration={duration}
           showClose={showClose}
           toastId={toastId}
           {...props}
@@ -439,7 +424,6 @@ const TransactionToast = memo<TransactionToastProps>(
           specializedToastVariants({ variant: "transaction" }),
           className,
         )}
-        duration={duration}
         showClose={showClose}
         toastId={toastId}
         {...props}
@@ -490,8 +474,9 @@ export const showAchievementToast = (
   const toastId = `achievement-${Date.now()}`;
   return {
     duration: props.duration,
+    toasterId: props.toasterId,
     toastId,
-    action: <AchievementToast {...props} showClose={true} toastId={toastId} />,
+    element: <AchievementToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
@@ -501,8 +486,9 @@ export const showMarketplaceToast = (
   const toastId = `marketplace-${Date.now()}`;
   return {
     duration: props.duration,
+    toasterId: props.toasterId,
     toastId,
-    action: <MarketplaceToast {...props} showClose={true} toastId={toastId} />,
+    element: <MarketplaceToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
@@ -512,8 +498,9 @@ export const showNetworkSwitchToast = (
   const toastId = `network-${Date.now()}`;
   return {
     duration: props.duration,
+    toasterId: props.toasterId,
     toastId,
-    action: (
+    element: (
       <NetworkSwitchToast {...props} showClose={true} toastId={toastId} />
     ),
   };
@@ -526,8 +513,9 @@ export const showErrorToast = (
   return {
     variant: "destructive" as const,
     duration: props.duration,
+    toasterId: props.toasterId,
     toastId,
-    action: <ErrorToast {...props} showClose={true} toastId={toastId} />,
+    element: <ErrorToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
@@ -538,8 +526,9 @@ export const showSuccessToast = (
   return {
     variant: "default" as const,
     duration: props.duration,
+    toasterId: props.toasterId,
     toastId,
-    action: <SuccessToast {...props} showClose={true} toastId={toastId} />,
+    element: <SuccessToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
@@ -549,8 +538,9 @@ export const showTransactionToast = (
   const toastId = `success-${Date.now()}`;
   return {
     duration: props.duration,
+    toasterId: props.toasterId,
     toastId,
-    action: <TransactionToast {...props} showClose={true} toastId={toastId} />,
+    element: <TransactionToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 

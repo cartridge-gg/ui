@@ -43,7 +43,7 @@ function ExistingToastDemo() {
     toast({
       title: "Update Available",
       description: "A new version is available for download.",
-      action: (
+      element: (
         <Button variant="outline" size="default">
           Update
         </Button>
@@ -81,7 +81,6 @@ function ExistingToastDemo() {
         These are the existing toast notifications using the original
         Radix-based system
       </div>
-
     </div>
   );
 }

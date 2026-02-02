@@ -304,6 +304,7 @@ function ControllerToasterDemo() {
       </div>
 
       <ControllerToaster />
+      {/* <ControllerToaster toasterId="controller" position="bottom-left" /> */}
     </div>
   );
 }
@@ -316,13 +317,17 @@ export const UsageExample: Story = {
   render: () => (
     <div className="space-y-4 text-white">
       <h2 className="text-lg font-semibold">
-        How integrade Controller toasts in your app:
+        Integrate Controller Toasts in your app:
       </h2>
 
       <div className="space-y-3 text-sm">
         <div>
           <h3 className="font-medium text-green-400">
-            1. Just add the controller toaster component to your game:
+            1. Add the {"<ControllerToaster />"} component to your game: 2. If
+            you already have a sonner toaster, remove its {"<Toaster />"}{" "}
+            component: 3. Or, if you want the controller toasters to be
+            independent from your existing sonner toaster, give it a toasterId:{" "}
+            {'<ControllerToaster toasterId="controller" />'}
           </h3>
           <pre className="bg-gray-800 p-2 rounded mt-1 text-xs">
             {`import { ControllerToaster } from "@cartridge/ui";

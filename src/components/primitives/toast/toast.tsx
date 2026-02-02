@@ -26,7 +26,7 @@ const toastVariants = cva(
 interface CloseButtonProps {
   variant?: "default" | "translucent";
   className?: string;
-  toastId?: number | string;
+  toastId?: string;
 }
 
 export const CloseButton = memo<CloseButtonProps>(
@@ -57,13 +57,21 @@ export interface ToastProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof toastVariants> {
   showClose?: boolean;
-  duration?: number;
-  toastId?: number | string;
+  toastId?: string;
+  toasterId?: string;
 }
 
 export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
   (
-    { className, variant, children, showClose = true, toastId, ...props },
+    {
+      className,
+      variant,
+      children,
+      showClose = true,
+      toastId,
+      toasterId,
+      ...props
+    },
     ref,
   ) => {
     return (

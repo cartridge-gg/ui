@@ -9,7 +9,9 @@ export type ToasterToast = ToastProps & {
   // id: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
-  action?: React.ReactElement;
+  element?: React.ReactElement;
+  duration?: number;
+  toasterId?: string;
   toastId?: string;
 };
 
@@ -18,15 +20,14 @@ function useToast() {
     const options: ExternalToast = {
       duration: toast.duration,
     };
-    if (toast.action) {
-      options.id = toast.toastId;
-    }
+    if (toast.toasterId) options.toasterId = toast.toasterId;
+    if (toast.element) options.id = toast.toastId;
     sonnerToast.custom(
       (id) =>
-        toast.action ?? (
+        toast.element ?? (
           <SuccessToast
             message={toast.title ?? ""}
-            toastId={toast.toastId ?? id}
+            toastId={toast.toastId as string ?? id}
           />
         ),
       options,
