@@ -101,7 +101,5 @@ export function ControllerToaster({
 
   if (disableSonnerToaster) return null;
 
-  return (
-    <SonnerToaster position={position} />
-  );
+  return <SonnerToaster position={position} />;
 }

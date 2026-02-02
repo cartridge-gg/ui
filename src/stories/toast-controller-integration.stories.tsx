@@ -241,7 +241,9 @@ function ControllerToasterDemo() {
               : "Transaction Confirmed"}
           </Button>
           <Button
-            onClick={() => sonnerToast.success("sonner.success()", { duration: 5000 })}
+            onClick={() =>
+              sonnerToast.success("sonner.success()", { duration: 5000 })
+            }
             className="w-full"
           >
             sonner.success()

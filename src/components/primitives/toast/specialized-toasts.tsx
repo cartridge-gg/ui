@@ -137,6 +137,7 @@ const AchievementToast = memo<AchievementToastProps>(
     preset,
     duration,
     showClose,
+    toastId,
     className,
     ...props
   }) => {
@@ -153,6 +154,7 @@ const AchievementToast = memo<AchievementToastProps>(
         )}
         duration={duration}
         showClose={showClose}
+        toastId={toastId}
         {...props}
       >
         <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
@@ -206,6 +208,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
     preset,
     duration,
     showClose,
+    toastId,
     className,
     ...props
   }) => {
@@ -217,6 +220,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
         )}
         duration={duration}
         showClose={showClose}
+        toastId={toastId}
         {...props}
       >
         <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
@@ -256,7 +260,15 @@ interface NetworkSwitchToastProps extends Omit<ToastProps, "children"> {
 }
 
 const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
-  ({ networkName, networkIcon, duration, showClose, className, ...props }) => (
+  ({
+    networkName,
+    networkIcon,
+    duration,
+    showClose,
+    toastId,
+    className,
+    ...props
+  }) => (
     <Toast
       className={cn(
         specializedToastVariants({ variant: "network" }),
@@ -264,6 +276,7 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
       )}
       duration={duration}
       showClose={showClose}
+      toastId={toastId}
       {...props}
     >
       <div className="flex items-center justify-between px-3 py-3 w-full h-full">
@@ -297,6 +310,7 @@ const ErrorToast = memo<ErrorToastProps>(
     preset,
     duration,
     showClose,
+    toastId,
     className,
     ...props
   }) => (
@@ -304,6 +318,7 @@ const ErrorToast = memo<ErrorToastProps>(
       className={cn(specializedToastVariants({ variant: "error" }), className)}
       duration={duration}
       showClose={showClose}
+      toastId={toastId}
       {...props}
     >
       <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
@@ -339,6 +354,7 @@ const SuccessToast = memo<SuccessToastProps>(
     preset,
     duration,
     showClose,
+    toastId,
     className,
     ...props
   }) => (
@@ -349,6 +365,7 @@ const SuccessToast = memo<SuccessToastProps>(
       )}
       duration={duration}
       showClose={showClose}
+      toastId={toastId}
       {...props}
     >
       <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
@@ -389,6 +406,7 @@ const TransactionToast = memo<TransactionToastProps>(
     preset,
     duration,
     showClose,
+    toastId,
     className,
     ...props
   }) => {
@@ -398,6 +416,7 @@ const TransactionToast = memo<TransactionToastProps>(
           className="flex items-center justify-center p-[10px] w-12 h-12 bg-background shadow-lg rounded-lg border-0 overflow-hidden"
           duration={duration}
           showClose={showClose}
+          toastId={toastId}
           {...props}
         >
           <div className="w-7 h-7 flex items-center justify-center">
@@ -422,6 +441,7 @@ const TransactionToast = memo<TransactionToastProps>(
         )}
         duration={duration}
         showClose={showClose}
+        toastId={toastId}
         {...props}
       >
         <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
@@ -465,76 +485,72 @@ TransactionToast.displayName = "TransactionToast";
 
 // Convenience functions for using with the existing toast system
 export const showAchievementToast = (
-  props: Pick<
-    AchievementToastProps,
-    "title" | "subtitle" | "xpAmount" | "progress" | "isDraft" | "duration"
-  >,
+  props: Omit<AchievementToastProps, "variant" | "toastId" | "children">,
 ) => {
+  const toastId = `achievement-${Date.now()}`;
   return {
     duration: props.duration,
-    action: <AchievementToast {...props} showClose={true} />,
+    toastId,
+    action: <AchievementToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
 export const showMarketplaceToast = (
-  props: Pick<
-    MarketplaceToastProps,
-    | "title"
-    | "collectionName"
-    | "itemNames"
-    | "itemImages"
-    | "progress"
-    | "duration"
-    | "preset"
-  >,
+  props: Omit<MarketplaceToastProps, "variant" | "toastId" | "children">,
 ) => {
+  const toastId = `marketplace-${Date.now()}`;
   return {
     duration: props.duration,
-    action: <MarketplaceToast {...props} showClose={true} />,
+    toastId,
+    action: <MarketplaceToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
 export const showNetworkSwitchToast = (
-  props: Pick<
-    NetworkSwitchToastProps,
-    "networkName" | "networkIcon" | "duration"
-  >,
+  props: Omit<NetworkSwitchToastProps, "variant" | "toastId" | "children">,
 ) => {
+  const toastId = `network-${Date.now()}`;
   return {
     duration: props.duration,
-    action: <NetworkSwitchToast {...props} showClose={true} />,
+    toastId,
+    action: (
+      <NetworkSwitchToast {...props} showClose={true} toastId={toastId} />
+    ),
   };
 };
 
 export const showErrorToast = (
-  props: Pick<ErrorToastProps, "message" | "progress" | "duration">,
+  props: Omit<ErrorToastProps, "variant" | "toastId" | "children">,
 ) => {
+  const toastId = `error-${Date.now()}`;
   return {
     variant: "destructive" as const,
     duration: props.duration,
-    action: <ErrorToast {...props} showClose={true} />,
+    toastId,
+    action: <ErrorToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
 export const showSuccessToast = (
-  props: Pick<SuccessToastProps, "message" | "progress" | "duration">,
+  props: Omit<SuccessToastProps, "variant" | "toastId" | "children">,
 ) => {
+  const toastId = `success-${Date.now()}`;
   return {
     variant: "default" as const,
     duration: props.duration,
-    action: <SuccessToast {...props} showClose={true} />,
+    toastId,
+    action: <SuccessToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
 export const showTransactionToast = (
-  props: Pick<
-    TransactionToastProps,
-    "status" | "isExpanded" | "label" | "progress" | "duration"
-  >,
+  props: Omit<TransactionToastProps, "variant" | "toastId" | "children">,
 ) => {
+  const toastId = `success-${Date.now()}`;
   return {
     duration: props.duration,
-    action: <TransactionToast {...props} showClose={true} />,
+    toastId,
+    action: <TransactionToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
