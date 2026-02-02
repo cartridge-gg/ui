@@ -11,10 +11,19 @@ import {
   ToastOptions,
   CONTROLLER_TOAST_MESSAGE_TYPE,
   ToastPosition,
+  NetworkSwitchToastOptions,
 } from "@/components/primitives/toast/types";
 import { ControllerToaster } from "@/components/primitives/toast/controller-toaster";
 import { toast as sonnerToast } from "sonner";
-import { ControllerNotificationTypes, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Switch } from "..";
+import {
+  ControllerNotificationTypes,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Switch,
+} from "..";
 
 const meta: Meta = {
   title: "Primitives/Toast/Controller Integration",
@@ -117,6 +126,26 @@ function ControllerToasterDemo() {
       duration: 5000,
     };
     emitControllerToast("transactionConfirmed", options);
+  };
+
+  const showSwitchToStarknet = () => {
+    const options: NetworkSwitchToastOptions = {
+      variant: "network-switch",
+      networkName: "Starknet Mainnet",
+      // networkIcon: "",
+      duration: 5000,
+    };
+    emitControllerToast("switchToStarknet", options);
+  };
+
+  const showSwitchToNums = () => {
+    const options: NetworkSwitchToastOptions = {
+      variant: "network-switch",
+      networkName: "Nums Chain",
+      networkIcon: "https://static.cartridge.gg/presets/nums/icon.png",
+      duration: 5000,
+    };
+    emitControllerToast("switchToNums", options);
   };
 
   const showMarketplacePurchaseBeast = () => {
@@ -260,6 +289,20 @@ function ControllerToasterDemo() {
               : "Transaction Confirmed"}
           </Button>
           <Button
+            onClick={showSwitchToStarknet}
+            className="w-full"
+            disabled={isLoading.switchToStarknet}
+          >
+            {isLoading.switchToStarknet ? "Loading..." : "Switch to Starknet"}
+          </Button>
+          <Button
+            onClick={showSwitchToNums}
+            className="w-full"
+            disabled={isLoading.switchToNums}
+          >
+            {isLoading.switchToNums ? "Loading..." : "Switch to Nums"}
+          </Button>
+          <Button
             onClick={() =>
               sonnerToast.success("sonner.success()", { duration: 5000 })
             }
@@ -343,42 +386,49 @@ function ControllerToasterDemo() {
             <Switch
               value={disabledTypes.includes("error") ? 1 : 0}
               onCheckedChange={() => switchDisabledType("error")}
-            />{" "}
+            />
             Disable Error
           </div>
           <div className="flex gap-2">
             <Switch
               value={disabledTypes.includes("success") ? 1 : 0}
               onCheckedChange={() => switchDisabledType("success")}
-            />{" "}
+            />
             Disable Success
+          </div>
+          <div className="flex gap-2">
+            <Switch
+              value={disabledTypes.includes("network-switch") ? 1 : 0}
+              onCheckedChange={() => switchDisabledType("network-switch")}
+            />
+            Disable Network Switch
           </div>
           <div className="flex gap-2">
             <Switch
               value={disabledTypes.includes("transaction") ? 1 : 0}
               onCheckedChange={() => switchDisabledType("transaction")}
-            />{" "}
+            />
             Disable Transaction
           </div>
           <div className="flex gap-2">
             <Switch
               value={disabledTypes.includes("marketplace") ? 1 : 0}
               onCheckedChange={() => switchDisabledType("marketplace")}
-            />{" "}
+            />
             Disable Marketplace
           </div>
           <div className="flex gap-2">
             <Switch
               value={disabledTypes.includes("achievement") ? 1 : 0}
               onCheckedChange={() => switchDisabledType("achievement")}
-            />{" "}
+            />
             Disable Achievement
           </div>
           <div className="flex gap-2 pt-2">
             <Switch
               value={collapseTransactions ? 1 : 0}
               onCheckedChange={(value) => setCollapseTransactions(value)}
-            />{" "}
+            />
             Collapse Transactions
           </div>
         </div>

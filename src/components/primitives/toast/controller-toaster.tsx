@@ -7,6 +7,7 @@ import {
   showTransactionToast,
   showMarketplaceToast,
   showAchievementToast,
+  showNetworkSwitchToast,
 } from "@/components/primitives/toast/specialized-toasts";
 import { useToast, ToasterToast } from "./use-toast";
 import {
@@ -17,12 +18,14 @@ import {
   MarketplaceToastOptions,
   AchievementToastOptions,
   CONTROLLER_TOAST_MESSAGE_TYPE,
+  NetworkSwitchToastOptions,
 } from "./types";
 import { SonnerToaster } from "@/components/primitives/sonner";
 
 export type ControllerNotificationTypes =
   | "error"
   | "success"
+  | "network-switch"
   | "transaction"
   | "marketplace"
   | "achievement";
@@ -67,6 +70,17 @@ export function ControllerToaster({
         const options = event.data.options as SuccessToastOptions;
         toast(
           showSuccessToast({
+            ...options,
+            toasterId,
+          }) as ToasterToast,
+        );
+      } else if (
+        variant == "network-switch" &&
+        !disabledTypes.includes("network-switch")
+      ) {
+        const options = event.data.options as NetworkSwitchToastOptions;
+        toast(
+          showNetworkSwitchToast({
             ...options,
             toasterId,
           }) as ToasterToast,

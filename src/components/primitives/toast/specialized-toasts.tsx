@@ -12,7 +12,7 @@ import {
   SparklesIcon,
   TransactionIcon,
 } from "@/components/icons";
-import { StarknetIcon } from "@/components/icons/brand";
+import { StarknetColorIcon } from "@/components/icons/brand-color";
 import { CollectibleImage } from "@/components/modules/collectibles";
 import { ToasterToast } from "./use-toast";
 import { Toast } from "./toast";
@@ -273,7 +273,14 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
       <div className="flex items-center justify-between px-3 py-3 w-full h-full">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-            {networkIcon || <StarknetIcon size="default" className="min-w-6" />}
+            {!networkIcon ? (
+              <StarknetColorIcon size="default" className="min-w-6 scale-125" />
+            ) : typeof networkIcon === "string" &&
+              networkIcon.startsWith("http") ? (
+              <img src={networkIcon} alt="" />
+            ) : (
+              networkIcon
+            )}
           </div>
           <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
             Switched to {networkName}
