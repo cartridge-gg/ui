@@ -398,7 +398,7 @@ const TransactionToast = memo<TransactionToastProps>(
       return (
         <Toast
           className="flex items-center justify-center p-[10px] w-12 h-12 bg-background shadow-lg rounded-lg border-0 overflow-hidden"
-          showClose={showClose}
+          showClose={!isExpanded ? false : showClose}
           toastId={toastId}
           {...props}
         >

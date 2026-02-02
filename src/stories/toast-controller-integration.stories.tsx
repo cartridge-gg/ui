@@ -10,9 +10,11 @@ import {
   // QuestToastOptions,
   ToastOptions,
   CONTROLLER_TOAST_MESSAGE_TYPE,
+  ToastPosition,
 } from "@/components/primitives/toast/types";
 import { ControllerToaster } from "@/components/primitives/toast/controller-toaster";
 import { toast as sonnerToast } from "sonner";
+import { ControllerNotificationTypes, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Switch } from "..";
 
 const meta: Meta = {
   title: "Primitives/Toast/Controller Integration",
@@ -34,6 +36,11 @@ type Story = StoryObj;
 
 function ControllerToasterDemo() {
   const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
+  const [collapseTransactions, setCollapseTransactions] = useState(false);
+  const [disabledTypes, setDisabledTypes] = useState<
+    ControllerNotificationTypes[]
+  >([]);
+  const [position, setPosition] = useState<ToastPosition>("bottom-right");
 
   // Debounced toast function to prevent multiple rapid clicks
   const showToastWithDebounce = useCallback(
@@ -192,6 +199,16 @@ function ControllerToasterDemo() {
   //   emitControllerToast("quest", options);
   // };
 
+  const switchDisabledType = (type: ControllerNotificationTypes) => {
+    setDisabledTypes((prev) => {
+      if (prev.includes(type)) {
+        return prev.filter((t) => t !== type);
+      } else {
+        return [...prev, type];
+      }
+    });
+  };
+
   return (
     <div className="space-y-4">
       <div className="text-white text-lg font-semibold mb-4">
@@ -302,10 +319,76 @@ function ControllerToasterDemo() {
           </Button> */}
         </div>
 
-        <div></div>
+        <div>
+          <h3 className="text-white text-sm font-medium">Client Options</h3>
+          <div className="py-2">
+            <Select
+              value={position}
+              onValueChange={(value) => setPosition(value as ToastPosition)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select position" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="top-left">Top Left</SelectItem>
+                <SelectItem value="top-center">Top Center</SelectItem>
+                <SelectItem value="top-right">Top Right</SelectItem>
+                <SelectItem value="bottom-left">Bottom Left</SelectItem>
+                <SelectItem value="bottom-center">Bottom Center</SelectItem>
+                <SelectItem value="bottom-right">Bottom Right</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex gap-2">
+            <Switch
+              value={disabledTypes.includes("error") ? 1 : 0}
+              onCheckedChange={() => switchDisabledType("error")}
+            />{" "}
+            Disable Error
+          </div>
+          <div className="flex gap-2">
+            <Switch
+              value={disabledTypes.includes("success") ? 1 : 0}
+              onCheckedChange={() => switchDisabledType("success")}
+            />{" "}
+            Disable Success
+          </div>
+          <div className="flex gap-2">
+            <Switch
+              value={disabledTypes.includes("transaction") ? 1 : 0}
+              onCheckedChange={() => switchDisabledType("transaction")}
+            />{" "}
+            Disable Transaction
+          </div>
+          <div className="flex gap-2">
+            <Switch
+              value={disabledTypes.includes("marketplace") ? 1 : 0}
+              onCheckedChange={() => switchDisabledType("marketplace")}
+            />{" "}
+            Disable Marketplace
+          </div>
+          <div className="flex gap-2">
+            <Switch
+              value={disabledTypes.includes("achievement") ? 1 : 0}
+              onCheckedChange={() => switchDisabledType("achievement")}
+            />{" "}
+            Disable Achievement
+          </div>
+          <div className="flex gap-2 pt-2">
+            <Switch
+              value={collapseTransactions ? 1 : 0}
+              onCheckedChange={(value) => setCollapseTransactions(value)}
+            />{" "}
+            Collapse Transactions
+          </div>
+        </div>
       </div>
 
-      <ControllerToaster />
+      <ControllerToaster
+        collapseTransactions={collapseTransactions}
+        disabledTypes={disabledTypes}
+        position={position}
+      />
       {/* <ControllerToaster toasterId="controller" position="bottom-left" /> */}
     </div>
   );

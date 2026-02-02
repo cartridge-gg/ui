@@ -20,26 +20,25 @@ import {
 } from "./types";
 import { SonnerToaster } from "@/components/primitives/sonner";
 
+export type ControllerNotificationTypes =
+  | "error"
+  | "success"
+  | "transaction"
+  | "marketplace"
+  | "achievement";
+
 export function ControllerToaster({
   // preset,
   position = "bottom-right",
+  disabledTypes = [],
+  collapseTransactions,
   toasterId,
-  disableErrors = false,
-  disableTransactions = false,
-  disableMarketplace = false,
-  disableAchievements = false,
-  // disableQuests = false,
-  disableSonnerToaster = false,
 }: {
-  preset?: string;
+  // preset?: string;
   position?: ToastPosition;
+  disabledTypes?: ControllerNotificationTypes[];
+  collapseTransactions?: boolean;
   toasterId?: string | undefined;
-  disableErrors?: boolean;
-  disableTransactions?: boolean;
-  disableMarketplace?: boolean;
-  disableAchievements?: boolean;
-  // disableQuests?: boolean;
-  disableSonnerToaster?: boolean;
 }) {
   const { toast } = useToast();
 
@@ -56,7 +55,7 @@ export function ControllerToaster({
       );
       if (!variant) return;
 
-      if (variant == "error" && !disableErrors) {
+      if (variant == "error" && !disabledTypes.includes("error")) {
         const options = event.data.options as ErrorToastOptions;
         toast(
           showErrorToast({
@@ -64,7 +63,7 @@ export function ControllerToaster({
             toasterId,
           }) as ToasterToast,
         );
-      } else if (variant == "success" && !disableErrors) {
+      } else if (variant == "success" && !disabledTypes.includes("success")) {
         const options = event.data.options as SuccessToastOptions;
         toast(
           showSuccessToast({
@@ -72,17 +71,25 @@ export function ControllerToaster({
             toasterId,
           }) as ToasterToast,
         );
-      } else if (variant == "transaction" && !disableTransactions) {
+      } else if (
+        variant == "transaction" &&
+        !disabledTypes.includes("transaction")
+      ) {
         const options = event.data.options as TransactionToastOptions;
         toast(
           showTransactionToast({
             ...options,
+            isExpanded:
+              collapseTransactions !== undefined ? !collapseTransactions : true,
             duration: options.status == "confirming" ? 0 : options.duration,
             toasterId,
             toastId: options.txHash || undefined,
           }) as ToasterToast,
         );
-      } else if (variant == "marketplace" && !disableMarketplace) {
+      } else if (
+        variant == "marketplace" &&
+        !disabledTypes.includes("marketplace")
+      ) {
         const options = event.data.options as MarketplaceToastOptions;
         toast(
           showMarketplaceToast({
@@ -91,7 +98,10 @@ export function ControllerToaster({
             toasterId,
           }) as ToasterToast,
         );
-      } else if (variant == "achievement" && !disableAchievements) {
+      } else if (
+        variant == "achievement" &&
+        !disabledTypes.includes("achievement")
+      ) {
         const options = event.data.options as AchievementToastOptions;
         toast(
           showAchievementToast({
@@ -105,9 +115,7 @@ export function ControllerToaster({
     return () => {
       window.removeEventListener("message", eventHandler);
     };
-  }, []);
-
-  if (disableSonnerToaster) return null;
+  }, [disabledTypes.join(","), collapseTransactions, toasterId]);
 
   return <SonnerToaster position={position} toasterId={toasterId} />;
 }
