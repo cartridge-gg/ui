@@ -35,6 +35,7 @@ export interface TransactionToastOptions extends BaseToastOptions {
   status: "confirming" | "confirmed";
   isExpanded?: boolean;
   label?: string;
+  txHash?: string;
 }
 
 // Network Switch Toast

@@ -256,14 +256,7 @@ interface NetworkSwitchToastProps extends Omit<ToasterToast, "children"> {
 }
 
 const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
-  ({
-    networkName,
-    networkIcon,
-    showClose,
-    toastId,
-    className,
-    ...props
-  }) => (
+  ({ networkName, networkIcon, showClose, toastId, className, ...props }) => (
     <Toast
       className={cn(
         specializedToastVariants({ variant: "network" }),
@@ -469,9 +462,9 @@ TransactionToast.displayName = "TransactionToast";
 
 // Convenience functions for using with the existing toast system
 export const showAchievementToast = (
-  props: Omit<AchievementToastProps, "variant" | "toastId" | "children">,
+  props: Omit<AchievementToastProps, "variant" | "children">,
 ) => {
-  const toastId = `achievement-${Date.now()}`;
+  const toastId = props.toastId || `achievement-${Date.now()}`;
   return {
     duration: props.duration,
     toasterId: props.toasterId,
@@ -481,9 +474,9 @@ export const showAchievementToast = (
 };
 
 export const showMarketplaceToast = (
-  props: Omit<MarketplaceToastProps, "variant" | "toastId" | "children">,
+  props: Omit<MarketplaceToastProps, "variant" | "children">,
 ) => {
-  const toastId = `marketplace-${Date.now()}`;
+  const toastId = props.toastId || `marketplace-${Date.now()}`;
   return {
     duration: props.duration,
     toasterId: props.toasterId,
@@ -493,9 +486,9 @@ export const showMarketplaceToast = (
 };
 
 export const showNetworkSwitchToast = (
-  props: Omit<NetworkSwitchToastProps, "variant" | "toastId" | "children">,
+  props: Omit<NetworkSwitchToastProps, "variant" | "children">,
 ) => {
-  const toastId = `network-${Date.now()}`;
+  const toastId = props.toastId || `network-${Date.now()}`;
   return {
     duration: props.duration,
     toasterId: props.toasterId,
@@ -507,9 +500,9 @@ export const showNetworkSwitchToast = (
 };
 
 export const showErrorToast = (
-  props: Omit<ErrorToastProps, "variant" | "toastId" | "children">,
+  props: Omit<ErrorToastProps, "variant" | "children">,
 ) => {
-  const toastId = `error-${Date.now()}`;
+  const toastId = props.toastId || `error-${Date.now()}`;
   return {
     variant: "destructive" as const,
     duration: props.duration,
@@ -520,9 +513,9 @@ export const showErrorToast = (
 };
 
 export const showSuccessToast = (
-  props: Omit<SuccessToastProps, "variant" | "toastId" | "children">,
+  props: Omit<SuccessToastProps, "variant" | "children">,
 ) => {
-  const toastId = `success-${Date.now()}`;
+  const toastId = props.toastId || `success-${Date.now()}`;
   return {
     variant: "default" as const,
     duration: props.duration,
@@ -533,9 +526,9 @@ export const showSuccessToast = (
 };
 
 export const showTransactionToast = (
-  props: Omit<TransactionToastProps, "variant" | "toastId" | "children">,
+  props: Omit<TransactionToastProps, "variant" | "children">,
 ) => {
-  const toastId = `success-${Date.now()}`;
+  const toastId = props.toastId || `transaction-${Date.now()}`;
   return {
     duration: props.duration,
     toasterId: props.toasterId,

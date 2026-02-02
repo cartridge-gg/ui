@@ -93,6 +93,7 @@ function ControllerToasterDemo() {
     const options: TransactionToastOptions = {
       variant: "transaction",
       status: "confirming",
+      txHash: "0x1234",
       label: "Purchase",
       progress: 50,
       duration: 5000,
@@ -104,6 +105,7 @@ function ControllerToasterDemo() {
     const options: TransactionToastOptions = {
       variant: "transaction",
       status: "confirmed",
+      txHash: "0x1234",
       progress: 50,
       duration: 5000,
     };

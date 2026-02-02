@@ -77,8 +77,9 @@ export function ControllerToaster({
         toast(
           showTransactionToast({
             ...options,
-            // duration: options.status == "confirming" ? 0 : options.duration,
+            duration: options.status == "confirming" ? 0 : options.duration,
             toasterId,
+            toastId: options.txHash || undefined,
           }) as ToasterToast,
         );
       } else if (variant == "marketplace" && !disableMarketplace) {

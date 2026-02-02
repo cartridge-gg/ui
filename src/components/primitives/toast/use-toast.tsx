@@ -17,8 +17,9 @@ export type ToasterToast = ToastProps & {
 
 function useToast() {
   const customToast = useCallback((toast: ToasterToast) => {
+    const sticky = toast.duration == 0;
     const options: ExternalToast = {
-      duration: toast.duration,
+      duration: sticky ? 60000 : toast.duration,
     };
     if (toast.toasterId) options.toasterId = toast.toasterId;
     if (toast.element) options.id = toast.toastId;
@@ -27,7 +28,7 @@ function useToast() {
         toast.element ?? (
           <SuccessToast
             message={toast.title ?? ""}
-            toastId={toast.toastId as string ?? id}
+            toastId={(toast.toastId as string) ?? id}
           />
         ),
       options,
