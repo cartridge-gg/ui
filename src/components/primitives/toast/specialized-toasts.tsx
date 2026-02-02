@@ -8,8 +8,8 @@ import {
   SpinnerIcon,
   AlertIcon,
   AwardIcon,
-  CreditIcon as CreditsIcon,
   SparklesIcon,
+  SparklesDraftIcon,
   TransactionIcon,
 } from "@/components/icons";
 import { StarknetColorIcon } from "@/components/icons/brand-color";
@@ -48,7 +48,7 @@ const XPTag = memo<XPTagProps>(({ amount, isMainnet = true }) => (
       {isMainnet ? (
         <SparklesIcon variant="solid" size="sm" className="text-foreground" />
       ) : (
-        <div className="w-3 h-3 bg-foreground rounded-sm" />
+        <SparklesDraftIcon size="sm" className="text-foreground" />
       )}
     </div>
     <span className="text-foreground text-sm font-normal leading-5">
@@ -65,12 +65,14 @@ interface ToastProgressBarProps {
   variant?: "achievement" | "error";
   className?: string;
   preset?: string | null;
+  color?: string;
 }
 
 const ToastProgressBar = memo<ToastProgressBarProps>(
-  ({ progress, variant = "achievement", className, preset }) => {
+  ({ progress, variant = "achievement", className, preset, color }) => {
     const [animatedProgress, setAnimatedProgress] = useState(0);
-    const color = usePresetColor(preset);
+    const presetColor = usePresetColor(preset);
+    const barColor = color || presetColor;
 
     useEffect(() => {
       const timer = setTimeout(() => setAnimatedProgress(progress), 100);
@@ -86,7 +88,7 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
       }
       return {
         bg: "bg-background-200",
-        fill: color ? undefined : "bg-achievement",
+        fill: barColor ? undefined : "bg-achievement",
       };
     };
 
@@ -107,7 +109,7 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
           )}
           style={{
             width: `${animatedProgress}%`,
-            backgroundColor: color ?? undefined,
+            backgroundColor: barColor ?? undefined,
           }}
         />
       </div>
@@ -142,7 +144,7 @@ const AchievementToast = memo<AchievementToastProps>(
     className,
     ...props
   }) => {
-    const IconComponent = isDraft ? CreditsIcon : AwardIcon;
+    const IconComponent = AwardIcon;
     const iconColor = isDraft
       ? "var(--achievement-200)"
       : "var(--achievement-100)";
@@ -182,7 +184,8 @@ const AchievementToast = memo<AchievementToastProps>(
         <ToastProgressBar
           progress={progress}
           variant="achievement"
-          preset={preset}
+          preset={isDraft ? null : preset}
+          color={isDraft ? "var(--achievement-200)" : undefined}
         />
       </Toast>
     );

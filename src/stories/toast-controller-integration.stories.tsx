@@ -218,6 +218,19 @@ function ControllerToasterDemo() {
     emitControllerToast("achievement", options);
   };
 
+  // const showAchievementCustomToast = () => {
+  //   const options: AchievementToastOptions = {
+  //     variant: "achievement",
+  //     title: "Pacifist Path",
+  //     subtitle: "Earned!",
+  //     iconUrl: "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo",
+  //     xpAmount: 100,
+  //     progress: 100,
+  //     duration: 5000,
+  //   };
+  //   emitControllerToast("achievementCustom", options);
+  // };
+
   // const showQuestToast = () => {
   //   const options: QuestToastOptions = {
   //     variant: "quest",
@@ -351,8 +364,15 @@ function ControllerToasterDemo() {
             className="w-full"
             disabled={isLoading.achievement}
           >
-            {isLoading.achievement ? "Loading..." : "Achievement"}
+            {isLoading.achievement ? "Loading..." : "Achievement Complete"}
           </Button>
+          {/* <Button
+            onClick={showAchievementCustomToast}
+            className="w-full"
+            disabled={isLoading.achievementCustom}
+          >
+            {isLoading.achievementCustom ? "Loading..." : "Achievement Custom"}
+          </Button> */}
           {/* <Button
             onClick={showQuestToast}
             className="w-full"

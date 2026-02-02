@@ -52,10 +52,6 @@ export function ControllerToaster({
         event.data.type === CONTROLLER_TOAST_MESSAGE_TYPE
           ? event.data.options.variant
           : undefined;
-      console.log(
-        ">>> CONTROLLER EVENT?:",
-        variant ? event.data.options : null,
-      );
       if (!variant) return;
 
       if (variant == "error" && !disabledTypes.includes("error")) {
