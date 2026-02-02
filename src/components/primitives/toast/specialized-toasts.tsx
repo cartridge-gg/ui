@@ -169,7 +169,7 @@ const AchievementToast = memo<AchievementToastProps>(
               />
             </div>
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
-              <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+              <span className="text-foreground text-sm font-medium leading-5 tracking-[0.01em] truncate">
                 {title}
               </span>
               <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
@@ -233,7 +233,7 @@ const MarketplaceToast = memo<MarketplaceToastProps>(
               <CollectibleImage images={itemImages} />
             </div>
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
-              <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+              <span className="text-foreground text-sm font-medium leading-5 tracking-[0.01em] truncate">
                 {title}
               </span>
               <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
@@ -285,7 +285,7 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
               networkIcon
             )}
           </div>
-          <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+          <span className="text-foreground text-sm font-medium leading-5 tracking-[0.01em] truncate">
             Switched to {networkName}
           </span>
         </div>
@@ -326,7 +326,7 @@ const ErrorToast = memo<ErrorToastProps>(
             size="default"
             className="text-destructive-foreground min-w-6"
           />
-          <span className="text-destructive-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+          <span className="text-destructive-foreground text-sm font-medium leading-5 tracking-[0.01em] truncate">
             {message}
           </span>
         </div>
@@ -367,7 +367,7 @@ const SuccessToast = memo<SuccessToastProps>(
       <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <CheckIcon size="default" className="text-foreground min-w-6" />
-          <span className="text-foreground text-base font-normal leading-5 tracking-[0.01em] truncate">
+          <span className="text-foreground text-sm font-normal leading-5 tracking-[0.01em] truncate">
             {message}
           </span>
         </div>
@@ -453,7 +453,7 @@ const TransactionToast = memo<TransactionToastProps>(
                 ]
               )}
             </div>
-            <span className="text-foreground text-base font-normal leading-5 tracking-[0.01em] truncate">
+            <span className="text-foreground text-sm font-normal leading-5 tracking-[0.01em] truncate">
               {status === "confirming" ? "Confirming" : "Confirmed"}
             </span>
             {status === "confirming" && (
