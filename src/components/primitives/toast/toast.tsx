@@ -58,7 +58,10 @@ export interface ToastProps
     VariantProps<typeof toastVariants> {
   showClose?: boolean;
   toastId?: string;
+  // compatibility with controller events
   toasterId?: string;
+  safeToClose?: boolean;
+  iconUrl?: string;
 }
 
 export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
@@ -70,6 +73,8 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
       showClose = true,
       toastId,
       toasterId,
+      safeToClose,
+      iconUrl,
       ...props
     },
     ref,
