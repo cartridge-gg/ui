@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { AchievementToast } from "@/components/primitives/toast/specialized-toasts";
-import { ToastProvider, ToastViewport } from "@/components/primitives/toast";
 
 const meta: Meta<typeof AchievementToast> = {
   title: "Primitives/Toast/Achievement Toast",
@@ -17,10 +16,9 @@ const meta: Meta<typeof AchievementToast> = {
   },
   decorators: [
     (Story) => (
-      <ToastProvider>
+      <div>
         <Story />
-        <ToastViewport />
-      </ToastProvider>
+      </div>
     ),
   ],
   argTypes: {

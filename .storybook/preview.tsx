@@ -3,7 +3,6 @@ import { Preview, ReactRenderer } from "@storybook/react";
 import { withThemeByClassName } from "@storybook/addon-themes";
 import { themes } from "@storybook/theming";
 import { SonnerToaster } from "../src/components/primitives/sonner";
-import { Toaster } from "../src/components/primitives/toast/toaster";
 
 import "../src/index.css";
 import { useThemeEffect } from "../src/hooks/theme";
@@ -61,8 +60,9 @@ const preview: Preview = {
       return (
         <>
           <Story />
-          <SonnerToaster />
-          <Toaster />
+          {Story().type.name !== "ControllerToasterDemo" &&
+            <SonnerToaster />
+          }
         </>
       )
     },

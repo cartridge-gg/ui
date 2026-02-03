@@ -4,16 +4,19 @@ import React, { memo, useState, useEffect } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "@/utils";
 import {
-  TimesIcon,
   CheckIcon,
   SpinnerIcon,
   AlertIcon,
   AwardIcon,
-  CreditIcon as CreditsIcon,
   SparklesIcon,
+  SparklesDraftIcon,
+  TransactionIcon,
 } from "@/components/icons";
-import { StarknetIcon } from "@/components/icons/brand";
-import { Toast, ToastClose, type ToastProps } from "./toast";
+import { StarknetColorIcon } from "@/components/icons/brand-color";
+import { CollectibleImage } from "@/components/modules/collectibles";
+import { ToasterToast } from "./use-toast";
+import { Toast } from "./toast";
+import { usePresetColor } from "@/utils/context/presets";
 
 // Base toast container for specialized toasts
 const specializedToastVariants = cva(
@@ -33,37 +36,6 @@ const specializedToastVariants = cva(
   },
 );
 
-// Close Button Component
-interface CloseButtonProps {
-  onClick?: () => void;
-  variant?: "default" | "translucent";
-  className?: string;
-}
-
-const CloseButton = memo<CloseButtonProps>(
-  ({ onClick, variant = "default", className }) => {
-    const iconColorClass =
-      variant === "translucent"
-        ? "text-translucent-dark-200 hover:text-translucent-dark-300"
-        : "text-foreground-200 hover:text-foreground";
-
-    return (
-      <button
-        className={cn(
-          "flex items-center justify-center w-6 h-6 rounded transition-colors",
-          iconColorClass,
-          className,
-        )}
-        onClick={onClick}
-      >
-        <TimesIcon size="sm" />
-      </button>
-    );
-  },
-);
-
-CloseButton.displayName = "CloseButton";
-
 // XP Tag Component
 interface XPTagProps {
   amount: number;
@@ -76,7 +48,7 @@ const XPTag = memo<XPTagProps>(({ amount, isMainnet = true }) => (
       {isMainnet ? (
         <SparklesIcon variant="solid" size="sm" className="text-foreground" />
       ) : (
-        <div className="w-3 h-3 bg-foreground rounded-sm" />
+        <SparklesDraftIcon size="sm" className="text-foreground" />
       )}
     </div>
     <span className="text-foreground text-sm font-normal leading-5">
@@ -92,11 +64,15 @@ interface ToastProgressBarProps {
   progress: number; // 0-100
   variant?: "achievement" | "error";
   className?: string;
+  preset?: string | null;
+  color?: string;
 }
 
 const ToastProgressBar = memo<ToastProgressBarProps>(
-  ({ progress, variant = "achievement", className }) => {
+  ({ progress, variant = "achievement", className, preset, color }) => {
     const [animatedProgress, setAnimatedProgress] = useState(0);
+    const presetColor = usePresetColor(preset);
+    const barColor = color || presetColor;
 
     useEffect(() => {
       const timer = setTimeout(() => setAnimatedProgress(progress), 100);
@@ -112,7 +88,7 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
       }
       return {
         bg: "bg-background-200",
-        fill: "bg-achievement",
+        fill: barColor ? undefined : "bg-achievement",
       };
     };
 
@@ -131,7 +107,10 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
             "h-full transition-all duration-1000 ease-out",
             colors.fill,
           )}
-          style={{ width: `${animatedProgress}%` }}
+          style={{
+            width: `${animatedProgress}%`,
+            backgroundColor: barColor ?? undefined,
+          }}
         />
       </div>
     );
@@ -141,14 +120,14 @@ const ToastProgressBar = memo<ToastProgressBarProps>(
 ToastProgressBar.displayName = "ToastProgressBar";
 
 // Achievement Toast Component
-interface AchievementToastProps extends Omit<ToastProps, "children"> {
+interface AchievementToastProps extends Omit<ToasterToast, "children"> {
   title: string;
   subtitle?: string;
   xpAmount: number;
   progress: number;
   isDraft?: boolean;
   duration?: number;
-  showClose?: boolean;
+  preset?: string;
 }
 
 const AchievementToast = memo<AchievementToastProps>(
@@ -156,14 +135,16 @@ const AchievementToast = memo<AchievementToastProps>(
     title,
     subtitle = "Earned!",
     xpAmount,
-    progress,
+    progress = 100,
     isDraft = false,
+    preset,
     duration,
-    showClose = false,
+    showClose,
+    toastId,
     className,
     ...props
   }) => {
-    const IconComponent = isDraft ? CreditsIcon : AwardIcon;
+    const IconComponent = AwardIcon;
     const iconColor = isDraft
       ? "var(--achievement-200)"
       : "var(--achievement-100)";
@@ -174,16 +155,21 @@ const AchievementToast = memo<AchievementToastProps>(
           specializedToastVariants({ variant: "achievement" }),
           className,
         )}
-        duration={duration}
+        showClose={showClose}
+        toastId={toastId}
         {...props}
       >
         <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div className="flex items-center justify-center w-10 h-10 bg-background rounded p-[5px] flex-shrink-0">
-              <IconComponent size="lg" style={{ color: iconColor }} />
+              <IconComponent
+                size="lg"
+                className="min-w-6"
+                style={{ color: iconColor }}
+              />
             </div>
             <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
-              <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+              <span className="text-foreground text-sm font-medium leading-5 tracking-[0.01em] truncate">
                 {title}
               </span>
               <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
@@ -193,14 +179,14 @@ const AchievementToast = memo<AchievementToastProps>(
           </div>
           <div className="flex items-center gap-2 flex-shrink-0 ml-2">
             <XPTag amount={xpAmount} isMainnet={!isDraft} />
-            {showClose && (
-              <ToastClose asChild>
-                <CloseButton />
-              </ToastClose>
-            )}
           </div>
         </div>
-        <ToastProgressBar progress={progress} variant="achievement" />
+        <ToastProgressBar
+          progress={progress}
+          variant="achievement"
+          preset={isDraft ? null : preset}
+          color={isDraft ? "var(--achievement-200)" : undefined}
+        />
       </Toast>
     );
   },
@@ -208,47 +194,101 @@ const AchievementToast = memo<AchievementToastProps>(
 
 AchievementToast.displayName = "AchievementToast";
 
+// Marketplace Toast Component
+interface MarketplaceToastProps extends Omit<ToasterToast, "children"> {
+  title: string;
+  collectionName: string;
+  itemNames: string[];
+  itemImages: string[];
+  progress?: number;
+  preset?: string;
+}
+
+const MarketplaceToast = memo<MarketplaceToastProps>(
+  ({
+    title,
+    collectionName,
+    itemNames,
+    itemImages,
+    progress = 100,
+    preset,
+    showClose,
+    toastId,
+    className,
+    ...props
+  }) => {
+    return (
+      <Toast
+        className={cn(
+          specializedToastVariants({ variant: "achievement" }),
+          className,
+        )}
+        showClose={showClose}
+        toastId={toastId}
+        {...props}
+      >
+        <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="flex items-center justify-center w-10 h-10 bg-background rounded p-[5px] flex-shrink-0">
+              <CollectibleImage images={itemImages} />
+            </div>
+            <div className="flex flex-col justify-center gap-[2px] flex-1 min-w-0">
+              <span className="text-foreground text-sm font-medium leading-5 tracking-[0.01em] truncate">
+                {title}
+              </span>
+              <span className="text-foreground-300 text-xs font-normal leading-4 truncate">
+                {itemNames.length > 1
+                  ? `${itemNames.length} ${collectionName}`
+                  : (itemNames[0] ?? "1 Item")}
+              </span>
+            </div>
+          </div>
+        </div>
+        <ToastProgressBar
+          progress={progress}
+          variant="achievement"
+          preset={preset}
+        />
+      </Toast>
+    );
+  },
+);
+
+MarketplaceToast.displayName = "MarketplaceToast";
+
 // Network Switch Toast Component
-interface NetworkSwitchToastProps extends Omit<ToastProps, "children"> {
+interface NetworkSwitchToastProps extends Omit<ToasterToast, "children"> {
   networkName: string;
   networkIcon?: React.ReactNode;
-  duration?: number;
-  showClose?: boolean;
 }
 
 const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
-  ({
-    networkName,
-    networkIcon,
-    duration,
-    showClose = false,
-    className,
-    ...props
-  }) => (
+  ({ networkName, networkIcon, showClose, toastId, className, ...props }) => (
     <Toast
       className={cn(
         specializedToastVariants({ variant: "network" }),
         className,
       )}
-      duration={duration}
+      showClose={showClose}
+      toastId={toastId}
       {...props}
     >
       <div className="flex items-center justify-between px-3 py-3 w-full h-full">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <div className="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-            {networkIcon || <StarknetIcon size="default" />}
+            {!networkIcon ? (
+              <StarknetColorIcon size="default" className="min-w-6 scale-125" />
+            ) : typeof networkIcon === "string" &&
+              networkIcon.startsWith("http") ? (
+              <img src={networkIcon} alt="" />
+            ) : (
+              networkIcon
+            )}
           </div>
-          <span className="text-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+          <span className="text-foreground text-sm font-medium leading-5 tracking-[0.01em] truncate">
             Switched to {networkName}
           </span>
         </div>
-        {showClose && (
-          <div className="flex-shrink-0 ml-2">
-            <ToastClose asChild>
-              <CloseButton />
-            </ToastClose>
-          </div>
-        )}
       </div>
     </Toast>
   ),
@@ -257,70 +297,110 @@ const NetworkSwitchToast = memo<NetworkSwitchToastProps>(
 NetworkSwitchToast.displayName = "NetworkSwitchToast";
 
 // Error Toast Component
-interface ErrorToastProps extends Omit<ToastProps, "children"> {
+interface ErrorToastProps extends Omit<ToasterToast, "children"> {
   message: string;
   progress?: number;
-  duration?: number;
-  showClose?: boolean;
+  preset?: string;
 }
 
 const ErrorToast = memo<ErrorToastProps>(
   ({
     message,
-    progress = 66.7,
-    duration,
-    showClose = false,
+    progress = 100,
+    preset,
+    showClose,
+    toastId,
     className,
     ...props
   }) => (
     <Toast
       className={cn(specializedToastVariants({ variant: "error" }), className)}
-      duration={duration}
+      showClose={showClose}
+      toastId={toastId}
       {...props}
+      variant="destructive"
     >
       <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <AlertIcon
             size="default"
-            className="text-destructive-foreground flex-shrink-0"
+            className="text-destructive-foreground min-w-6"
           />
-          <span className="text-destructive-foreground text-base font-medium leading-5 tracking-[0.01em] truncate">
+          <span className="text-destructive-foreground text-sm font-medium leading-5 tracking-[0.01em] truncate">
             {message}
           </span>
         </div>
-        {showClose && (
-          <div className="flex-shrink-0 ml-2">
-            <ToastClose asChild>
-              <CloseButton variant="translucent" />
-            </ToastClose>
-          </div>
-        )}
       </div>
-      <ToastProgressBar progress={progress} variant="error" />
+      <ToastProgressBar progress={progress} variant="error" preset={preset} />
     </Toast>
   ),
 );
 
 ErrorToast.displayName = "ErrorToast";
 
+// Success Toast Component
+interface SuccessToastProps extends Omit<ToasterToast, "children"> {
+  message: string;
+  progress?: number;
+  preset?: string;
+}
+
+const SuccessToast = memo<SuccessToastProps>(
+  ({
+    message,
+    progress = 100,
+    preset,
+    showClose,
+    toastId,
+    className,
+    ...props
+  }) => (
+    <Toast
+      className={cn(
+        specializedToastVariants({ variant: "transaction" }),
+        className,
+      )}
+      showClose={showClose}
+      toastId={toastId}
+      {...props}
+    >
+      <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <CheckIcon size="default" className="text-foreground min-w-6" />
+          <span className="text-foreground text-sm font-normal leading-5 tracking-[0.01em] truncate">
+            {message}
+          </span>
+        </div>
+      </div>
+      <ToastProgressBar
+        progress={progress}
+        variant="achievement"
+        preset={preset}
+      />
+    </Toast>
+  ),
+);
+
+SuccessToast.displayName = "SuccessToast";
+
 // Transaction Notification Component
-interface TransactionNotificationProps extends Omit<ToastProps, "children"> {
+interface TransactionToastProps extends Omit<ToasterToast, "children"> {
   status: "confirming" | "confirmed";
   isExpanded?: boolean;
   label?: string;
   progress?: number;
-  duration?: number;
-  showClose?: boolean;
+  preset?: string;
 }
 
-const TransactionNotification = memo<TransactionNotificationProps>(
+const TransactionToast = memo<TransactionToastProps>(
   ({
     status,
     isExpanded = true,
-    label = "New Game",
-    progress = 66.7,
-    duration,
-    showClose = false,
+    label,
+    progress = 100,
+    preset,
+    showClose,
+    toastId,
     className,
     ...props
   }) => {
@@ -328,17 +408,18 @@ const TransactionNotification = memo<TransactionNotificationProps>(
       return (
         <Toast
           className="flex items-center justify-center p-[10px] w-12 h-12 bg-background shadow-lg rounded-lg border-0 overflow-hidden"
-          duration={duration}
+          showClose={!isExpanded ? false : showClose}
+          toastId={toastId}
           {...props}
         >
           <div className="w-7 h-7 flex items-center justify-center">
             {status === "confirming" ? (
               <SpinnerIcon
                 size="default"
-                className="text-achievement animate-spin"
+                className="text-achievement animate-spin min-w-6"
               />
             ) : (
-              <CheckIcon size="default" className="text-achievement" />
+              <CheckIcon size="default" className="text-achievement min-w-6" />
             )}
           </div>
         </Toast>
@@ -351,28 +432,34 @@ const TransactionNotification = memo<TransactionNotificationProps>(
           specializedToastVariants({ variant: "transaction" }),
           className,
         )}
-        duration={duration}
+        showClose={showClose}
+        toastId={toastId}
         {...props}
       >
         <div className="flex items-center justify-between px-3 py-3 w-full flex-1">
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="w-6 h-6 flex items-center justify-center flex-shrink-0">
+            <div className="w-6 h-6 flex items-center justify-center">
               {status === "confirming" ? (
                 <SpinnerIcon
                   size="default"
-                  className="text-foreground animate-spin"
+                  className="text-foreground animate-spin min-w-6"
                 />
               ) : (
-                <CheckIcon size="default" className="text-foreground" />
+                [
+                  <CheckIcon
+                    size="default"
+                    className="text-foreground min-w-6"
+                  />,
+                ]
               )}
             </div>
-            <span className="text-foreground text-base font-normal leading-5 tracking-[0.01em] truncate">
+            <span className="text-foreground text-sm font-normal leading-5 tracking-[0.01em] truncate">
               {status === "confirming" ? "Confirming" : "Confirmed"}
             </span>
             {status === "confirming" && (
               <div className="flex items-center px-2 py-1 bg-translucent-dark-100 rounded-[2px] ml-2 flex-shrink-0">
                 <div className="w-4 h-4 mr-1 flex items-center justify-center">
-                  <div className="w-[10px] h-[8px] bg-achievement" />
+                  <TransactionIcon className="w-[11px] h-[9px] text-achievement" />
                 </div>
                 <span className="text-achievement text-xs font-normal leading-4 whitespace-nowrap">
                   {label}
@@ -380,111 +467,109 @@ const TransactionNotification = memo<TransactionNotificationProps>(
               </div>
             )}
           </div>
-          {showClose && (
-            <div className="flex-shrink-0 ml-2">
-              <ToastClose asChild>
-                <CloseButton />
-              </ToastClose>
-            </div>
-          )}
         </div>
         <ToastProgressBar
           progress={status === "confirmed" ? 100 : progress}
           variant="achievement"
+          preset={preset}
         />
       </Toast>
     );
   },
 );
 
-TransactionNotification.displayName = "TransactionNotification";
+TransactionToast.displayName = "TransactionToast";
 
 // Convenience functions for using with the existing toast system
 export const showAchievementToast = (
-  props: Pick<
-    AchievementToastProps,
-    "title" | "subtitle" | "xpAmount" | "progress" | "isDraft" | "duration"
-  >,
+  props: Omit<AchievementToastProps, "variant" | "children">,
 ) => {
+  const toastId = props.toastId || `achievement-${Date.now()}`;
   return {
     duration: props.duration,
-    action: (
-      <AchievementToast
-        {...props}
-        showClose={true}
-        // Remove Radix props to avoid conflicts
-        open={undefined}
-        onOpenChange={undefined}
-      />
-    ),
+    toasterId: props.toasterId,
+    toastId,
+    element: <AchievementToast {...props} showClose={true} toastId={toastId} />,
+  };
+};
+
+export const showMarketplaceToast = (
+  props: Omit<MarketplaceToastProps, "variant" | "children">,
+) => {
+  const toastId = props.toastId || `marketplace-${Date.now()}`;
+  return {
+    duration: props.duration,
+    toasterId: props.toasterId,
+    toastId,
+    element: <MarketplaceToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
 export const showNetworkSwitchToast = (
-  props: Pick<
-    NetworkSwitchToastProps,
-    "networkName" | "networkIcon" | "duration"
-  >,
+  props: Omit<NetworkSwitchToastProps, "variant" | "children">,
 ) => {
+  const toastId = props.toastId || `network-${Date.now()}`;
   return {
     duration: props.duration,
-    action: (
-      <NetworkSwitchToast
-        {...props}
-        showClose={true}
-        open={undefined}
-        onOpenChange={undefined}
-      />
+    toasterId: props.toasterId,
+    toastId,
+    element: (
+      <NetworkSwitchToast {...props} showClose={true} toastId={toastId} />
     ),
   };
 };
 
 export const showErrorToast = (
-  props: Pick<ErrorToastProps, "message" | "progress" | "duration">,
+  props: Omit<ErrorToastProps, "variant" | "children">,
 ) => {
+  const toastId = props.toastId || `error-${Date.now()}`;
   return {
     variant: "destructive" as const,
     duration: props.duration,
-    action: (
-      <ErrorToast
-        {...props}
-        showClose={true}
-        open={undefined}
-        onOpenChange={undefined}
-      />
-    ),
+    toasterId: props.toasterId,
+    toastId,
+    element: <ErrorToast {...props} showClose={true} toastId={toastId} />,
+  };
+};
+
+export const showSuccessToast = (
+  props: Omit<SuccessToastProps, "variant" | "children">,
+) => {
+  const toastId = props.toastId || `success-${Date.now()}`;
+  return {
+    variant: "default" as const,
+    duration: props.duration,
+    toasterId: props.toasterId,
+    toastId,
+    element: <SuccessToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
 export const showTransactionToast = (
-  props: Pick<
-    TransactionNotificationProps,
-    "status" | "isExpanded" | "label" | "progress" | "duration"
-  >,
+  props: Omit<TransactionToastProps, "variant" | "children">,
 ) => {
+  const toastId = props.toastId || `transaction-${Date.now()}`;
   return {
     duration: props.duration,
-    action: (
-      <TransactionNotification
-        {...props}
-        showClose={true}
-        open={undefined}
-        onOpenChange={undefined}
-      />
-    ),
+    toasterId: props.toasterId,
+    toastId,
+    element: <TransactionToast {...props} showClose={true} toastId={toastId} />,
   };
 };
 
 export {
   AchievementToast,
+  MarketplaceToast,
   NetworkSwitchToast,
   ErrorToast,
-  TransactionNotification,
-  CloseButton,
+  SuccessToast,
+  TransactionToast,
   XPTag,
   ToastProgressBar,
   type AchievementToastProps,
+  type MarketplaceToastProps,
   type NetworkSwitchToastProps,
   type ErrorToastProps,
-  type TransactionNotificationProps,
+  type SuccessToastProps,
+  type TransactionToastProps,
 };

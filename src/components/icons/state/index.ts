@@ -47,6 +47,7 @@ export * from "./singular-oval";
 export * from "./singular-shape";
 export * from "./space-invader";
 export * from "./sparkles";
+export * from "./sparkles-draft";
 export * from "./stack-diamond";
 export * from "./stack-oval";
 export * from "./stack-shape";

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { CloseButton } from "@/components/primitives/toast/specialized-toasts";
+import { CloseButton } from "@/components/primitives/toast/toast";
 
 // Close Button Stories
 const closeButtonMeta: Meta<typeof CloseButton> = {
@@ -20,7 +20,6 @@ const closeButtonMeta: Meta<typeof CloseButton> = {
       control: "select",
       options: ["default", "translucent"],
     },
-    onClick: { action: "clicked" },
   },
 };
 

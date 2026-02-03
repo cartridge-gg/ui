@@ -1,7 +1,4 @@
-// Re-export existing toast primitives
 export * from "./toast";
-export * from "./toaster";
 export * from "./use-toast";
-
-// Export new specialized toast components
+export * from "./controller-toaster";
 export * from "./specialized-toasts";

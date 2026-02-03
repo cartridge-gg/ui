@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@/components/primitives/button";
 import { useToast } from "@/components/primitives/toast/use-toast";
-import { Toaster } from "@/components/primitives/toast/toaster";
 
 const meta: Meta = {
   title: "Primitives/Toast/Existing Toast System",
@@ -44,7 +43,7 @@ function ExistingToastDemo() {
     toast({
       title: "Update Available",
       description: "A new version is available for download.",
-      action: (
+      element: (
         <Button variant="outline" size="default">
           Update
         </Button>
@@ -82,8 +81,6 @@ function ExistingToastDemo() {
         These are the existing toast notifications using the original
         Radix-based system
       </div>
-
-      <Toaster />
     </div>
   );
 }
