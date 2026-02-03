@@ -20,7 +20,6 @@ const closeButtonMeta: Meta<typeof CloseButton> = {
       control: "select",
       options: ["default", "translucent"],
     },
-    onClick: { action: "clicked" },
   },
 };
 
