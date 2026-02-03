@@ -8,7 +8,7 @@ export type ToastPosition =
 
 // Base toast options shared by all variants
 export interface BaseToastOptions {
-  id?: string; // for updating pushed toasts
+  toastId?: string; // for updating pushed toasts
   duration?: number; // in milliseconds, 0 means persistent
   position?: ToastPosition;
   progress?: number;
@@ -35,7 +35,6 @@ export interface TransactionToastOptions extends BaseToastOptions {
   status: "confirming" | "confirmed";
   isExpanded?: boolean;
   label?: string;
-  txHash?: string;
 }
 
 // Network Switch Toast
