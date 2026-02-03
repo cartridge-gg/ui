@@ -31,13 +31,11 @@ export type ControllerNotificationTypes =
   | "achievement";
 
 export function ControllerToaster({
-  // preset,
   position = "bottom-right",
   disabledTypes = [],
   collapseTransactions,
   toasterId,
 }: {
-  // preset?: string;
   position?: ToastPosition;
   disabledTypes?: ControllerNotificationTypes[];
   collapseTransactions?: boolean;
@@ -47,7 +45,6 @@ export function ControllerToaster({
 
   useEffect(() => {
     const eventHandler = (event: any) => {
-      // Sonner toast
       const variant =
         event.data.type === CONTROLLER_TOAST_MESSAGE_TYPE
           ? event.data.options.variant

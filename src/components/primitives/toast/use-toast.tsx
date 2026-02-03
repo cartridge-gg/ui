@@ -6,7 +6,6 @@ import { ToastProps } from "./toast";
 import { ErrorToast, SuccessToast } from "./specialized-toasts";
 
 export type ToasterToast = ToastProps & {
-  // id: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
   element?: React.ReactElement;
