@@ -445,19 +445,14 @@ const TransactionToast = memo<TransactionToastProps>(
                   className="text-foreground animate-spin min-w-6"
                 />
               ) : (
-                [
-                  <CheckIcon
-                    size="default"
-                    className="text-foreground min-w-6"
-                  />,
-                ]
+                <CheckIcon size="default" className="text-foreground min-w-6" />
               )}
             </div>
             <span className="text-foreground text-sm font-normal leading-5 tracking-[0.01em] truncate">
               {status === "confirming" ? "Confirming" : "Confirmed"}
             </span>
             {status === "confirming" && (
-              <div className="flex items-center px-2 py-1 bg-translucent-dark-100 rounded-[2px] ml-2 flex-shrink-0">
+              <div className="flex items-center py-1 bg-translucent-dark-100 rounded-[2px] flex-shrink-0">
                 <div className="w-4 h-4 mr-1 flex items-center justify-center">
                   <TransactionIcon className="w-[11px] h-[9px] text-achievement" />
                 </div>
@@ -481,8 +476,10 @@ const TransactionToast = memo<TransactionToastProps>(
 TransactionToast.displayName = "TransactionToast";
 
 // Convenience functions for using with the existing toast system
+type ToastPropsToOmit = "safeToClose" | "variant" | "children";
+
 export const showAchievementToast = (
-  props: Omit<AchievementToastProps, "variant" | "children">,
+  props: Omit<AchievementToastProps, ToastPropsToOmit>,
 ) => {
   const toastId = props.toastId || `achievement-${Date.now()}`;
   return {
@@ -494,7 +491,7 @@ export const showAchievementToast = (
 };
 
 export const showMarketplaceToast = (
-  props: Omit<MarketplaceToastProps, "variant" | "children">,
+  props: Omit<MarketplaceToastProps, ToastPropsToOmit>,
 ) => {
   const toastId = props.toastId || `marketplace-${Date.now()}`;
   return {
@@ -506,7 +503,7 @@ export const showMarketplaceToast = (
 };
 
 export const showNetworkSwitchToast = (
-  props: Omit<NetworkSwitchToastProps, "variant" | "children">,
+  props: Omit<NetworkSwitchToastProps, ToastPropsToOmit>,
 ) => {
   const toastId = props.toastId || `network-${Date.now()}`;
   return {
@@ -520,7 +517,7 @@ export const showNetworkSwitchToast = (
 };
 
 export const showErrorToast = (
-  props: Omit<ErrorToastProps, "variant" | "children">,
+  props: Omit<ErrorToastProps, ToastPropsToOmit>,
 ) => {
   const toastId = props.toastId || `error-${Date.now()}`;
   return {
@@ -533,7 +530,7 @@ export const showErrorToast = (
 };
 
 export const showSuccessToast = (
-  props: Omit<SuccessToastProps, "variant" | "children">,
+  props: Omit<SuccessToastProps, ToastPropsToOmit>,
 ) => {
   const toastId = props.toastId || `success-${Date.now()}`;
   return {
@@ -546,7 +543,7 @@ export const showSuccessToast = (
 };
 
 export const showTransactionToast = (
-  props: Omit<TransactionToastProps, "variant" | "children">,
+  props: Omit<TransactionToastProps, ToastPropsToOmit>,
 ) => {
   const toastId = props.toastId || `transaction-${Date.now()}`;
   return {

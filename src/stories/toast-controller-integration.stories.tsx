@@ -50,6 +50,8 @@ function ControllerToasterDemo() {
     ControllerNotificationTypes[]
   >([]);
   const [position, setPosition] = useState<ToastPosition>("bottom-right");
+  const [txCount, setTxCount] = useState(1);
+  const [txConfirming, setTxConfirming] = useState(false);
 
   // Debounced toast function to prevent multiple rapid clicks
   const showToastWithDebounce = useCallback(
@@ -109,23 +111,39 @@ function ControllerToasterDemo() {
     const options: TransactionToastOptions = {
       variant: "transaction",
       status: "confirming",
-      toastId: "0x1234", // transaction hash
+      toastId: `tx-${txCount}`,
       label: "Purchase",
       progress: 50,
       duration: 5000,
+      safeToClose: false,
     };
     emitControllerToast("transactionConfirming", options);
+    setTxConfirming(true);
   };
 
   const showTransactionConfirmed = () => {
     const options: TransactionToastOptions = {
       variant: "transaction",
       status: "confirmed",
-      toastId: "0x1234", // transaction hash
+      toastId: `tx-${txCount}`,
       progress: 50,
       duration: 5000,
     };
     emitControllerToast("transactionConfirmed", options);
+    setTxConfirming(false);
+    setTxCount((prev) => prev + 1);
+  };
+
+  const showTransactionError = () => {
+    const options: ErrorToastOptions = {
+      variant: "error",
+      message: "Transaction execution failed",
+      toastId: `tx-${txCount}`,
+      duration: 5000,
+    };
+    emitControllerToast("transactionError", options);
+    setTxConfirming(false);
+    setTxCount((prev) => prev + 1);
   };
 
   const showSwitchToStarknet = () => {
@@ -202,6 +220,7 @@ function ControllerToasterDemo() {
       isDraft: true,
       progress: 50,
       duration: 5000,
+      iconUrl: "",
     };
     emitControllerToast("achievementDraft", options);
   };
@@ -214,6 +233,7 @@ function ControllerToasterDemo() {
       xpAmount: 100,
       progress: 100,
       duration: 5000,
+      iconUrl: "",
     };
     emitControllerToast("achievement", options);
   };
@@ -286,20 +306,29 @@ function ControllerToasterDemo() {
           <Button
             onClick={showTransactionConfirming}
             className="w-full"
-            disabled={isLoading.transactionConfirming}
+            disabled={isLoading.transactionConfirming || txConfirming}
           >
             {isLoading.transactionConfirming
               ? "Loading..."
-              : "Transaction Confirming"}
+              : `Confirm TX${txCount}...`}
           </Button>
           <Button
             onClick={showTransactionConfirmed}
             className="w-full"
-            disabled={isLoading.transactionConfirmed}
+            disabled={isLoading.transactionConfirmed || !txConfirming}
           >
             {isLoading.transactionConfirmed
               ? "Loading..."
-              : "Transaction Confirmed"}
+              : `...TX${txCount} confirmed`}
+          </Button>
+          <Button
+            onClick={showTransactionError}
+            className="w-full"
+            disabled={isLoading.transactionError || !txConfirming}
+          >
+            {isLoading.transactionError
+              ? "Loading..."
+              : `...TX${txCount} error`}
           </Button>
           <Button
             onClick={showSwitchToStarknet}
