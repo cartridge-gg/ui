@@ -19,6 +19,7 @@ export interface ActivityCollectibleCardProps
   collection: string;
   image: string;
   action: "send" | "receive" | "mint";
+  timestamp: number;
   error?: boolean;
   loading?: boolean;
   className?: string;
@@ -30,6 +31,7 @@ export const ActivityCollectibleCard = ({
   collection,
   image,
   action,
+  timestamp,
   error,
   loading,
   variant,
@@ -102,11 +104,10 @@ export const ActivityCollectibleCard = ({
 
   return (
     <ActivityCard
-      Logo={Logo}
-      title={title}
-      subTitle={Address}
-      topic={name}
-      subTopic={Collection}
+      icon={Icon}
+      logo={Logo}
+      items={[title, Address, name, Collection]}
+      timestamp={timestamp}
       error={error}
       loading={loading}
       variant={variant}

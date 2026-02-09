@@ -20,6 +20,7 @@ export interface ActivityAchievementCardProps
   points: number;
   website: string;
   image: string;
+  timestamp: number;
   error?: boolean;
   loading?: boolean;
   certified?: boolean;
@@ -32,6 +33,7 @@ export const ActivityAchievementCard = ({
   points,
   website,
   image,
+  timestamp,
   error,
   loading,
   certified,
@@ -79,11 +81,10 @@ export const ActivityAchievementCard = ({
 
   return (
     <ActivityCard
-      Logo={Logo}
-      title={title}
-      subTitle={Social}
-      topic={topic}
-      subTopic={Points}
+      icon={Icon}
+      logo={Logo}
+      items={[title, Social, topic, Points]}
+      timestamp={timestamp}
       error={error}
       loading={loading}
       variant={variant}

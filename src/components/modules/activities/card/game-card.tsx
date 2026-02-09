@@ -12,6 +12,7 @@ export interface ActivityGameCardProps
   title: string;
   website: string;
   image: string;
+  timestamp: number;
   error?: boolean;
   loading?: boolean;
   certified?: boolean;
@@ -22,6 +23,7 @@ export const ActivityGameCard = ({
   title,
   website,
   image,
+  timestamp,
   error,
   loading,
   certified,
@@ -65,9 +67,10 @@ export const ActivityGameCard = ({
 
   return (
     <ActivityCard
-      Logo={Logo}
-      title={formattedTitle}
-      subTitle={Social}
+      icon={Icon}
+      logo={Logo}
+      items={[formattedTitle, Social]}
+      timestamp={timestamp}
       error={error}
       loading={loading}
       variant={variant}

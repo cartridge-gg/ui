@@ -1,9 +1,10 @@
 import {
+  AchievementPlayerAvatar,
+  ActivityPreposition,
   ArrowIcon,
   PaperPlaneIcon,
   SparklesIcon,
   Thumbnail,
-  ThumbnailsSubIcon,
 } from "@/index";
 import { VariantProps } from "class-variance-authority";
 import { useMemo, useState } from "react";
@@ -13,11 +14,15 @@ import { formatAddress } from "@/utils";
 export interface ActivityTokenCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof activityCardVariants> {
-  amount: string;
-  address: string;
-  value: string;
-  image: string;
+  address: string; // token address
+  username?: string; // token owner username
+  amount: string; // token amount
+  value: string; // usd value
+  image?: string; // token image
+  symbol?: string; // token symbol (used if no image)
+  logo?: string; // game logo
   action: "send" | "receive" | "mint";
+  timestamp: number;
   error?: boolean;
   loading?: boolean;
   className?: string;
@@ -26,9 +31,13 @@ export interface ActivityTokenCardProps
 export const ActivityTokenCard = ({
   amount,
   address,
+  username,
   value,
   image,
+  symbol,
+  logo,
   action,
+  timestamp,
   error,
   loading,
   variant,
@@ -40,65 +49,74 @@ export const ActivityTokenCard = ({
   const Icon = useMemo(() => {
     switch (action) {
       case "send":
-        return <PaperPlaneIcon className="w-full h-full" variant="solid" />;
+        return <PaperPlaneIcon variant="solid" className="w-full h-full" />;
       case "receive":
         return <ArrowIcon variant="down" className="w-full h-full" />;
+      case "mint":
+        return <SparklesIcon variant="solid" className="w-full h-full" />;
       default:
-        return <SparklesIcon className="w-full h-full" variant="solid" />;
+        return undefined;
     }
   }, [action]);
 
-  const title = useMemo(() => {
-    switch (action) {
-      case "send":
-        return loading ? "Sending" : "Sent";
-      case "receive":
-        return loading ? "Receiving" : "Received";
-      default:
-        return loading ? "Minting" : "Minted";
-    }
-  }, [loading, action]);
+  // const title = useMemo(() => {
+  //   switch (action) {
+  //     case "send":
+  //       return loading ? "Sending" : "Sent";
+  //     case "receive":
+  //       return loading ? "Receiving" : "Received";
+  //     default:
+  //       return loading ? "Minting" : "Minted";
+  //   }
+  // }, [loading, action]);
 
-  const Logo = useMemo(
-    () => (
-      <Thumbnail
-        icon={image}
-        subIcon={
-          <ThumbnailsSubIcon
-            variant={hover ? "lighter" : "light"}
-            Icon={Icon}
-          />
-        }
-        error={error}
-        loading={loading}
-        variant={hover ? "lighter" : "light"}
-        size="lg"
-        rounded
-      />
-    ),
-    [image, error, loading, hover, Icon],
+  const TokenImage = useMemo(
+    () =>
+      image ? (
+        <Thumbnail
+          icon={image}
+          variant={hover ? "lighter" : "light"}
+          size="sm"
+          rounded
+        />
+      ) : undefined,
+    [image, hover],
   );
 
-  const Address = useMemo(() => {
+  const TokenSymbol = useMemo(
+    () => (TokenImage ? undefined : symbol?.toUpperCase() || "TOKEN"),
+    [TokenImage, symbol],
+  );
+
+  const Preposition = useMemo(() => {
+    return (
+      <ActivityPreposition
+        label={action === "send" ? "to" : action === "receive" ? "from" : null}
+      />
+    );
+  }, [action]);
+
+  const Account = useMemo(() => {
     switch (action) {
       case "send":
-        return <p>{`To ${formatAddress(address, { size: "xs" })}`}</p>;
+      case "receive":
+        return username
+          ? [
+              <AchievementPlayerAvatar username={username} size="xs" />,
+              username,
+            ]
+          : [formatAddress(address, { size: "xs" })];
       default:
-        return <p>{`From ${formatAddress(address, { size: "xs" })}`}</p>;
+        return [];
     }
   }, [address, action]);
 
-  const Value = useMemo(() => {
-    return <p>{value}</p>;
-  }, [value]);
-
   return (
     <ActivityCard
-      Logo={Logo}
-      title={title}
-      subTitle={Address}
-      topic={amount}
-      subTopic={Value}
+      icon={Icon}
+      logo={logo}
+      items={[TokenImage, amount, TokenSymbol, Preposition, ...Account]}
+      timestamp={timestamp}
       error={error}
       loading={loading}
       variant={variant}
