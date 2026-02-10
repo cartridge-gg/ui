@@ -18,7 +18,7 @@ export interface ActivityCollectibleCardProps
   address: string;
   collection: string;
   image: string;
-  action: "send" | "receive" | "mint";
+  action: "send" | "receive" | "mint" | "burn";
   timestamp: number;
   error?: boolean;
   loading?: boolean;
@@ -30,7 +30,7 @@ export const ActivityCollectibleCard = ({
   address,
   collection,
   image,
-  action,
+  action: actionProp,
   timestamp,
   error,
   loading,
@@ -39,6 +39,15 @@ export const ActivityCollectibleCard = ({
   ...props
 }: ActivityCollectibleCardProps) => {
   const [hover, setHover] = useState(false);
+  const action = useMemo(
+    () =>
+      actionProp === "receive" && BigInt(address) == 0n
+        ? "mint"
+        : actionProp === "send" && BigInt(address) == 0n
+          ? "burn"
+          : actionProp,
+    [actionProp, address],
+  );
 
   const Icon = useMemo(() => {
     switch (action) {

@@ -49,7 +49,7 @@ export const ActivityCardRow = ({
       {...props}
     >
       <div className="flex flex-row gap-1 text-sm w-full items-center">
-        <div className="w-6 h-6 p-0">{icon}</div>
+        <div className="w-6 h-6 p-0 flex-none">{icon}</div>
         {items.map((item, index) => (
           <div key={`item-${index}`}>
             {typeof item === "string" ? (
@@ -69,12 +69,12 @@ export const ActivityCardRow = ({
           {getDuration(currentTimestamp - timestamp)}
         </div>
         {error ? (
-          <ErrorAlertIcon className="w-6 h-6" variant="error" />
+          <ErrorAlertIcon className="w-6 h-6 flex-none" variant="error" />
         ) : loading ? (
-          <SpinnerIcon className="w-6 h-6 animate-spin" />
+          <SpinnerIcon className="w-6 h-6 flex-none animate-spin" />
         ) : (
           logo && (
-            <div className="w-6 h-6">
+            <div className="w-6 h-6 flex-none">
               <Thumbnail icon={logo} size="sm" />
             </div>
           )

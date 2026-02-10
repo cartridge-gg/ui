@@ -2,10 +2,12 @@ import {
   AchievementPlayerAvatar,
   ActivityPreposition,
   ArrowIcon,
+  FireIcon,
   PaperPlaneIcon,
   SeedlingIcon,
   Thumbnail,
   TransferIcon,
+  WalletIcon,
 } from "@/index";
 import { VariantProps } from "class-variance-authority";
 import { useMemo, useState } from "react";
@@ -25,7 +27,7 @@ export interface ActivityTokenCardProps
   swappedImage?: string;
   swappedSymbol?: string;
   logo?: string; // game logo
-  action: "send" | "receive" | "mint" | "swap";
+  action: "send" | "receive" | "mint" | "burn" | "swap";
   timestamp: number;
   error?: boolean;
   loading?: boolean;
@@ -43,7 +45,7 @@ export const ActivityTokenCard = ({
   swappedImage,
   swappedSymbol,
   logo,
-  action,
+  action: actionProp,
   timestamp,
   error,
   loading,
@@ -52,6 +54,15 @@ export const ActivityTokenCard = ({
   ...props
 }: ActivityTokenCardProps) => {
   const [hover, setHover] = useState(false);
+  const action = useMemo(
+    () =>
+      actionProp === "receive" && BigInt(address) == 0n
+        ? "mint"
+        : actionProp === "send" && BigInt(address) == 0n
+          ? "burn"
+          : actionProp,
+    [actionProp, address],
+  );
 
   const Icon = useMemo(() => {
     switch (action) {
@@ -61,6 +72,8 @@ export const ActivityTokenCard = ({
         return <ArrowIcon variant="down" className="w-full h-full" />;
       case "mint":
         return <SeedlingIcon variant="solid" className="w-full h-full" />;
+      case "burn":
+        return <FireIcon variant="solid" className="w-full h-full" />;
       case "swap":
         return <TransferIcon className="w-full h-full" />;
       default:
@@ -105,6 +118,10 @@ export const ActivityTokenCard = ({
         return <ActivityPreposition label="to" />;
       case "receive":
         return <ActivityPreposition label="from" />;
+      case "mint":
+        return <ActivityPreposition label="minted" />;
+      case "burn":
+        return <ActivityPreposition label="burned" />;
       case "swap":
         return <ActivityPreposition label="for" />;
       default:
@@ -121,7 +138,10 @@ export const ActivityTokenCard = ({
               <AchievementPlayerAvatar username={username} size="xs" />,
               username,
             ]
-          : [formatAddress(address, { size: "xs" })];
+          : [
+              <WalletIcon variant="solid" size="xs" />,
+              formatAddress(address, { size: "xs" }),
+            ];
       case "swap":
         return [
           SwappedTokenImage,

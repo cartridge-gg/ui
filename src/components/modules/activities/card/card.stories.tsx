@@ -174,6 +174,30 @@ export const Token: Story = {
         timestamp={weeks_away}
       />
       <ActivityTokenCard
+        address="0x0"
+        amount="100"
+        value="$6.04"
+        image={LORDS_LOGO}
+        action="receive"
+        timestamp={weeks_away}
+      />
+      <ActivityTokenCard
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        amount="100"
+        value="$6.04"
+        image={FOOLS_LOGO}
+        action="burn"
+        timestamp={weeks_away}
+      />
+      <ActivityTokenCard
+        address="0x0"
+        amount="100"
+        value="$6.04"
+        image={LORDS_LOGO}
+        action="send"
+        timestamp={weeks_away}
+      />
+      <ActivityTokenCard
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
         amount="100,000"
         value="$6.04"
