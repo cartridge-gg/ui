@@ -48,8 +48,8 @@ export const ActivityCardRow = ({
       className={cn(activityCardRowVariants({ variant }), className)}
       {...props}
     >
-      <div className="flex flex-row gap-1 text-xs w-full items-center">
-        <div className="w-6 h-6 p-0 mr-1">{icon}</div>
+      <div className="flex flex-row gap-1 text-sm w-full items-center">
+        <div className="w-6 h-6 p-0">{icon}</div>
         {items.map((item, index) => (
           <div key={`item-${index}`}>
             {typeof item === "string" ? (

@@ -39,7 +39,7 @@ const FOOLS_LOGO = "https://assets.underware.gg/pistols/fools.svg";
 
 export const Game: Story = {
   render: () => (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
       <ActivityGameCard
         title="Attack"
         website="https://lootsurvivor.io"
@@ -73,7 +73,7 @@ export const Game: Story = {
 
 export const Achievement: Story = {
   render: () => (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
       <ActivityAchievementCard
         title="Achievement"
         website="https://lootsurvivor.io"
@@ -115,7 +115,7 @@ export const Achievement: Story = {
 
 export const Token: Story = {
   render: () => (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
       <ActivityTokenCard
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
         username="clicksave"
@@ -128,7 +128,7 @@ export const Token: Story = {
       <ActivityTokenCard
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
         username="reciprodancer"
-        amount="100"
+        amount="1,000"
         value="$6.04"
         image={LORDS_LOGO}
         action="receive"
@@ -145,6 +145,111 @@ export const Token: Story = {
       />
       <ActivityTokenCard
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        username="reciprodancer"
+        amount="1,000"
+        value="$6.04"
+        image={LORDS_LOGO}
+        swappedAmount="100"
+        swappedImage={FOOLS_LOGO}
+        action="swap"
+        timestamp={minutes_away}
+      />
+      <ActivityTokenCard
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        username="reciprodancer"
+        amount="100"
+        value="$12.00"
+        image={FOOLS_LOGO}
+        swappedAmount="99"
+        swappedSymbol="BEADS"
+        action="swap"
+        timestamp={days_away}
+      />
+      <ActivityTokenCard
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        amount="100"
+        value="$6.04"
+        image={FOOLS_LOGO}
+        action="mint"
+        timestamp={weeks_away}
+      />
+      <ActivityTokenCard
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        amount="100,000"
+        value="$6.04"
+        image={LORDS_LOGO}
+        action="receive"
+        timestamp={minutes_away}
+        error
+      />
+      <ActivityTokenCard
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        amount="100"
+        value="$6.04"
+        image={LORDS_LOGO}
+        action="send"
+        timestamp={seconds_away}
+        loading
+      />
+    </div>
+  ),
+};
+
+export const Collectible: Story = {
+  render: () => (
+    <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
+      <ActivityCollectibleCard
+        name="Onyx Bane Ogre"
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        collection="Beast"
+        image={LS_COVER}
+        action="receive"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name="Onyx Bane Ogre"
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        collection="Beast"
+        image={LS_COVER}
+        action="send"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name="Onyx Bane Ogre"
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        collection="Beast"
+        image={LS_COVER}
+        action="mint"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name="Onyx Bane Ogre"
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        collection="Beast"
+        image={LS_COVER}
+        action="receive"
+        timestamp={seconds_away}
+        loading
+      />
+      <ActivityCollectibleCard
+        name="Onyx Bane Ogre"
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        collection="Beast"
+        image={LS_COVER}
+        action="receive"
+        timestamp={seconds_away}
+        error
+      />
+    </div>
+  ),
+};
+
+export const Arcade: Story = {
+  render: () => (
+    <div className="flex flex-col gap-3 m-auto">
+      <p className="text-center text-lg">Arcade WIP</p>
+      <ActivityTokenCard
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e83123b"
         amount="100"
         value="$6.04"
         image={FOOLS_LOGO}
@@ -188,55 +293,6 @@ export const Token: Story = {
         action="send"
         timestamp={seconds_away}
         loading
-      />
-    </div>
-  ),
-};
-
-export const Collectible: Story = {
-  render: () => (
-    <div className="flex flex-col gap-3">
-      <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
-        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
-        action="receive"
-        timestamp={seconds_away}
-      />
-      <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
-        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
-        action="send"
-        timestamp={seconds_away}
-      />
-      <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
-        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
-        action="mint"
-        timestamp={seconds_away}
-      />
-      <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
-        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
-        action="receive"
-        timestamp={seconds_away}
-        loading
-      />
-      <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
-        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
-        action="receive"
-        timestamp={seconds_away}
-        error
       />
     </div>
   ),

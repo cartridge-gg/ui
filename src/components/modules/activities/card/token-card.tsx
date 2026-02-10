@@ -3,8 +3,9 @@ import {
   ActivityPreposition,
   ArrowIcon,
   PaperPlaneIcon,
-  SparklesIcon,
+  SeedlingIcon,
   Thumbnail,
+  TransferIcon,
 } from "@/index";
 import { VariantProps } from "class-variance-authority";
 import { useMemo, useState } from "react";
@@ -17,11 +18,14 @@ export interface ActivityTokenCardProps
   address: string; // token address
   username?: string; // token owner username
   amount: string; // token amount
-  value: string; // usd value
+  value?: string; // usd value
   image?: string; // token image
   symbol?: string; // token symbol (used if no image)
+  swappedAmount?: string;
+  swappedImage?: string;
+  swappedSymbol?: string;
   logo?: string; // game logo
-  action: "send" | "receive" | "mint";
+  action: "send" | "receive" | "mint" | "swap";
   timestamp: number;
   error?: boolean;
   loading?: boolean;
@@ -29,12 +33,15 @@ export interface ActivityTokenCardProps
 }
 
 export const ActivityTokenCard = ({
-  amount,
   address,
   username,
+  amount,
   value,
   image,
   symbol,
+  swappedAmount,
+  swappedImage,
+  swappedSymbol,
   logo,
   action,
   timestamp,
@@ -53,22 +60,13 @@ export const ActivityTokenCard = ({
       case "receive":
         return <ArrowIcon variant="down" className="w-full h-full" />;
       case "mint":
-        return <SparklesIcon variant="solid" className="w-full h-full" />;
+        return <SeedlingIcon variant="solid" className="w-full h-full" />;
+      case "swap":
+        return <TransferIcon className="w-full h-full" />;
       default:
         return undefined;
     }
   }, [action]);
-
-  // const title = useMemo(() => {
-  //   switch (action) {
-  //     case "send":
-  //       return loading ? "Sending" : "Sent";
-  //     case "receive":
-  //       return loading ? "Receiving" : "Received";
-  //     default:
-  //       return loading ? "Minting" : "Minted";
-  //   }
-  // }, [loading, action]);
 
   const TokenImage = useMemo(
     () =>
@@ -88,15 +86,33 @@ export const ActivityTokenCard = ({
     [TokenImage, symbol],
   );
 
+  const SwappedTokenImage = useMemo(
+    () =>
+      swappedImage ? (
+        <Thumbnail
+          icon={swappedImage}
+          variant={hover ? "lighter" : "light"}
+          size="sm"
+          rounded
+        />
+      ) : undefined,
+    [image, hover],
+  );
+
   const Preposition = useMemo(() => {
-    return (
-      <ActivityPreposition
-        label={action === "send" ? "to" : action === "receive" ? "from" : null}
-      />
-    );
+    switch (action) {
+      case "send":
+        return <ActivityPreposition label="to" />;
+      case "receive":
+        return <ActivityPreposition label="from" />;
+      case "swap":
+        return <ActivityPreposition label="for" />;
+      default:
+        return undefined;
+    }
   }, [action]);
 
-  const Account = useMemo(() => {
+  const Subject = useMemo(() => {
     switch (action) {
       case "send":
       case "receive":
@@ -106,6 +122,14 @@ export const ActivityTokenCard = ({
               username,
             ]
           : [formatAddress(address, { size: "xs" })];
+      case "swap":
+        return [
+          SwappedTokenImage,
+          swappedAmount!,
+          SwappedTokenImage
+            ? undefined
+            : swappedSymbol?.toUpperCase() || "TOKEN",
+        ];
       default:
         return [];
     }
@@ -115,7 +139,7 @@ export const ActivityTokenCard = ({
     <ActivityCardRow
       icon={Icon}
       logo={logo}
-      items={[TokenImage, amount, TokenSymbol, Preposition, ...Account]}
+      items={[TokenImage, amount, TokenSymbol, Preposition, ...Subject]}
       timestamp={timestamp}
       error={error}
       loading={loading}
