@@ -8,12 +8,12 @@ import {
 } from "@/index";
 import { VariantProps } from "class-variance-authority";
 import { useMemo, useState } from "react";
-import ActivityCard, { activityCardVariants } from "./card";
+import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 import { formatAddress } from "@/utils";
 
 export interface ActivityTokenCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof activityCardVariants> {
+    VariantProps<typeof activityCardRowVariants> {
   address: string; // token address
   username?: string; // token owner username
   amount: string; // token amount
@@ -112,7 +112,7 @@ export const ActivityTokenCard = ({
   }, [address, action]);
 
   return (
-    <ActivityCard
+    <ActivityCardRow
       icon={Icon}
       logo={logo}
       items={[TokenImage, amount, TokenSymbol, Preposition, ...Account]}

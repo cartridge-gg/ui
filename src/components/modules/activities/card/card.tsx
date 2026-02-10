@@ -1,10 +1,10 @@
-import { GlobeIcon, Thumbnail, VerifiedIcon } from "@/index";
-import { cn, getDuration } from "@/utils";
+import { GlobeIcon, VerifiedIcon } from "@/index";
+import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
 
 export const activityCardVariants = cva(
-  "select-none rounded px-3 py-2.5 flex items-center justify-between gap-4 text-foreground-100 data-[loading]:text-foreground-300 data-[error]:text-destructive-100",
+  "select-none rounded p-3 pr-4 flex items-center justify-between gap-4 text-foreground-100 data-[loading]:text-foreground-300 data-[error]:text-destructive-100",
   {
     variants: {
       variant: {
@@ -20,20 +20,22 @@ export const activityCardVariants = cva(
 export interface ActivityCardProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
     VariantProps<typeof activityCardVariants> {
-  icon: React.ReactNode;
-  logo?: React.ReactNode;
-  timestamp: number;
-  items: (string | React.ReactNode)[];
+  Logo: React.ReactNode;
+  title: string | React.ReactNode;
+  subTitle: string | React.ReactNode;
+  topic?: string;
+  subTopic?: string | React.ReactNode;
   error?: boolean;
   loading?: boolean;
   className?: string;
 }
 
 export const ActivityCard = ({
-  icon,
-  logo,
-  items,
-  timestamp,
+  Logo,
+  title,
+  subTitle,
+  topic,
+  subTopic,
   error,
   loading,
   variant,
@@ -47,46 +49,24 @@ export const ActivityCard = ({
       className={cn(activityCardVariants({ variant }), className)}
       {...props}
     >
-      <div className="flex flex-row gap-1 text-xs w-full items-center">
-        <div className="w-[24px] h-[24px] p-0 mr-1">{icon}</div>
-        {items.map((item, index) => (
-          <div key={`item-${index}`}>
-            {typeof item === "string" ? (
-              <div
-                data-error={error}
-                className="data-[error]:text-destructive-100"
-              >
-                <p>{item}</p>
-              </div>
-            ) : (
-              item
-            )}
-          </div>
-        ))}
-        <div className="grow" />
-        <div className="text-sm text-foreground-400 mx-1 mb-[1px]">
-          {getDuration(new Date().getTime() - timestamp)}
+      {Logo}
+      <div className="flex flex-col gap-0.5 items-stretch grow overflow-hidden">
+        <div
+          data-error={error}
+          className="flex items-center gap-6 justify-between text-sm font-medium capitalize data-[error]:text-destructive-100"
+        >
+          <p>{title}</p>
+          {!!topic && <p className="truncate">{topic}</p>}
         </div>
-        {logo && (
-          <div className="w-[24px] h-[24px]">
-            <Thumbnail icon={logo} size="sm" />
-          </div>
-        )}
+        <div
+          data-error={error}
+          className="flex items-center gap-1 justify-between text-xs text-foreground-300 data-[error]:text-destructive-100"
+        >
+          {subTitle}
+          {!!subTopic && subTopic}
+        </div>
       </div>
     </div>
-  );
-};
-
-export const ActivityPreposition = ({
-  label,
-}: {
-  label: string | undefined | null;
-}) => {
-  if (!label) {
-    return null;
-  }
-  return (
-    <div className="text-sm text-foreground-400 mx-1 mb-[1px]">{label}</div>
   );
 };
 

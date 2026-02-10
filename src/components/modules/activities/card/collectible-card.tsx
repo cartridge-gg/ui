@@ -7,13 +7,13 @@ import {
 } from "@/index";
 import { VariantProps } from "class-variance-authority";
 import { useMemo, useState } from "react";
-import ActivityCard, { activityCardVariants } from "./card";
+import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 import { formatAddress } from "@/utils";
 import { getChecksumAddress } from "starknet";
 
 export interface ActivityCollectibleCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof activityCardVariants> {
+    VariantProps<typeof activityCardRowVariants> {
   name: string;
   address: string;
   collection: string;
@@ -103,7 +103,7 @@ export const ActivityCollectibleCard = ({
   }, [collection]);
 
   return (
-    <ActivityCard
+    <ActivityCardRow
       icon={Icon}
       logo={Logo}
       items={[title, Address, name, Collection]}

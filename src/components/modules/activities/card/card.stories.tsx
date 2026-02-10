@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  ActivityCard,
+  ActivityCardRow,
   ActivityAchievementCard,
   ActivityGameCard,
   ActivityTokenCard,
   ActivityCollectibleCard,
 } from "./";
 
-const meta: Meta<typeof ActivityCard> = {
+const meta: Meta<typeof ActivityCardRow> = {
   title: "Modules/Activities/Card",
-  component: ActivityCard,
+  component: ActivityCardRow,
   tags: ["autodocs"],
   parameters: {
     layout: "padded",
@@ -17,7 +17,7 @@ const meta: Meta<typeof ActivityCard> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof ActivityCard>;
+type Story = StoryObj<typeof ActivityCardRow>;
 
 const now = new Date().getTime();
 const seconds_away = now - 10 * 1000;

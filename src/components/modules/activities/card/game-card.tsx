@@ -1,14 +1,11 @@
 import { JoystickIcon, Thumbnail, ThumbnailsSubIcon } from "@/index";
 import { VariantProps } from "class-variance-authority";
 import { useMemo, useState } from "react";
-import ActivityCard, {
-  ActivitySocialWebsite,
-  activityCardVariants,
-} from "./card";
+import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 
 export interface ActivityGameCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof activityCardVariants> {
+    VariantProps<typeof activityCardRowVariants> {
   title: string;
   website: string;
   image: string;
@@ -57,19 +54,19 @@ export const ActivityGameCard = ({
     [image, error, loading, hover, Icon],
   );
 
-  const Social = useMemo(() => {
-    return <ActivitySocialWebsite website={website} certified={certified} />;
-  }, [website, certified]);
+  // const Social = useMemo(() => {
+  //   return <ActivitySocialWebsite website={website} certified={certified} />;
+  // }, [website, certified]);
 
   const formattedTitle = useMemo(() => {
     return title.replace("_", " ").trim();
   }, [title]);
 
   return (
-    <ActivityCard
+    <ActivityCardRow
       icon={Icon}
       logo={Logo}
-      items={[formattedTitle, Social]}
+      items={[formattedTitle]}
       timestamp={timestamp}
       error={error}
       loading={loading}

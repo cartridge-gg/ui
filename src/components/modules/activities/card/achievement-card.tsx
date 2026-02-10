@@ -7,14 +7,11 @@ import {
 import { cn } from "@/utils";
 import { VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
-import ActivityCard, {
-  ActivitySocialWebsite,
-  activityCardVariants,
-} from "./card";
+import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 
 export interface ActivityAchievementCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof activityCardVariants> {
+    VariantProps<typeof activityCardRowVariants> {
   title: string;
   topic: string;
   points: number;
@@ -66,9 +63,9 @@ export const ActivityAchievementCard = ({
     [image, error, loading, Icon],
   );
 
-  const Social = useMemo(() => {
-    return <ActivitySocialWebsite website={website} certified={certified} />;
-  }, [website, certified]);
+  // const Social = useMemo(() => {
+  //   return <ActivitySocialWebsite website={website} certified={certified} />;
+  // }, [website, certified]);
 
   const Points = useMemo(() => {
     return (
@@ -80,10 +77,10 @@ export const ActivityAchievementCard = ({
   }, [points]);
 
   return (
-    <ActivityCard
+    <ActivityCardRow
       icon={Icon}
       logo={Logo}
-      items={[title, Social, topic, Points]}
+      items={[title, topic, Points]}
       timestamp={timestamp}
       error={error}
       loading={loading}
