@@ -1,6 +1,7 @@
-import { Thumbnail } from "@/index";
+import { ErrorAlertIcon, SpinnerIcon, Thumbnail } from "@/index";
 import { cn, getDuration } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
+import { useMemo } from "react";
 
 export const activityCardRowVariants = cva(
   "select-none rounded px-3 py-2.5 flex items-center justify-between gap-4 text-foreground-100 data-[loading]:text-foreground-300 data-[error]:text-destructive-100",
@@ -39,6 +40,7 @@ export const ActivityCardRow = ({
   className,
   ...props
 }: ActivityCardRowProps) => {
+  const currentTimestamp = useMemo(() => new Date().getTime(), []);
   return (
     <div
       data-loading={loading}
@@ -47,7 +49,7 @@ export const ActivityCardRow = ({
       {...props}
     >
       <div className="flex flex-row gap-1 text-xs w-full items-center">
-        <div className="w-[24px] h-[24px] p-0 mr-1">{icon}</div>
+        <div className="w-6 h-6 p-0 mr-1">{icon}</div>
         {items.map((item, index) => (
           <div key={`item-${index}`}>
             {typeof item === "string" ? (
@@ -64,12 +66,18 @@ export const ActivityCardRow = ({
         ))}
         <div className="grow" />
         <div className="text-sm text-foreground-400 mx-1 mb-[1px]">
-          {getDuration(new Date().getTime() - timestamp)}
+          {getDuration(currentTimestamp - timestamp)}
         </div>
-        {logo && (
-          <div className="w-[24px] h-[24px]">
-            <Thumbnail icon={logo} size="sm" />
-          </div>
+        {error ? (
+          <ErrorAlertIcon className="w-6 h-6" variant="error" />
+        ) : loading ? (
+          <SpinnerIcon className="w-6 h-6 animate-spin" />
+        ) : (
+          logo && (
+            <div className="w-6 h-6">
+              <Thumbnail icon={logo} size="sm" />
+            </div>
+          )
         )}
       </div>
     </div>
