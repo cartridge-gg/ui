@@ -1,15 +1,11 @@
-import {
-  CollectibleTag,
-  ErrorAlertIcon,
-  SpinnerIcon,
-  Thumbnail,
-} from "@/index";
+import { ErrorAlertIcon, SpinnerIcon, Thumbnail } from "@/index";
 import { cn, getDuration } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
+import React from "react";
 import { useMemo } from "react";
 
 export const activityCardRowVariants = cva(
-  "select-none rounded px-3 py-2.5 flex items-center justify-between gap-4 text-foreground-100 data-[loading]:text-foreground-300 data-[error]:text-destructive-100",
+  "select-none rounded px-3 py-2.5 flex gap-0.5 text-sm items-center justify-between text-foreground-100 data-[loading]:text-foreground-300 data-[error]:text-destructive-100",
   {
     variants: {
       variant: {
@@ -53,41 +49,34 @@ export const ActivityCardRow = ({
       className={cn(activityCardRowVariants({ variant }), className)}
       {...props}
     >
-      <div className="flex flex-row gap-1 text-sm w-full items-center">
-        <div className="w-6 h-6 p-0 flex-none">{icon}</div>
-        {items.map((item, index) => (
-          <div key={`item-${index}`}>
-            {typeof item === "string" ? (
-              <div
-                data-error={error}
-                className="data-[error]:text-destructive-100"
-              >
-                <p>{item}</p>
-              </div>
-            ) : (
-              item
-            )}
-          </div>
-        ))}
-
-        <div className="flex-grow" />
-
-        <div className="text-sm text-foreground-400 mx-1 mb-[1px]">
-          {getDuration(currentTimestamp - timestamp)}
-        </div>
-
-        {error ? (
-          <ErrorAlertIcon className="w-6 h-6 flex-none" variant="error" />
-        ) : loading ? (
-          <SpinnerIcon className="w-6 h-6 flex-none animate-spin" />
-        ) : (
-          logo && (
-            <div className="w-6 h-6 flex-none">
-              <Thumbnail icon={logo} size="sm" />
-            </div>
-          )
+      <div className="w-6 h-6 p-0 flex-none">{icon}</div>
+      {items
+        .filter(Boolean)
+        .map((item, index) =>
+          typeof item === "string" ? (
+            <p key={`item-${index}`}>{item}</p>
+          ) : React.isValidElement(item) ? (
+            React.cloneElement(item, { key: `item-${index}` })
+          ) : null,
         )}
+
+      <div className="flex-grow" />
+
+      <div className="text-sm text-foreground-400 mx-1 mb-[1px]">
+        {getDuration(currentTimestamp - timestamp)}
       </div>
+
+      {error ? (
+        <ErrorAlertIcon className="w-6 h-6 flex-none" variant="error" />
+      ) : loading ? (
+        <SpinnerIcon className="w-6 h-6 flex-none animate-spin" />
+      ) : (
+        logo && (
+          <div className="w-6 h-6 flex-none">
+            <Thumbnail icon={logo} size="sm" />
+          </div>
+        )
+      )}
     </div>
   );
 };

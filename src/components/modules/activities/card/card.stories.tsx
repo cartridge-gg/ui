@@ -32,11 +32,19 @@ const LS_LOGO =
   "https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/icon.png";
 const LORDS_LOGO =
   "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo";
-const LS_COVER =
-  "https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/cover.png";
+const BEAST_IMAGE =
+  "https://api.cartridge.gg/x/arcade-main/torii/static/0x046da8955829adf2bda310099a0063451923f02e648cf25a1203aac6335cf0e4/0x00000000000000000000000000000000000000000000000000000000000105de/image";
 const PISTOLS_LOGO =
   "https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/pistols/icon.png";
 const FOOLS_LOGO = "https://assets.underware.gg/pistols/fools.svg";
+const DOPE_IMAGE =
+  "https://raw2.seadn.io/optimism/0x0e55e1913c50e015e0f60386ff56a4bfb00d7110/448cb89b7c9c6673de179a7d5bef21/b8448cb89b7c9c6673de179a7d5bef21.svg";
+const PAPER_LOGO =
+  "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/811f019a-0461-4cff-6c1e-442102863f00/logo";
+const DUELIST_IMAGE =
+  "https://api.cartridge.gg/x/arcade-pistols/torii/static/0x07aaa9866750a0db82a54ba8674c38620fa2f967d2fbb31133def48e0527c87f/0x0000000000000000000000000000000000000000000000000000000000000577/image";
+const KARAT_IMAGE =
+  "https://api.cartridge.gg/x/arcade-main/torii/static/0x07d8ea58612a5de25f29281199a4fc1f2ce42f0f207f93c3a35280605f3b8e68/0x0000000000000000000000000000000000000000000000000000000000000001/image";
 
 export const Game: Story = {
   render: () => (
@@ -132,6 +140,23 @@ export const Token: Story = {
         amount="1,000"
         value="$6.04"
         image={LORDS_LOGO}
+        action="send"
+        timestamp={minutes_away}
+      />
+      <ActivityTokenCard
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        amount="1,000,000,000,000,000"
+        value="$6.04"
+        image={LORDS_LOGO}
+        action="receive"
+        timestamp={minutes_away}
+      />
+      <ActivityTokenCard
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        username="supercalifragilisticexpialidocious"
+        amount="1,000"
+        value="$6.04"
+        image={LORDS_LOGO}
         action="receive"
         timestamp={minutes_away}
       />
@@ -167,7 +192,7 @@ export const Token: Story = {
         timestamp={days_away}
       />
       <ActivityTokenCard
-        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        address="0x0"
         amount="100"
         value="$6.04"
         image={FOOLS_LOGO}
@@ -183,7 +208,7 @@ export const Token: Story = {
         timestamp={weeks_away}
       />
       <ActivityTokenCard
-        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        address="0x0"
         amount="100"
         value="$6.04"
         image={FOOLS_LOGO}
@@ -224,43 +249,81 @@ export const Collectible: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
       <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
+        name={'"Grim Sun" Hippogriff'}
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
-        action="receive"
-        timestamp={seconds_away}
-      />
-      <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
-        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
+        username="popsy"
+        image={BEAST_IMAGE}
         action="send"
         timestamp={seconds_away}
       />
       <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
+        name={'"Grim Sun" Hippogriff'}
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
+        image={BEAST_IMAGE}
+        action="receive"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name={"Dope Ride"}
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        username="reciprodancer"
+        image={DOPE_IMAGE}
+        orderAmount="100"
+        orderImage={PAPER_LOGO}
+        action="list"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name={"Dope Ride"}
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        username="reciprodancer"
+        image={DOPE_IMAGE}
+        orderSymbol="BEADS"
+        orderAmount="100"
+        action="sell"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name={"Pistosl at Dawn Duelist #123"}
+        address="0x0"
+        image={DUELIST_IMAGE}
         action="mint"
         timestamp={seconds_away}
       />
       <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
+        name={"Pistosl at Dawn Duelist #123"}
+        address="0x0"
+        image={DUELIST_IMAGE}
+        action="burn"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name={"Karat #123"}
+        address="0x0"
+        image={KARAT_IMAGE}
+        action="receive"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name={"Karat #123"}
+        address="0x0"
+        image={KARAT_IMAGE}
+        action="send"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name={'"Grim Sun" Hippogriff'}
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
+        username="popsy"
+        image={BEAST_IMAGE}
         action="receive"
         timestamp={seconds_away}
         loading
       />
       <ActivityCollectibleCard
-        name="Onyx Bane Ogre"
+        name={'"Grim Sun" Hippogriff'}
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
-        collection="Beast"
-        image={LS_COVER}
+        image={BEAST_IMAGE}
         action="receive"
         timestamp={seconds_away}
         error
@@ -273,14 +336,38 @@ export const Arcade: Story = {
   render: () => (
     <div className="flex flex-col gap-3 m-auto">
       <p className="text-center text-lg">Arcade WIP</p>
-      <ActivityTokenCard
-        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e83123b"
-        amount="100"
-        value="$6.04"
-        image={FOOLS_LOGO}
-        logo={PISTOLS_LOGO}
+      <ActivityCollectibleCard
+        name={'"Grim Sun" Hippogriff'}
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        username="popsy"
+        image={BEAST_IMAGE}
+        logo={LS_LOGO}
+        action="send"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name={'"Grim Sun" Hippogriff'}
+        address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
+        image={BEAST_IMAGE}
+        logo={LS_LOGO}
+        action="receive"
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name={'"Grim Sun" Hippogriff'}
+        address="0x0"
+        image={BEAST_IMAGE}
+        logo={LS_LOGO}
         action="mint"
-        timestamp={days_away}
+        timestamp={seconds_away}
+      />
+      <ActivityCollectibleCard
+        name={'"Grim Sun" Hippogriff'}
+        address="0x0"
+        image={BEAST_IMAGE}
+        logo={LS_LOGO}
+        action="burn"
+        timestamp={seconds_away}
       />
       <ActivityTokenCard
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
@@ -302,10 +389,29 @@ export const Arcade: Story = {
         timestamp={months_away}
       />
       <ActivityTokenCard
+        address="0x0"
+        amount="100"
+        value="$6.04"
+        image={FOOLS_LOGO}
+        logo={PISTOLS_LOGO}
+        action="mint"
+        timestamp={days_away}
+      />
+      <ActivityTokenCard
+        address="0x0"
+        amount="100"
+        value="$6.04"
+        image={FOOLS_LOGO}
+        logo={PISTOLS_LOGO}
+        action="burn"
+        timestamp={days_away}
+      />
+      <ActivityTokenCard
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
         amount="100"
         value="$6.04"
         image={LORDS_LOGO}
+        logo={PISTOLS_LOGO}
         action="receive"
         timestamp={minutes_away}
         error
@@ -315,6 +421,7 @@ export const Arcade: Story = {
         amount="100"
         value="$6.04"
         image={LORDS_LOGO}
+        logo={PISTOLS_LOGO}
         action="send"
         timestamp={seconds_away}
         loading

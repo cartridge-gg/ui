@@ -2,7 +2,7 @@ import {
   AchievementPlayerAvatar,
   ActivityPreposition,
   ArrowIcon,
-  CollectibleTagFlex,
+  CollectibleTag,
   FireIcon,
   PaperPlaneIcon,
   SeedlingIcon,
@@ -54,7 +54,8 @@ export const ActivityTokenCard = ({
   className,
   ...props
 }: ActivityTokenCardProps) => {
-  const [hover, setHover] = useState(false);
+  const [_hover, setHover] = useState(false);
+
   const action = useMemo(
     () =>
       actionProp === "receive" && BigInt(address) == 0n
@@ -87,37 +88,31 @@ export const ActivityTokenCard = ({
       image ? (
         <Thumbnail
           icon={image}
-          variant={hover ? "lighter" : "light"}
+          variant="ghost"
           size="xs"
+          className="flex-none"
           rounded
         />
       ) : undefined,
-    [image, hover],
+    [image],
   );
 
   const Token = useMemo(() => {
     return (
-      <CollectibleTagFlex variant="dark">
+      <CollectibleTag variant="dark" className="gap-1">
         {TokenImage}
         <p>{amount}</p>
-        {TokenImage ? undefined : (
-          <p>{symbol?.toUpperCase() || "TOKEN"}</p>
-        )}
-      </CollectibleTagFlex>
+        {TokenImage ? undefined : <p>{symbol?.toUpperCase() || "TOKEN"}</p>}
+      </CollectibleTag>
     );
   }, [TokenImage, amount, symbol]);
 
   const SwappedTokenImage = useMemo(
     () =>
       swappedImage ? (
-        <Thumbnail
-          icon={swappedImage}
-          variant={hover ? "lighter" : "light"}
-          size="xs"
-          rounded
-        />
+        <Thumbnail icon={swappedImage} variant="ghost" size="xs" rounded />
       ) : undefined,
-    [image, hover],
+    [image],
   );
 
   const Preposition = useMemo(() => {
@@ -142,25 +137,31 @@ export const ActivityTokenCard = ({
       case "send":
       case "receive":
         return username ? (
-          <CollectibleTagFlex variant="dark">
-            <AchievementPlayerAvatar size="xs" username={username} />
-            {username}
-          </CollectibleTagFlex>
+          <CollectibleTag variant="dark" className="gap-1 shrink min-w-0">
+            <AchievementPlayerAvatar
+              size="xs"
+              className="flex-none"
+              username={username}
+            />
+            <p className="truncate shrink">{username}</p>
+          </CollectibleTag>
         ) : (
-          <CollectibleTagFlex variant="dark">
-            <WalletIcon variant="solid" size="xs" />
-            {formatAddress(address, { size: "xs" })}
-          </CollectibleTagFlex>
+          <CollectibleTag variant="dark" className="gap-1 shrink min-w-0">
+            <WalletIcon variant="solid" size="xs" className="flex-none" />
+            <p className="truncate shrink">
+              {formatAddress(address, { size: "xs" })}
+            </p>
+          </CollectibleTag>
         );
       case "swap":
         return (
-          <CollectibleTagFlex variant="dark">
+          <CollectibleTag variant="dark" className="gap-1 shrink">
             {SwappedTokenImage}
             <p>{swappedAmount!}</p>
             {SwappedTokenImage ? undefined : (
               <p>{swappedSymbol?.toUpperCase() || "TOKEN"}</p>
             )}
-          </CollectibleTagFlex>
+          </CollectibleTag>
         );
       default:
         return undefined;
