@@ -1,4 +1,9 @@
-import { ErrorAlertIcon, SpinnerIcon, Thumbnail } from "@/index";
+import {
+  CollectibleTag,
+  ErrorAlertIcon,
+  SpinnerIcon,
+  Thumbnail,
+} from "@/index";
 import { cn, getDuration } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
@@ -64,10 +69,13 @@ export const ActivityCardRow = ({
             )}
           </div>
         ))}
-        <div className="grow" />
+
+        <div className="flex-grow" />
+
         <div className="text-sm text-foreground-400 mx-1 mb-[1px]">
           {getDuration(currentTimestamp - timestamp)}
         </div>
+
         {error ? (
           <ErrorAlertIcon className="w-6 h-6 flex-none" variant="error" />
         ) : loading ? (

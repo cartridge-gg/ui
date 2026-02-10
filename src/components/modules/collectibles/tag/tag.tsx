@@ -13,8 +13,8 @@ const collectibleTagVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "text-foreground-100 bg-translucent-light-100 backdrop-blur-[8px]",
+        default: "text-foreground-100 bg-translucent-light-100",
+        dark: "text-foreground-100 bg-translucent-dark-100",
       },
     },
     defaultVariants: {
@@ -37,6 +37,22 @@ export function CollectibleTag({
     >
       {children}
       {label && <p className="px-0.5">{label}</p>}
+    </div>
+  );
+}
+
+export function CollectibleTagFlex({
+  variant,
+  className,
+  children,
+  ...props
+}: Omit<CollectibleTagProps, "label">) {
+  return (
+    <div
+      className={cn(collectibleTagVariants({ variant }), className)}
+      {...props}
+    >
+      <div className="flex gap-1 items-center">{children}</div>
     </div>
   );
 }

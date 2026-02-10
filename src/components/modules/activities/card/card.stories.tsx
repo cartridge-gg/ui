@@ -26,6 +26,7 @@ const hours_away = now - 60 * 60 * 1000;
 const days_away = now - 24 * 60 * 60 * 1000;
 const weeks_away = now - 2 * 7 * 24 * 60 * 60 * 1000;
 const months_away = now - 5 * 30 * 24 * 60 * 60 * 1000;
+const years_away = now - 2 * 365 * 24 * 60 * 60 * 1000;
 
 const LS_LOGO =
   "https://raw.githubusercontent.com/cartridge-gg/presets/refs/heads/main/configs/loot-survivor/icon.png";
@@ -187,7 +188,7 @@ export const Token: Story = {
         value="$6.04"
         image={FOOLS_LOGO}
         action="burn"
-        timestamp={weeks_away}
+        timestamp={months_away}
       />
       <ActivityTokenCard
         address="0x0"
@@ -195,7 +196,7 @@ export const Token: Story = {
         value="$6.04"
         image={LORDS_LOGO}
         action="send"
-        timestamp={weeks_away}
+        timestamp={years_away}
       />
       <ActivityTokenCard
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"

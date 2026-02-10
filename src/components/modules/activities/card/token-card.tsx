@@ -2,6 +2,7 @@ import {
   AchievementPlayerAvatar,
   ActivityPreposition,
   ArrowIcon,
+  CollectibleTagFlex,
   FireIcon,
   PaperPlaneIcon,
   SeedlingIcon,
@@ -87,17 +88,24 @@ export const ActivityTokenCard = ({
         <Thumbnail
           icon={image}
           variant={hover ? "lighter" : "light"}
-          size="sm"
+          size="xs"
           rounded
         />
       ) : undefined,
     [image, hover],
   );
 
-  const TokenSymbol = useMemo(
-    () => (TokenImage ? undefined : symbol?.toUpperCase() || "TOKEN"),
-    [TokenImage, symbol],
-  );
+  const Token = useMemo(() => {
+    return (
+      <CollectibleTagFlex variant="dark">
+        {TokenImage}
+        <p>{amount}</p>
+        {TokenImage ? undefined : (
+          <p>{symbol?.toUpperCase() || "TOKEN"}</p>
+        )}
+      </CollectibleTagFlex>
+    );
+  }, [TokenImage, amount, symbol]);
 
   const SwappedTokenImage = useMemo(
     () =>
@@ -105,7 +113,7 @@ export const ActivityTokenCard = ({
         <Thumbnail
           icon={swappedImage}
           variant={hover ? "lighter" : "light"}
-          size="sm"
+          size="xs"
           rounded
         />
       ) : undefined,
@@ -133,25 +141,29 @@ export const ActivityTokenCard = ({
     switch (action) {
       case "send":
       case "receive":
-        return username
-          ? [
-              <AchievementPlayerAvatar username={username} size="xs" />,
-              username,
-            ]
-          : [
-              <WalletIcon variant="solid" size="xs" />,
-              formatAddress(address, { size: "xs" }),
-            ];
+        return username ? (
+          <CollectibleTagFlex variant="dark">
+            <AchievementPlayerAvatar size="xs" username={username} />
+            {username}
+          </CollectibleTagFlex>
+        ) : (
+          <CollectibleTagFlex variant="dark">
+            <WalletIcon variant="solid" size="xs" />
+            {formatAddress(address, { size: "xs" })}
+          </CollectibleTagFlex>
+        );
       case "swap":
-        return [
-          SwappedTokenImage,
-          swappedAmount!,
-          SwappedTokenImage
-            ? undefined
-            : swappedSymbol?.toUpperCase() || "TOKEN",
-        ];
+        return (
+          <CollectibleTagFlex variant="dark">
+            {SwappedTokenImage}
+            <p>{swappedAmount!}</p>
+            {SwappedTokenImage ? undefined : (
+              <p>{swappedSymbol?.toUpperCase() || "TOKEN"}</p>
+            )}
+          </CollectibleTagFlex>
+        );
       default:
-        return [];
+        return undefined;
     }
   }, [address, action]);
 
@@ -159,7 +171,7 @@ export const ActivityTokenCard = ({
     <ActivityCardRow
       icon={Icon}
       logo={logo}
-      items={[TokenImage, amount, TokenSymbol, Preposition, ...Subject]}
+      items={[Token, Preposition, Subject]}
       timestamp={timestamp}
       error={error}
       loading={loading}
