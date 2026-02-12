@@ -52,29 +52,48 @@ export const Game: Story = {
   render: () => (
     <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
       <ActivityGameCard
-        title="Attack"
-        website="https://lootsurvivor.io"
-        image={LS_LOGO}
+        action="attack"
+        name="Loot Survivor"
+        logo={LS_LOGO}
+        themeColor={LS_COLOR}
         timestamp={seconds_away}
       />
       <ActivityGameCard
-        title="Attack"
-        website="https://lootsurvivor.io"
-        image={LS_LOGO}
+        action="behead_a_beast"
+        name="Loot Survivor"
+        logo={LS_LOGO}
+        themeColor={LS_COLOR}
         timestamp={minutes_away}
         certified
       />
       <ActivityGameCard
-        title="Attack"
-        website="https://lootsurvivor.io"
-        image={LS_LOGO}
+        action="commit"
+        name="Pistols at Dawn"
+        logo={PISTOLS_LOGO}
+        themeColor={PISTOLS_COLOR}
+        timestamp={seconds_away}
+      />
+      <ActivityGameCard
+        action="create_tutorial_challenge"
+        name="Pistols at Dawn"
+        logo={PISTOLS_LOGO}
+        themeColor={PISTOLS_COLOR}
+        timestamp={minutes_away}
+        certified
+      />
+      <ActivityGameCard
+        action="attack"
+        name="Loot Survivor"
+        logo={LS_LOGO}
+        themeColor={LS_COLOR}
         timestamp={hours_away}
         loading
       />
       <ActivityGameCard
-        title="Attack"
-        website="https://lootsurvivor.io"
-        image={LS_LOGO}
+        action="attack"
+        name="Loot Survivor"
+        logo={LS_LOGO}
+        themeColor={LS_COLOR}
         timestamp={days_away}
         error
       />

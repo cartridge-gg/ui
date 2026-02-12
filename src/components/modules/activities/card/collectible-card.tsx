@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import {
   ArrowIcon,
   ThumbnailCollectible,
@@ -13,7 +14,6 @@ import {
   CollectibleTag,
 } from "@/index";
 import { VariantProps } from "class-variance-authority";
-import { useMemo, useState } from "react";
 import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 import { formatAddress } from "@/utils";
 

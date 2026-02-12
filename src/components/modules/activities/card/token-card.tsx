@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import {
   AchievementPlayerAvatar,
   ActivityPreposition,
@@ -11,7 +12,6 @@ import {
   WalletIcon,
 } from "@/index";
 import { VariantProps } from "class-variance-authority";
-import { useMemo, useState } from "react";
 import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 import { formatAddress } from "@/utils";
 

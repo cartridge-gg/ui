@@ -38,7 +38,7 @@ export const ActivityAchievementCard = ({
   const Icon = useMemo(
     () => (
       <TrophyIcon
-        className="w-full h-full text-foreground-100"
+        className="w-full h-full text-foreground-100 flex-none"
         variant="solid"
       />
     ),
@@ -71,7 +71,7 @@ export const ActivityAchievementCard = ({
         className="gap-1 shrink min-w-0 text-inherit"
         style={{ color: !loading && !error ? themeColor : undefined }}
       >
-        <SparklesIcon variant="solid" size="xs" />
+        <SparklesIcon variant="solid" size="xs" className="flex-none"/>
         <p>{points}</p>
       </CollectibleTag>
     );
