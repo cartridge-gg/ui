@@ -1,39 +1,36 @@
-import {
-  SparklesIcon,
-  Thumbnail,
-  ThumbnailsSubIcon,
-  TrophyIcon,
-} from "@/index";
-import { cn } from "@/utils";
-import { VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
+import { cn } from "@/utils";
+import { CollectibleTag, SparklesIcon, Thumbnail, TrophyIcon } from "@/index";
+import { VariantProps } from "class-variance-authority";
 import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 
 export interface ActivityAchievementCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof activityCardRowVariants> {
-  title: string;
   topic: string;
   points: number;
-  website: string;
-  image: string;
+  image: string; // achievement image or icon as fa-xxx
+  themeColor: string; // game theme color
+  logo?: string; // game logo
+  certified?: boolean;
+  website?: string;
   timestamp: number;
   error?: boolean;
   loading?: boolean;
-  certified?: boolean;
   className?: string;
 }
 
 export const ActivityAchievementCard = ({
-  title,
   topic,
   points,
-  website,
   image,
+  themeColor,
+  logo,
+  certified,
+  website,
   timestamp,
   error,
   loading,
-  certified,
   variant,
   className,
   ...props
@@ -48,39 +45,47 @@ export const ActivityAchievementCard = ({
     [],
   );
 
-  const Logo = useMemo(
-    () => (
-      <Thumbnail
-        icon={image}
-        subIcon={<ThumbnailsSubIcon variant="light" Icon={Icon} />}
-        error={error}
-        loading={loading}
-        size="lg"
-        variant="light"
-        className={cn(!error && !loading && "text-primary")}
-      />
-    ),
-    [image, error, loading, Icon],
-  );
+  const Topic = useMemo(() => {
+    return (
+      <CollectibleTag
+        variant="dark"
+        className="gap-1 shrink min-w-0 text-inherit"
+        style={{ color: !loading && !error ? themeColor : undefined }}
+      >
+        <Thumbnail
+          icon={image}
+          variant="ghost"
+          size="xs"
+          className="flex-none text-inherit"
+          rounded
+        />
+        <p className="truncate shrink">{topic}</p>
+      </CollectibleTag>
+    );
+  }, [image, topic]);
+
+  const Points = useMemo(() => {
+    return (
+      <CollectibleTag
+        variant="dark"
+        className="gap-1 shrink min-w-0 text-inherit"
+        style={{ color: !loading && !error ? themeColor : undefined }}
+      >
+        <SparklesIcon variant="solid" size="xs" />
+        <p>{points}</p>
+      </CollectibleTag>
+    );
+  }, [points]);
 
   // const Social = useMemo(() => {
   //   return <ActivitySocialWebsite website={website} certified={certified} />;
   // }, [website, certified]);
 
-  const Points = useMemo(() => {
-    return (
-      <div className="flex items-center gap-1 text-inherit">
-        <SparklesIcon variant="solid" size="xs" />
-        <span>{points}</span>
-      </div>
-    );
-  }, [points]);
-
   return (
     <ActivityCardRow
       icon={Icon}
-      logo={Logo}
-      items={[title, topic, Points]}
+      logo={logo}
+      items={[Topic, Points]}
       timestamp={timestamp}
       error={error}
       loading={loading}
