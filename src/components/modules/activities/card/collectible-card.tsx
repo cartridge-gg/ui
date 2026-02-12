@@ -146,14 +146,18 @@ export const ActivityCollectibleCard = ({
       case "send":
       case "receive":
         return username ? (
-          <CollectibleTag variant="dark" className="gap-1 shrink">
-            <AchievementPlayerAvatar size="xs" username={username} />
-            {username}
+          <CollectibleTag variant="dark" className="gap-1 shrink min-w-0">
+            <AchievementPlayerAvatar
+              size="xs"
+              className="flex-none"
+              username={username}
+            />
+            <p className="truncate">{username}</p>
           </CollectibleTag>
         ) : (
-          <CollectibleTag variant="dark" className="gap-1 shrink">
+          <CollectibleTag variant="dark" className="gap-1 shrink min-w-0">
             <WalletIcon variant="solid" size="xs" />
-            {formatAddress(address, { size: "xs" })}
+            <p className="truncate">{formatAddress(address, { size: "xs" })}</p>
           </CollectibleTag>
         );
       case "list":

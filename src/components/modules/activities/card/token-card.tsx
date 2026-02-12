@@ -3,6 +3,7 @@ import {
   AchievementPlayerAvatar,
   ActivityPreposition,
   ArrowIcon,
+  CoinsIcon,
   CollectibleTag,
   FireIcon,
   PaperPlaneIcon,
@@ -93,16 +94,19 @@ export const ActivityTokenCard = ({
           className="flex-none"
           rounded
         />
-      ) : undefined,
+      ) : (
+        <CoinsIcon variant="solid" size="xs" className="flex-none" />
+      ),
     [image],
   );
 
   const Token = useMemo(() => {
     return (
-      <CollectibleTag variant="dark" className="gap-1">
+      <CollectibleTag variant="dark" className="gap-1 shrink min-w-0">
         {TokenImage}
-        <p>{amount}</p>
-        {TokenImage ? undefined : <p>{symbol?.toUpperCase() || "TOKEN"}</p>}
+        <p className="truncate">
+          {amount} {symbol?.toUpperCase() || ""}
+        </p>
       </CollectibleTag>
     );
   }, [TokenImage, amount, symbol]);
@@ -111,8 +115,10 @@ export const ActivityTokenCard = ({
     () =>
       swappedImage ? (
         <Thumbnail icon={swappedImage} variant="ghost" size="xs" rounded />
-      ) : undefined,
-    [image],
+      ) : (
+        <CoinsIcon variant="solid" size="xs" className="flex-none" />
+      ),
+    [swappedImage],
   );
 
   const Preposition = useMemo(() => {
@@ -137,30 +143,27 @@ export const ActivityTokenCard = ({
       case "send":
       case "receive":
         return username ? (
-          <CollectibleTag variant="dark" className="gap-1 shrink min-w-0">
+          <CollectibleTag variant="dark" className="gap-1 shrink min-w-[60px]">
             <AchievementPlayerAvatar
               size="xs"
               className="flex-none"
               username={username}
             />
-            <p className="truncate shrink">{username}</p>
+            <p className="truncate">{username}</p>
           </CollectibleTag>
         ) : (
-          <CollectibleTag variant="dark" className="gap-1 shrink min-w-0">
+          <CollectibleTag variant="dark" className="gap-1 shrink min-w-[60px]">
             <WalletIcon variant="solid" size="xs" className="flex-none" />
-            <p className="truncate shrink">
-              {formatAddress(address, { size: "xs" })}
-            </p>
+            <p className="truncate">{formatAddress(address, { size: "xs" })}</p>
           </CollectibleTag>
         );
       case "swap":
         return (
           <CollectibleTag variant="dark" className="gap-1 shrink">
             {SwappedTokenImage}
-            <p>{swappedAmount!}</p>
-            {SwappedTokenImage ? undefined : (
-              <p>{swappedSymbol?.toUpperCase() || "TOKEN"}</p>
-            )}
+            <p className="truncate">
+              {swappedAmount!} {swappedSymbol?.toUpperCase() || ""}
+            </p>
           </CollectibleTag>
         );
       default:

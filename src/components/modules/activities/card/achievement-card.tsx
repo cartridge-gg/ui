@@ -69,9 +69,8 @@ export const ActivityAchievementCard = ({
       <CollectibleTag
         variant="dark"
         className="gap-1 shrink min-w-0 text-inherit"
-        style={{ color: !loading && !error ? themeColor : undefined }}
       >
-        <SparklesIcon variant="solid" size="xs" className="flex-none"/>
+        <SparklesIcon variant="solid" size="xs" className="flex-none" />
         <p>{points}</p>
       </CollectibleTag>
     );

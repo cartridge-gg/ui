@@ -87,3 +87,57 @@ export const Bold18px: Story = {
     className: "text-lg font-bold",
   },
 };
+
+export const Regular14pxWeight100: Story = {
+  args: {
+    className: "text-sm font-thin",
+  },
+};
+
+export const Regular14pxWeight200: Story = {
+  args: {
+    className: "text-sm font-extralight",
+  },
+};
+
+export const Regular14pxWeight300: Story = {
+  args: {
+    className: "text-sm font-light",
+  },
+};
+
+export const Regular14pxWeight400: Story = {
+  args: {
+    className: "text-sm font-normal",
+  },
+};
+
+export const Regular14pxWeight500: Story = {
+  args: {
+    className: "text-sm font-medium",
+  },
+};
+
+export const Regular14pxWeight600: Story = {
+  args: {
+    className: "text-sm font-semibold",
+  },
+};
+
+export const Regular14pxWeight700: Story = {
+  args: {
+    className: "text-sm font-bold",
+  },
+};
+
+export const Regular14pxWeight800: Story = {
+  args: {
+    className: "text-sm font-extrabold",
+  },
+};
+
+export const Regular14pxWeight900: Story = {
+  args: {
+    className: "text-sm font-black",
+  },
+};
