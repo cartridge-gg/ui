@@ -91,7 +91,7 @@ export const cartridgeTWPreset: Partial<Config> = {
     extend: {
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
-        mono: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
+        mono: ["LD_Mono", "IBM Plex Mono", ...defaultTheme.fontFamily.mono],
       },
       fontSize: {
         ["2xs"]: "10px",
