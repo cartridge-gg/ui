@@ -16,6 +16,7 @@ export interface CollectibleCardProps
   lastSale?: string | { value: string; image: string } | null;
   selectable?: boolean;
   selected?: boolean;
+  clickable?: boolean;
   onSelect?: () => void;
   onClick?: () => void;
 }
@@ -46,6 +47,7 @@ export function CollectibleCard({
   lastSale,
   selectable = false,
   selected,
+  clickable = false,
   onSelect,
   variant,
   className,
@@ -57,7 +59,9 @@ export function CollectibleCard({
       data-selected={selected}
       className={cn(
         collectibleCardVariants({ variant }),
-        props.onClick !== undefined ? "cursor-pointer" : "cursor-default",
+        props.onClick !== undefined || clickable
+          ? "cursor-pointer"
+          : "cursor-default",
         className,
       )}
       {...props}
