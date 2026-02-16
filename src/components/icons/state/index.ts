@@ -18,6 +18,7 @@ export * from "./dove";
 export * from "./earth";
 export * from "./eye";
 export * from "./filter";
+export * from "./fire";
 export * from "./gem";
 export * from "./globe";
 export * from "./grid";

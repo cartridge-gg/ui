@@ -13,8 +13,8 @@ const collectibleTagVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "text-foreground-100 bg-translucent-light-100 backdrop-blur-[8px]",
+        default: "text-foreground-100 bg-translucent-light-100",
+        dark: "text-inherit bg-translucent-dark-100",
       },
     },
     defaultVariants: {

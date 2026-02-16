@@ -1,79 +1,93 @@
-import { JoystickIcon, Thumbnail, ThumbnailsSubIcon } from "@/index";
+import { useMemo } from "react";
+import {
+  ActivityPreposition,
+  CollectibleTag,
+  JoystickIcon,
+  Thumbnail,
+  TransactionIcon,
+} from "@/index";
 import { VariantProps } from "class-variance-authority";
-import { useMemo, useState } from "react";
-import ActivityCard, {
-  ActivitySocialWebsite,
-  activityCardVariants,
-} from "./card";
+import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 
 export interface ActivityGameCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof activityCardVariants> {
-  title: string;
-  website: string;
-  image: string;
+    VariantProps<typeof activityCardRowVariants> {
+  action: string; // endpoint
+  name: string; // game name
+  themeColor: string; // game theme color
+  logo?: string; // game logo
+  website?: string;
+  certified?: boolean;
+  timestamp: number;
   error?: boolean;
   loading?: boolean;
-  certified?: boolean;
   className?: string;
 }
 
 export const ActivityGameCard = ({
-  title,
+  action,
+  name,
+  themeColor,
+  logo,
   website,
-  image,
+  certified,
+  timestamp,
   error,
   loading,
-  certified,
   variant,
   className,
   ...props
 }: ActivityGameCardProps) => {
-  const [hover, setHover] = useState(false);
-
   const Icon = useMemo(
     () => <JoystickIcon className="w-full h-full" variant="solid" />,
     [],
   );
 
-  const Logo = useMemo(
-    () => (
-      <Thumbnail
-        icon={image}
-        subIcon={
-          <ThumbnailsSubIcon
-            variant={hover ? "lighter" : "light"}
-            Icon={Icon}
-          />
-        }
-        error={error}
-        loading={loading}
-        size="lg"
-        variant={hover ? "lighter" : "light"}
-      />
-    ),
-    [image, error, loading, hover, Icon],
-  );
+  const Title = useMemo(() => {
+    return (
+      <CollectibleTag
+        variant="dark"
+        className="gap-1 shrink min-w-0 text-inherit"
+        style={{ color: !loading && !error ? themeColor : undefined }}
+      >
+        <TransactionIcon size="2xs" className="flex-none" />
+        <p className="truncate capitalize">
+          {action.split("_").join(" ").trim()}
+        </p>
+      </CollectibleTag>
+    );
+  }, [action]);
 
-  const Social = useMemo(() => {
-    return <ActivitySocialWebsite website={website} certified={certified} />;
-  }, [website, certified]);
+  const Preposition = useMemo(() => <ActivityPreposition label="in" />, []);
 
-  const formattedTitle = useMemo(() => {
-    return title.replace("_", " ").trim();
-  }, [title]);
+  const Game = useMemo(() => {
+    return (
+      <CollectibleTag variant="dark" className="gap-1">
+        <Thumbnail
+          icon={logo}
+          variant="ghost"
+          size="xs"
+          className="flex-none"
+        />
+        <p className="truncate">{name}</p>
+      </CollectibleTag>
+    );
+  }, [logo, name]);
+
+  // const Social = useMemo(() => {
+  //   return <ActivitySocialWebsite website={website} certified={certified} />;
+  // }, [website, certified]);
 
   return (
-    <ActivityCard
-      Logo={Logo}
-      title={formattedTitle}
-      subTitle={Social}
+    <ActivityCardRow
+      icon={Icon}
+      logo={undefined}
+      items={[Title, Preposition, Game]}
+      timestamp={timestamp}
       error={error}
       loading={loading}
       variant={variant}
       className={className}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
       {...props}
     />
   );

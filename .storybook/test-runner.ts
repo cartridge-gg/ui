@@ -35,7 +35,7 @@ const config: TestRunnerConfig = {
 
     // Force load common fonts if they exist
     await page.evaluate(() => {
-      const fonts = ["Inter", "IBM Plex Mono", "Arial", "Helvetica"]; // Add your common fonts
+      const fonts = ["Inter", "LD_Mono", "IBM Plex Mono", "Arial", "Helvetica"]; // Add your common fonts
       fonts.forEach((font) => {
         document.fonts.load(`1em ${font}`);
       });

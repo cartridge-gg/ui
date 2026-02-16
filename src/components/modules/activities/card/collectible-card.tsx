@@ -1,24 +1,36 @@
+import { useMemo, useState } from "react";
 import {
   ArrowIcon,
-  PaperPlaneIcon,
-  SparklesIcon,
   ThumbnailCollectible,
-  ThumbnailsSubIcon,
+  PaperPlaneIcon,
+  SeedlingIcon,
+  FireIcon,
+  TagIcon,
+  MoneyIcon,
+  ActivityPreposition,
+  AchievementPlayerAvatar,
+  WalletIcon,
+  Thumbnail,
+  CollectibleTag,
 } from "@/index";
 import { VariantProps } from "class-variance-authority";
-import { useMemo, useState } from "react";
-import ActivityCard, { activityCardVariants } from "./card";
+import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 import { formatAddress } from "@/utils";
-import { getChecksumAddress } from "starknet";
 
 export interface ActivityCollectibleCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof activityCardVariants> {
+    VariantProps<typeof activityCardRowVariants> {
   name: string;
-  address: string;
-  collection: string;
-  image: string;
-  action: "send" | "receive" | "mint";
+  address: string; // token address
+  username?: string; // token owner username
+  collection?: string;
+  image?: string; // token image
+  logo?: string; // game logo
+  orderAmount?: string; // order amount
+  orderImage?: string; // order token image
+  orderSymbol?: string; // order token symbol (if no image)
+  action: "send" | "receive" | "mint" | "burn" | "list" | "sell";
+  timestamp: number;
   error?: boolean;
   loading?: boolean;
   className?: string;
@@ -27,86 +39,149 @@ export interface ActivityCollectibleCardProps
 export const ActivityCollectibleCard = ({
   name,
   address,
+  username,
   collection,
   image,
-  action,
+  logo,
+  orderAmount,
+  orderImage,
+  orderSymbol,
+  action: actionProp,
+  timestamp,
   error,
   loading,
   variant,
   className,
   ...props
 }: ActivityCollectibleCardProps) => {
-  const [hover, setHover] = useState(false);
+  const [_hover, setHover] = useState(false);
+
+  const action = useMemo(
+    () =>
+      actionProp === "receive" && BigInt(address) == 0n
+        ? "mint"
+        : actionProp === "send" && BigInt(address) == 0n
+          ? "burn"
+          : actionProp,
+    [actionProp, address],
+  );
 
   const Icon = useMemo(() => {
     switch (action) {
       case "send":
-        return <PaperPlaneIcon className="w-full h-full" variant="solid" />;
+        return <PaperPlaneIcon variant="solid" className="w-full h-full" />;
       case "receive":
         return <ArrowIcon variant="down" className="w-full h-full" />;
+      case "mint":
+        return <SeedlingIcon variant="solid" className="w-full h-full" />;
+      case "burn":
+        return <FireIcon variant="solid" className="w-full h-full" />;
+      case "list":
+        return <TagIcon variant="solid" className="w-full h-full" />;
+      case "sell":
+        return <MoneyIcon variant="solid" className="w-full h-full" />;
       default:
-        return <SparklesIcon className="w-full h-full" variant="solid" />;
+        return undefined;
     }
   }, [action]);
 
-  const title = useMemo(() => {
-    switch (action) {
-      case "send":
-        return loading ? "Sending" : "Sent";
-      case "receive":
-        return loading ? "Receiving" : "Received";
-      default:
-        return loading ? "Minting" : "Minted";
-    }
-  }, [loading, action]);
-
-  const Logo = useMemo(
+  const TokenImage = useMemo(
     () => (
       <ThumbnailCollectible
-        image={image}
-        subIcon={
-          <ThumbnailsSubIcon
-            variant={hover ? "lighter" : "light"}
-            Icon={Icon}
-          />
-        }
-        error={error}
-        loading={loading}
-        variant={hover ? "lighter" : "light"}
-        size="lg"
+        image={image ?? ""}
+        variant="ghost"
+        size="sm"
+        className="flex-none"
       />
     ),
-    [image, error, loading, hover, Icon],
+    [image],
   );
 
-  const Address = useMemo(() => {
+  const Token = useMemo(() => {
+    return (
+      <CollectibleTag
+        variant="dark"
+        className="gap-1 shrink min-w-0 text-inherit"
+      >
+        {TokenImage}
+        <p className="truncate shrink">{name}</p>
+      </CollectibleTag>
+    );
+  }, [TokenImage, name]);
+
+  const Preposition = useMemo(() => {
     switch (action) {
       case "send":
+        return <ActivityPreposition label="to" />;
+      case "receive":
+        return <ActivityPreposition label="from" />;
+      case "mint":
+        return <ActivityPreposition label="minted" />;
+      case "burn":
+        return <ActivityPreposition label="burned" />;
+      case "list":
+      case "sell":
+        return <ActivityPreposition label="for" />;
+      default:
+        return undefined;
+    }
+  }, [action]);
+
+  const OrderTokenImage = useMemo(
+    () =>
+      orderImage ? (
+        <Thumbnail
+          icon={orderImage}
+          variant="ghost"
+          size="xs"
+          className="flex-none"
+          rounded
+        />
+      ) : undefined,
+    [orderImage],
+  );
+
+  const Subject = useMemo(() => {
+    switch (action) {
+      case "send":
+      case "receive":
+        return username ? (
+          <CollectibleTag variant="dark" className="gap-1 shrink min-w-0">
+            <AchievementPlayerAvatar
+              size="xs"
+              className="flex-none"
+              username={username}
+            />
+            <p className="truncate">{username}</p>
+          </CollectibleTag>
+        ) : (
+          <CollectibleTag variant="dark" className="gap-1 shrink min-w-0">
+            <WalletIcon variant="solid" size="xs" />
+            <p className="truncate">{formatAddress(address, { size: "xs" })}</p>
+          </CollectibleTag>
+        );
+      case "list":
+      case "sell":
         return (
-          <p>{`To ${formatAddress(getChecksumAddress(address), {
-            size: "xs",
-          })}`}</p>
+          <CollectibleTag variant="dark" className="gap-1 shrink">
+            {OrderTokenImage}
+            <p>{orderAmount!}</p>
+            {OrderTokenImage ? undefined : (
+              <p>{orderSymbol?.toUpperCase() || "TOKEN"}</p>
+            )}
+          </CollectibleTag>
         );
       default:
-        return (
-          <p>{`From ${formatAddress(getChecksumAddress(address), {
-            size: "xs",
-          })}`}</p>
-        );
+        return undefined;
     }
   }, [address, action]);
 
-  const Collection = useMemo(() => {
-    return <p>{collection}</p>;
-  }, [collection]);
-
   return (
-    <ActivityCard
-      Logo={Logo}
-      title={title}
-      subTitle={Address}
-      topic={name}
-      subTopic={Collection}
+    <ActivityCardRow
+      icon={Icon}
+      logo={logo}
+      items={[Token, Preposition, Subject]}
+      timestamp={timestamp}
       error={error}
       loading={loading}
       variant={variant}

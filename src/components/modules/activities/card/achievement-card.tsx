@@ -1,40 +1,36 @@
-import {
-  SparklesIcon,
-  Thumbnail,
-  ThumbnailsSubIcon,
-  TrophyIcon,
-} from "@/index";
-import { cn } from "@/utils";
-import { VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
-import ActivityCard, {
-  ActivitySocialWebsite,
-  activityCardVariants,
-} from "./card";
+import { cn } from "@/utils";
+import { CollectibleTag, SparklesIcon, Thumbnail, TrophyIcon } from "@/index";
+import { VariantProps } from "class-variance-authority";
+import ActivityCardRow, { activityCardRowVariants } from "./card-row";
 
 export interface ActivityAchievementCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof activityCardVariants> {
-  title: string;
+    VariantProps<typeof activityCardRowVariants> {
   topic: string;
   points: number;
-  website: string;
-  image: string;
+  image: string; // achievement image or icon as fa-xxx
+  themeColor: string; // game theme color
+  logo?: string; // game logo
+  certified?: boolean;
+  website?: string;
+  timestamp: number;
   error?: boolean;
   loading?: boolean;
-  certified?: boolean;
   className?: string;
 }
 
 export const ActivityAchievementCard = ({
-  title,
   topic,
   points,
-  website,
   image,
+  themeColor,
+  logo,
+  certified,
+  website,
+  timestamp,
   error,
   loading,
-  certified,
   variant,
   className,
   ...props
@@ -42,48 +38,54 @@ export const ActivityAchievementCard = ({
   const Icon = useMemo(
     () => (
       <TrophyIcon
-        className="w-full h-full text-foreground-100"
+        className="w-full h-full text-foreground-100 flex-none"
         variant="solid"
       />
     ),
     [],
   );
 
-  const Logo = useMemo(
-    () => (
-      <Thumbnail
-        icon={image}
-        subIcon={<ThumbnailsSubIcon variant="light" Icon={Icon} />}
-        error={error}
-        loading={loading}
-        size="lg"
-        variant="light"
-        className={cn(!error && !loading && "text-primary")}
-      />
-    ),
-    [image, error, loading, Icon],
-  );
-
-  const Social = useMemo(() => {
-    return <ActivitySocialWebsite website={website} certified={certified} />;
-  }, [website, certified]);
+  const Topic = useMemo(() => {
+    return (
+      <CollectibleTag
+        variant="dark"
+        className="gap-1 shrink min-w-0 text-inherit"
+        style={{ color: !loading && !error ? themeColor : undefined }}
+      >
+        <Thumbnail
+          icon={image}
+          variant="ghost"
+          size="xs"
+          className="flex-none text-inherit"
+          rounded
+        />
+        <p className="truncate shrink">{topic}</p>
+      </CollectibleTag>
+    );
+  }, [image, topic]);
 
   const Points = useMemo(() => {
     return (
-      <div className="flex items-center gap-1 text-inherit">
-        <SparklesIcon variant="solid" size="xs" />
-        <span>{points}</span>
-      </div>
+      <CollectibleTag
+        variant="dark"
+        className="gap-1 shrink min-w-0 text-inherit"
+      >
+        <SparklesIcon variant="solid" size="xs" className="flex-none" />
+        <p>{points}</p>
+      </CollectibleTag>
     );
   }, [points]);
 
+  // const Social = useMemo(() => {
+  //   return <ActivitySocialWebsite website={website} certified={certified} />;
+  // }, [website, certified]);
+
   return (
-    <ActivityCard
-      Logo={Logo}
-      title={title}
-      subTitle={Social}
-      topic={topic}
-      subTopic={Points}
+    <ActivityCardRow
+      icon={Icon}
+      logo={logo}
+      items={[Topic, Points]}
+      timestamp={timestamp}
       error={error}
       loading={loading}
       variant={variant}
