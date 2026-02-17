@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { ActivityCardRow } from "./";
+declare const meta: Meta<typeof ActivityCardRow>;
+export default meta;
+type Story = StoryObj<typeof ActivityCardRow>;
+export declare const Game: Story;
+export declare const Achievement: Story;
+export declare const Token: Story;
+export declare const Collectible: Story;
+export declare const Arcade: Story;
