@@ -13,8 +13,11 @@ export interface TokenCardProps
   image: string | React.ReactNode;
   title: string | React.ReactNode;
   amount: string;
+  increasing?: boolean;
+  decreasing?: boolean;
   value?: string;
   change?: string;
+  clickable?: boolean;
   className?: string;
 }
 
@@ -22,8 +25,11 @@ export const TokenCard = ({
   image,
   title,
   amount,
+  increasing,
+  decreasing,
   value,
   change,
+  clickable = true,
   variant,
   className,
   ...props
@@ -43,25 +49,43 @@ export const TokenCard = ({
   );
 
   const style = useMemo(() => {
-    if (change?.includes("+")) {
+    if (increasing || change?.includes("+")) {
       return {
         backgroundImage: `linear-gradient(to right,transparent,color-mix(in srgb, var(--constructive-100) 3%, transparent))`,
       };
     }
-    if (change?.includes("-")) {
+    if (decreasing || change?.includes("-")) {
       return {
         backgroundImage: `linear-gradient(to right,transparent,color-mix(in srgb, var(--destructive-100) 3%, transparent))`,
       };
     }
     return {};
-  }, [change]);
+  }, [change, increasing, decreasing]);
+
+  const Amount = useMemo(() => {
+    if (increasing) {
+      return <p className="text-constructive-100">+{amount}</p>;
+    }
+    if (decreasing) {
+      return <p className="text-destructive-100">-{amount}</p>;
+    }
+    return <>{amount}</>;
+  }, [amount, increasing, decreasing]);
 
   const Change = useMemo(() => {
     if (change?.includes("+")) {
-      return <p className="text-constructive-100">{change}</p>;
+      return (
+        <p className="text-constructive-100">
+          {change}
+        </p>
+      );
     }
     if (change?.includes("-")) {
-      return <p className="text-destructive-100">{change}</p>;
+      return (
+        <p className="text-destructive-100">
+          {change}
+        </p>
+      );
     }
     return <></>;
   }, [change]);
@@ -70,11 +94,11 @@ export const TokenCard = ({
     <ActivityCard
       Logo={Logo}
       title={title}
-      subTitle={amount}
+      subTitle={Amount}
       topic={value}
       subTopic={Change}
       variant={variant}
-      className={cn("rounded-none", className)}
+      className={cn("rounded-none", !clickable && "pointer-events-none", className)}
       style={style}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
