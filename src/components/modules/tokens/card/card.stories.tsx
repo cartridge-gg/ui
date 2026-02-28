@@ -40,3 +40,19 @@ export const Decreasing: Story = {
     change: "-$1.78",
   },
 };
+
+export const IncreasingAmount: Story = {
+  args: {
+    value: "$31.40",
+    increasing: true,
+    clickable: false,
+  },
+};
+
+export const DecreasingAmount: Story = {
+  args: {
+    value: "$31.40",
+    decreasing: true,
+    clickable: false,
+  },
+};

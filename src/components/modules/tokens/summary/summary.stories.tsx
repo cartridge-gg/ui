@@ -16,7 +16,7 @@ type Story = StoryObj<typeof TokenSummary>;
 
 export const Default: Story = {
   render: () => (
-    <TokenSummary>
+    <TokenSummary title="Tokens">
       <TokenCard
         image={"https://static.cartridge.gg/presets/credit/icon.svg"}
         title={"Credits"}
@@ -58,6 +58,26 @@ export const Default: Story = {
         amount={"0.01 PAPER"}
         value={"$31.40"}
         change={"+$1.78"}
+      />
+      <TokenCard
+        image={
+          "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/a3bfe959-50c4-4f89-0aef-b19207d82a00/logo"
+        }
+        title={"Lords"}
+        amount={"0.01 LORDS"}
+        value={"$31.40"}
+        decreasing
+        clickable={false}
+      />
+      <TokenCard
+        image={
+          "https://imagedelivery.net/0xPAQaDtnQhBs8IzYRIlNg/811f019a-0461-4cff-6c1e-442102863f00/logo"
+        }
+        title={"Paper"}
+        amount={"0.01 PAPER"}
+        value={"$31.40"}
+        increasing
+        clickable={false}
       />
     </TokenSummary>
   ),

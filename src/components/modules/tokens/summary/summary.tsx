@@ -1,9 +1,12 @@
+import { CardContent } from "@/index";
 import { cn } from "@/utils";
 import { cva, VariantProps } from "class-variance-authority";
 
 export interface TokenSummaryProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof tokenSummaryVariants> {}
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
+  VariantProps<typeof tokenSummaryVariants> {
+  title?: string | React.ReactNode;
+}
 
 const tokenSummaryVariants = cva(
   "rounded overflow-y-scroll w-full flex flex-col gap-y-px",
@@ -20,6 +23,7 @@ const tokenSummaryVariants = cva(
 );
 
 export const TokenSummary = ({
+  title,
   variant,
   className,
   children,
@@ -31,6 +35,11 @@ export const TokenSummary = ({
       {...props}
       style={{ scrollbarWidth: "none" }}
     >
+      {title && (
+        <CardContent className="text-foreground-400">
+          {title}
+        </CardContent>
+      )}
       {children}
     </div>
   );
