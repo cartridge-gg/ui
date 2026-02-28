@@ -1,0 +1,15 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { AchievementPlayerHeader } from "./player-header";
+declare const meta: Meta<typeof AchievementPlayerHeader>;
+export default meta;
+type Story = StoryObj<typeof AchievementPlayerHeader>;
+export declare const Dark: Story;
+export declare const Default: Story;
+export declare const Light: Story;
+export declare const NotFollower: Story;
+export declare const NoFollowers: Story;
+export declare const OneFollower: Story;
+export declare const TwoFollowers: Story;
+export declare const ThreeFollowers: Story;
+export declare const Compacted: Story;
+export declare const GoldCompacted: Story;

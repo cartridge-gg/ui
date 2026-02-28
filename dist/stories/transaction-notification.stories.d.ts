@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { TransactionToast } from "../components/primitives/toast/specialized-toasts";
+declare const meta: Meta<typeof TransactionToast>;
+export default meta;
+type Story = StoryObj<typeof TransactionToast>;
+export declare const ConfirmingExpanded: Story;
+export declare const ConfirmedExpanded: Story;
+export declare const ConfirmingCollapsed: Story;
+export declare const ConfirmedCollapsed: Story;
+export declare const SwapTransaction: Story;
+export declare const TransferTransaction: Story;

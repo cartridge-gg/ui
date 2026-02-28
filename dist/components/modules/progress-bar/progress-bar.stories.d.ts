@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { ProgressBar } from "./progress-bar";
+declare const meta: Meta<typeof ProgressBar>;
+export default meta;
+type Story = StoryObj<typeof ProgressBar>;
+export declare const Default: Story;
+export declare const DefaultUncompleted: Story;
+export declare const HalfCompleted: Story;
+export declare const HalfUncompleted: Story;
+export declare const Empty: Story;

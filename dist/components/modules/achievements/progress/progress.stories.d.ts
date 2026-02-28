@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { AchievementProgress } from "./progress";
+declare const meta: Meta<typeof AchievementProgress>;
+export default meta;
+type Story = StoryObj<typeof AchievementProgress>;
+export declare const Default: Story;
+export declare const Empty: Story;
+export declare const Complete: Story;
+export declare const Verbose: Story;
+export declare const Ghost: Story;

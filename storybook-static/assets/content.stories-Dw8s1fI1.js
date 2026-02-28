@@ -1,0 +1,22 @@
+import{C as H}from"./ui-DM_vkKtB.js";import{fn as m}from"./index-BgJgh-x_.js";import{c as F}from"./index-DVenkyLy.js";import"./jsx-runtime-Cf8x2fCZ.js";import"./index-yBjzXJbu.js";import"./context-CDbX8kD3.js";import"./index-BlmOqGMO.js";import"./index-KnJS0CU8.js";import"./index-Dkb_ZYRU.js";import"./index-BYUKtP1h.js";import"./index-C_Dn7qTj.js";import"./index-BQxh6BgF.js";import"./index-CVWIyhAF.js";import"./index-DuqhnXMO.js";import"./index-fNjTmf9T.js";import"./index-BbW-7v3v.js";import"./index-DdDw_O67.js";import"./wedge-Ek6y42Ws.js";import"./utils-GTnaulzv.js";import"./index-CRGxjvZy.js";import"./index-B7ENhYdy.js";import"./index-BylD-epk.js";import"./index-DZCApzUK.js";import"./index-CJGASTBR.js";import"./index-CYmZMVXJ.js";import"./spinner-BCFkRInS.js";import"./alert-HkMSTgu9.js";import"./badge-CF9VCaa2.js";import"./breadcrumb-V3TW3CaT.js";import"./dots-CqQy5XBj.js";import"./card-CHJmWtwN.js";import"./checkbox-BJGOHg_b.js";import"./index-DZ2oWOeb.js";import"./index-DaMGPy2X.js";import"./checkbox-BNhnVxLV.js";import"./drawer-CB1qWX_Q.js";import"./dropdown-menu-Bf3pfD8n.js";import"./index-BV9D_7a1.js";import"./index-z8P03atw.js";import"./index-DoUPdNCX.js";import"./check-BknbCD27.js";import"./circle-Ddb5-e2i.js";import"./alert-DG-IKYwr.js";import"./radio-group-WlSpQHWm.js";import"./menubar-eE93DyoQ.js";import"./popover-DNr9wWs8.js";import"./progress-Dkom_LNH.js";import"./select-COP56eT4.js";import"./index-COzOtNfS.js";import"./circle-check-B84UAr7O.js";import"./separator-DLNkf967.js";import"./sheet-BHnC42pu.js";import"./times-zfpenlOA.js";import"./skeleton-CV1PtUMd.js";import"./switch-CWQaiJ0M.js";import"./table-2Lq_Rdjg.js";import"./tabs-pHV4z6kt.js";import"./toggle-group-Bz_GEFe3.js";import"./utils-CzDHQuSw.js";import"./index-Cd0zht5T.js";import"./tooltip-CEc4qSmp.js";import"./times-circle-BPxv1pFA.js";import"./index-ZHEgE2XS.js";import"./context-BuIODk1w.js";import"./network-CcwvfiHk.js";import"./slot-CN02be8o.js";import"./globe-DDfpzYVi.js";import"./starknet-PF0GvedQ.js";import"./starknet-CX4nG1WJ.js";import"./account-tYrnUz6u.js";import"./player-badge-B7pDkZH-.js";import"./empty-BoLAzEHX.js";import"./player-avatar-QlCq2E0v.js";import"./olmech-1Z8z4GR2.js";import"./thumbnail-BYLXA86H.js";import"./index-DTUS6EFt.js";import"./warning-CVvTL8z7.js";import"./info-BgozbEzj.js";import"./copy-DxcVf5Zk.js";const Zr={title:"Modules/Connection/Tooltip Content",component:H,tags:["autodocs"],parameters:{layout:"centered"},args:{username:"shinobi",address:"0x1234567890123456789012345678901234567890",chainId:F.StarknetChainId.SN_MAIN,followers:32,followings:32,onFollowersClick:m(),onFollowingsClick:m(),onClick:m()}},r={},o={args:{chainId:F.StarknetChainId.SN_SEPOLIA}},t={args:{chainId:"0x57505f534c4f54"}},i={args:{chainId:"0x44454641554c54"}},e={args:{hideNetwork:!0}},p={args:{followers:void 0,followings:void 0}};var s,a,n;r.parameters={...r.parameters,docs:{...(s=r.parameters)==null?void 0:s.docs,source:{originalSource:"{}",...(n=(a=r.parameters)==null?void 0:a.docs)==null?void 0:n.source}}};var c,d,l;o.parameters={...o.parameters,docs:{...(c=o.parameters)==null?void 0:c.docs,source:{originalSource:`{
+  args: {
+    chainId: constants.StarknetChainId.SN_SEPOLIA
+  }
+}`,...(l=(d=o.parameters)==null?void 0:d.docs)==null?void 0:l.source}}};var u,g,f;t.parameters={...t.parameters,docs:{...(u=t.parameters)==null?void 0:u.docs,source:{originalSource:`{
+  args: {
+    chainId: "0x57505f534c4f54"
+  }
+}`,...(f=(g=t.parameters)==null?void 0:g.docs)==null?void 0:f.source}}};var S,w,h;i.parameters={...i.parameters,docs:{...(S=i.parameters)==null?void 0:S.docs,source:{originalSource:`{
+  args: {
+    chainId: "0x44454641554c54"
+  }
+}`,...(h=(w=i.parameters)==null?void 0:w.docs)==null?void 0:h.source}}};var I,k,C;e.parameters={...e.parameters,docs:{...(I=e.parameters)==null?void 0:I.docs,source:{originalSource:`{
+  args: {
+    hideNetwork: true
+  }
+}`,...(C=(k=e.parameters)==null?void 0:k.docs)==null?void 0:C.source}}};var x,N,_;p.parameters={...p.parameters,docs:{...(x=p.parameters)==null?void 0:x.docs,source:{originalSource:`{
+  args: {
+    followers: undefined,
+    followings: undefined
+  }
+}`,...(_=(N=p.parameters)==null?void 0:N.docs)==null?void 0:_.source}}};const $r=["Starknet","Sepolia","Slot","Default","HiddenNetwork","HiddenFollowers"];export{i as Default,p as HiddenFollowers,e as HiddenNetwork,o as Sepolia,t as Slot,r as Starknet,$r as __namedExportsOrder,Zr as default};

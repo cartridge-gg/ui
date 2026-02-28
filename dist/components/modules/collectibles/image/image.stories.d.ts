@@ -1,0 +1,17 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { CollectibleImage } from ".";
+declare const meta: Meta<typeof CollectibleImage>;
+export default meta;
+type Story = StoryObj<typeof CollectibleImage>;
+export declare const Default: Story;
+export declare const DataUri: Story;
+export declare const CorrectedBeastDataUri: Story;
+export declare const CorrectedGoldenTokenUrl: Story;
+export declare const EmptyImageList: Story;
+export declare const BadUrl: Story;
+export declare const BadUrlWithFallback: Story;
+export declare const IpfsDirect: Story;
+export declare const IpfsPinnedFile: Story;
+export declare const IpfsUnpinnedFile: Story;
+export declare const IpfsUnpinnedLoadingSkeleton: Story;
+export declare const IpfsUnpinnedLoadingSpinner: Story;

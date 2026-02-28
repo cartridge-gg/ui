@@ -1,0 +1,16 @@
+import { Input } from "../components/primitives/input";
+import { Meta, StoryObj } from "@storybook/react";
+declare const meta: Meta<typeof Input>;
+export default meta;
+type Story = StoryObj<typeof Input>;
+export declare const Default: Story;
+export declare const Value: Story;
+export declare const Error: Story;
+export declare const AutoFocus: Story;
+export declare const LongValue: Story;
+export declare const BigDefault: Story;
+export declare const BigValue: Story;
+export declare const BigError: Story;
+export declare const UsernameDefault: Story;
+export declare const UsernameValue: Story;
+export declare const UsernameError: Story;

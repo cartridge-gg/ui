@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/utils/api/index.tsx"],"names":[],"mappings":"AAAA,cAAc,cAAc,CAAC;AAC7B,cAAc,WAAW,CAAC","sourcesContent":["export * from \"./apiFetcher\";\nexport * from \"./fetcher\";\n"]}

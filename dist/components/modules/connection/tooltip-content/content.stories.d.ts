@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { ConnectionTooltipContent } from "./content";
+declare const meta: Meta<typeof ConnectionTooltipContent>;
+export default meta;
+type Story = StoryObj<typeof ConnectionTooltipContent>;
+export declare const Starknet: Story;
+export declare const Sepolia: Story;
+export declare const Slot: Story;
+export declare const Default: Story;
+export declare const HiddenNetwork: Story;
+export declare const HiddenFollowers: Story;

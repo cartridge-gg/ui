@@ -1,0 +1,16 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { SignerMethod } from "./signer-method";
+declare const meta: Meta<typeof SignerMethod>;
+export default meta;
+type Story = StoryObj<typeof meta>;
+export declare const Gmail: Story;
+export declare const Discord: Story;
+export declare const sms: Story;
+export declare const Passkey: Story;
+export declare const Wallet: Story;
+export declare const Argent: Story;
+export declare const Phantom: Story;
+export declare const MetaMask: Story;
+export declare const Rabby: Story;
+export declare const WalletConnect: Story;
+export declare const AllMethods: Story;

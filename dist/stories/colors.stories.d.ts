@@ -1,0 +1,16 @@
+import { Meta, StoryObj } from "@storybook/react";
+import { PropsWithChildren } from "react";
+declare function Colors(props: PropsWithChildren): import("react/jsx-runtime").JSX.Element;
+declare const meta: Meta<typeof Colors>;
+export default meta;
+type Story = StoryObj<typeof Colors>;
+export declare const Background: Story;
+export declare const Destructive: Story;
+export declare const Constructive: Story;
+export declare const Achievement: Story;
+export declare const Spacer: Story;
+export declare const Foreground: Story;
+export declare const Primary: Story;
+export declare const Secondary: Story;
+export declare const TranslucentDark: Story;
+export declare const TranslucentLight: Story;

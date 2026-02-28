@@ -1,0 +1,24 @@
+import { WalletType } from "../../../components";
+type RecipientProps = {
+    to: string;
+    value: string;
+    selectedName: string;
+    selectedAddress: string;
+    selectedWallet: WalletType;
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onFocus: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+    onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+    onClear: () => void;
+    resultName: string | undefined;
+    resultAddress: string;
+    resultWallet: WalletType;
+    onResultClick: () => void;
+    onResultEnter: () => void;
+    onResultLeave: () => void;
+    isLoading: boolean;
+    isFocused: boolean;
+    isHovered: boolean;
+    error?: Error;
+};
+export declare const Recipient: ({ to, value, selectedName, selectedAddress, selectedWallet, onChange, onFocus, onBlur, onClear, resultName, resultAddress, resultWallet, onResultClick, onResultEnter, onResultLeave, error, isLoading, isFocused, isHovered, }: RecipientProps) => import("react/jsx-runtime").JSX.Element;
+export {};

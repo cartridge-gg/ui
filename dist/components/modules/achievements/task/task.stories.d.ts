@@ -1,0 +1,13 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { AchievementTask } from "./task";
+declare const meta: Meta<typeof AchievementTask>;
+export default meta;
+type Story = StoryObj<typeof AchievementTask>;
+export declare const Default: Story;
+export declare const Completed: Story;
+export declare const Long: Story;
+export declare const LongCompleted: Story;
+export declare const Single: Story;
+export declare const SingleCompleted: Story;
+export declare const Large: Story;
+export declare const LargeCompleted: Story;

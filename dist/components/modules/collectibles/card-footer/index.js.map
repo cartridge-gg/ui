@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../../../src/components/modules/collectibles/card-footer/index.ts"],"names":[],"mappings":"AAAA,cAAc,eAAe,CAAC","sourcesContent":["export * from \"./card-footer\";\n"]}

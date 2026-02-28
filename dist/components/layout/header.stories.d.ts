@@ -1,0 +1,16 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { LayoutHeader } from "./index";
+declare const meta: Meta<typeof LayoutHeader>;
+export default meta;
+type Story = StoryObj<typeof meta>;
+export declare const Expanded: Story;
+export declare const Compressed: Story;
+export declare const IconComponentProp: Story;
+export declare const IconElementProp: Story;
+export declare const VeryLongTitle: Story;
+export declare const CustomIconUrl: Story;
+export declare const CustomIconUrlExpanded: Story;
+export declare const WithBackButton: Story;
+export declare const WithCloseButton: Story;
+export declare const WithConnectedUser: Story;
+export declare const ReactiveThemeChanges: Story;

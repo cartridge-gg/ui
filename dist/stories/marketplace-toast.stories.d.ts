@@ -1,0 +1,12 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { MarketplaceToast } from "../components/primitives/toast/specialized-toasts";
+declare const meta: Meta<typeof MarketplaceToast>;
+export default meta;
+type Story = StoryObj<typeof MarketplaceToast>;
+export declare const PurchasedBeast: Story;
+export declare const PurchasedBeasts: Story;
+export declare const SentBeast: Story;
+export declare const SentBeasts: Story;
+export declare const SoldJoker: Story;
+export declare const PurchasedStarterPack: Story;
+export declare const SentLords: Story;

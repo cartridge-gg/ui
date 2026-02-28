@@ -1,0 +1,6 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Card, CardHeader, CardListContent, CardListItem, CardTitle, } from "../../../../index";
+export function StarterpackContains({ title, items }) {
+    return (_jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "normal-case font-semibold text-xs w-full flex items-center justify-between", children: [_jsx("span", { children: title ?? "Contains" }), _jsx("div", { className: "bg-background-300 py-0.5 px-1.5 rounded-full", children: _jsxs("span", { className: "text-foreground-300", children: [items.length, " total"] }) })] }) }), _jsx(CardListContent, { children: items.map((item) => (_jsx(CardListItem, { className: "flex flex-row items-center p-3", children: _jsxs("div", { className: "flex flex-row items-center gap-3", children: [_jsx("img", { src: item.image, className: "size-8" }), _jsxs("div", { className: "flex flex-col gap-0.5", children: [_jsx("p", { className: "text-foreground-100 font-medium text-sm", children: item.title }), _jsx("p", { className: "text-foreground-300 font-normal text-xs", children: item.description })] })] }) }))) })] }));
+}
+//# sourceMappingURL=contains.js.map
