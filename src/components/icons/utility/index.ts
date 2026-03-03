@@ -47,6 +47,7 @@ export * from "./robot";
 export * from "./scan-qr";
 export * from "./scan-self";
 export * from "./search";
+export * from "./shop";
 export * from "./sign-out";
 export * from "./slash";
 export * from "./slider";
