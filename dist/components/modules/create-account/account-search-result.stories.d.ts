@@ -1,0 +1,10 @@
+import { AccountSearchResultItem } from "../../../index";
+import type { Meta, StoryObj } from "@storybook/react";
+declare const meta: Meta<typeof AccountSearchResultItem>;
+export default meta;
+type Story = StoryObj<typeof AccountSearchResultItem>;
+export declare const Default: Story;
+export declare const ExistingUser: Story;
+export declare const ExistingUserWithNoPoints: Story;
+export declare const NewUser: Story;
+export declare const MultipleResult: Story;
