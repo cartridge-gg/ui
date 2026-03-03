@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 
 export interface TokenSummaryProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
-  VariantProps<typeof tokenSummaryVariants> {
+    VariantProps<typeof tokenSummaryVariants> {
   title?: string | React.ReactNode;
 }
 
@@ -36,7 +36,7 @@ export const TokenSummary = ({
       style={{ scrollbarWidth: "none" }}
     >
       {title && (
-        <CardContent className="text-foreground-400">
+        <CardContent className="text-foreground-400 text-xs font-semibold">
           {title}
         </CardContent>
       )}

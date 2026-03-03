@@ -74,18 +74,10 @@ export const TokenCard = ({
 
   const Change = useMemo(() => {
     if (change?.includes("+")) {
-      return (
-        <p className="text-constructive-100">
-          {change}
-        </p>
-      );
+      return <p className="text-constructive-100">{change}</p>;
     }
     if (change?.includes("-")) {
-      return (
-        <p className="text-destructive-100">
-          {change}
-        </p>
-      );
+      return <p className="text-destructive-100">{change}</p>;
     }
     return <></>;
   }, [change]);
@@ -98,7 +90,11 @@ export const TokenCard = ({
       topic={value}
       subTopic={Change}
       variant={variant}
-      className={cn("rounded-none", !clickable && "pointer-events-none", className)}
+      className={cn(
+        "rounded-none",
+        !clickable && "pointer-events-none",
+        className,
+      )}
       style={style}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
