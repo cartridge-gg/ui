@@ -1,40 +1,30 @@
-import { createContext, ReactNode, useContext, useMemo } from "react";
 import { useEffect, useState } from "react";
-import { loadAllConfigs, type ControllerConfig } from "@cartridge/presets";
+import { loadConfig } from "@cartridge/presets";
 
-type ControllerPresetContextType = {
-  configs: Record<string, ControllerConfig>;
+export const usePresetColor = (configName: string | null | undefined) => {
+  const [color, setColor] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!configName) {
+      setColor(null);
+      return;
+    }
+
+    loadConfig(configName).then((config) => {
+      setColor(config?.theme?.colors?.primary?.toString() ?? null);
+    });
+  }, [configName]);
+
+  return color;
 };
 
-const ControllerPresetContext = createContext<ControllerPresetContextType>({
-  configs: {},
-});
-
+/**
+ * @deprecated No longer needed. usePresetColor now loads configs on demand.
+ */
 export function ControllerPresetProvider({
   children,
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
 }) {
-  const [configs, setConfigs] = useState<Record<string, ControllerConfig>>({});
-  useEffect(() => {
-    const loadConfigs = async () => {
-      const configs = await loadAllConfigs();
-      setConfigs(configs);
-    };
-    loadConfigs();
-  }, []);
-  return (
-    <ControllerPresetContext.Provider value={{ configs }}>
-      {children}
-    </ControllerPresetContext.Provider>
-  );
+  return <>{children}</>;
 }
-
-export const usePresetColor = (configName: string | null | undefined) => {
-  const { configs } = useContext(ControllerPresetContext);
-  const color = useMemo(() => {
-    const config = configs[configName ?? ""];
-    return config?.theme?.colors?.primary?.toString() ?? null;
-  }, [configs, configName]);
-  return color;
-};

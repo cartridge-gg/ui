@@ -1386,11 +1386,9 @@ export type CreateCoinbaseOnrampOrderInput = {
 };
 
 export type CreateCryptoPaymentInput = {
-  credits?: InputMaybe<CreditsInput>;
+  credits: CreditsInput;
   isMainnet?: InputMaybe<Scalars['Boolean']>;
   network: Network;
-  purchaseType: PurchaseType;
-  starterpackId?: InputMaybe<Scalars['ID']>;
   teamId?: InputMaybe<Scalars['ID']>;
   username: Scalars['String'];
 };
@@ -1403,12 +1401,10 @@ export type CreateLayerswapDepositInput = {
 };
 
 export type CreateLayerswapPaymentInput = {
-  credits?: InputMaybe<CreditsInput>;
+  credits: CreditsInput;
   destinationNetwork: LayerswapDestinationNetwork;
   layerswapFees?: InputMaybe<Scalars['BigInt']>;
-  purchaseType: PurchaseType;
   sourceNetwork: LayerswapSourceNetwork;
-  starterpackId?: InputMaybe<Scalars['ID']>;
   teamId?: InputMaybe<Scalars['ID']>;
 };
 
@@ -1465,12 +1461,19 @@ export type CreateServiceInput = {
 };
 
 export type CreateStripePaymentIntentInput = {
-  credits?: InputMaybe<CreditsInput>;
+  credits: CreditsInput;
   isMainnet?: InputMaybe<Scalars['Boolean']>;
-  purchaseType: PurchaseType;
-  starterpackId?: InputMaybe<Scalars['ID']>;
   teamId?: InputMaybe<Scalars['ID']>;
-  username: Scalars['String'];
+};
+
+export type CreateStripeStarterpackIntentInput = {
+  chainId: Scalars['String'];
+  isMainnet?: InputMaybe<Scalars['Boolean']>;
+  quantity: Scalars['Int'];
+  referral?: InputMaybe<Scalars['String']>;
+  referralGroup?: InputMaybe<Scalars['String']>;
+  registryAddress: Scalars['String'];
+  starterpackId: Scalars['String'];
 };
 
 export type CredentialMetadata = Eip191Credentials | PasswordCredentials | SiwsCredentials | StarknetCredentials | WebauthnCredentials;
@@ -2971,6 +2974,7 @@ export type Mutation = {
   createRpcCorsDomain: RpcCorsDomain;
   createSession: Scalars['String'];
   createStripePaymentIntent: StripePaymentIntent;
+  createStripeStarterpackIntent: StripePaymentIntent;
   createTeam: Team;
   decreaseBudget: Paymaster;
   deleteDeployment: Scalars['Boolean'];
@@ -3140,6 +3144,11 @@ export type MutationCreateSessionArgs = {
 
 export type MutationCreateStripePaymentIntentArgs = {
   input: CreateStripePaymentIntentInput;
+};
+
+
+export type MutationCreateStripeStarterpackIntentArgs = {
+  input: CreateStripeStarterpackIntentInput;
 };
 
 
@@ -4464,12 +4473,6 @@ export type ProveVerifyResponse = {
   transactionId?: Maybe<Scalars['String']>;
   verified?: Maybe<Scalars['Boolean']>;
 };
-
-export enum PurchaseType {
-  Credits = 'CREDITS',
-  /** @deprecated Starterpack purchases are now handled client-side */
-  Starterpack = 'STARTERPACK'
-}
 
 export type Query = {
   __typename?: 'Query';

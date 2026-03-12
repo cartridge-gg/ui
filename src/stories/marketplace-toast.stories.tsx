@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MarketplaceToast } from "@/components/primitives/toast/specialized-toasts";
-import { ControllerPresetProvider } from "@/utils/context/presets";
 
 const meta: Meta<typeof MarketplaceToast> = {
   title: "Primitives/Toast/Marketplace Toast",
@@ -15,13 +14,6 @@ const meta: Meta<typeof MarketplaceToast> = {
       ],
     },
   },
-  decorators: [
-    (Story) => (
-      <ControllerPresetProvider>
-        <Story />
-      </ControllerPresetProvider>
-    ),
-  ],
   argTypes: {
     title: { control: "text" },
     collectionName: { control: "text" },
