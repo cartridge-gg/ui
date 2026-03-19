@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { XPTag } from "../components/primitives/toast/specialized-toasts";
+declare const meta: Meta<typeof XPTag>;
+export default meta;
+type Story = StoryObj<typeof XPTag>;
+export declare const MainnetXP: Story;
+export declare const TestnetXP: Story;
+export declare const LargeAmount: Story;
+export declare const SmallAmount: Story;
+export declare const Comparison: Story;
