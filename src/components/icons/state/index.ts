@@ -2,6 +2,7 @@ export * from "./bell";
 export * from "./bolt";
 export * from "./book";
 export * from "./calendar";
+export * from "./chat";
 export * from "./checkbox";
 export * from "./chest";
 export * from "./clock";
