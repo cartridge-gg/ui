@@ -18,7 +18,7 @@ export interface TokenCardProps
   value?: string;
   change?: string;
   clickable?: boolean;
-  squaredImage?: boolean;
+  roundedImage?: boolean;
   className?: string;
 }
 
@@ -31,7 +31,7 @@ export const TokenCard = ({
   value,
   change,
   clickable = true,
-  squaredImage = true,
+  roundedImage = true,
   variant,
   className,
   ...props
@@ -44,7 +44,7 @@ export const TokenCard = ({
         icon={image}
         size="lg"
         variant={hover ? "lighter" : "light"}
-        rounded={!squaredImage}
+        rounded={roundedImage}
       />
     ),
     [image, hover],
