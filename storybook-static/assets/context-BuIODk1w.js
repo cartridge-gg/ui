@@ -1,0 +1,1 @@
+import{r as t}from"./index-BlmOqGMO.js";const o={withBackground:!1,setWithBackground:()=>{},bottomLayout:"none",setBottomLayout:()=>{}},e=t.createContext(o);function n(){return t.useContext(e)}export{e as L,n as u};

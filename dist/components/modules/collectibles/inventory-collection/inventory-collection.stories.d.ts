@@ -1,0 +1,15 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { InventoryCollectionCard } from ".";
+declare const meta: Meta<typeof InventoryCollectionCard>;
+export default meta;
+type Story = StoryObj<typeof InventoryCollectionCard>;
+export declare const Beasts: Story;
+export declare const GoldenTokens: Story;
+export declare const Karats: Story;
+export declare const Bloberts: Story;
+export declare const Duelists: Story;
+export declare const Realms: Story;
+export declare const DopeWarsGear: Story;
+export declare const BadUrl: Story;
+export declare const BadUrlWithFallback: Story;
+export declare const IpfsUnpinnedFile: Story;
