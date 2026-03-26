@@ -22,6 +22,7 @@ const AccordionTrigger = React.forwardRef<
     color?: string;
     parentClassName?: string;
     wedgeIconSize?: "2xs" | "xs" | "sm" | "default" | "lg" | "xl" | "2xl";
+    wedgeClassName?: string;
   }
 >(
   (
@@ -32,6 +33,7 @@ const AccordionTrigger = React.forwardRef<
       color,
       parentClassName,
       wedgeIconSize,
+      wedgeClassName,
       ...props
     },
     ref,
@@ -50,7 +52,7 @@ const AccordionTrigger = React.forwardRef<
           <WedgeIcon
             variant="right"
             size={wedgeIconSize}
-            className={cn("transition-transform duration-200", color)}
+            className={cn("transition-transform duration-200", color, wedgeClassName)}
           />
         )}
       </AccordionPrimitive.Trigger>
