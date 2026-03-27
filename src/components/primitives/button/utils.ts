@@ -15,13 +15,13 @@ export const buttonVariants = cva(
         link: "normal-case tracking-normal font-sans font-normal bg-background-100 border border-background-200 text-foreground-300 hover:border-background-300",
         // TODO: The following variants should be removed
         destructive:
-          "bg-destructive-100 text-destructive-foreground shadow-sm hover:bg-destructive-100",
+          "bg-background-200 text-destructive-100 shadow-sm disabled:text-foreground-400 hover:bg-destructive-100",
         outline:
           "border border-input bg-background shadow-sm hover:bg-background-500 hover:text-foreground-200",
         ghost: "hover:bg-background-500 hover:text-foreground-200",
       },
       size: {
-        default: "h-10 px-6 py-2.5 text-base/[20px] tracking-wide",
+        default: "h-10 px-6 py-2.5 text-sm/[20px] tracking-[2.1px]",
         tall: "h-full w-9 rounded-none p-2",
         icon: "h-10 w-10 flex items-center",
         thumbnail: "h-10 px-3",

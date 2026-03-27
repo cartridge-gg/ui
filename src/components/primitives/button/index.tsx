@@ -12,6 +12,7 @@ export interface ButtonProps
   asChild?: boolean;
   isLoading?: boolean;
   isActive?: boolean;
+  quantity?: number | string;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -23,6 +24,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       asChild = false,
       isLoading,
       isActive,
+      quantity,
       children,
       disabled,
       ...props
@@ -46,6 +48,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading ? <Spinner /> : children}
         {variant === "link" && !isLoading && <ExternalIcon size="sm" />}
+        {quantity !== undefined && (
+          <span className="opacity-50 font-[inherit] text-[inherit] tracking-[inherit]">
+            {quantity}
+          </span>
+        )}
       </Comp>
     );
   },

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { SignerMethod } from "./signer-method";
+import { ControllerStack } from "@/utils/mock/controller-stack";
 
 const meta: Meta<typeof SignerMethod> = {
   title: "Modules/SignerMethod",
@@ -18,6 +19,23 @@ const meta: Meta<typeof SignerMethod> = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  render: () => (
+    <ControllerStack>
+      <SignerMethod kind="google" onClick={() => {}} />
+      <SignerMethod kind="discord" onClick={() => {}} />
+      <SignerMethod kind="sms" onClick={() => {}} />
+      <SignerMethod kind="passkey" onClick={() => {}} />
+      <SignerMethod kind="wallet" onClick={() => {}} />
+      <SignerMethod kind="argent" onClick={() => {}} />
+      <SignerMethod kind="phantom" onClick={() => {}} />
+      <SignerMethod kind="metamask" onClick={() => {}} />
+      <SignerMethod kind="rabby" onClick={() => {}} />
+      <SignerMethod kind="walletconnect" onClick={() => {}} />
+    </ControllerStack>
+  ),
+};
 
 export const Gmail: Story = {
   args: {
@@ -77,21 +95,4 @@ export const WalletConnect: Story = {
   args: {
     kind: "walletconnect",
   },
-};
-
-export const AllMethods: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <SignerMethod kind="google" onClick={() => {}} />
-      <SignerMethod kind="discord" onClick={() => {}} />
-      <SignerMethod kind="sms" onClick={() => {}} />
-      <SignerMethod kind="passkey" onClick={() => {}} />
-      <SignerMethod kind="wallet" onClick={() => {}} />
-      <SignerMethod kind="argent" onClick={() => {}} />
-      <SignerMethod kind="phantom" onClick={() => {}} />
-      <SignerMethod kind="metamask" onClick={() => {}} />
-      <SignerMethod kind="rabby" onClick={() => {}} />
-      <SignerMethod kind="walletconnect" onClick={() => {}} />
-    </div>
-  ),
 };
