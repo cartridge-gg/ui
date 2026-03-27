@@ -6,7 +6,7 @@ import {
   ActivityTokenCard,
   ActivityCollectibleCard,
 } from "./";
-import { ControllerStack } from "@/stories/controller-stack";
+import { ControllerStack } from "@/utils/mock/controller-stack";
 
 const meta: Meta<typeof ActivityCardRow> = {
   title: "Modules/Activities/Card",

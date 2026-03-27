@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@/components/primitives/button";
 import { ArrowToLineIcon, CoinsIcon, GiftIcon, Separator } from "@/components";
-import { ControllerStack } from "./controller-stack";
+import { ControllerStack } from "@/utils/mock/controller-stack";
 
 const meta: Meta<typeof Button> = {
   title: "Primitives/Button",
