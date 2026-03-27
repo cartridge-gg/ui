@@ -12,6 +12,7 @@ import {
   RabbyColorIcon,
   EthereumIcon,
 } from "@/components/icons";
+import { ControllerStack } from "@/utils/mock/controller-stack";
 
 const meta = {
   title: "Modules/Purchase/Card",
@@ -42,6 +43,54 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof PurchaseCard>;
+
+export const Default: Story = {
+  render: () => (
+    <ControllerStack>
+      <PurchaseCard
+        text="Controller"
+        icon={<ControllerColorIcon />}
+        onClick={() => {}}
+      />
+      <PurchaseCard
+        text="Credit Card"
+        icon={<CreditCardIcon variant="solid" />}
+        onClick={() => {}}
+      />
+      <PurchaseCard
+        text="Starknet"
+        icon={<StarknetColorIcon />}
+        onClick={() => {}}
+      />
+      <PurchaseCard
+        text="Google"
+        icon={<GoogleColorIcon />}
+        onClick={() => {}}
+      />
+      <PurchaseCard
+        text="Phantom"
+        icon={<PhantomColorIcon />}
+        network="Solana"
+        networkIcon={<SolanaIcon />}
+        onClick={() => {}}
+      />
+      <PurchaseCard
+        text="Argent"
+        icon={<ArgentColorIcon />}
+        network="Starknet"
+        networkIcon={<StarknetIcon />}
+        onClick={() => {}}
+      />
+      <PurchaseCard
+        text="Rabby"
+        icon={<RabbyColorIcon />}
+        network="Ethereum"
+        networkIcon={<EthereumIcon />}
+        onClick={() => {}}
+      />
+    </ControllerStack>
+  ),
+};
 
 export const Controller: Story = {
   args: {

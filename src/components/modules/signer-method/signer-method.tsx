@@ -82,5 +82,3 @@ export function SignerMethod({ className, kind, onClick }: SignerMethodProps) {
     </div>
   );
 }
-
-export { SignerMethod as PaymentMethod };
