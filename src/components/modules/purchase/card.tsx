@@ -22,8 +22,8 @@ export const PurchaseCard = ({
   return (
     <div
       className={cn(
-        "group flex flex-row gap-2 p-3 justify-between",
-        "w-full h-[40px] p-2.5 gap-2",
+        "group flex flex-row p-2.5 gap-2 justify-between",
+        "w-full h-[40px]",
         "rounded",
         "bg-background-200 hover:bg-background-300",
         "text-foreground-100 text-normal uppercase tracking-[2.1px]",

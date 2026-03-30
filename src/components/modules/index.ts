@@ -18,3 +18,4 @@ export * from "./tokens";
 export * from "./traceabilities";
 export * from "./universals";
 export * from "./purchase";
+export * from "./social";

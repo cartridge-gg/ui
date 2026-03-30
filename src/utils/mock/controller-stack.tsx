@@ -1,8 +1,19 @@
+import { cn } from "@/utils";
+
 export const ControllerStack = ({
   children,
-}: { children: React.ReactNode }) => {
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
-    <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
+    <div
+      className={cn(
+        "flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto",
+        className,
+      )}
+    >
       {children}
     </div>
   );
