@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../../../src/components/modules/collectibles/inventory-collection/index.ts"],"names":[],"mappings":"AAAA,cAAc,wBAAwB,CAAC","sourcesContent":["export * from \"./inventory-collection\";\n"]}
