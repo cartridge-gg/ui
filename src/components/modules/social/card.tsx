@@ -58,7 +58,7 @@ export const SocialCard = ({
       />
       <div
         className={cn(
-          "flex-1 items-left m-auto",
+          "flex-1 items-left m-auto text-sm",
           (isDisabled || isCompleted) && "text-foreground-400",
         )}
       >
