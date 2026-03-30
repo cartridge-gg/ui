@@ -6,6 +6,7 @@ import {
   ActivityTokenCard,
   ActivityCollectibleCard,
 } from "./";
+import { ControllerStack } from "@/utils/mock/controller-stack";
 
 const meta: Meta<typeof ActivityCardRow> = {
   title: "Modules/Activities/Card",
@@ -50,7 +51,7 @@ const KARAT_IMAGE =
 
 export const Game: Story = {
   render: () => (
-    <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
+    <ControllerStack>
       <ActivityGameCard
         action="attack"
         name="Loot Survivor"
@@ -97,13 +98,13 @@ export const Game: Story = {
         timestamp={days_away}
         error
       />
-    </div>
+    </ControllerStack>
   ),
 };
 
 export const Achievement: Story = {
   render: () => (
-    <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
+    <ControllerStack>
       <ActivityAchievementCard
         topic="Beowulf"
         points={12}
@@ -151,13 +152,13 @@ export const Achievement: Story = {
         timestamp={days_away}
         error
       />
-    </div>
+    </ControllerStack>
   ),
 };
 
 export const Token: Story = {
   render: () => (
-    <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
+    <ControllerStack>
       <ActivityTokenCard
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
         username="clicksave"
@@ -286,13 +287,13 @@ export const Token: Story = {
         timestamp={seconds_away}
         loading
       />
-    </div>
+    </ControllerStack>
   ),
 };
 
 export const Collectible: Story = {
   render: () => (
-    <div className="flex flex-col gap-3 w-[432px] border border-solid border-background-300 p-4 m-auto">
+    <ControllerStack>
       <ActivityCollectibleCard
         name={'"Grim Sun" Hippogriff'}
         address="0x041aad5a7493b75f240f418cb5f052d1a68981af21e813ed0a35e96d3e83123b"
@@ -381,7 +382,7 @@ export const Collectible: Story = {
         timestamp={seconds_away}
         error
       />
-    </div>
+    </ControllerStack>
   ),
 };
 

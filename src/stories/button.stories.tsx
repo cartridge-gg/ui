@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { Button } from "@/components/primitives/button";
-import { ArrowToLineIcon, CoinsIcon, GiftIcon } from "@/components";
+import { ArrowToLineIcon, CoinsIcon, GiftIcon, Separator } from "@/components";
+import { ControllerStack } from "@/utils/mock/controller-stack";
 
 const meta: Meta<typeof Button> = {
   title: "Primitives/Button",
@@ -29,26 +30,124 @@ export default meta;
 type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
+  render: () => (
+    <ControllerStack>
+      <Button>Primary</Button>
+      <Button disabled>Disabled</Button>
+      <Button isLoading>Loading</Button>
+      <Separator className="bg-background-400" />
+      <Button>
+        <CoinsIcon variant="solid" size="sm" /> Primary + Icon
+      </Button>
+      <Button disabled>
+        <CoinsIcon variant="solid" size="sm" /> Disabled
+      </Button>
+      <Button isLoading>
+        <CoinsIcon variant="solid" size="sm" /> Loading
+      </Button>
+      <Separator className="bg-background-400" />
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="secondary" disabled>
+        Disabled
+      </Button>
+      <Button variant="secondary" isLoading>
+        Loading
+      </Button>
+      <Separator className="bg-background-400" />
+      <Button variant="secondary">
+        <CoinsIcon variant="solid" size="sm" /> Secondary + Icon
+      </Button>
+      <Button variant="secondary" disabled>
+        <CoinsIcon variant="solid" size="sm" /> Disabled
+      </Button>
+      <Button variant="secondary" isLoading>
+        <CoinsIcon variant="solid" size="sm" /> Loading
+      </Button>
+      <Separator className="bg-background-400" />
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="destructive" disabled>
+        Disabled
+      </Button>
+      <Button variant="destructive" isLoading>
+        Loading
+      </Button>
+      <Separator className="bg-background-400" />
+      <Button variant="destructive">
+        <CoinsIcon variant="solid" size="sm" /> Destructive + Icon
+      </Button>
+      <Button variant="destructive" disabled>
+        <CoinsIcon variant="solid" size="sm" /> Disabled
+      </Button>
+      <Button variant="destructive" isLoading>
+        <CoinsIcon variant="solid" size="sm" /> Loading
+      </Button>
+      <Separator className="bg-background-400" />
+      <Button variant="tertiary">Tertiary</Button>
+      <Button variant="tertiary" isActive>
+        Active
+      </Button>
+      <Button variant="tertiary" disabled>
+        Disabled
+      </Button>
+      <Button variant="tertiary" isLoading>
+        Loading
+      </Button>
+      <Separator className="bg-background-400" />
+      <Button variant="tertiary">
+        <CoinsIcon variant="solid" size="sm" /> Tertiary + Icon
+      </Button>
+      <Button variant="tertiary" isActive>
+        <CoinsIcon variant="solid" size="sm" /> Active
+      </Button>
+      <Button variant="tertiary" disabled>
+        <CoinsIcon variant="solid" size="sm" /> Disabled
+      </Button>
+      <Button variant="tertiary" isLoading>
+        <CoinsIcon variant="solid" size="sm" /> Loading
+      </Button>
+      <Separator className="bg-background-400" />
+      <h3>With Quantity</h3>
+      <Button quantity="2">Primary</Button>
+      <Button quantity="2" disabled>
+        Disabled
+      </Button>
+      <Button quantity="2" variant="secondary">
+        Secondary
+      </Button>
+      <Button quantity="2" variant="secondary" disabled>
+        Disabled
+      </Button>
+      <Button quantity="2" variant="destructive">
+        Destructive
+      </Button>
+      <Button quantity="2" variant="destructive" disabled>
+        Disabled
+      </Button>
+    </ControllerStack>
+  ),
+};
+
+export const Primary: Story = {
   args: {
     children: "sign up",
   },
 };
 
-export const DefaultLoading: Story = {
+export const PrimaryLoading: Story = {
   args: {
     children: "sign up",
     isLoading: true,
   },
 };
 
-export const DefaultDisabled: Story = {
+export const PrimaryDisabled: Story = {
   args: {
     children: "sign up",
     disabled: true,
   },
 };
 
-export const DefaultWithIcon: Story = {
+export const PrimaryWithIcon: Story = {
   args: {
     children: (
       <>
@@ -58,7 +157,7 @@ export const DefaultWithIcon: Story = {
   },
 };
 
-export const DefaultWithIconDisabled: Story = {
+export const PrimaryWithIconDisabled: Story = {
   args: {
     children: (
       <>
@@ -66,6 +165,13 @@ export const DefaultWithIconDisabled: Story = {
       </>
     ),
     disabled: true,
+  },
+};
+
+export const PrimaryWithQuantity: Story = {
+  args: {
+    children: "sign up",
+    quantity: "2",
   },
 };
 
@@ -115,6 +221,14 @@ export const SecondaryWithIconDisabled: Story = {
   },
 };
 
+export const SecondaryWithQuantity: Story = {
+  args: {
+    children: "skip",
+    quantity: "2",
+    variant: "secondary",
+  },
+};
+
 export const Tertiary: Story = {
   args: {
     children: "$1",
@@ -135,6 +249,14 @@ export const TertiaryActive: Story = {
     children: "$1",
     variant: "tertiary",
     isActive: true,
+  },
+};
+
+export const TertiaryWithQuantity: Story = {
+  args: {
+    children: "$1",
+    quantity: "2",
+    variant: "tertiary",
   },
 };
 

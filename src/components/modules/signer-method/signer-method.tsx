@@ -10,7 +10,6 @@ import {
 } from "@/components/icons/brand-color";
 import { FingerprintIcon } from "@/components/icons/brand/fingerprint";
 import { cn } from "@/utils";
-import { useState } from "react";
 import { SignerPendingCardKind } from "../signer-pending-card/signer-pending-card";
 
 export type SignerMethodKind = SignerPendingCardKind | "wallet";
@@ -63,38 +62,23 @@ const signers: Record<
 } as const;
 
 export function SignerMethod({ className, kind, onClick }: SignerMethodProps) {
-  const [hovered, setHovered] = useState(false);
   const { icon, label } = signers[kind];
 
   return (
     <div
       className={cn(
         "flex items-center",
-        "w-full h-[52px] p-3 gap-2",
+        "w-full h-[40px] p-2.5 gap-2",
         "rounded",
         "bg-background-200 hover:bg-background-300",
+        "text-foreground-100 font-ld text-sm text-normal uppercase tracking-[2.1px]",
         "cursor-pointer transition-colors ease-in-out",
         className,
       )}
       onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
-      {icon && (
-        <div
-          className={cn(
-            "w-fit h-fit p-1",
-            "rounded-[16px]",
-            "bg-background-300",
-            hovered && "bg-background-400",
-          )}
-        >
-          {icon}
-        </div>
-      )}
-      <span className="text-foreground-100 text-base">
-        {label || kind.charAt(0).toUpperCase() + kind.slice(1)}
-      </span>
+      {icon && <div className={cn("w-fit h-fit")}>{icon}</div>}
+      {label || kind.charAt(0).toUpperCase() + kind.slice(1)}
     </div>
   );
 }

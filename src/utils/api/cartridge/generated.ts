@@ -136,6 +136,8 @@ export enum AccountOrderField {
 
 export type AccountPrivate = {
   __typename?: 'AccountPrivate';
+  /** Date of birth in YYYY-MM-DD format. */
+  dob?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
@@ -208,6 +210,17 @@ export type AccountTeamWhereInput = {
 export type AccountUpdateInput = {
   /** Set the email for the account. */
   email?: InputMaybe<Scalars['String']>;
+};
+
+export type AccountVerifyInput = {
+  /** Date of birth in YYYY-MM-DD format. */
+  dob?: InputMaybe<Scalars['String']>;
+  emailAddress?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  /** Use the UAT sandbox environment instead of production. */
+  sandbox?: InputMaybe<Scalars['Boolean']>;
 };
 
 /**
@@ -2955,6 +2968,7 @@ export type MintAllowance = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  accountVerify: Scalars['Boolean'];
   addOwner: Scalars['Boolean'];
   addPolicies?: Maybe<Array<PaymasterPolicy>>;
   addToTeam: Scalars['Boolean'];
@@ -2993,11 +3007,6 @@ export type Mutation = {
   finalizeLogin: Scalars['String'];
   finalizeRegistration: Account;
   increaseBudget: Paymaster;
-  /**
-   * Perform Prove Identity Verify v2.
-   * Submits consumer PII for verification.
-   */
-  proveVerify: ProveVerifyResponse;
   register: Account;
   removeAllPolicies: Scalars['Boolean'];
   removeFromTeam: Scalars['Boolean'];
@@ -3034,6 +3043,11 @@ export type Mutation = {
    * Updates the user's phone number and verification timestamp on success.
    */
   verifyPhone: VerifyResponse;
+};
+
+
+export type MutationAccountVerifyArgs = {
+  input: AccountVerifyInput;
 };
 
 
@@ -3223,11 +3237,6 @@ export type MutationIncreaseBudgetArgs = {
   paymasterName: Scalars['ID'];
   reason?: InputMaybe<AdminBudgetReason>;
   unit: FeeUnit;
-};
-
-
-export type MutationProveVerifyArgs = {
-  input: ProveVerifyInput;
 };
 
 
@@ -4408,77 +4417,6 @@ export type Project = {
   model: Scalars['String'];
   namespace: Scalars['String'];
   project: Scalars['String'];
-};
-
-export type ProveAddressResult = {
-  __typename?: 'ProveAddressResult';
-  addressScore: Scalars['Int'];
-  city: Scalars['Boolean'];
-  distance: Scalars['Float'];
-  postalCode: Scalars['Boolean'];
-  region: Scalars['Boolean'];
-  street: Scalars['Boolean'];
-  streetNumber: Scalars['Int'];
-};
-
-export type ProveEmailResult = {
-  __typename?: 'ProveEmailResult';
-  emailAddress: Scalars['Boolean'];
-};
-
-export type ProveIdentifiersResult = {
-  __typename?: 'ProveIdentifiersResult';
-  dob: Scalars['Boolean'];
-  driversLicenseNumber: Scalars['Boolean'];
-  driversLicenseState: Scalars['Boolean'];
-  last4: Scalars['Boolean'];
-  ssn: Scalars['Boolean'];
-};
-
-export type ProveNameResult = {
-  __typename?: 'ProveNameResult';
-  firstName: Scalars['Int'];
-  lastName: Scalars['Int'];
-  nameScore: Scalars['Int'];
-};
-
-export type ProveVerifyInput = {
-  address?: InputMaybe<Scalars['String']>;
-  city?: InputMaybe<Scalars['String']>;
-  dob?: InputMaybe<Scalars['String']>;
-  emailAddress?: InputMaybe<Scalars['String']>;
-  extendedAddress?: InputMaybe<Scalars['String']>;
-  /** Use the UAT sandbox environment instead of production. */
-  firstName?: InputMaybe<Scalars['String']>;
-  last4?: InputMaybe<Scalars['String']>;
-  lastName?: InputMaybe<Scalars['String']>;
-  phoneNumber?: InputMaybe<Scalars['String']>;
-  postalCode?: InputMaybe<Scalars['String']>;
-  region?: InputMaybe<Scalars['String']>;
-  ssn?: InputMaybe<Scalars['String']>;
-};
-
-export type ProveVerifyResponse = {
-  __typename?: 'ProveVerifyResponse';
-  address?: Maybe<ProveAddressResult>;
-  carrier?: Maybe<Scalars['String']>;
-  cipConfidence?: Maybe<Scalars['String']>;
-  countryCode?: Maybe<Scalars['String']>;
-  description: Scalars['String'];
-  email?: Maybe<ProveEmailResult>;
-  enrollStatus?: Maybe<Scalars['String']>;
-  identifiers?: Maybe<ProveIdentifiersResult>;
-  lineType?: Maybe<Scalars['String']>;
-  multiCipConfidence?: Maybe<Scalars['String']>;
-  multiVerified?: Maybe<Scalars['Boolean']>;
-  name?: Maybe<ProveNameResult>;
-  payfoneAlias?: Maybe<Scalars['String']>;
-  phoneNumber?: Maybe<Scalars['String']>;
-  reasonCodes?: Maybe<Array<Scalars['String']>>;
-  status: Scalars['Int'];
-  success: Scalars['Boolean'];
-  transactionId?: Maybe<Scalars['String']>;
-  verified?: Maybe<Scalars['Boolean']>;
 };
 
 export type PurchaseFulfillment = {

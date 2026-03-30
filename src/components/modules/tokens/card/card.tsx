@@ -19,6 +19,7 @@ export interface TokenCardProps
   change?: string;
   clickable?: boolean;
   roundedImage?: boolean;
+  isFree?: boolean;
   className?: string;
 }
 
@@ -32,6 +33,7 @@ export const TokenCard = ({
   change,
   clickable = true,
   roundedImage = true,
+  isFree = false,
   variant,
   className,
   ...props
@@ -91,6 +93,7 @@ export const TokenCard = ({
       subTitle={Amount}
       topic={value}
       subTopic={Change}
+      badge={isFree ? "FREE" : undefined}
       variant={variant}
       className={cn(
         "rounded-none",

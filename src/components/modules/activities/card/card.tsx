@@ -25,6 +25,7 @@ export interface ActivityCardProps
   subTitle: string | React.ReactNode;
   topic?: string;
   subTopic?: string | React.ReactNode;
+  badge?: string;
   error?: boolean;
   loading?: boolean;
   className?: string;
@@ -36,6 +37,7 @@ export const ActivityCard = ({
   subTitle,
   topic,
   subTopic,
+  badge,
   error,
   loading,
   variant,
@@ -50,21 +52,28 @@ export const ActivityCard = ({
       {...props}
     >
       {Logo}
-      <div className="flex flex-col gap-0.5 items-stretch grow overflow-hidden">
-        <div
-          data-error={error}
-          className="flex items-center gap-6 justify-between text-sm font-medium capitalize data-[error]:text-destructive-100"
-        >
-          <p>{title}</p>
-          {!!topic && <p className="truncate">{topic}</p>}
+      <div className="flex grow items-center">
+        <div className="flex grow flex-col gap-0.5 items-stretch overflow-hidden">
+          <div
+            data-error={error}
+            className="flex items-center gap-6 justify-between text-sm font-medium capitalize data-[error]:text-destructive-100"
+          >
+            <p>{title}</p>
+            {!!topic && <p className="truncate">{topic}</p>}
+          </div>
+          <div
+            data-error={error}
+            className="flex items-center gap-1 justify-between text-xs text-foreground-300 data-[error]:text-destructive-100"
+          >
+            {subTitle}
+            {!!subTopic && subTopic}
+          </div>
         </div>
-        <div
-          data-error={error}
-          className="flex items-center gap-1 justify-between text-xs text-foreground-300 data-[error]:text-destructive-100"
-        >
-          {subTitle}
-          {!!subTopic && subTopic}
-        </div>
+        {badge && (
+          <div className="text-foreground-300 text-sm border border-background-300 rounded-sm px-1 py-0.5">
+            {badge}
+          </div>
+        )}
       </div>
     </div>
   );

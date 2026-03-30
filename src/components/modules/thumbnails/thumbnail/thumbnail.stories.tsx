@@ -31,7 +31,8 @@ export const Default: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
       {sizes.map((size) => (
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -65,7 +66,8 @@ export const Transdark: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
       {sizes.map((size) => (
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -101,7 +103,8 @@ export const Translight: Story = {
   render: () => (
     <div className="flex flex-col gap-3">
       {sizes.map((size) => (
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -138,6 +141,7 @@ export const Rounded: Story = {
     <div className="flex flex-col gap-3 ">
       {sizes.map((size) => (
         <div className="flex gap-3 ">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -174,6 +178,7 @@ export const Component: Story = {
     <div className="flex flex-col gap-3 ">
       {sizes.map((size) => (
         <div className="flex gap-3 ">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -210,6 +215,7 @@ export const ComponentRounded: Story = {
     <div className="flex flex-col gap-3 ">
       {sizes.map((size) => (
         <div className="flex gap-3 ">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -248,6 +254,7 @@ export const FontAwesome: Story = {
     <div className="flex flex-col gap-3 ">
       {sizes.map((size) => (
         <div className="flex gap-3 ">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -286,6 +293,7 @@ export const Fallback: Story = {
     <div className="flex flex-col gap-3 ">
       {sizes.map((size) => (
         <div className="flex gap-3 ">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -320,6 +328,7 @@ export const Loading: Story = {
     <div className="flex flex-col gap-3 ">
       {sizes.map((size) => (
         <div className="flex gap-3 ">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -356,6 +365,7 @@ export const Error: Story = {
     <div className="flex flex-col gap-3 ">
       {sizes.map((size) => (
         <div className="flex gap-3 ">
+          <div className="w-8">{size}</div>
           {variants.map((variant) => (
             <Thumbnail
               key={`${size}-${variant}`}
@@ -397,7 +407,7 @@ export const ObjectFit: Story = {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3">
         <h3 className="text-sm font-semibold">Default (aspect-square)</h3>
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
           {sizes.map((size) => (
             <Thumbnail
               key={`default-${size}`}
@@ -412,7 +422,7 @@ export const ObjectFit: Story = {
         <h3 className="text-sm font-semibold">
           Object Contain (fits entire image)
         </h3>
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
           {sizes.map((size) => (
             <Thumbnail
               key={`contain-${size}`}
@@ -428,7 +438,7 @@ export const ObjectFit: Story = {
         <h3 className="text-sm font-semibold">
           Object Cover (fills container, may crop)
         </h3>
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
           {sizes.map((size) => (
             <Thumbnail
               key={`cover-${size}`}
@@ -444,7 +454,7 @@ export const ObjectFit: Story = {
         <h3 className="text-sm font-semibold">
           Object Fill (stretches to fill)
         </h3>
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
           {sizes.map((size) => (
             <Thumbnail
               key={`fill-${size}`}
