@@ -1198,6 +1198,60 @@ export type CoinbaseTransactionsResponse = {
   transactions: Array<CoinbaseTransaction>;
 };
 
+export type CoinflowPayment = {
+  __typename?: 'CoinflowPayment';
+  id: Scalars['ID'];
+  paymentStatus: CoinflowPaymentStatus;
+  purchaseFulfillment?: Maybe<PurchaseFulfillment>;
+};
+
+export enum CoinflowPaymentStatus {
+  Failed = 'FAILED',
+  Pending = 'PENDING',
+  Succeeded = 'SUCCEEDED'
+}
+
+export type CoinflowPricingDetails = {
+  __typename?: 'CoinflowPricingDetails';
+  baseCostInCents: Scalars['Int'];
+  processingFeeInCents: Scalars['Int'];
+  totalInCents: Scalars['Int'];
+};
+
+export type CoinflowStarterpackIntent = {
+  __typename?: 'CoinflowStarterpackIntent';
+  /**
+   * Internal CoinflowPayments row ID. Use this with the coinflowPayment query
+   * to poll fulfillment status after checkout completes.
+   */
+  id: Scalars['ID'];
+  /** Checkout JWT encoding subtotal, blockchain, settlement type, and destination. */
+  jwtToken: Scalars['String'];
+  /** Coinflow merchant ID for the checkout component. */
+  merchantId: Scalars['String'];
+  /** Pricing breakdown in cents. */
+  pricing: CoinflowPricingDetails;
+  /** Session key (JWT) for authenticating the checkout component with Coinflow. */
+  sessionKey: Scalars['String'];
+};
+
+export type CoinflowStarterpackQuote = {
+  __typename?: 'CoinflowStarterpackQuote';
+  needsSwap: Scalars['Boolean'];
+  paymentToken: Scalars['String'];
+  pricing: CoinflowPricingDetails;
+};
+
+export type CoinflowStarterpackQuoteInput = {
+  clientPercentage?: InputMaybe<Scalars['Int']>;
+  isMainnet?: InputMaybe<Scalars['Boolean']>;
+  quantity: Scalars['Int'];
+  referral?: InputMaybe<Scalars['String']>;
+  referralGroup?: InputMaybe<Scalars['String']>;
+  registryAddress: Scalars['String'];
+  starterpackId: Scalars['String'];
+};
+
 export type Collectible = {
   __typename?: 'Collectible';
   assets: Array<AssetEdge>;
@@ -1406,6 +1460,16 @@ export type CreateCoinbaseOnrampOrderInput = {
   usdcTransferAuthorization: UsdcTransferAuthorizationInput;
 };
 
+export type CreateCoinflowStarterpackIntentInput = {
+  clientPercentage?: InputMaybe<Scalars['Int']>;
+  isMainnet?: InputMaybe<Scalars['Boolean']>;
+  quantity: Scalars['Int'];
+  referral?: InputMaybe<Scalars['String']>;
+  referralGroup?: InputMaybe<Scalars['String']>;
+  registryAddress: Scalars['String'];
+  starterpackId: Scalars['String'];
+};
+
 export type CreateCryptoPaymentInput = {
   credits: CreditsInput;
   isMainnet?: InputMaybe<Scalars['Boolean']>;
@@ -1488,6 +1552,7 @@ export type CreateStripePaymentIntentInput = {
 };
 
 export type CreateStripeStarterpackIntentInput = {
+  clientPercentage?: InputMaybe<Scalars['Int']>;
   isMainnet?: InputMaybe<Scalars['Boolean']>;
   quantity: Scalars['Int'];
   referral?: InputMaybe<Scalars['String']>;
@@ -2507,6 +2572,12 @@ export enum LayerswapStatus {
   PendingUserTransfer = 'PENDING_USER_TRANSFER'
 }
 
+export type LayerswapStatusResponse = {
+  __typename?: 'LayerswapStatusResponse';
+  status: LayerswapStatus;
+  txHash?: Maybe<Scalars['String']>;
+};
+
 export type Lock = Node & {
   __typename?: 'Lock';
   createdAt: Scalars['Time'];
@@ -2985,6 +3056,13 @@ export type Mutation = {
    * This mutation sends USDC to a burner address, which then transfers to the presigned destination.
    */
   createCoinbaseOnrampOrder: CoinbaseOnrampOrderResponse;
+  /**
+   * Create a Coinflow checkout intent for a starterpack purchase.
+   * Mirrors createStripeStarterpackIntent: computes pricing, creates a
+   * PurchaseFulfillment (AWAITING_PAYMENT), and returns the session key
+   * and JWT the frontend needs to render the Coinflow checkout component.
+   */
+  createCoinflowStarterpackIntent: CoinflowStarterpackIntent;
   createCryptoPayment: CryptoPayment;
   createDeployment: Deployment;
   createLayerswapDeposit: LayerswapPayment;
@@ -2999,6 +3077,7 @@ export type Mutation = {
   createTeam: Team;
   decreaseBudget: Paymaster;
   deleteDeployment: Scalars['Boolean'];
+  deleteMe: Scalars['Boolean'];
   deleteRpcApiKey: Scalars['Boolean'];
   deleteRpcCorsDomain: Scalars['Boolean'];
   deleteTeam: Scalars['Boolean'];
@@ -3093,6 +3172,11 @@ export type MutationCreateCoinbaseLayerswapOrderArgs = {
 
 export type MutationCreateCoinbaseOnrampOrderArgs = {
   input: CreateCoinbaseOnrampOrderInput;
+};
+
+
+export type MutationCreateCoinflowStarterpackIntentArgs = {
+  input: CreateCoinflowStarterpackIntentInput;
 };
 
 
@@ -4460,6 +4544,17 @@ export type Query = {
    * Returns a paginated list of transactions in reverse chronological order.
    */
   coinbaseOnrampTransactions: CoinbaseTransactionsResponse;
+  /**
+   * Get a Coinflow payment by its internal ID (the CoinflowPayments row ID),
+   * including its linked PurchaseFulfillment for fulfillment status polling.
+   */
+  coinflowPayment: CoinflowPayment;
+  /**
+   * Get a Coinflow starterpack pricing quote without creating a payment intent.
+   * Mirrors stripeStarterpackQuote: computes pricing, resolves payment token,
+   * and indicates whether a USDC swap is required at purchase time.
+   */
+  coinflowStarterpackQuote: CoinflowStarterpackQuote;
   collectible: Collectible;
   collectibles: CollectibleConnection;
   collection: Collection;
@@ -4472,7 +4567,7 @@ export type Query = {
   layerswapPayment?: Maybe<LayerswapPayment>;
   layerswapQuote: LayerswapQuote;
   layerswapSources: Array<LayerswapSource>;
-  layerswapStatus: LayerswapStatus;
+  layerswapStatus: LayerswapStatusResponse;
   lookupPaymaster: PaymasterLookupResult;
   me?: Maybe<Account>;
   merkleClaims: MerkleClaimConnection;
@@ -4503,6 +4598,7 @@ export type Query = {
   starterpack?: Maybe<StarterpackDetails>;
   streaks: StreakResult;
   stripePayment: StripePayment;
+  stripeStarterpackQuote: StripeStarterpackQuote;
   subscribeCreateSession?: Maybe<Session>;
   team?: Maybe<Team>;
   teams?: Maybe<TeamConnection>;
@@ -4567,6 +4663,16 @@ export type QueryCoinbaseOnrampQuoteArgs = {
 
 export type QueryCoinbaseOnrampTransactionsArgs = {
   input: CoinbaseTransactionsInput;
+};
+
+
+export type QueryCoinflowPaymentArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryCoinflowStarterpackQuoteArgs = {
+  input: CoinflowStarterpackQuoteInput;
 };
 
 
@@ -4843,6 +4949,11 @@ export type QueryStreaksArgs = {
 
 export type QueryStripePaymentArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryStripeStarterpackQuoteArgs = {
+  input: StripeStarterpackQuoteInput;
 };
 
 
@@ -5139,6 +5250,10 @@ export type RpcLog = Node & {
   __typename?: 'RPCLog';
   /** API key used (if any) */
   apiKeyID?: Maybe<Scalars['String']>;
+  /** Authentication outcome for this request */
+  authDecision: RpcLogAuthDecision;
+  /** Whether RPC auth enforcement was enabled for this request */
+  authEnforced: Scalars['Boolean'];
   /** IP address of the client */
   clientIP: Scalars['String'];
   /** CORS domain used (if any) */
@@ -5154,6 +5269,8 @@ export type RpcLog = Node & {
   method?: Maybe<Scalars['String']>;
   /** Starknet network used */
   network: RpcLogNetwork;
+  /** Origin header from the request */
+  origin?: Maybe<Scalars['String']>;
   /** When billing was processed. NULL indicates not yet processed. */
   processedAt?: Maybe<Scalars['Time']>;
   /** Referer header from the request */
@@ -5169,6 +5286,13 @@ export type RpcLog = Node & {
   /** User agent of the client */
   userAgent?: Maybe<Scalars['String']>;
 };
+
+/** RPCLogAuthDecision is enum for the field auth_decision */
+export enum RpcLogAuthDecision {
+  Allowed = 'allowed',
+  Blocked = 'blocked',
+  WouldBeBlocked = 'would_be_blocked'
+}
 
 /** A connection to a list of items. */
 export type RpcLogConnection = {
@@ -5218,6 +5342,14 @@ export type RpcLogWhereInput = {
   apiKeyIDNEQ?: InputMaybe<Scalars['String']>;
   apiKeyIDNotIn?: InputMaybe<Array<Scalars['String']>>;
   apiKeyIDNotNil?: InputMaybe<Scalars['Boolean']>;
+  /** auth_decision field predicates */
+  authDecision?: InputMaybe<RpcLogAuthDecision>;
+  authDecisionIn?: InputMaybe<Array<RpcLogAuthDecision>>;
+  authDecisionNEQ?: InputMaybe<RpcLogAuthDecision>;
+  authDecisionNotIn?: InputMaybe<Array<RpcLogAuthDecision>>;
+  /** auth_enforced field predicates */
+  authEnforced?: InputMaybe<Scalars['Boolean']>;
+  authEnforcedNEQ?: InputMaybe<Scalars['Boolean']>;
   /** client_ip field predicates */
   clientIP?: InputMaybe<Scalars['String']>;
   clientIPContains?: InputMaybe<Scalars['String']>;
@@ -5303,6 +5435,22 @@ export type RpcLogWhereInput = {
   networkNotIn?: InputMaybe<Array<RpcLogNetwork>>;
   not?: InputMaybe<RpcLogWhereInput>;
   or?: InputMaybe<Array<RpcLogWhereInput>>;
+  /** origin field predicates */
+  origin?: InputMaybe<Scalars['String']>;
+  originContains?: InputMaybe<Scalars['String']>;
+  originContainsFold?: InputMaybe<Scalars['String']>;
+  originEqualFold?: InputMaybe<Scalars['String']>;
+  originGT?: InputMaybe<Scalars['String']>;
+  originGTE?: InputMaybe<Scalars['String']>;
+  originHasPrefix?: InputMaybe<Scalars['String']>;
+  originHasSuffix?: InputMaybe<Scalars['String']>;
+  originIn?: InputMaybe<Array<Scalars['String']>>;
+  originIsNil?: InputMaybe<Scalars['Boolean']>;
+  originLT?: InputMaybe<Scalars['String']>;
+  originLTE?: InputMaybe<Scalars['String']>;
+  originNEQ?: InputMaybe<Scalars['String']>;
+  originNotIn?: InputMaybe<Array<Scalars['String']>>;
+  originNotNil?: InputMaybe<Scalars['Boolean']>;
   /** processed_at field predicates */
   processedAt?: InputMaybe<Scalars['Time']>;
   processedAtGT?: InputMaybe<Scalars['Time']>;
@@ -6467,6 +6615,7 @@ export type StripePayment = {
 export type StripePaymentIntent = {
   __typename?: 'StripePaymentIntent';
   clientSecret: Scalars['String'];
+  customerSessionClientSecret?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   pricing: StripePricingDetails;
 };
@@ -6482,6 +6631,23 @@ export type StripePricingDetails = {
   baseCostInCents: Scalars['Int'];
   processingFeeInCents: Scalars['Int'];
   totalInCents: Scalars['Int'];
+};
+
+export type StripeStarterpackQuote = {
+  __typename?: 'StripeStarterpackQuote';
+  needsSwap: Scalars['Boolean'];
+  paymentToken: Scalars['String'];
+  pricing: StripePricingDetails;
+};
+
+export type StripeStarterpackQuoteInput = {
+  clientPercentage?: InputMaybe<Scalars['Int']>;
+  isMainnet?: InputMaybe<Scalars['Boolean']>;
+  quantity: Scalars['Int'];
+  referral?: InputMaybe<Scalars['String']>;
+  referralGroup?: InputMaybe<Scalars['String']>;
+  registryAddress: Scalars['String'];
+  starterpackId: Scalars['String'];
 };
 
 export type Team = Node & {
@@ -7384,7 +7550,7 @@ export type LayerswapStatusQueryVariables = Exact<{
 }>;
 
 
-export type LayerswapStatusQuery = { __typename?: 'Query', layerswapStatus: LayerswapStatus };
+export type LayerswapStatusQuery = { __typename?: 'Query', layerswapStatus: { __typename?: 'LayerswapStatusResponse', status: LayerswapStatus } };
 
 export type CoinbaseOnrampTransactionsQueryVariables = Exact<{
   input: CoinbaseTransactionsInput;
@@ -8553,7 +8719,9 @@ export const useLayerswapQuoteQuery = <
     );
 export const LayerswapStatusDocument = `
     query LayerswapStatus($swapId: ID!, $isMainnet: Boolean) {
-  layerswapStatus(swapId: $swapId, isMainnet: $isMainnet)
+  layerswapStatus(swapId: $swapId, isMainnet: $isMainnet) {
+    status
+  }
 }
     `;
 export const useLayerswapStatusQuery = <
