@@ -1,4 +1,4 @@
-import { MobileIcon } from "@/components/icons";
+import { MobileIcon, WalletIcon } from "@/components/icons";
 import {
   ArgentColorIcon,
   DiscordColorIcon,
@@ -20,7 +20,9 @@ export type SignerPendingCardKind =
   | "argent"
   | "rabby"
   | "phantom"
-  | "walletconnect";
+  | "phantom-evm"
+  | "walletconnect"
+  | "wallet";
 
 interface SignerPendingCardProps {
   className?: string;
@@ -80,11 +82,23 @@ const variants: Record<
     primaryText: "Waiting for Signature",
     secondaryText: "Don't see your wallet? Check your other browser windows",
   },
+  "phantom-evm": {
+    icon: <PhantomColorIcon size="xl" />,
+    primaryText: "Waiting for Signature",
+    secondaryText: "Don't see your wallet? Check your other browser windows",
+    label: "Phantom",
+  },
   walletconnect: {
     icon: <WalletConnectColorIcon size="xl" />,
     primaryText: "Waiting for Signature",
     secondaryText: "Continue on your mobile device",
     label: "WalletConnect",
+  },
+  wallet: {
+    icon: <WalletIcon variant="solid" size="xl" />,
+    primaryText: "",
+    secondaryText: "",
+    label: "Wallet",
   },
 } as const;
 
@@ -149,7 +163,7 @@ export function SignerPendingCard({
               : authedAddress
                 ? formatAddress(authedAddress, { size: "xs" })
                 : (label || kind.charAt(0).toUpperCase() + kind.slice(1)) +
-                  " connected"}
+                " connected"}
         </span>
       </div>
     </div>
