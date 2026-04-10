@@ -96,3 +96,9 @@ export const WalletConnect: Story = {
     kind: "walletconnect",
   },
 };
+
+export const Unknown: Story = {
+  args: {
+    kind: "unknown",
+  },
+};

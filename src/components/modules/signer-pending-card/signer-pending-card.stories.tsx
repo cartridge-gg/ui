@@ -21,6 +21,8 @@ const meta: Meta<typeof SignerPendingCard> = {
         "rabby",
         "phantom",
         "walletconnect",
+        "phantom-evm",
+        "wallet",
       ],
     },
   },
@@ -132,13 +134,6 @@ export const RabbyInProgress: Story = {
   },
 };
 
-export const PhantomInProgress: Story = {
-  args: {
-    kind: "phantom",
-    inProgress: true,
-  },
-};
-
 export const WalletConnectInProgress: Story = {
   args: {
     kind: "walletconnect",
@@ -179,6 +174,7 @@ export const AllMethods: Story = {
       <SignerPendingCard kind="rabby" inProgress={false} />
       <SignerPendingCard kind="phantom" inProgress={false} />
       <SignerPendingCard kind="walletconnect" inProgress={false} />
+      <SignerPendingCard kind="wallet" inProgress={false} />
     </div>
   ),
 };

@@ -1,4 +1,4 @@
-import { MobileIcon, WalletIcon } from "@/components/icons";
+import { MobileIcon, WalletIcon, WarningIcon } from "@/components/icons";
 import {
   ArgentColorIcon,
   DiscordColorIcon,
@@ -12,7 +12,7 @@ import { FingerprintIcon } from "@/components/icons/brand/fingerprint";
 import { cn } from "@/utils";
 import { SignerPendingCardKind } from "../signer-pending-card/signer-pending-card";
 
-export type SignerMethodKind = SignerPendingCardKind | "wallet";
+export type SignerMethodKind = SignerPendingCardKind;
 
 interface SignerMethodProps {
   className?: string;
@@ -49,6 +49,10 @@ const signers: Record<
   phantom: {
     icon: <PhantomColorIcon size="sm" />,
   },
+  "phantom-evm": {
+    icon: <PhantomColorIcon size="sm" />,
+    label: "Phantom",
+  },
   metamask: {
     icon: <MetaMaskColorIcon size="sm" />,
   },
@@ -62,7 +66,11 @@ const signers: Record<
 } as const;
 
 export function SignerMethod({ className, kind, onClick }: SignerMethodProps) {
-  const { icon, label } = signers[kind];
+  const signerExist = (kind in signers)
+  const { icon, label } = signerExist ? signers[kind] : {
+    icon: <WarningIcon size="sm" />,
+    label: "Unknown",
+  };
 
   return (
     <div
@@ -75,7 +83,7 @@ export function SignerMethod({ className, kind, onClick }: SignerMethodProps) {
         "cursor-pointer transition-colors ease-in-out",
         className,
       )}
-      onClick={onClick}
+      onClick={signerExist ? onClick : undefined}
     >
       {icon && <div className={cn("w-fit h-fit")}>{icon}</div>}
       {label || kind.charAt(0).toUpperCase() + kind.slice(1)}

@@ -69,7 +69,9 @@ query LayerswapQuote($input: CreateLayerswapDepositInput!) {
 }
 
 query LayerswapStatus($swapId: ID!, $isMainnet: Boolean) {
-  layerswapStatus(swapId: $swapId, isMainnet: $isMainnet)
+  layerswapStatus(swapId: $swapId, isMainnet: $isMainnet) {
+    status
+  }
 }
 
 query CoinbaseOnrampTransactions($input: CoinbaseTransactionsInput!) {
