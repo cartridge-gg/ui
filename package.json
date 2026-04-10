@@ -48,6 +48,7 @@
     }
   },
   "scripts": {
+    "clean": "rm -rf node_modules dist tsconfig.tsbuildinfo",
     "build": "pnpm graphql:gen && tsc && tsc-alias && pnpm copyThemes && pnpm copyAssets",
     "dev": "npm-run-all --parallel dev:tsc dev:alias dev:assets",
     "dev:tsc": "tsc --watch --preserveWatchOutput",
